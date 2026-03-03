@@ -2,7 +2,6 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import Image from "next/image"
 
 interface GameService {
   id: string
@@ -76,11 +75,10 @@ export function GameGrid({ initialGames, categories }: GameGridProps) {
           >
             {/* Background Image */}
             <div className="absolute inset-0">
-              <Image
+              <img
                 src={game.bgImage}
                 alt={game.name}
-                fill
-                className="object-cover transition-transform duration-700 group-hover:scale-105"
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-90" />
             </div>
@@ -88,11 +86,10 @@ export function GameGrid({ initialGames, categories }: GameGridProps) {
             {/* Character Image */}
             {game.charImage && (
               <div className="absolute inset-0 z-10 pointer-events-none transition-transform duration-700 ease-out group-hover:scale-110 origin-bottom-right">
-                <Image
+                <img
                   src={game.charImage}
                   alt={`${game.name} Character`}
-                  fill
-                  className="object-contain object-right-bottom scale-[1.1] translate-y-[15%] translate-x-[8%]"
+                  className="w-full h-full object-contain object-right-bottom scale-[1.1] translate-y-[15%] translate-x-[8%]"
                 />
               </div>
             )}
