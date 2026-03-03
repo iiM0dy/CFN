@@ -128,9 +128,51 @@ model Service {
   // Options for the service details page
   platforms         String[] // e.g., ["PC", "Console"]
   completionMethods String[] // e.g., ["Solo", "Duo"]
+  maxQuantity       Int      @default(15) // Maximum quantity that can be ordered
+  
+  // Dynamic service options
+  options     ServiceOption[]
   
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+}
+
+// Flexible option groups for each service (e.g., "Rank Selection", "Material Type", "Quantity")
+model ServiceOption {
+  id          String   @id @default(cuid())
+  serviceId   String
+  service     Service  @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+  
+  label       String   // e.g., "Current Rank", "Material Type", "Desired Rank"
+  type        String   // e.g., "select", "range", "checkbox", "number"
+  required    Boolean  @default(true)
+  order       Int      @default(0) // Display order
+  
+  // Option values (for select/checkbox types)
+  values      ServiceOptionValue[]
+  
+  // For range/number types
+  minValue    Int?
+  maxValue    Int?
+  step        Int?
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// Individual values for select/checkbox options
+model ServiceOptionValue {
+  id              String        @id @default(cuid())
+  optionId        String
+  option          ServiceOption @relation(fields: [optionId], references: [id], onDelete: Cascade)
+  
+  label           String        // e.g., "Iron", "Bronze", "Silver"
+  value           String        // Internal value
+  priceModifier   Decimal       @default(0) // Additional price for this option
+  order           Int           @default(0) // Display order
+  
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
 }
 
 model CartItem {

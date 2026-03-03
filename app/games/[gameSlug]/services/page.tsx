@@ -15,10 +15,41 @@ export default async function GameServicesPage({ params }: { params: Promise<{ g
     const game = games[0]
 
     if (game) {
-        // Fetch services using raw query as fallback if the Prisma client is out of sync
-        game.services = await prisma.$queryRaw<any[]>`
-            SELECT * FROM "Service" WHERE "gameId" = ${game.id}
+        // Fetch services with options using raw query
+        const services = await prisma.$queryRaw<any[]>`
+            SELECT s.*, 
+                   json_agg(
+                       json_build_object(
+                           'id', so.id,
+                           'label', so.label,
+                           'type', so.type,
+                           'minValue', so."minValue",
+                           'maxValue', so."maxValue"
+                       )
+                   ) FILTER (WHERE so.id IS NOT NULL) as options
+            FROM "Service" s
+            LEFT JOIN "ServiceOption" so ON so."serviceId" = s.id
+            WHERE s."gameId" = ${game.id}
+            GROUP BY s.id
         `
+        
+        // Calculate display price for each service
+        game.services = services.map(service => {
+            let displayPrice = Number(service.basePrice);
+            
+            // For Coins service, calculate minimum purchasable amount
+            if (service.name?.toLowerCase().includes('coin') && service.options && service.options.length > 0) {
+                const coinOption = service.options.find((opt: any) => opt.type === 'number');
+                if (coinOption && coinOption.minValue) {
+                    displayPrice = (Number(service.basePrice) * coinOption.minValue) / 1000;
+                }
+            }
+            
+            return {
+                ...service,
+                displayPrice: displayPrice.toFixed(2)
+            };
+        });
     }
 
     if (!game) {
@@ -107,7 +138,7 @@ export default async function GameServicesPage({ params }: { params: Promise<{ g
                                 <div className="flex items-center justify-between mt-auto pt-4 border-t border-[#1c1c1c]">
                                     <div className="flex flex-col">
                                         <span className="text-[10px] text-gray-500 font-bold uppercase tracking-widest">Starting at</span>
-                                        <span className="text-xl font-black text-white italic tracking-tighter">${Number(service.basePrice).toFixed(2)}</span>
+                                        <span className="text-xl font-black text-white italic tracking-tighter">${service.displayPrice || Number(service.basePrice).toFixed(2)}</span>
                                     </div>
                                     <div className="bg-primary hover:bg-primary-dark text-white text-xs font-bold uppercase px-5 py-2.5 rounded-lg flex items-center gap-2 shadow-lg shadow-primary/20 group-hover:shadow-primary/40 transition-all">
                                         Order Now
