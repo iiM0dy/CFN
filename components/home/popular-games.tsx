@@ -53,7 +53,7 @@ export async function PopularGames() {
                                         src={game.charImage}
                                         alt={`${game.name} Character`}
                                         fill
-                                        className="object-contain object-right-bottom scale-[1.5] translate-y-[22%] translate-x-[12%]"
+                                        className="object-contain object-right-bottom scale-[1.1] translate-y-[15%] translate-x-[8%]"
                                         sizes="(max-width: 768px) 100vw, 25vw"
                                         priority
                                     />
