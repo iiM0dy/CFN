@@ -4,7 +4,7 @@ import Image from "next/image"
 import { notFound } from "next/navigation"
 import { Search, Filter, CheckCircle2, ArrowRight, Shield, Clock, CheckCircle, ThumbsUp, ChevronRight } from "lucide-react"
 
-export default async function GameServicesPage({ params }: { params: { gameSlug: string } }) {
+export default async function GameServicesPage({ params }: { params: Promise<{ gameSlug: string }> }) {
     const { gameSlug } = await params
 
     // Use a raw query as a fallback if the Prisma client types are out of sync with the DB

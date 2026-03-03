@@ -1,5 +1,10 @@
 import { auth } from "@/auth"
 import { prisma } from "@/lib/prisma"
+import { ShieldCheck, Package, Clock, TrendingUp, DollarSign } from "lucide-react"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import { Badge } from "@/components/ui/badge"
+import { Footer } from "@/components/layout/footer"
+
 export default async function AdminOrdersPage() {
     const session = await auth()
 
