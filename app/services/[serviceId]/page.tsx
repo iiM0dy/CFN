@@ -2,11 +2,12 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { notFound } from "next/navigation";
+import { useSession } from "next-auth/react";
 import { 
     Shield, Clock, Lock, Zap, ChevronRight, Computer, 
-    Gamepad2, ArrowRight, CheckCircle2, Rocket, TrendingUp
+    Gamepad2, ArrowRight, CheckCircle2, Rocket, TrendingUp, Heart
 } from "lucide-react";
 
 interface ServiceOptionValue {
@@ -37,6 +38,7 @@ interface Service {
     platforms: string[];
     completionMethods: string[];
     maxQuantity?: number;
+    image?: string | null;
     options?: ServiceOption[];
     game: {
         name: string;
@@ -46,6 +48,8 @@ interface Service {
 
 export default function ServiceDetailsPage() {
     const { serviceId } = useParams();
+    const router = useRouter();
+    const { data: session } = useSession();
     const [service, setService] = useState<Service | null>(null);
     const [loading, setLoading] = useState(true);
     
@@ -57,6 +61,19 @@ export default function ServiceDetailsPage() {
     const [quantity, setQuantity] = useState(1); // Default to 1
     const [selectedOptions, setSelectedOptions] = useState<Record<string, any>>({});
     const [activeTab, setActiveTab] = useState("description");
+    
+    // Promo code state
+    const [promoCodeData, setPromoCodeData] = useState<any>(null);
+    const [promoCodeError, setPromoCodeError] = useState("");
+    const [isValidatingPromo, setIsValidatingPromo] = useState(false);
+    
+    // Payment modal state
+    const [showPaymentModal, setShowPaymentModal] = useState(false);
+    const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<string | null>(null);
+    
+    // Favorite state
+    const [isFavorite, setIsFavorite] = useState(false);
+    const [favoriteLoading, setFavoriteLoading] = useState(false);
 
     // Close dropdowns when clicking outside
     useEffect(() => {
@@ -82,6 +99,11 @@ export default function ServiceDetailsPage() {
                     setService(data);
                     if (data.platforms?.length > 0) setPlatform(data.platforms[0]);
                     if (data.completionMethods?.length > 0) setCompletionMethod(data.completionMethods[0]);
+                    
+                    // Check if service is favorited
+                    if (session?.user) {
+                        checkFavorite();
+                    }
                 } else {
                     console.error("Failed to fetch service");
                 }
@@ -93,7 +115,51 @@ export default function ServiceDetailsPage() {
         }
 
         fetchService();
-    }, [serviceId]);
+    }, [serviceId, session]);
+    
+    const checkFavorite = async () => {
+        try {
+            const res = await fetch('/api/favorites');
+            if (res.ok) {
+                const favorites = await res.json();
+                setIsFavorite(favorites.some((fav: any) => fav.serviceId === serviceId));
+            }
+        } catch (error) {
+            console.error('Error checking favorite:', error);
+        }
+    };
+    
+    const toggleFavorite = async () => {
+        if (!session?.user) {
+            router.push('/login?callbackUrl=' + encodeURIComponent(window.location.href));
+            return;
+        }
+        
+        setFavoriteLoading(true);
+        try {
+            if (isFavorite) {
+                const res = await fetch(`/api/favorites?serviceId=${serviceId}`, {
+                    method: 'DELETE'
+                });
+                if (res.ok) {
+                    setIsFavorite(false);
+                }
+            } else {
+                const res = await fetch('/api/favorites', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ serviceId })
+                });
+                if (res.ok) {
+                    setIsFavorite(true);
+                }
+            }
+        } catch (error) {
+            console.error('Error toggling favorite:', error);
+        } finally {
+            setFavoriteLoading(false);
+        }
+    };
 
     // Calculate total price
     const calculateTotalPrice = () => {
@@ -143,7 +209,101 @@ export default function ServiceDetailsPage() {
             price *= 1.40; // +40%
         }
         
+        // Apply promo code discount
+        if (promoCodeData) {
+            if (promoCodeData.discountType === 'percentage') {
+                price = price * (1 - promoCodeData.discount / 100);
+            } else {
+                price = Math.max(0, price - promoCodeData.discount);
+            }
+        }
+        
         return price.toFixed(2);
+    };
+    
+    // Validate promo code
+    const validatePromoCode = async () => {
+        if (!promoCode.trim()) return;
+        
+        setIsValidatingPromo(true);
+        setPromoCodeError("");
+        
+        try {
+            const res = await fetch('/api/promo-codes/validate', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ code: promoCode })
+            });
+            
+            const data = await res.json();
+            
+            if (res.ok) {
+                setPromoCodeData(data);
+                setPromoCodeError("");
+            } else {
+                setPromoCodeError(data.error);
+                setPromoCodeData(null);
+            }
+        } catch (error) {
+            setPromoCodeError("Failed to validate promo code");
+            setPromoCodeData(null);
+        } finally {
+            setIsValidatingPromo(false);
+        }
+    };
+    
+    // Handle order click
+    const handleOrderClick = () => {
+        if (!session) {
+            router.push('/login?callbackUrl=' + encodeURIComponent(window.location.href));
+            return;
+        }
+        // Show payment modal
+        setShowPaymentModal(true);
+    };
+    
+    // Handle payment method selection and purchase
+    const handlePurchase = async () => {
+        if (!selectedPaymentMethod) {
+            alert('Please select a payment method');
+            return;
+        }
+        
+        try {
+            // Create order in database
+            const orderData = {
+                serviceId: service?.id,
+                totalPrice: calculateTotalPrice(),
+                quantity,
+                platform,
+                completionMethod,
+                completionSpeed,
+                promoCode: promoCodeData ? promoCode : null,
+                discount: promoCodeData ? (promoCodeData.discountType === 'percentage' 
+                    ? (Number(calculateTotalPrice()) * promoCodeData.discount / 100)
+                    : promoCodeData.discount) : 0,
+                selectedOptions
+            };
+            
+            const res = await fetch('/api/orders', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(orderData)
+            });
+            
+            if (res.ok) {
+                const order = await res.json();
+                // Process payment (to be implemented with actual payment gateway)
+                alert(`Order created successfully! Order ID: ${order.id.slice(0, 8)}\nPayment via ${selectedPaymentMethod} will be processed.`);
+                setShowPaymentModal(false);
+                router.push('/orders');
+            } else {
+                alert('Failed to create order. Please try again.');
+            }
+        } catch (error) {
+            console.error('Error creating order:', error);
+            alert('An error occurred. Please try again.');
+        }
     };
 
     // Calculate speed boost price for display
@@ -204,7 +364,7 @@ export default function ServiceDetailsPage() {
 
     return (
         <div className="relative flex min-h-screen flex-col bg-[#0B0B0B] text-white font-[family-name:var(--font-space-grotesk)]">
-            <main className="flex-grow w-full px-4 py-8 md:px-10 lg:px-20 max-w-7xl mx-auto">
+            <main className="flex-grow w-full px-6 py-8 max-w-7xl mx-auto">
                 {/* Breadcrumbs */}
                 <div className="flex items-center gap-2 text-sm text-gray-500 mb-8 font-[family-name:var(--font-noto-sans)]">
                     <Link href="/" className="hover:text-primary transition-colors">Home</Link>
@@ -220,29 +380,71 @@ export default function ServiceDetailsPage() {
                     {/* Left Column */}
                     <div className="lg:col-span-8 flex flex-col gap-10">
                         {/* Hero Section */}
-                        <div className="relative rounded-2xl overflow-hidden border border-[#1c1c1c] bg-[#141414] p-8">
-                            <div className="absolute top-0 right-0 w-64 h-64 bg-primary/10 blur-[80px] rounded-full pointer-events-none"></div>
-                            <div className="flex flex-col gap-4 relative z-10">
-                                <div className="inline-flex items-center gap-2 self-start px-3 py-1 rounded bg-primary/10 border border-primary/20 text-primary text-xs font-bold uppercase tracking-wider">
-                                    <Zap className="size-3" />
-                                    Hot Service
+                        <div className="relative rounded-2xl overflow-hidden border border-[#1c1c1c] bg-[#141414]">
+                            {/* Background Image (if available) */}
+                            {service.image && (
+                                <div className="absolute inset-0 opacity-20">
+                                    <img
+                                        src={service.image}
+                                        alt={service.name}
+                                        className="w-full h-full object-cover"
+                                    />
+                                    <div className="absolute inset-0 bg-gradient-to-r from-[#141414] via-[#141414]/95 to-[#141414]/80"></div>
                                 </div>
-                                <h1 className="text-4xl md:text-5xl font-bold text-white uppercase tracking-tight">{service.name}</h1>
-                                <p className="text-gray-400 font-[family-name:var(--font-noto-sans)] leading-relaxed max-w-2xl">
-                                    {service.description}
-                                </p>
-                                <div className="flex flex-wrap gap-4 mt-2">
-                                    <div className="flex items-center gap-1.5 text-sm text-gray-300 bg-[#1c1c1c] px-3 py-1.5 rounded border border-[#2a1a1c]">
-                                        <CheckCircle2 className="size-4 text-primary" />
-                                        Verified Pros
+                            )}
+                            
+                            <div className="absolute top-0 right-0 w-64 h-64 bg-primary/10 blur-[80px] rounded-full pointer-events-none"></div>
+                            
+                            <div className="relative z-10 p-8 flex gap-6">
+                                {/* Service Image Thumbnail */}
+                                {service.image && (
+                                    <div className="hidden md:block shrink-0">
+                                        <div className="w-32 h-32 rounded-xl overflow-hidden border-2 border-primary/30 shadow-lg shadow-primary/20">
+                                            <img
+                                                src={service.image}
+                                                alt={service.name}
+                                                className="w-full h-full object-cover"
+                                            />
+                                        </div>
                                     </div>
-                                    <div className="flex items-center gap-1.5 text-sm text-gray-300 bg-[#1c1c1c] px-3 py-1.5 rounded border border-[#2a1a1c]">
-                                        <Clock className="size-4 text-primary" />
-                                        Start within 15m
+                                )}
+                                
+                                <div className="flex flex-col gap-4 flex-1">
+                                    <div className="flex items-center justify-between gap-4">
+                                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded bg-primary/10 border border-primary/20 text-primary text-xs font-bold uppercase tracking-wider">
+                                            <Zap className="size-3" />
+                                            Hot Service
+                                        </div>
+                                        <button
+                                            onClick={toggleFavorite}
+                                            disabled={favoriteLoading}
+                                            className={`flex items-center gap-2 px-4 py-2 rounded-lg border transition-all ${
+                                                isFavorite
+                                                    ? 'bg-primary/10 border-primary text-primary'
+                                                    : 'bg-[#1c1c1c] border-[#2a1a1c] text-gray-400 hover:border-primary/50 hover:text-primary'
+                                            }`}
+                                        >
+                                            <Heart className={`size-4 ${isFavorite ? 'fill-current' : ''}`} />
+                                            <span className="text-sm font-bold">{isFavorite ? 'Saved' : 'Save'}</span>
+                                        </button>
                                     </div>
-                                    <div className="flex items-center gap-1.5 text-sm text-gray-300 bg-[#1c1c1c] px-3 py-1.5 rounded border border-[#2a1a1c]">
-                                        <Lock className="size-4 text-primary" />
-                                        VPN Protection
+                                    <h1 className="text-4xl md:text-5xl font-bold text-white uppercase tracking-tight">{service.name}</h1>
+                                    <p className="text-gray-400 font-[family-name:var(--font-noto-sans)] leading-relaxed max-w-2xl">
+                                        {service.description}
+                                    </p>
+                                    <div className="flex flex-wrap gap-4 mt-2">
+                                        <div className="flex items-center gap-1.5 text-sm text-gray-300 bg-[#1c1c1c] px-3 py-1.5 rounded border border-[#2a1a1c]">
+                                            <CheckCircle2 className="size-4 text-primary" />
+                                            Verified Pros
+                                        </div>
+                                        <div className="flex items-center gap-1.5 text-sm text-gray-300 bg-[#1c1c1c] px-3 py-1.5 rounded border border-[#2a1a1c]">
+                                            <Clock className="size-4 text-primary" />
+                                            Start within 15m
+                                        </div>
+                                        <div className="flex items-center gap-1.5 text-sm text-gray-300 bg-[#1c1c1c] px-3 py-1.5 rounded border border-[#2a1a1c]">
+                                            <Lock className="size-4 text-primary" />
+                                            VPN Protection
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -419,96 +621,62 @@ export default function ServiceDetailsPage() {
 
                                     {/* Checkbox Type - Multi-select Dropdown */}
                                     {option.type === 'checkbox' && (
-                                        <div className="p-6 rounded-xl border border-[#2a1a1c] bg-[#141414]">
-                                            <div className="relative dropdown-container">
-                                                {/* Selected Items Display */}
-                                                <div className="mb-4 flex flex-wrap gap-2">
-                                                    {(selectedOptions[option.id] || []).map((selectedValue: string) => {
-                                                        const item = option.values.find(v => v.value === selectedValue);
-                                                        return item ? (
-                                                            <div key={selectedValue} className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 text-primary px-3 py-1.5 rounded-lg text-sm font-medium">
-                                                                <span>{item.label}</span>
-                                                                <button
-                                                                    type="button"
-                                                                    onClick={() => {
+                                        <div className="relative dropdown-container">
+                                            {/* Dropdown Button */}
+                                            <button
+                                                type="button"
+                                                onClick={() => {
+                                                    const dropdown = document.getElementById(`dropdown-${option.id}`);
+                                                    if (dropdown) {
+                                                        dropdown.classList.toggle('hidden');
+                                                    }
+                                                }}
+                                                className="w-full bg-[#1c1c1c] border border-[#2a1a1c] rounded-lg p-4 flex items-center justify-between text-gray-300 hover:border-primary/50 transition-colors"
+                                            >
+                                                <span className="font-medium">
+                                                    {(selectedOptions[option.id] || []).length > 0 
+                                                        ? `${(selectedOptions[option.id] || []).length} ${option.label.toLowerCase()} selected`
+                                                        : `Choose ${option.label.toLowerCase()}...`}
+                                                </span>
+                                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                                </svg>
+                                            </button>
+
+                                            {/* Dropdown Menu */}
+                                            <div
+                                                id={`dropdown-${option.id}`}
+                                                className="hidden absolute z-10 w-full mt-2 bg-[#1c1c1c] border border-[#2a1a1c] rounded-lg shadow-2xl max-h-64 overflow-y-auto"
+                                            >
+                                                <div className="p-2">
+                                                    {option.values.sort((a, b) => a.order - b.order).map((value) => (
+                                                        <label
+                                                            key={value.id}
+                                                            className="flex items-center justify-between p-3 rounded-lg hover:bg-[#252525] cursor-pointer transition-colors"
+                                                        >
+                                                            <div className="flex items-center gap-3">
+                                                                <input
+                                                                    type="checkbox"
+                                                                    value={value.value}
+                                                                    checked={(selectedOptions[option.id] || []).includes(value.value)}
+                                                                    onChange={(e) => {
                                                                         const current = selectedOptions[option.id] || [];
                                                                         setSelectedOptions({
                                                                             ...selectedOptions,
-                                                                            [option.id]: current.filter((v: string) => v !== selectedValue)
+                                                                            [option.id]: e.target.checked
+                                                                                ? [...current, value.value]
+                                                                                : current.filter((v: string) => v !== value.value)
                                                                         });
                                                                     }}
-                                                                    className="hover:text-white transition-colors"
-                                                                >
-                                                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                                                                    </svg>
-                                                                </button>
+                                                                    className="w-5 h-5 rounded border-[#2a1a1c] bg-[#141414] text-primary focus:ring-primary focus:ring-offset-0"
+                                                                />
+                                                                <span className="text-sm text-gray-300 font-medium">{value.label}</span>
                                                             </div>
-                                                        ) : null;
-                                                    })}
-                                                </div>
-
-                                                {/* Dropdown Button */}
-                                                <button
-                                                    type="button"
-                                                    onClick={() => {
-                                                        const dropdown = document.getElementById(`dropdown-${option.id}`);
-                                                        if (dropdown) {
-                                                            dropdown.classList.toggle('hidden');
-                                                        }
-                                                    }}
-                                                    className="w-full bg-[#1c1c1c] border border-[#2a1a1c] rounded-lg p-4 flex items-center justify-between text-gray-300 hover:border-primary/50 transition-colors"
-                                                >
-                                                    <div className="flex items-center gap-3">
-                                                        <svg className="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                                                        </svg>
-                                                        <span className="font-medium">
-                                                            {(selectedOptions[option.id] || []).length > 0 
-                                                                ? `${(selectedOptions[option.id] || []).length} ${option.label.toLowerCase()} selected`
-                                                                : `Choose ${service.name} ${option.label.toLowerCase()}...`}
-                                                        </span>
-                                                    </div>
-                                                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                                                    </svg>
-                                                </button>
-
-                                                {/* Dropdown Menu */}
-                                                <div
-                                                    id={`dropdown-${option.id}`}
-                                                    className="hidden absolute z-10 w-full mt-2 bg-[#1c1c1c] border border-[#2a1a1c] rounded-lg shadow-2xl max-h-64 overflow-y-auto"
-                                                >
-                                                    <div className="p-2">
-                                                        {option.values.sort((a, b) => a.order - b.order).map((value) => (
-                                                            <label
-                                                                key={value.id}
-                                                                className="flex items-center justify-between p-3 rounded-lg hover:bg-[#252525] cursor-pointer transition-colors"
-                                                            >
-                                                                <div className="flex items-center gap-3">
-                                                                    <input
-                                                                        type="checkbox"
-                                                                        value={value.value}
-                                                                        checked={(selectedOptions[option.id] || []).includes(value.value)}
-                                                                        onChange={(e) => {
-                                                                            const current = selectedOptions[option.id] || [];
-                                                                            setSelectedOptions({
-                                                                                ...selectedOptions,
-                                                                                [option.id]: e.target.checked
-                                                                                    ? [...current, value.value]
-                                                                                    : current.filter((v: string) => v !== value.value)
-                                                                            });
-                                                                        }}
-                                                                        className="w-5 h-5 rounded border-[#2a1a1c] bg-[#141414] text-primary focus:ring-primary focus:ring-offset-0"
-                                                                    />
-                                                                    <span className="text-sm text-gray-300 font-medium">{value.label}</span>
-                                                                </div>
-                                                                {value.priceModifier > 0 && (
-                                                                    <span className="text-sm font-bold text-primary">+${value.priceModifier}</span>
-                                                                )}
-                                                            </label>
-                                                        ))}
-                                                    </div>
+                                                            {value.priceModifier > 0 && (
+                                                                <span className="text-sm font-bold text-primary">+${Number(value.priceModifier).toFixed(2)}</span>
+                                                            )}
+                                                        </label>
+                                                    ))}
                                                 </div>
                                             </div>
                                         </div>
@@ -619,9 +787,6 @@ export default function ServiceDetailsPage() {
                                                                 ? 'Our pro logs into your account to complete the service. Requires account details.'
                                                                 : 'You play on your own account. Our booster will trade materials to you in-raid.'}
                                                         </p>
-                                                        {method.toLowerCase().includes('self-play') && (
-                                                            <span className="inline-block mt-2 text-[10px] font-bold text-primary bg-primary/10 px-1.5 py-0.5 rounded border border-primary/20 uppercase">+30% Price</span>
-                                                        )}
                                                     </div>
                                                 </div>
                                             </label>
@@ -807,22 +972,34 @@ export default function ServiceDetailsPage() {
                                         <input
                                             type="text"
                                             value={promoCode}
-                                            onChange={(e) => setPromoCode(e.target.value.toUpperCase())}
+                                            onChange={(e) => {
+                                                setPromoCode(e.target.value.toUpperCase());
+                                                setPromoCodeError("");
+                                                setPromoCodeData(null);
+                                            }}
                                             placeholder="Enter code"
                                             className="flex-1 bg-[#1c1c1c] border border-[#2a1a1c] rounded-lg px-3 py-2 text-white text-sm placeholder-gray-500 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary transition-colors"
                                         />
                                         <button
                                             type="button"
-                                            onClick={() => {
-                                                if (promoCode) {
-                                                    alert('Promo code validation coming soon!');
-                                                }
-                                            }}
-                                            className="px-4 py-2 bg-primary hover:bg-primary-dark text-white text-sm font-bold uppercase rounded-lg transition-colors"
+                                            onClick={validatePromoCode}
+                                            disabled={!promoCode.trim() || isValidatingPromo}
+                                            className="px-4 py-2 bg-primary hover:bg-primary-dark text-white text-sm font-bold uppercase rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                                         >
-                                            Apply
+                                            {isValidatingPromo ? 'Checking...' : 'Apply'}
                                         </button>
                                     </div>
+                                    {promoCodeError && (
+                                        <p className="text-red-500 text-xs mt-2">{promoCodeError}</p>
+                                    )}
+                                    {promoCodeData && (
+                                        <p className="text-green-500 text-xs mt-2">
+                                            ✓ {promoCodeData.name} applied! 
+                                            {promoCodeData.discountType === 'percentage' 
+                                                ? ` ${promoCodeData.discount}% off` 
+                                                : ` $${promoCodeData.discount} off`}
+                                        </p>
+                                    )}
                                 </div>
 
                                 <div className="space-y-4 mb-6 border-b border-[#2a1a1c] pb-6">
@@ -861,7 +1038,10 @@ export default function ServiceDetailsPage() {
                                     <span className="text-gray-400 text-sm font-medium">Total Price</span>
                                     <span className="text-3xl font-bold text-white">${calculateTotalPrice()}</span>
                                 </div>
-                                <button className="w-full py-4 bg-primary hover:bg-primary-dark text-white font-bold uppercase tracking-widest rounded-lg flex items-center justify-center gap-2 group transition-all shadow-lg shadow-primary/20 hover:shadow-primary/40">
+                                <button 
+                                    onClick={handleOrderClick}
+                                    className="w-full py-4 bg-primary hover:bg-primary-dark text-white font-bold uppercase tracking-widest rounded-lg flex items-center justify-center gap-2 group transition-all shadow-lg shadow-primary/20 hover:shadow-primary/40"
+                                >
                                     Order Now
                                     <ArrowRight className="size-5 group-hover:translate-x-1 transition-transform" />
                                 </button>
@@ -901,6 +1081,100 @@ export default function ServiceDetailsPage() {
                     </div>
                 </div>
             </main>
+            
+            {/* Payment Method Modal */}
+            {showPaymentModal && (
+                <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+                    <div className="bg-[#141414] border border-[#1c1c1c] rounded-2xl p-8 max-w-md w-full shadow-2xl relative">
+                        {/* Close button */}
+                        <button
+                            onClick={() => {
+                                setShowPaymentModal(false);
+                                setSelectedPaymentMethod(null);
+                            }}
+                            className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors"
+                        >
+                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+
+                        <h2 className="text-2xl font-bold text-white uppercase tracking-tight mb-2">Choose Payment Method</h2>
+                        <p className="text-sm text-gray-400 mb-6">Select your preferred payment method to complete your order</p>
+
+                        {/* Payment Methods */}
+                        <div className="space-y-3 mb-6">
+                            {/* PayPal */}
+                            <label className="cursor-pointer block">
+                                <input
+                                    type="radio"
+                                    name="paymentMethod"
+                                    value="paypal"
+                                    checked={selectedPaymentMethod === 'paypal'}
+                                    onChange={(e) => setSelectedPaymentMethod(e.target.value)}
+                                    className="peer sr-only"
+                                />
+                                <div className="flex items-center gap-4 p-4 rounded-xl border-2 border-[#2a1a1c] bg-[#1c1c1c] hover:border-primary/50 transition-all peer-checked:border-primary peer-checked:bg-primary/10">
+                                    <div className="size-12 rounded-lg bg-[#0070ba] flex items-center justify-center">
+                                        <svg className="w-8 h-8" viewBox="0 0 24 24" fill="white">
+                                            <path d="M20.067 8.478c.492.88.556 2.014.3 3.327-.74 3.806-3.276 5.12-6.514 5.12h-.5a.805.805 0 00-.794.68l-.04.22-.63 3.993-.028.15a.805.805 0 01-.794.68H7.72a.483.483 0 01-.477-.558L8.926 13.7a.805.805 0 01.794-.68h2.344c4.323 0 7.255-2.203 8.003-6.542z"/>
+                                            <path d="M6.124 3.65A.805.805 0 016.916 3h6.553c1.587 0 2.726.33 3.49 1.053.732.692 1.131 1.728 1.218 3.13-1.084 4.83-4.504 7.29-9.616 7.29H6.916a.805.805 0 00-.794.68l-.952 6.035a.483.483 0 01-.477.558H2.175a.483.483 0 01-.477-.558z" opacity=".7"/>
+                                        </svg>
+                                    </div>
+                                    <div className="flex-1">
+                                        <h3 className="font-bold text-white">PayPal</h3>
+                                        <p className="text-xs text-gray-400">Fast and secure payment</p>
+                                    </div>
+                                    <div className="size-5 rounded-full border-2 border-gray-600 flex items-center justify-center peer-checked:border-primary">
+                                        <div className="size-2.5 bg-primary rounded-full opacity-0 peer-checked:opacity-100"></div>
+                                    </div>
+                                </div>
+                            </label>
+
+                            {/* Crypto */}
+                            <label className="cursor-pointer block">
+                                <input
+                                    type="radio"
+                                    name="paymentMethod"
+                                    value="crypto"
+                                    checked={selectedPaymentMethod === 'crypto'}
+                                    onChange={(e) => setSelectedPaymentMethod(e.target.value)}
+                                    className="peer sr-only"
+                                />
+                                <div className="flex items-center gap-4 p-4 rounded-xl border-2 border-[#2a1a1c] bg-[#1c1c1c] hover:border-primary/50 transition-all peer-checked:border-primary peer-checked:bg-primary/10">
+                                    <div className="size-12 rounded-lg bg-gradient-to-br from-orange-500 to-yellow-500 flex items-center justify-center">
+                                        <svg className="w-8 h-8" viewBox="0 0 24 24" fill="white">
+                                            <path d="M23.638 14.904c-1.602 6.43-8.113 10.34-14.542 8.736C2.67 22.05-1.244 15.525.362 9.105 1.962 2.67 8.475-1.243 14.9.358c6.43 1.605 10.342 8.115 8.738 14.548v-.002zm-6.35-4.613c.24-1.59-.974-2.45-2.64-3.03l.54-2.153-1.315-.33-.525 2.107c-.345-.087-.705-.167-1.064-.25l.526-2.127-1.32-.33-.54 2.165c-.285-.067-.565-.132-.84-.2l-1.815-.45-.35 1.407s.975.225.955.236c.535.136.63.486.615.766l-1.477 5.92c-.075.166-.24.406-.614.314.015.02-.96-.24-.96-.24l-.66 1.51 1.71.426.93.242-.54 2.19 1.32.327.54-2.17c.36.1.705.19 1.05.273l-.51 2.154 1.32.33.545-2.19c2.24.427 3.93.257 4.64-1.774.57-1.637-.03-2.58-1.217-3.196.854-.193 1.5-.76 1.68-1.93h.01zm-3.01 4.22c-.404 1.64-3.157.75-4.05.53l.72-2.9c.896.23 3.757.67 3.33 2.37zm.41-4.24c-.37 1.49-2.662.735-3.405.55l.654-2.64c.744.18 3.137.524 2.75 2.084v.006z"/>
+                                        </svg>
+                                    </div>
+                                    <div className="flex-1">
+                                        <h3 className="font-bold text-white">Cryptocurrency</h3>
+                                        <p className="text-xs text-gray-400">Bitcoin, Ethereum & more</p>
+                                    </div>
+                                    <div className="size-5 rounded-full border-2 border-gray-600 flex items-center justify-center peer-checked:border-primary">
+                                        <div className="size-2.5 bg-primary rounded-full opacity-0 peer-checked:opacity-100"></div>
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
+
+                        {/* Buy Button */}
+                        <button
+                            onClick={handlePurchase}
+                            disabled={!selectedPaymentMethod}
+                            className="w-full py-4 bg-primary hover:bg-primary-dark text-white font-bold uppercase tracking-widest rounded-lg flex items-center justify-center gap-2 transition-all shadow-lg shadow-primary/20 hover:shadow-primary/40 disabled:opacity-50 disabled:cursor-not-allowed mb-4"
+                        >
+                            Buy Now - ${calculateTotalPrice()}
+                        </button>
+
+                        {/* Security Notice */}
+                        <div className="flex items-center justify-center gap-2 pt-4 border-t border-[#2a1a1c]">
+                            <Lock className="size-4 text-gray-400" />
+                            <span className="text-xs text-gray-400">We protect your privacy with advanced encryption</span>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

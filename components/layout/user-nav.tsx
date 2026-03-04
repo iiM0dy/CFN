@@ -48,12 +48,13 @@ export function UserNav() {
                     </div>
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={() => signOut()}>
-                    Log out
-                    <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
                 <DropdownMenuGroup>
+                    <DropdownMenuItem asChild>
+                        <a href="/orders">
+                            My Orders
+                            <DropdownMenuShortcut>⌘O</DropdownMenuShortcut>
+                        </a>
+                    </DropdownMenuItem>
                     <DropdownMenuItem>
                         Profile
                         <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
@@ -70,6 +71,11 @@ export function UserNav() {
                         </DropdownMenuItem>
                     )}
                 </DropdownMenuGroup>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={() => signOut()}>
+                    Log out
+                    <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
+                </DropdownMenuItem>
             </DropdownMenuContent>
         </DropdownMenu>
     )

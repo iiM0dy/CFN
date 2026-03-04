@@ -59,7 +59,7 @@ export default function FAQPage() {
                         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-7xl opacity-20 bg-[radial-gradient(circle_at_center,rgba(175,18,37,0.4)_0%,transparent_70%)]" />
                         <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:32px_32px] [mask-image:radial-gradient(ellipse_at_center,black_50%,transparent_100%)]" />
                     </div>
-                    <div className="relative z-10 container mx-auto px-4 py-16 md:py-24 flex flex-col items-center text-center">
+                    <div className="relative z-10 container mx-auto px-6 py-16 md:py-24 flex flex-col items-center text-center">
                         <span className="mb-4 inline-flex items-center rounded-full border border-[#533c3f] bg-[#261c1d] px-3 py-1 text-xs font-medium text-primary">
                             <span className="mr-1.5 h-1.5 w-1.5 rounded-full bg-primary animate-pulse" />
                             Support Center
@@ -79,7 +79,7 @@ export default function FAQPage() {
                     </div>
                 </div>
 
-                <div className="container mx-auto px-4 py-12 md:py-16 max-w-6xl">
+                <div className="container mx-auto px-6 py-12 md:py-16 max-w-7xl">
                     {/* Category Grid */}
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-16">
                         {categories.map((c) => (
@@ -135,7 +135,7 @@ export default function FAQPage() {
                 </div>
             </main>
 
-            <footer className="border-t border-[#533c3f] bg-[#181112] py-12 px-4 md:px-10">
+            <footer className="border-t border-[#533c3f] bg-[#181112] py-12 px-6">
                 <div className="container mx-auto flex flex-col md:flex-row justify-between items-start gap-8">
                     <div className="flex flex-col gap-4 max-w-sm">
                         <div className="flex items-center gap-2 text-white">

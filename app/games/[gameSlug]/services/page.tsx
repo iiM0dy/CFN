@@ -1,6 +1,5 @@
 import { prisma } from "@/lib/prisma"
 import Link from "next/link"
-import Image from "next/image"
 import { notFound } from "next/navigation"
 import { Search, Filter, CheckCircle2, ArrowRight, Shield, Clock, CheckCircle, ThumbsUp, ChevronRight } from "lucide-react"
 
@@ -58,7 +57,7 @@ export default async function GameServicesPage({ params }: { params: Promise<{ g
 
     return (
         <div className="bg-[#0B0B0B] text-white min-h-screen flex flex-col font-[family-name:var(--font-space-grotesk)] overflow-x-hidden">
-            <main className="flex-grow w-full px-4 py-8 md:px-10 lg:px-20 max-w-7xl mx-auto">
+            <main className="flex-grow w-full px-6 py-8 max-w-7xl mx-auto">
                 {/* Breadcrumbs */}
                 <div className="flex items-center gap-2 text-sm text-gray-500 mb-8 font-[family-name:var(--font-noto-sans)]">
                     <Link href="/" className="hover:text-primary transition-colors">Home</Link>
@@ -101,24 +100,22 @@ export default async function GameServicesPage({ params }: { params: Promise<{ g
                             href={`/services/${service.id}`}
                             className="group relative bg-[#141414] border border-[#1c1c1c] rounded-2xl overflow-hidden transition-all duration-300 hover:border-primary hover:-translate-y-1 hover:shadow-[0_10px_40px_-10px_rgba(175,18,37,0.3)] flex flex-col"
                         >
-                            <div className="h-48 relative overflow-hidden bg-[#0F0F0F]">
+                            <div className="h-56 relative overflow-hidden bg-gradient-to-br from-[#1c1c1c] to-[#0F0F0F]">
                                 {service.image ? (
-                                    <Image
+                                    <img
                                         src={service.image}
                                         alt={service.name}
-                                        fill
-                                        className="object-cover opacity-60 group-hover:scale-105 transition-transform duration-700"
+                                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                                     />
                                 ) : (
-                                    <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-transparent opacity-60 group-hover:scale-105 transition-transform duration-700" />
+                                    <div className="absolute inset-0 bg-gradient-to-br from-primary/30 via-primary/10 to-transparent" />
                                 )}
-                                <div className="absolute inset-0 bg-gradient-to-t from-[#141414] via-[#141414]/90 to-[#141414]/40"></div>
-                                <div className="absolute top-4 right-4 bg-primary text-white text-xs font-bold px-2.5 py-1 rounded shadow-lg shadow-primary/20">
-                                    NEW
+                                <div className="absolute top-4 right-4 bg-primary text-white text-xs font-bold px-3 py-1.5 rounded-lg shadow-lg shadow-primary/30 backdrop-blur-sm border border-primary/20">
+                                    HOT
                                 </div>
                             </div>
 
-                            <div className="p-6 flex flex-col flex-grow -mt-12 relative z-10">
+                            <div className="p-6 flex flex-col flex-grow relative z-10">
                                 <h3 className="text-xl font-bold text-white uppercase tracking-wide mb-3 group-hover:text-primary transition-colors">{service.name}</h3>
                                 <ul className="text-gray-400 text-sm font-[family-name:var(--font-noto-sans)] space-y-2 mb-6 flex-grow">
                                     <li className="flex items-start gap-2">

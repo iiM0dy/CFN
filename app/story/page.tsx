@@ -30,7 +30,7 @@ export default function StoryPage() {
 
                 {/* Stats Bar */}
                 <div className="w-full border-y border-[#38292b] bg-[#181112]">
-                    <div className="mx-auto max-w-7xl px-4 py-8">
+                    <div className="mx-auto max-w-7xl px-6 py-8">
                         <div className="grid grid-cols-2 gap-8 md:grid-cols-4 md:gap-12">
                             {[
                                 { value: "50k+", label: "Total Orders" },
@@ -48,7 +48,7 @@ export default function StoryPage() {
                 </div>
 
                 {/* Mission & Values */}
-                <section className="py-24 px-4 bg-[#211113]">
+                <section className="py-24 px-6 bg-[#211113]">
                     <div className="mx-auto max-w-7xl">
                         <div className="mb-16 grid gap-12 lg:grid-cols-2 lg:items-center">
                             <div>
@@ -79,7 +79,7 @@ export default function StoryPage() {
                 </section>
 
                 {/* Team Section */}
-                <section className="border-t border-[#38292b] bg-[#181112] py-24 px-4">
+                <section className="border-t border-[#38292b] bg-[#181112] py-24 px-6">
                     <div className="mx-auto max-w-7xl">
                         <div className="mb-16 text-center">
                             <span className="mb-2 block text-sm font-bold uppercase tracking-widest text-primary">The Architects</span>
@@ -107,7 +107,7 @@ export default function StoryPage() {
                 </section>
 
                 {/* CTA Section */}
-                <section className="relative overflow-hidden py-20 px-4">
+                <section className="relative overflow-hidden py-20 px-6">
                     <div className="absolute inset-0 bg-primary/5" />
                     <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary to-transparent opacity-50" />
                     <div className="relative z-10 mx-auto max-w-4xl text-center">

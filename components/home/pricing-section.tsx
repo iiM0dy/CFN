@@ -30,7 +30,7 @@ export function PricingSection() {
 
     return (
         <section className="py-24 bg-[#0F0F0F]">
-            <div className="max-w-[1280px] mx-auto px-6">
+            <div className="max-w-7xl mx-auto px-6">
                 <div className="flex flex-col lg:flex-row gap-16 items-center">
                     {/* Left Content */}
                     <div className="lg:w-1/2">

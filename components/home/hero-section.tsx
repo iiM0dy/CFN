@@ -17,7 +17,7 @@ export function HeroSection() {
                 />
             </div>
 
-            <div className="relative z-20 container mx-auto px-6 text-center max-w-4xl mt-10">
+            <div className="relative z-20 container mx-auto px-6 text-center max-w-7xl mt-10">
                 {/* Badge */}
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-bold uppercase tracking-widest mb-6 animate-pulse">
                     <span className="w-2 h-2 rounded-full bg-primary" />

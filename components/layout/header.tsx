@@ -5,15 +5,17 @@ import { usePathname } from "next/navigation"
 import { AirwickLogo } from "@/components/layout/airwick-logo"
 import { CartSheet } from "@/components/cart/cart-sheet"
 import { UserNav } from "@/components/layout/user-nav"
+import { SearchModal } from "@/components/layout/search-modal"
 import { useState } from "react"
 
 export function Header() {
     const pathname = usePathname()
     const [mobileOpen, setMobileOpen] = useState(false)
+    const [searchOpen, setSearchOpen] = useState(false)
 
     return (
         <nav className="sticky top-0 z-50 border-b border-[#2A2A2A] bg-[#0B0B0B]/90 backdrop-blur-md">
-            <div className="max-w-[1280px] mx-auto px-6 h-20 flex items-center justify-between">
+            <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
                 {/* Left: Logo + Nav */}
                 <div className="flex items-center gap-10">
                     <Link href="/" className="flex items-center gap-3 group">
@@ -45,7 +47,10 @@ export function Header() {
                 {/* Right: Search + Auth + Cart */}
                 <div className="flex items-center gap-4">
                     {/* Search Button */}
-                    <button className="hidden lg:flex items-center justify-center size-10 rounded-full bg-[#1A1A1A] hover:bg-[#252525] text-gray-400 transition-colors">
+                    <button 
+                        onClick={() => setSearchOpen(true)}
+                        className="hidden lg:flex items-center justify-center size-10 rounded-full bg-[#1A1A1A] hover:bg-[#252525] text-gray-400 hover:text-white transition-colors"
+                    >
                         <svg className="size-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
                     </button>
 
@@ -80,6 +85,9 @@ export function Header() {
                     </div>
                 </div>
             )}
+
+            {/* Search Modal */}
+            <SearchModal isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
         </nav>
     )
 }

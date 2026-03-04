@@ -14,7 +14,7 @@ export async function PopularGames() {
             {/* Top gradient line */}
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
 
-            <div className="max-w-[1440px] mx-auto px-6">
+            <div className="max-w-7xl mx-auto px-6">
                 <div className="flex justify-between items-end mb-12">
                     <div>
                         <h2 className="text-3xl md:text-5xl font-bold text-white mb-2 italic tracking-tighter">POPULAR GAMES</h2>

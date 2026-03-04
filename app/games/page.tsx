@@ -17,7 +17,7 @@ export default async function GamesPage() {
 
     return (
         <div className="bg-[#0B0B0B] text-white min-h-screen flex flex-col font-[family-name:var(--font-space-grotesk)] overflow-x-hidden">
-            <main className="flex-grow flex flex-col items-center w-full px-4 py-8 md:px-10 lg:px-20">
+            <main className="flex-grow flex flex-col items-center w-full px-6 py-8">
                 {/* Hero Section */}
                 <section className="w-full max-w-7xl flex flex-col gap-6 items-center text-center py-12 md:py-20 relative">
                     <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary/20 via-[#0B0B0B] to-[#0B0B0B] opacity-70" />

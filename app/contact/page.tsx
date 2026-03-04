@@ -6,10 +6,10 @@ export default function ContactPage() {
     return (
         <div className="bg-[#211113] text-white min-h-screen flex flex-col font-[family-name:var(--font-space-grotesk)]">
             
-            <main className="flex-1 flex flex-col items-center w-full px-4 py-8 lg:py-12">
-                <div className="w-full max-w-[1200px] flex flex-col gap-10">
+            <main className="flex-1 flex flex-col items-center w-full px-6 py-8 lg:py-12">
+                <div className="w-full max-w-7xl flex flex-col gap-10">
                     {/* Hero Section */}
-                    <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between px-4">
+                    <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
                         <div className="flex flex-col gap-3 max-w-2xl">
                             <h1 className="text-white text-5xl lg:text-6xl font-bold leading-[0.95] tracking-tight">
                                 Need backup? <br /><span className="text-primary">We&apos;re here.</span>
@@ -45,7 +45,7 @@ export default function ContactPage() {
                     </div>
 
                     {/* Main Split Layout */}
-                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 px-4 mt-6">
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mt-6">
                         {/* Left: Contact Form */}
                         <div className="lg:col-span-7 flex flex-col gap-6">
                             <div className="p-8 rounded-2xl bg-[#2d1b1e]/50 border border-white/5 backdrop-blur-sm">
