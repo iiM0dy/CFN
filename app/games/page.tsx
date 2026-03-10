@@ -43,7 +43,7 @@ export default async function GamesPage() {
                     <div className="flex flex-col gap-4 max-w-sm">
                         <div className="flex items-center gap-2 text-white">
                             <span className="text-primary text-2xl font-black italic">AW</span>
-                            <h2 className="text-lg font-black uppercase italic tracking-tighter">Airwick</h2>
+                            <h2 className="text-lg font-black uppercase italic tracking-tighter">CFNboost</h2>
                         </div>
                         <p className="text-gray-400 text-sm leading-relaxed">The premier marketplace for competitive gaming services. Connect with elite players and elevate your rank today.</p>
                     </div>
@@ -71,7 +71,7 @@ export default async function GamesPage() {
                     </div>
                 </div>
                 <div className="max-w-7xl mx-auto mt-12 pt-8 border-t border-[#1A1A1A] flex flex-col md:flex-row justify-between items-center gap-4">
-                    <p className="text-gray-500 text-xs">© 2024 Airwick. All rights reserved.</p>
+                    <p className="text-gray-500 text-xs">© 2024 CFNboost. All rights reserved.</p>
                     <div className="flex items-center gap-2">
                         <span className="w-2 h-2 rounded-full bg-emerald-500" />
                         <span className="text-gray-400 text-xs">All Systems Operational</span>

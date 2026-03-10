@@ -58,7 +58,7 @@ export default function CheckoutPage() {
                             </div>
                         </div>
                         <div className="hidden lg:block px-4">
-                            <h4 className="text-sm font-bold text-white mb-3">Why choose Airwick?</h4>
+                            <h4 className="text-sm font-bold text-white mb-3">Why choose CFNboost?</h4>
                             <ul className="space-y-2 text-sm text-[#b89da1]">
                                 <li className="flex gap-2"><span className="text-primary">✓</span> Top 500 Challengers only</li>
                                 <li className="flex gap-2"><span className="text-primary">✓</span> VPN Protection enabled</li>
@@ -180,7 +180,7 @@ export default function CheckoutPage() {
 
             <footer className="mt-auto border-t border-[#38292b] bg-[#261c1d] py-8 px-6 text-center">
                 <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
-                    <p className="text-[#b89da1] text-sm">© 2024 Airwick Boosting. All rights reserved.</p>
+                    <p className="text-[#b89da1] text-sm">© 2024 CFNboost Boosting. All rights reserved.</p>
                     <div className="flex gap-6 text-sm font-medium">
                         <a className="text-[#b89da1] hover:text-white transition-colors" href="#">Terms of Service</a>
                         <a className="text-[#b89da1] hover:text-white transition-colors" href="#">Privacy Policy</a>

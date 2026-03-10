@@ -153,7 +153,7 @@ export default function ContactPage() {
                                         </div>
                                         <div className="flex flex-col gap-1">
                                             <div className="bg-[#38292b] p-3 rounded-2xl rounded-tl-none border border-[#4a2b2f] text-sm text-gray-200">
-                                                <p>Welcome to Airwick support! 👋 I&apos;m here to help you get that rank you deserve. What can I do for you today?</p>
+                                                <p>Welcome to CFNboost support! 👋 I&apos;m here to help you get that rank you deserve. What can I do for you today?</p>
                                             </div>
                                             <span className="text-[10px] text-gray-500 ml-1">2:31 PM</span>
                                         </div>
@@ -222,7 +222,7 @@ export default function ContactPage() {
             <footer className="border-t border-white/10 bg-[#211113] py-8 px-6 mt-12">
                 <div className="max-w-[1200px] mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
                     <div className="flex items-center gap-2 text-gray-500 text-sm">
-                        <span>© 2024 Airwick. All rights reserved.</span>
+                        <span>© 2024 CFNboost. All rights reserved.</span>
                     </div>
                     <div className="flex gap-6">
                         <a className="text-gray-500 hover:text-white transition-colors text-sm" href="#">Privacy Policy</a>

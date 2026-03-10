@@ -254,7 +254,7 @@ export default function ServicesPage() {
                         <div>
                             <div className="flex items-center gap-2 text-white mb-6">
                                 <span className="text-primary text-3xl">🎮</span>
-                                <h2 className="text-xl font-bold uppercase">Airwick</h2>
+                                <h2 className="text-xl font-bold uppercase">CFNboost</h2>
                             </div>
                             <p className="text-gray-500 text-sm mb-6">The world&apos;s most trusted competitive gaming marketplace. Join thousands of players achieving their dream rank today.</p>
                         </div>
@@ -287,7 +287,7 @@ export default function ServicesPage() {
                         </div>
                     </div>
                     <div className="border-t border-[#38292b] pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-                        <p className="text-gray-600 text-xs text-center md:text-left">© 2023 Airwick. All rights reserved. Valorant is a trademark of Riot Games, Inc. Airwick is not endorsed by or affiliated with Riot Games.</p>
+                        <p className="text-gray-600 text-xs text-center md:text-left">© 2023 CFNboost. All rights reserved. Valorant is a trademark of Riot Games, Inc. CFNboost is not endorsed by or affiliated with Riot Games.</p>
                         <div className="flex gap-6 text-gray-600 text-xs">
                             <a className="hover:text-gray-400" href="#">Privacy Policy</a>
                             <a className="hover:text-gray-400" href="#">Cookie Policy</a>
