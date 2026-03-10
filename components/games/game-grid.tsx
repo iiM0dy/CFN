@@ -10,6 +10,7 @@ interface GameService {
   bgImage: string
   charImage: string | null
   href: string
+  isActive: boolean
 }
 
 interface GameGridProps {
@@ -67,25 +68,48 @@ export function GameGrid({ initialGames, categories }: GameGridProps) {
 
       {/* Games Grid */}
       <section className="w-full max-w-7xl grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 pb-20">
-        {filteredGames.map((game) => (
-          <Link
-            key={game.id}
-            href={game.href}
-            className="group relative h-96 rounded-2xl overflow-hidden border border-white/5 bg-[#1A1A1A] block transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_-15px_rgba(175,18,37,0.4)] hover:border-primary/50"
-          >
+        {filteredGames.map((game) => {
+          const handleClick = (e: React.MouseEvent) => {
+            if (!game.isActive) {
+              e.preventDefault()
+            }
+          }
+
+          return (
+            <Link
+              key={game.id}
+              href={game.isActive ? game.href : '#'}
+              onClick={handleClick}
+              className={`group relative h-96 rounded-2xl overflow-hidden border border-white/5 bg-[#1A1A1A] block transition-all duration-500 ${
+                game.isActive 
+                  ? 'hover:-translate-y-2 hover:shadow-[0_20px_40px_-15px_rgba(175,18,37,0.4)] hover:border-primary/50 cursor-pointer' 
+                  : 'cursor-not-allowed opacity-75'
+              }`}
+            >
+            {/* Coming Soon Badge */}
+            {!game.isActive && (
+              <div className="absolute top-4 right-4 z-30 px-3 py-1 bg-primary/90 backdrop-blur-sm rounded-full text-white text-xs font-bold uppercase tracking-wider">
+                Coming Soon
+              </div>
+            )}
+
             {/* Background Image */}
             <div className="absolute inset-0">
               <img
                 src={game.bgImage}
                 alt={game.name}
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                className={`w-full h-full object-cover transition-transform duration-700 ${
+                  game.isActive ? 'group-hover:scale-105' : 'grayscale'
+                }`}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-90" />
             </div>
 
             {/* Character Image */}
             {game.charImage && (
-              <div className="absolute inset-0 z-10 pointer-events-none transition-transform duration-700 ease-out group-hover:scale-110 origin-bottom-right">
+              <div className={`absolute inset-0 z-10 pointer-events-none transition-transform duration-700 ease-out origin-bottom-right ${
+                game.isActive ? 'group-hover:scale-110' : 'grayscale'
+              }`}>
                 <img
                   src={game.charImage}
                   alt={`${game.name} Character`}
@@ -102,25 +126,31 @@ export function GameGrid({ initialGames, categories }: GameGridProps) {
               <p className="text-sm text-gray-400 mb-4 line-clamp-1 group-hover:text-gray-200 transition-colors">
                 {game.description}
               </p>
-              <div className="flex items-center text-primary text-xs font-black uppercase tracking-widest opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300">
-                View Services
-                <svg
-                  className="size-4 ml-1"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={3}
-                    d="M9 5l7 7-7 7"
-                  />
-                </svg>
-              </div>
+              {game.isActive ? (
+                <div className="flex items-center text-primary text-xs font-black uppercase tracking-widest opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300">
+                  View Services
+                  <svg
+                    className="size-4 ml-1"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={3}
+                      d="M9 5l7 7-7 7"
+                    />
+                  </svg>
+                </div>
+              ) : (
+                <div className="text-gray-500 text-sm font-medium">
+                  Available Soon
+                </div>
+              )}
             </div>
           </Link>
-        ))}
+        )})}
 
         {/* Request Game Card */}
         <div className="h-96 rounded-2xl border border-dashed border-[#2A2A2A] bg-[#0B0B0B]/50 flex flex-col items-center justify-center text-center p-6 gap-4 hover:bg-[#0B0B0B] transition-all duration-300 cursor-pointer group hover:border-primary/50">

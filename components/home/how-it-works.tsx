@@ -2,11 +2,11 @@
 
 export function HowItWorks() {
     return (
-        <section className="py-24 bg-[#0B0B0B]">
+        <section className="py-20 bg-[#0B0B0B]">
             <div className="max-w-7xl mx-auto px-6">
                 <div className="text-center mb-16">
-                    <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">HOW IT WORKS</h2>
-                    <div className="w-20 h-1 bg-primary mx-auto" />
+                    <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">How It Works</h2>
+                    <p className="text-gray-400 text-lg">Get started in three simple steps</p>
                 </div>
 
                 <div className="relative grid grid-cols-1 md:grid-cols-3 gap-12">

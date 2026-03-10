@@ -3,9 +3,9 @@ import Link from "next/link"
 import { GameGrid } from "@/components/games/game-grid"
 
 export default async function GamesPage() {
-    // Use raw query to avoid issues with missing models/fields in Prisma client types
+    // Use raw query to get ALL games (both active and inactive)
     const games = await prisma.$queryRaw<any[]>`
-        SELECT * FROM "GameService" WHERE "isActive" = true ORDER BY name ASC
+        SELECT * FROM "GameService" ORDER BY name ASC
     `
 
     // Extract unique categories from the database games
