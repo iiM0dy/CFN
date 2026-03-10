@@ -16,14 +16,17 @@ export function Header() {
 
     return (
         <nav className="sticky top-0 z-50 border-b border-[#2A2A2A] bg-[#0B0B0B]/90 backdrop-blur-md">
-            <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <div className="max-w-[1440px] mx-auto px-6 lg:px-10 h-20 flex items-center justify-between">
                 {/* Left: Logo + Site name */}
                 <div className="flex items-center gap-10">
                     <Link href="/" className="flex items-center gap-3 group">
                         <div className="text-primary group-hover:text-white transition-colors duration-300">
                             <AirwickLogo className="size-8" />
                         </div>
-                        <span className="text-xl font-bold tracking-tight uppercase">CFNboost</span>
+                        <span className="text-xl font-black tracking-tight uppercase font-[family-name:var(--font-space-grotesk)]">
+                            <span className="text-primary">CFN</span>
+                            <span className="text-white">BOOST</span>
+                        </span>
                     </Link>
                 </div>
 

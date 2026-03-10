@@ -10,7 +10,7 @@ export default function DashboardPage() {
                 <div className="flex h-20 items-center gap-3 px-6 border-b border-[#38292b]">
                     <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-white text-xl">🎮</div>
                     <div className="flex flex-col">
-                        <span className="text-lg font-bold leading-none tracking-tight">CFNboost</span>
+                        <span className="text-lg font-bold leading-none tracking-tight font-[family-name:var(--font-space-grotesk)]">CFNboost</span>
                         <span className="text-xs font-medium text-[#b89da1]">Elite Boosting</span>
                     </div>
                 </div>

@@ -222,7 +222,7 @@ export default function ContactPage() {
             <footer className="border-t border-white/10 bg-[#211113] py-8 px-6 mt-12">
                 <div className="max-w-[1200px] mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
                     <div className="flex items-center gap-2 text-gray-500 text-sm">
-                        <span>© 2024 CFNboost. All rights reserved.</span>
+                        <span className="font-[family-name:var(--font-space-grotesk)]">© 2024 CFNboost. All rights reserved.</span>
                     </div>
                     <div className="flex gap-6">
                         <a className="text-gray-500 hover:text-white transition-colors text-sm" href="#">Privacy Policy</a>

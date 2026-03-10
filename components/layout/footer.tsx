@@ -27,7 +27,7 @@ const footerLinks = {
 export function Footer() {
     return (
         <footer className="bg-[#050505] pt-20 pb-10 border-t border-[#1A1A1A]">
-            <div className="max-w-[1280px] mx-auto px-6">
+            <div className="max-w-[1440px] mx-auto px-6 lg:px-10">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
                     {/* Brand */}
                     <div>
@@ -35,7 +35,10 @@ export function Footer() {
                             <div className="text-primary">
                                 <AirwickLogo className="size-6" />
                             </div>
-                            <span className="text-lg font-bold uppercase tracking-tight text-white">Airwick</span>
+                            <span className="text-lg font-black tracking-tight font-[family-name:var(--font-space-grotesk)]">
+                                <span className="text-primary">CFN</span>
+                                <span className="text-white">BOOST</span>
+                            </span>
                         </Link>
                         <p className="text-gray-500 text-sm leading-relaxed mb-6">
                             The world&apos;s most advanced marketplace for competitive gaming services. Elevate your potential today.
@@ -91,7 +94,14 @@ export function Footer() {
                 </div>
 
                 <div className="pt-8 border-t border-[#1A1A1A] flex flex-col md:flex-row justify-between items-center gap-4">
-                    <p className="text-gray-600 text-xs">© 2024 Airwick. All rights reserved.</p>
+                    <p className="text-gray-600 text-xs">
+                        © 2024{" "}
+                        <span className="font-semibold tracking-wide font-[family-name:var(--font-space-grotesk)]">
+                            <span className="text-primary">CFN</span>
+                            <span className="text-white">BOOST</span>
+                        </span>
+                        . All rights reserved.
+                    </p>
                     <div className="flex gap-6 items-center">
                         <div className="h-6 w-10 bg-gray-800 rounded opacity-50" />
                         <div className="h-6 w-10 bg-gray-800 rounded opacity-50" />

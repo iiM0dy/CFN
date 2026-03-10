@@ -6,63 +6,97 @@ const heroImageUrl = "https://lh3.googleusercontent.com/aida-public/AB6AXuBRzeCj
 
 export function HeroSection() {
     return (
-        <header className="relative w-full min-h-[600px] flex items-center justify-center overflow-hidden bg-[#0B0B0B]">
-            {/* Background with Overlay */}
-            <div className="absolute inset-0 z-0">
-                <div className="absolute inset-0 bg-gradient-to-b from-[#0B0B0B]/60 via-[#0B0B0B]/80 to-[#0B0B0B] z-10" />
+        <header className="relative w-full min-h-[750px] flex items-center justify-center overflow-visible border-b border-white/5 bg-[#050505]">
+            {/* Layered Backgrounds */}
+            <div className="absolute inset-0 z-0 overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/60 to-transparent z-20" />
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(175,18,37,0.18)_0%,transparent_60%)] z-10" />
                 <div
-                    className="w-full h-full bg-cover bg-center bg-no-repeat opacity-40"
+                    className="absolute inset-0 opacity-40 mix-blend-overlay z-10 bg-[linear-gradient(0deg,rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:40px_40px]"
+                />
+                <div
+                    className="w-full h-full bg-cover bg-center bg-no-repeat transition-transform duration-[20s] scale-110 hover:scale-100"
                     style={{ backgroundImage: `url('${heroImageUrl}')` }}
                 />
             </div>
 
-            <div className="relative z-20 max-w-7xl mx-auto px-6 py-32 text-center">
+            <div className="relative z-30 max-w-[1440px] mx-auto px-6 lg:px-10 flex flex-col items-center text-center py-24">
                 {/* Main Heading */}
-                <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight">
-                    LEVEL UP<br />
-                    YOUR GAME
+                <h1 className="text-5xl md:text-7xl lg:text-[88px] font-black leading-[0.9] tracking-tighter text-white mb-6 italic drop-shadow-[0_0_30px_rgba(175,18,37,0.45)]">
+                    ASCEND
+                    <br />
+                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-white/80 to-white/40">
+                        BEYOND LIMITS
+                    </span>
                 </h1>
 
                 {/* Subtitle */}
-                <p className="text-lg md:text-xl text-gray-400 mb-10 max-w-2xl mx-auto">
-                    The premium marketplace for competitive rank boosting. Secure, anonymous, and elite service for top-tier gamers who demand perfection.
+                <p className="text-base md:text-lg text-gray-400 mb-10 max-w-2xl mx-auto font-medium leading-relaxed tracking-tight">
+                    The industry standard for professional competitive rank advancement. Secure, anonymous, and executed by the world&apos;s top 0.1% talent.
                 </p>
 
                 {/* CTAs */}
                 <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
                     <Link
                         href="/games"
-                        className="px-8 py-4 rounded-lg bg-primary hover:bg-primary-dark text-white font-bold text-base transition-all duration-200 flex items-center justify-center gap-2 group"
+                        className="group h-14 px-10 rounded-lg bg-primary hover:bg-primary-dark text-white font-black text-xs md:text-sm uppercase tracking-[0.25em] transition-all duration-300 shadow-[0_15px_30px_-5px_rgba(175,18,37,0.6)] hover:-translate-y-0.5 flex items-center gap-3"
                     >
-                        Start Boosting
-                        <svg className="size-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
+                        Explore Services
+                        <svg
+                            className="size-5 group-hover:translate-x-1 transition-transform"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0-5 5m5-5H6" />
+                        </svg>
                     </Link>
                     <Link
-                        href="/contact"
-                        className="px-8 py-4 rounded-lg bg-[#1A1A1A] hover:bg-[#252525] border border-[#2a2a2a] text-white font-bold text-base transition-all duration-200 flex items-center justify-center gap-2"
+                        href="/services/valorant"
+                        className="h-14 px-10 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-white font-black text-xs md:text-sm uppercase tracking-[0.25em] transition-all duration-300 backdrop-blur-md flex items-center justify-center"
                     >
-                        <svg className="size-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
-                        Jobs
+                        Become a PRO
                     </Link>
                 </div>
 
-                {/* Trust Indicators */}
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-8 pt-8 border-t border-[#2a2a2a]">
-                    <div className="text-center">
-                        <div className="text-3xl font-bold text-white mb-1">50k+</div>
-                        <div className="text-sm text-gray-500 uppercase tracking-wider">Orders Done</div>
-                    </div>
-                    <div className="text-center">
-                        <div className="text-3xl font-bold text-white mb-1">4.9/5</div>
-                        <div className="text-sm text-gray-500 uppercase tracking-wider">Trust Rating</div>
-                    </div>
-                    <div className="text-center">
-                        <div className="text-3xl font-bold text-white mb-1">200+</div>
-                        <div className="text-sm text-gray-500 uppercase tracking-wider">Active Boosters</div>
-                    </div>
-                    <div className="text-center">
-                        <div className="text-3xl font-bold text-white mb-1">24/7</div>
-                        <div className="text-sm text-gray-500 uppercase tracking-wider">Live Support</div>
+                {/* Dashboard-style Live Stats */}
+                <div className="w-full max-w-5xl translate-y-10">
+                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-px bg-white/5 border border-white/5 rounded-2xl overflow-hidden bg-[#050505]/80 backdrop-blur-xl">
+                        <div className="p-6 bg-[#050505]/80 hover:bg-white/[0.02] transition-colors group flex flex-col items-center text-center gap-2">
+                            <p className="text-[10px] font-bold text-gray-500 uppercase tracking-[0.3em] group-hover:text-primary transition-colors">
+                                Global Orders
+                            </p>
+                            <span className="text-2xl font-black text-white tracking-tighter">52,109</span>
+                            <span className="text-[10px] text-emerald-500 font-bold">+12%</span>
+                        </div>
+                        <div className="p-6 bg-[#050505]/80 hover:bg-white/[0.02] transition-colors group flex flex-col items-center text-center gap-2">
+                            <p className="text-[10px] font-bold text-gray-500 uppercase tracking-[0.3em] group-hover:text-primary transition-colors">
+                                Success Rate
+                            </p>
+                            <span className="text-2xl font-black text-white tracking-tighter">99.8%</span>
+                            <span className="text-[11px] text-emerald-400 font-semibold flex items-center gap-1">
+                                <svg className="size-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                Verified
+                            </span>
+                        </div>
+                        <div className="p-6 bg-[#050505]/80 hover:bg-white/[0.02] transition-colors group flex flex-col items-center text-center gap-2">
+                            <p className="text-[10px] font-bold text-gray-500 uppercase tracking-[0.3em] group-hover:text-primary transition-colors">
+                                Elite Experts
+                            </p>
+                            <span className="text-2xl font-black text-white tracking-tighter">412</span>
+                            <span className="text-[10px] text-primary font-bold">LIVE</span>
+                        </div>
+                        <div className="p-6 bg-[#050505]/80 hover:bg-white/[0.02] transition-colors group flex flex-col items-center text-center gap-2">
+                            <p className="text-[10px] font-bold text-gray-500 uppercase tracking-[0.3em] group-hover:text-primary transition-colors">
+                                Avg. Start Time
+                            </p>
+                            <span className="text-2xl font-black text-white tracking-tighter">14m</span>
+                            <svg className="size-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        </div>
                     </div>
                 </div>
             </div>

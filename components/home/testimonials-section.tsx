@@ -23,35 +23,67 @@ const testimonials = [
 
 export function TestimonialsSection() {
     return (
-        <section className="py-24 bg-[#0F0F0F] border-y border-[#1A1A1A]">
-            <div className="max-w-7xl mx-auto px-6">
-                <h2 className="text-3xl md:text-4xl font-bold text-white mb-12 text-center">ELITE FEEDBACK</h2>
+        <section className="py-24 bg-[#050505]">
+            <div className="max-w-[1440px] mx-auto px-6 lg:px-10">
+                <div className="flex flex-col md:flex-row justify-between items-center gap-8 mb-16">
+                    <h2 className="text-4xl md:text-5xl font-black text-white tracking-tighter italic uppercase">
+                        Feedback Matrix
+                    </h2>
+                    <div className="flex gap-3">
+                        <button className="size-11 rounded-full border border-white/10 flex items-center justify-center hover:bg-white/5 transition-colors">
+                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                            </svg>
+                        </button>
+                        <button className="size-11 rounded-full border border-white/10 flex items-center justify-center hover:bg-white/5 transition-colors">
+                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                     {testimonials.map((t, i) => (
                         <div
                             key={t.author}
-                            className={`bg-surface-dark border border-[#2A2A2A] p-8 rounded-xl hover:bg-[#1A1A1A] transition-colors${i === 2 ? " hidden lg:block" : ""}`}
+                            className={`relative rounded-2xl border border-white/10 bg-[#0a0a0a]/80 p-10 backdrop-blur-md overflow-hidden ${
+                                i === 1 ? "border-primary/40 shadow-[0_0_35px_rgba(175,18,37,0.25)]" : ""
+                            }`}
                         >
-                            {/* Stars */}
-                            <div className="flex items-center gap-1 mb-4 text-primary">
+                            <div className="absolute top-8 right-8 opacity-10">
+                                <svg className="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M7.17 6A5.001 5.001 0 002 11v7h7v-7H6.83A3.001 3.001 0 019 8.17V6H7.17zM17.17 6A5.001 5.001 0 0012 11v7h7v-7h-2.17A3.001 3.001 0 0120 8.17V6h-2.83z" />
+                                </svg>
+                            </div>
+
+                            <div className="flex gap-1 mb-6">
                                 {[...Array(5)].map((_, j) => (
-                                    <svg key={j} className="size-4 fill-current" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" /></svg>
+                                    <svg
+                                        key={j}
+                                        className="w-4 h-4 text-primary"
+                                        fill="currentColor"
+                                        viewBox="0 0 20 20"
+                                    >
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674 4.911.017c.969.004 1.371 1.24.588 1.81l-3.97 2.883 1.485 4.686c.285.9-.755 1.65-1.54 1.118L10 15.347l-3.944 2.768c-.784.55-1.825-.218-1.54-1.118l1.485-4.686-3.97-2.883c-.783-.57-.38-1.806.588-1.81l4.911-.017 1.519-4.674z" />
+                                    </svg>
                                 ))}
                             </div>
 
-                            {/* Quote */}
-                            <p className="text-gray-300 mb-6 leading-relaxed">&ldquo;{t.quote}&rdquo;</p>
+                            <p className="text-gray-300 text-sm md:text-base mb-8 leading-relaxed">
+                                &ldquo;{t.quote}&rdquo;
+                            </p>
 
-                            {/* Author */}
-                            <div className="flex items-center gap-4">
+                            <div className="flex items-center gap-4 border-t border-white/10 pt-6 mt-2">
                                 <div
-                                    className="size-10 rounded-full bg-gray-700 bg-cover bg-center"
+                                    className="size-12 rounded-full bg-primary/20 border border-primary/40 bg-cover bg-center flex-shrink-0"
                                     style={{ backgroundImage: `url('${t.avatar}')` }}
                                 />
                                 <div>
-                                    <h5 className="text-white font-bold text-sm">{t.author}</h5>
-                                    <span className="text-xs text-gray-500">{t.tag}</span>
+                                    <h5 className="text-white font-bold text-sm uppercase tracking-tight">{t.author}</h5>
+                                    <span className="text-[11px] text-gray-500 font-medium uppercase tracking-widest">
+                                        {t.tag}
+                                    </span>
                                 </div>
                             </div>
                         </div>
