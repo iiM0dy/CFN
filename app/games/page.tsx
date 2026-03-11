@@ -9,60 +9,65 @@ export default async function GamesPage() {
         SELECT * FROM "GameService" ORDER BY name ASC
     `
 
-    // Extract unique categories from the database games
-    // In a more robust setup, you might have a separate Category model
-    const dbCategories = Array.from(new Set(games.map(g => "All Games"))) // Default for now
+    // Sanitize games for Client Component (convert Dates to strings)
+    const serializedGames = games.map(game => ({
+        ...game,
+        createdAt: game.createdAt?.toString() || null,
+        updatedAt: game.updatedAt?.toString() || null,
+    }))
 
     // We can define static categories or derive them if you add a category field to GameService
     const categories = ["All Games", "FPS", "MOBA", "MMO", "Action"];
 
     return (
-        <div className="bg-[#0B0B0B] text-white min-h-screen flex flex-col font-sans overflow-x-hidden">
-            <main className="grow w-full max-w-[1440px] mx-auto px-6 lg:px-10 py-8">
+        <div className="bg-[#0B0B0B] text-white min-h-screen flex flex-col font-cairo overflow-x-hidden">
+            <main className="grow w-full max-w-[1440px] mx-auto px-6 lg:px-10 pt-9 pb-12">
+                {/* Tactical Breadcrumbs */}
+                <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 mb-9">
+                    <Link href="/" className="hover:text-primary transition-colors">Home</Link>
+                    <span className="material-symbols-outlined text-[10px]">chevron_right</span>
+                    <span className="text-white">Games</span>
+                </div>
+
                 {/* Cinematic Hero Section */}
                 <section className="relative mb-12 rounded-xl overflow-hidden w-full shadow-[0_0_50px_-10px_rgba(175,18,37,0.3)]">
                     <div className="relative flex min-h-[500px] flex-col items-center justify-center p-8 text-center bg-cover bg-center"
-                        style={{ backgroundImage: `linear-gradient(to bottom, rgba(11, 11, 11, 0.6), rgba(11, 11, 11, 0.95)), url('https://lh3.googleusercontent.com/aida-public/AB6AXuCwy7WyGmG3fseRw8CRbOv9Gg0GFzlSVuiHky7YhOhccQyRMNWYkv6eVynrUoyk2R9b_acVsPPcN__JBEs0PkIN85Cq6uiotQg5i2XE1S7UQ0UD78h9jpn5z-wbbDJczEmMJh0IUeIkcwg8FYDcnlkK_B80MU3pjrKs4MiaMQCmxUbh_Rs5NIfMQfBHAzacnWVjaruiZczTox9rhcRbpeMXXZAAlXOVgzhII8GvndG4aRV-sxwuEkSzwm3hStWhTlF3r4OhHDzf-NiC')` }}>
-                        <div className="z-10 max-w-3xl">
-                            <div
-                                className="inline-flex items-center gap-2 px-3 py-1 mb-6 rounded-full bg-primary/20 border border-primary/30 text-primary text-xs font-bold uppercase tracking-widest">
-                                <span className="flex h-2 w-2 rounded-full bg-primary animate-pulse"></span>
-                                Est. 2018 | Professional Standards
-                            </div>
-                            <h1 className="text-5xl md:text-7xl font-bold tracking-tighter text-slate-100 mb-4 uppercase font-cairo">
-                                <span className="text-primary">CFN</span><span className="text-white">BOOST</span> <span className="text-primary">EMPIRE</span>
+                        style={{ backgroundImage: `linear-gradient(to bottom, rgba(11, 11, 11, 0.7), rgba(11, 11, 11, 0.95)), url('https://lh3.googleusercontent.com/aida-public/AB6AXuCwy7WyGmG3fseRw8CRbOv9Gg0GFzlSVuiHky7YhOhccQyRMNWYkv6eVynrUoyk2R9b_acVsPPcN__JBEs0PkIN85Cq6uiotQg5i2XE1S7UQ0UD78h9jpn5z-wbbDJczEmMJh0IUeIkcwg8FYDcnlkK_B80MU3pjrKs4MiaMQCmxUbh_Rs5NIfMQfBHAzacnWVjaruiZczTox9rhcRbpeMXXZAAlXOVgzhII8GvndG4aRV-sxwuEkSzwm3hStWhTlF3r4OhHDzf-NiC')` }}>
+                        <div className="z-10 max-w-4xl">
+                            <h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter text-white mb-6 uppercase font-cairo">
+                                THE <span className="text-primary">EMPIRE</span> DIRECTORY
                             </h1>
                             <p className="text-lg md:text-xl text-slate-300 font-light max-w-2xl mx-auto leading-relaxed">
-                                Experience the gold standard in competitive gaming. Secure, elite-tier rank boosting and
-                                professional coaching services tailored for champions.
+                                Deploy elite gaming solutions across the world's most competitive titles.
+                                Secure, verified, and professional rank progression services for serious players.
                             </p>
                         </div>
-                        {/* Subtle Red Glow Elements */}
-                        <div className="absolute bottom-0 left-1/4 w-64 h-64 bg-primary/10 rounded-full blur-[120px]"></div>
-                        <div className="absolute top-0 right-1/4 w-64 h-64 bg-primary/10 rounded-full blur-[120px]"></div>
+                        {/* Dramatic Glows */}
+                        <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-primary/10 rounded-full blur-[140px]"></div>
+                        <div className="absolute -top-24 -right-24 w-96 h-96 bg-primary/10 rounded-full blur-[140px]"></div>
                     </div>
                 </section>
 
-                <GameGrid initialGames={games} categories={categories} />
+                <GameGrid initialGames={serializedGames} categories={categories} />
 
                 {/* Trust Metrics */}
-                <section className="mt-20 py-12 border-t border-white/5 w-full">
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-                        <div className="text-center">
-                            <div className="text-3xl font-bold text-slate-100 mb-1">50,000+</div>
-                            <div className="text-primary text-xs font-bold uppercase tracking-widest">Orders Completed</div>
+                <section className="mt-12 py-12 border-t border-white/5 w-full">
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                        <div className="group">
+                            <div className="text-3xl font-black text-white group-hover:text-primary transition-colors tracking-tighter mb-1">50,000+</div>
+                            <div className="text-primary text-[10px] font-bold uppercase tracking-widest">Orders Finalized</div>
                         </div>
-                        <div className="text-center">
-                            <div className="text-3xl font-bold text-slate-100 mb-1">4.9/5</div>
-                            <div className="text-primary text-xs font-bold uppercase tracking-widest">Trustpilot Rating</div>
+                        <div className="group">
+                            <div className="text-3xl font-black text-white group-hover:text-primary transition-colors tracking-tighter mb-1">4.9/5</div>
+                            <div className="text-primary text-[10px] font-bold uppercase tracking-widest">User Satisfaction</div>
                         </div>
-                        <div className="text-center">
-                            <div className="text-3xl font-bold text-slate-100 mb-1">500+</div>
-                            <div className="text-primary text-xs font-bold uppercase tracking-widest">Elite Boosters</div>
+                        <div className="group">
+                            <div className="text-3xl font-black text-white group-hover:text-primary transition-colors tracking-tighter mb-1">500+</div>
+                            <div className="text-primary text-[10px] font-bold uppercase tracking-widest">Active Experts</div>
                         </div>
-                        <div className="text-center">
-                            <div className="text-3xl font-bold text-slate-100 mb-1">24/7</div>
-                            <div className="text-primary text-xs font-bold uppercase tracking-widest">Active Support</div>
+                        <div className="group">
+                            <div className="text-3xl font-black text-white group-hover:text-primary transition-colors tracking-tighter mb-1">24/7</div>
+                            <div className="text-primary text-[10px] font-bold uppercase tracking-widest">Network Uptime</div>
                         </div>
                     </div>
                 </section>

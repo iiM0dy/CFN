@@ -33,7 +33,7 @@ export default async function GameServicesPage({ params }: { params: Promise<{ g
             GROUP BY s.id
         `
 
-        // Calculate display price for each service
+        // Calculate display price for each service and ensure serializability
         game.services = services.map(service => {
             let displayPrice = Number(service.basePrice);
 
@@ -47,6 +47,14 @@ export default async function GameServicesPage({ params }: { params: Promise<{ g
 
             return {
                 ...service,
+                basePrice: Number(service.basePrice),
+                createdAt: service.createdAt?.toString() || null,
+                updatedAt: service.updatedAt?.toString() || null,
+                options: service.options?.map((opt: any) => ({
+                    ...opt,
+                    minValue: opt.minValue ? Number(opt.minValue) : null,
+                    maxValue: opt.maxValue ? Number(opt.maxValue) : null,
+                })) || [],
                 displayPrice: displayPrice.toFixed(2)
             };
         });
@@ -57,10 +65,10 @@ export default async function GameServicesPage({ params }: { params: Promise<{ g
     }
 
     return (
-        <div className="bg-[#0B0B0B] text-white min-h-screen flex flex-col font-sans overflow-x-hidden">
-            <main className="grow w-full max-w-[1440px] mx-auto px-6 lg:px-10 py-8">
-                {/* Breadcrumbs */}
-                <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#555] mb-8">
+        <div className="bg-[#0B0B0B] text-white min-h-screen flex flex-col font-cairo overflow-x-hidden">
+            <main className="grow w-full max-w-[1440px] mx-auto px-6 lg:px-10 pt-9 pb-12">
+                {/* Tactical Breadcrumbs */}
+                <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 mb-9">
                     <Link href="/" className="hover:text-primary transition-colors">Home</Link>
                     <span className="material-symbols-outlined text-[10px]">chevron_right</span>
                     <Link href="/games" className="hover:text-primary transition-colors">Games</Link>
@@ -69,52 +77,52 @@ export default async function GameServicesPage({ params }: { params: Promise<{ g
                 </div>
 
                 {/* Cinematic Hero Section */}
-                <section className="relative mb-12 rounded-xl overflow-hidden w-full shadow-[0_0_50px_-10px_rgba(175,18,37,0.3)]">
-                    <div className="relative flex min-h-[400px] flex-col items-center justify-center p-8 text-center bg-cover bg-center"
-                        style={{ backgroundImage: `linear-gradient(to bottom, rgba(11, 11, 11, 0.7), rgba(11, 11, 11, 0.95)), url('${game.bgImage}')` }}>
-                        <div className="z-10 max-w-3xl">
-                            <div className="inline-flex items-center gap-2 px-3 py-1 mb-6 rounded-full bg-primary/20 border border-primary/30 text-primary text-[10px] font-bold uppercase tracking-widest">
-                                <span className="flex h-2 w-2 rounded-full bg-primary animate-pulse"></span>
-                                Elite {game.name} Services
-                            </div>
-                            <h1 className="text-5xl md:text-7xl font-black tracking-tighter text-white mb-4 uppercase font-cairo">
-                                <span className="text-primary">{game.name}</span> <span className="text-white">COMMAND</span>
+                <section className="relative mb-20 rounded-2xl overflow-hidden w-full border border-white/5">
+                    <div className="relative flex min-h-[500px] flex-col items-center justify-center p-12 text-center bg-cover bg-center group"
+                        style={{ backgroundImage: `linear-gradient(to bottom, rgba(11, 11, 11, 0.6), rgba(11, 11, 11, 0.98)), url('${game.bgImage}')` }}>
+
+                        <div className="z-10 max-w-4xl relative">
+                            <h1 className="text-6xl md:text-8xl font-black tracking-tight text-white mb-8 uppercase leading-[0.8] font-cairo">
+                                <span className="block opacity-50 text-4xl md:text-5xl mb-2">{game.name}</span>
+                                <span className="text-primary italic">SERVICES</span>
                             </h1>
-                            <p className="text-lg md:text-xl text-slate-300 font-light max-w-2xl mx-auto leading-relaxed">
+                            <p className="text-lg md:text-xl text-slate-300 font-medium max-w-2xl mx-auto leading-relaxed italic opacity-80">
                                 {game.description || `Secure your legacy in ${game.name}. Elite-tier progression and 
                                 professional coaching services tailored for future champions.`}
                             </p>
                         </div>
-                        {/* Subtle Glows */}
-                        <div className="absolute bottom-0 left-1/4 w-64 h-64 bg-primary/10 rounded-full blur-[120px]"></div>
-                        <div className="absolute top-0 right-1/4 w-64 h-64 bg-primary/10 rounded-full blur-[120px]"></div>
+
+                        {/* Subtle Glows - Balanced */}
+                        <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-[150px]"></div>
+                        <div className="absolute top-0 right-1/4 w-96 h-96 bg-primary/5 rounded-full blur-[150px]"></div>
                     </div>
                 </section>
 
                 <ServiceList initialServices={game.services} />
 
-                {/* Trust Pillar Row */}
-                <section className="mt-12 py-12 border-t border-white/5 w-full">
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-                        <div className="text-center group">
-                            <div className="text-3xl font-black text-white group-hover:text-primary transition-colors mb-1 tracking-tighter">50,000+</div>
-                            <div className="text-primary text-[10px] font-bold uppercase tracking-widest">Deployments Finished</div>
-                        </div>
-                        <div className="text-center group">
-                            <div className="text-3xl font-black text-white group-hover:text-primary transition-colors mb-1 tracking-tighter">4.9/5</div>
-                            <div className="text-primary text-[10px] font-bold uppercase tracking-widest">Asset Rating</div>
-                        </div>
-                        <div className="text-center group">
-                            <div className="text-3xl font-black text-white group-hover:text-primary transition-colors mb-1 tracking-tighter">500+</div>
-                            <div className="text-primary text-[10px] font-bold uppercase tracking-widest">Field Experts</div>
-                        </div>
-                        <div className="text-center group">
-                            <div className="text-3xl font-black text-white group-hover:text-primary transition-colors mb-1 tracking-tighter">24/7</div>
-                            <div className="text-primary text-[10px] font-bold uppercase tracking-widest">HQ Monitoring</div>
-                        </div>
+                {/* Performance Analytics Row */}
+                <section className="mt-20 py-16 border-t border-white/5 w-full">
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-12">
+                        {[
+                            { label: 'Deployments Finished', value: '50,000+' },
+                            { label: 'Asset Rating', value: '4.9/5' },
+                            { label: 'Field Experts', value: '500+' },
+                            { label: 'HQ Monitoring', value: '24/7' }
+                        ].map((stat, i) => (
+                            <div key={i} className="text-center group relative">
+                                <div className="text-4xl md:text-5xl font-black text-white group-hover:text-primary transition-all duration-500 mb-2 tracking-tighter italic">
+                                    {stat.value}
+                                </div>
+                                <div className="text-slate-500 text-[10px] font-black uppercase tracking-[0.2em] group-hover:text-primary/50 transition-colors">
+                                    {stat.label}
+                                </div>
+                                <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-8 h-0.5 bg-primary/0 group-hover:bg-primary/50 transition-all duration-500"></div>
+                            </div>
+                        ))}
                     </div>
                 </section>
             </main>
         </div>
     )
 }
+

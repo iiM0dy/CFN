@@ -34,42 +34,41 @@ export function GameGrid({ initialGames, categories }: GameGridProps) {
   return (
     <>
       {/* Search & Filter Bar */}
-      <section className="w-full mb-12 sticky top-4 z-30">
-        <div className="bg-[#161616]/80 backdrop-blur-xl border border-white/5 p-4 rounded-xl shadow-2xl">
-          <div className="flex flex-col lg:flex-row gap-4">
-            <div className="relative flex-1">
-              <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-500">search</span>
-              <input
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full bg-[#0B0B0B] border border-white/5 focus:border-primary/50 focus:ring-1 focus:ring-primary/50 rounded-lg pl-12 py-3 text-slate-100 placeholder:text-slate-600 font-medium transition-all"
-                placeholder="Search elite services (e.g. Valorant Immortal, LoL Challenger)..."
-                type="text"
-              />
-            </div>
-            <div className="flex gap-2 overflow-x-auto pb-2 lg:pb-0 scrollbar-hide">
-              {categories.map((c) => {
-                let icon = "grid_view";
-                if (c === "FPS") icon = "target";
-                if (c === "MOBA") icon = "swords";
-                if (c === "MMO") icon = "shield";
-                if (c === "Action") icon = "military_tech";
+      <section className="w-full mb-12">
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-6">
+          <div className="flex items-center gap-3 overflow-x-auto pb-2 lg:pb-0 scrollbar-hide w-full lg:w-auto">
+            {categories.map((c) => {
+              let icon = "grid_view";
+              if (c === "FPS") icon = "target";
+              if (c === "MOBA") icon = "swords";
+              if (c === "MMO") icon = "shield";
+              if (c === "Action") icon = "military_tech";
 
-                return (
-                  <button
-                    key={c}
-                    onClick={() => setActiveCategory(c)}
-                    className={`flex items-center gap-2 px-5 py-2 rounded-lg font-semibold whitespace-nowrap transition-all duration-300 ${activeCategory === c
-                      ? "bg-primary text-white shadow-lg shadow-primary/20"
-                      : "bg-white/5 hover:bg-white/10 text-slate-400 hover:text-slate-100"
-                      }`}
-                  >
-                    <span className="material-symbols-outlined text-sm">{icon}</span>
-                    {c === "All Games" ? "All Categories" : c}
-                  </button>
-                );
-              })}
-            </div>
+              return (
+                <button
+                  key={c}
+                  onClick={() => setActiveCategory(c)}
+                  className={`flex items-center gap-2 px-5 py-2.5 rounded-lg text-[11px] font-black uppercase tracking-widest transition-all duration-300 border ${activeCategory === c
+                    ? "bg-primary border-primary text-white shadow-lg shadow-primary/20"
+                    : "bg-[#161616] border-white/5 text-slate-500 hover:text-white hover:border-white/10"
+                    }`}
+                >
+                  <span className="material-symbols-outlined text-[14px]">{icon}</span>
+                  {c === "All Games" ? "All Operations" : c}
+                </button>
+              );
+            })}
+          </div>
+
+          <div className="relative w-full lg:w-80 group">
+            <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 text-sm group-focus-within:text-primary transition-colors">search</span>
+            <input
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full bg-[#161616] border border-white/5 focus:border-primary/50 focus:ring-1 focus:ring-primary/50 rounded-lg pl-11 pr-4 py-3 text-white placeholder:text-slate-600 text-sm font-medium transition-all"
+              placeholder="Search assets..."
+              type="text"
+            />
           </div>
         </div>
       </section>
@@ -77,11 +76,14 @@ export function GameGrid({ initialGames, categories }: GameGridProps) {
       {/* Grid Header Info */}
       <div className="w-full flex justify-between items-end mb-8">
         <div>
-          <h2 className="text-2xl font-bold text-slate-100 uppercase tracking-tight">Active Battlegrounds</h2>
-          <p className="text-slate-500 text-sm mt-1">Select a title to view professional tier packages</p>
+          <h2 className="text-2xl font-black text-white uppercase tracking-tight flex items-center gap-3">
+            <span className="h-6 w-1 bg-primary rounded-full"></span>
+            Battlefield Selection
+          </h2>
+          <p className="text-slate-500 text-[10px] font-bold uppercase tracking-widest mt-1">Select title to deploy professional experts</p>
         </div>
-        <div className="text-slate-400 text-sm font-medium hidden sm:block">
-          Showing <span className="text-primary">{filteredGames.length}</span> Premium Games
+        <div className="text-slate-600 text-[10px] font-black uppercase tracking-[0.2em] hidden sm:block italic">
+          Network Capacity: <span className="text-primary">{filteredGames.length} ACTIVE NODES</span>
         </div>
       </div>
 
@@ -104,14 +106,14 @@ export function GameGrid({ initialGames, categories }: GameGridProps) {
             >
               {/* Coming Soon Badge */}
               {!game.isActive && (
-                <div className="absolute top-4 right-4 z-30 px-3 py-1 bg-primary/90 backdrop-blur-sm rounded-full text-white text-[10px] font-bold uppercase tracking-widest">
+                <div className="absolute top-4 right-4 z-30 px-3 py-1 bg-[#111]/80 backdrop-blur-md border border-white/5 rounded-full text-white text-[10px] font-black uppercase tracking-[0.2em]">
                   Coming Soon
                 </div>
               )}
 
               {/* Background Image */}
               <div
-                className={`absolute inset-0 bg-cover bg-center transition-transform duration-700 ${game.isActive ? 'group-hover:scale-110' : 'grayscale'}`}
+                className={`absolute inset-0 bg-cover bg-center transition-transform duration-700 ${game.isActive ? 'group-hover:scale-110' : 'grayscale brightness-50 contrast-125'}`}
                 style={{ backgroundImage: `url('${game.bgImage}')` }}
               />
 
@@ -119,9 +121,9 @@ export function GameGrid({ initialGames, categories }: GameGridProps) {
               <div className="absolute inset-0 bg-linear-to-t from-[#0B0B0B] via-[#0B0B0B]/40 to-transparent" />
               <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
-              {/* Character Overlay (Optional integration with the new style) */}
+              {/* Character Overlay */}
               {game.charImage && (
-                <div className={`absolute inset-0 z-10 pointer-events-none transition-transform duration-700 ease-out origin-bottom-right ${game.isActive ? 'group-hover:scale-105 group-hover:-translate-y-2' : 'grayscale'}`}>
+                <div className={`absolute inset-0 z-10 pointer-events-none transition-transform duration-700 ease-out origin-bottom-right ${game.isActive ? 'group-hover:scale-105 group-hover:-translate-y-2' : 'grayscale brightness-75'}`}>
                   <img
                     src={game.charImage}
                     alt={`${game.name} Character`}
@@ -132,19 +134,21 @@ export function GameGrid({ initialGames, categories }: GameGridProps) {
 
               {/* Card Content */}
               <div className="absolute bottom-0 left-0 right-0 p-6 z-10">
-                <h3 className="text-2xl font-bold text-white mb-1 group-hover:text-primary transition-colors uppercase tracking-tight">
+                <h3 className="text-2xl font-black text-white mb-1 group-hover:text-primary transition-colors uppercase tracking-tight">
                   {game.name}
                 </h3>
-                <p className="text-slate-300 text-xs font-medium uppercase tracking-wider line-clamp-1">
-                  {game.description || 'Professional Ranking'}
+                <p className="text-slate-400 text-[10px] font-bold uppercase tracking-widest line-clamp-1 italic">
+                  {game.description || 'Verified Service Node'}
                 </p>
 
-                {game.isActive && (
-                  <div className="mt-4 flex items-center justify-between opacity-0 group-hover:opacity-100 transition-all translate-y-4 group-hover:translate-y-0 duration-300">
-                    <span className="text-[10px] font-bold text-primary tracking-widest uppercase">VIEW PACKAGES</span>
-                    <span className="material-symbols-outlined text-primary text-sm">north_east</span>
-                  </div>
-                )}
+                <div className={`mt-4 flex items-center justify-between transition-all duration-500 ${game.isActive ? 'opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0' : 'opacity-20'}`}>
+                  <span className="text-[10px] font-black text-primary tracking-[0.25em] uppercase italic">
+                    {game.isActive ? "VIEW PACKAGES" : "ENCRYPTED"}
+                  </span>
+                  <span className="material-symbols-outlined text-primary text-sm">
+                    {game.isActive ? "north_east" : "lock"}
+                  </span>
+                </div>
               </div>
             </Link>
           )

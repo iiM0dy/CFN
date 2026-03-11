@@ -14,85 +14,79 @@ export default function ServicesPage() {
     ];
 
     return (
-        <div className="bg-[#181112] text-white min-h-screen flex flex-col overflow-x-hidden font-[family-name:var(--font-space-grotesk)]">
+        <div className="bg-[#0B0B0B] text-white min-h-screen flex flex-col font-cairo overflow-x-hidden">
+            <main className="grow w-full max-w-[1440px] mx-auto px-6 lg:px-10 pt-9 pb-8">
+                {/* Tactical Breadcrumbs */}
+                <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 mb-9">
+                    <Link href="/" className="hover:text-primary transition-colors">Home</Link>
+                    <span className="material-symbols-outlined text-[10px]">chevron_right</span>
+                    <span className="text-white">Services</span>
+                </div>
 
-            <main className="flex-1 flex flex-col">
-                {/* Hero Section */}
-                <section className="relative min-h-[600px] flex items-center justify-center overflow-hidden">
-                    <div className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat" style={{ backgroundImage: `url('https://lh3.googleusercontent.com/aida-public/AB6AXuDtT1jxDnxtsGIYRHSMliDraQn_yLp0tQ7G1WJ7RCBN9NdrKIRTuaGkdIUKlrOvPWikxRxk5MFhBRZjKk7hGER1bAQZpd0cuR4jwWRnD-eHOlI6Wibh51FP3RZtyZQEx0Onbt05ETSRiUQkyWD186PINwATOjSsIKbW8-9-8vg4hpw9lLtovh2yKoqwOxKHZTwisuocZjUJrBv0kjSCJBPT2IX4YE5Q4R-fB5jc1nDqjIRKmMsBObn6_FxrzBqZRmrO3dwv-CAHdgJW')` }} />
-                    <div className="absolute inset-0 z-0 bg-gradient-to-b from-[#181112]/80 via-[#181112]/60 to-[#181112]" />
-                    <div className="absolute inset-0 z-0 bg-gradient-to-r from-[#181112] via-transparent to-[#181112]" />
-                    <div className="container mx-auto px-4 md:px-10 relative z-10 pt-10">
-                        <div className="max-w-3xl flex flex-col gap-6">
-                            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/20 border border-primary/30 w-fit backdrop-blur-sm">
-                                <span className="text-primary text-sm">🛡️</span>
-                                <span className="text-primary text-xs font-bold uppercase tracking-wider">Radiant Tier Boosters</span>
+                {/* Cinematic Hero Section */}
+                <section className="relative mb-12 rounded-xl overflow-hidden w-full shadow-[0_0_50px_-10px_rgba(175,18,37,0.3)]">
+                    <div className="relative flex min-h-[500px] flex-col items-center justify-center p-8 text-center bg-cover bg-center"
+                        style={{ backgroundImage: `linear-gradient(to bottom, rgba(11, 11, 11, 0.7), rgba(11, 11, 11, 0.95)), url('https://lh3.googleusercontent.com/aida-public/AB6AXuDtT1jxDnxtsGIYRHSMliDraQn_yLp0tQ7G1WJ7RCBN9NdrKIRTuaGkdIUKlrOvPWikxRxk5MFhBRZjKk7hGER1bAQZpd0cuR4jwWRnD-eHOlI6Wibh51FP3RZtyZQEx0Onbt05ETSRiUQkyWD186PINwATOjSsIKbW8-9-8vg4hpw9lLtovh2yKoqwOxKHZTwisuocZjUJrBv0kjSCJBPT2IX4YE5Q4R-fB5jc1nDqjIRKmMsBObn6_FxrzBqZRmrO3dwv-CAHdgJW')` }}>
+                        <div className="z-10 max-w-4xl">
+                            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-[10px] font-bold uppercase tracking-widest italic">
+                                <span className="material-symbols-outlined text-xs">bolt</span>
+                                Service Detail
                             </div>
-                            <h1 className="text-5xl md:text-7xl font-bold text-white leading-[0.9] tracking-tighter uppercase drop-shadow-lg">
-                                Dominate <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-red-400">The Lobby</span>.
+                            <h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter text-white mb-6 uppercase font-cairo leading-tight">
+                                ELITE <span className="text-primary">SERVICES</span>
                             </h1>
-                            <p className="text-gray-300 text-lg md:text-xl max-w-xl font-light">
-                                Premium Valorant boosting services. Safe, anonymous, and executed by the top 0.1% of players. Stop grinding, start climbing.
+                            <p className="text-lg md:text-xl text-slate-300 font-light max-w-2xl mx-auto leading-relaxed">
+                                Deploy precision-engineered gaming solutions. From rank augmentation to elite tactical training,
+                                our operatives deliver results where others fail.
                             </p>
-                            <div className="flex flex-wrap gap-4 mt-4">
-                                <Link href="/services/valorant" className="flex h-14 px-8 items-center justify-center rounded-lg bg-primary hover:bg-[#8a0e1d] text-white font-bold text-lg tracking-wide shadow-[0_0_20px_rgba(175,18,37,0.5)] transition-all transform hover:scale-105">
-                                    Boost Now 🚀
+                            <div className="flex flex-wrap items-center justify-center gap-4 mt-10">
+                                <Link href="/games" className="px-8 py-4 bg-primary hover:bg-[#8a0e1d] text-white font-black text-sm uppercase tracking-[0.2em] rounded-lg shadow-lg shadow-primary/20 transition-all transform hover:scale-105 flex items-center gap-2">
+                                    DEPLOY NOW <span className="material-symbols-outlined text-sm">rocket_launch</span>
                                 </Link>
-                                <button className="flex h-14 px-8 items-center justify-center rounded-lg bg-[#261c1d] border border-[#38292b] hover:border-primary text-white font-medium text-lg tracking-wide transition-all">
-                                    View Demo ▶
+                                <button className="px-8 py-4 bg-[#161616] border border-white/5 hover:border-primary/50 text-white font-black text-sm uppercase tracking-[0.2em] rounded-lg transition-all flex items-center gap-2 group">
+                                    HQ BROADCAST <span className="material-symbols-outlined text-sm group-hover:text-primary transition-colors">play_circle</span>
                                 </button>
                             </div>
-                            {/* Trust Indicators */}
-                            <div className="flex items-center gap-6 mt-8 pt-6 border-t border-white/10">
-                                <div className="flex -space-x-2">
-                                    {[
-                                        "https://lh3.googleusercontent.com/aida-public/AB6AXuAAK9zKjE_C32T_4_QD5Uy3UojRIed9_xbkfnD2LQN9Uil1DGlTjWXPRDabirsjeQ7F2gDPwzTrS6zuxTq7W9z4ONWr5RcR2mSP-2PjIeqDf6BLEkiFhsT5PuxncKCi8qd2ZdtCxjYsPlMV2l0XE6lqePWf1HUPr2bY3OOwtZEqXvL1xf5n-q-iLh0AN7KflU_K3kYPlaczHFhuGViud7-rs8BGUlzc2oU_YJyba_SR-eZQ0QEFhRvsYpg6k9qCLHEMZV7R9wtBipXi",
-                                        "https://lh3.googleusercontent.com/aida-public/AB6AXuAW44E4BtHbQv-INHbU4AjH6yMFdO6nQTA3WO__IZ4HJ8eVdlvHikTHT09K-EeUFAQ7Lpt7qQZ_W7Gg55WVgMiq9GbOLOTU_zeHop0ce6I_OU8PcxnD4lDWU2QKP-s-xQvyUaGtcYxr4NSN2maRY_MKQTJOaChwiTglHUh6HcOv5OZGJLqx4p2kpA0dwuQe_UaBzgkxs4RbzCzUusbRR5bBEaeka4OHM3OQdeCCwwYYsQnw2yF7YubfQ_qcIDwUGzUKqT7Ek6XqfLFn",
-                                        "https://lh3.googleusercontent.com/aida-public/AB6AXuCzG7PJeoyysq_mAMJUuoHwdsFgBRLy23cI4y_8FPzg5WIaBqhmfDSbpjuy4zXuPGxFjtcC0cCMPPMwVFdlmyuKPjSAPLU-z63suVruBWFhMmoRa9yGzti_CZKn0ymlmaVYHKIe-RqzrsGt6wMU7DxfC13wPWqHBsGIn7ye7FLQxi70Fx8jsATKYsyvEmxWmUX-XHbP6RwnnQk-r3ZON7lifVNqyc0Y2pVsyiyhIpKBUatbqsfiCMncGIKyriUEzqRTSJNRrZHg4zz1",
-                                    ].map((src, i) => (
-                                        <img key={i} alt="User" className="w-8 h-8 rounded-full border-2 border-[#181112]" src={src} />
-                                    ))}
-                                    <div className="w-8 h-8 rounded-full border-2 border-[#181112] bg-primary flex items-center justify-center text-[10px] font-bold text-white">+2k</div>
-                                </div>
-                                <div className="flex flex-col">
-                                    <div className="flex text-yellow-500 text-sm">⭐⭐⭐⭐⭐</div>
-                                    <span className="text-xs text-gray-400 font-medium">4.9/5 Rating from 2000+ <span className="font-cairo font-bold">CFNboost</span> Orders</span>
-                                </div>
-                            </div>
                         </div>
+                        {/* Dramatic Glows - Balanced */}
+                        <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-primary/5 rounded-full blur-[140px]"></div>
+                        <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 blur-[80px] rounded-full pointer-events-none"></div>
                     </div>
-                    <div className="absolute right-0 bottom-0 md:right-10 md:bottom-10 z-0 opacity-20 md:opacity-40 pointer-events-none text-primary text-[200px] md:text-[400px] rotate-12">🎯</div>
                 </section>
 
                 {/* Service Categories */}
-                <section className="py-16 bg-[#181112]">
-                    <div className="container mx-auto px-4 md:px-10">
-                        <div className="flex flex-col md:flex-row justify-between items-end mb-10 gap-4">
-                            <div>
-                                <h2 className="text-3xl md:text-4xl font-bold text-white mb-2">Choose Your Service</h2>
-                                <p className="text-gray-400">Select the type of boost you need to dominate the ladder.</p>
-                            </div>
-                            <Link href="/services/valorant" className="text-primary hover:text-white transition-colors flex items-center gap-1 text-sm font-bold uppercase tracking-wider">
-                                View All Services →
-                            </Link>
+                <section className="py-12 border-t border-white/5">
+                    <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
+                        <div>
+                            <h2 className="text-3xl font-black text-white uppercase tracking-tight flex items-center gap-3">
+                                <span className="h-8 w-1 bg-primary rounded-full"></span>
+                                Tactical Categories
+                            </h2>
+                            <p className="text-slate-500 text-[10px] font-bold uppercase tracking-widest mt-1">Select your specialized deployment objective</p>
                         </div>
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                            {[
-                                { icon: "📈", title: "Rank Boosting", desc: "We play on your account to reach your desired rank. Fast & Anonymous.", color: "primary", img: "https://lh3.googleusercontent.com/aida-public/AB6AXuDmQh4mUTJOso3jp3HHwlk9GzilRw62um_g1y7l2vVAWLEZLdCje5SniTT-3YYutaOksEi_dOyJkw5hEGiMbFt-eS76cIbcI5MANQIwg-fawl_nkQAtxNn4msSIc8QdxQ7BTepf8920VHNfJvc3T_Vm3PiCkeyrRW-QGUBkzjJVEplIIy19Ky5wCslcTaMVPg__Sbt6PkT7S3jzvl-kRZztdksKeBCJucsP_YxQbz48F2C9GAHK7zpg-K3vnbHjN_DzfOm0T8QdOEt2", href: "/services/valorant" },
-                                { icon: "🏆", title: "Placement Matches", desc: "Guarantee a high starting rank for the new season with 5/5 wins.", color: "blue", img: "https://lh3.googleusercontent.com/aida-public/AB6AXuCBNUdDuQau5JUZJkwKLtOzvls3Jry8Qq4w5CW5aN7cq8wMUJm7dM43dP90vhjP3C_PRsx_2wie-kpbxVt74U6CMYdmm2Yxgl7h6LPrgybYE35skJaEq6tqWKDtspjhNaWOjmuIuHBgEd-2s3PHs2RoMFJzApZYrK0yr4Gxrd4cjCYYt8IX90matMb0iZdJB_GrEvUDpFaEhZNGIDLS6fakyRTgM3mPvwEcRDphfEB3OuMhw057MLtMQfXtjbdF3645dfc2YXAr0UyX", href: "/services/valorant" },
-                                { icon: "🎓", title: "Coaching", desc: "1-on-1 sessions with pro players. Learn macro, aim, and agent utility.", color: "green", img: "https://lh3.googleusercontent.com/aida-public/AB6AXuCbVRAw9NnkVp6N26aqSVPJoKnpbTrrkR8PJekZ5hzvW1M0NnB4St-ZZAO-emJJFAZgcnPZPx3nAVlsObUt8pW30hzHtLlbH6ef0zPF4sZEVoC9Vu-IblngFj8k544hZ_PcSLxfrJUNiKMp7Xrvb8NLjLB_dESbJRPcPsUbWGYM3FjwwO7jsKGOOA5yDi_DlkDC1_RHL5WfOmqM4x9BfKv7Z191p3lM_zXFBB1JbCMsG9sRsEHsMZmfhU1RjcaY990wYWOybQQiIzGn", href: "/services/valorant" },
-                            ].map((s) => (
-                                <Link key={s.title} href={s.href} className="group relative bg-[#261c1d] rounded-xl overflow-hidden border border-[#38292b] hover:border-primary/50 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_30px_-10px_rgba(175,18,37,0.3)] cursor-pointer">
-                                    <div className="absolute inset-0 bg-gradient-to-t from-[#181112] to-transparent opacity-80 z-10" />
-                                    <div className="h-48 bg-cover bg-center transition-transform duration-500 group-hover:scale-110" style={{ backgroundImage: `url('${s.img}')` }} />
-                                    <div className="absolute bottom-0 left-0 right-0 p-6 z-20 flex flex-col gap-2">
-                                        <div className={`size-10 rounded-lg ${s.color === 'primary' ? 'bg-primary/20 text-primary border-primary/30' : s.color === 'blue' ? 'bg-blue-500/20 text-blue-400 border-blue-500/30' : 'bg-green-500/20 text-green-400 border-green-500/30'} backdrop-blur-md flex items-center justify-center mb-2 border text-xl`}>{s.icon}</div>
-                                        <h3 className={`text-xl font-bold text-white group-hover:${s.color === 'primary' ? 'text-primary' : s.color === 'blue' ? 'text-blue-400' : 'text-green-400'} transition-colors`}>{s.title}</h3>
-                                        <p className="text-gray-400 text-sm">{s.desc}</p>
+                        <Link href="/games" className="text-primary hover:text-white transition-colors flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] border-b border-primary/0 hover:border-primary pb-1">
+                            VIEW ALL OPERATIONS <span className="material-symbols-outlined text-sm">arrow_right_alt</span>
+                        </Link>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        {[
+                            { icon: "trending_up", title: "Rank Augmentation", desc: "Surgical execution to your desired competitive tier. Fast, anonymous, and elite.", color: "primary", img: "https://lh3.googleusercontent.com/aida-public/AB6AXuDmQh4mUTJOso3jp3HHWlk9GzilRw62um_g1y7l2vVAWLEZLdCje5SniTT-3YYutaOksEi_dOyJkw5hEGiMbFt-eS76cIbcI5MANQIwg-fawl_nkQAtxNn4msSIc8QdxQ7BTepf8920VHNfJvc3T_Vm3PiCkeyrRW-QGUBkzjJVEplIIy19Ky5wCslcTaMVPg__Sbt6PkT7S3jzvl-kRZztdksKeBCJucsP_YxQbz48F2C9GAHK7zpg-K3vnbHjN_DzfOm0T8QdOEt2", href: "/games" },
+                            { icon: "verified", title: "Tier Placements", desc: "Secure a dominant season start. 100% win-rate guarantee on calibration matches.", color: "blue", img: "https://lh3.googleusercontent.com/aida-public/AB6AXuCBNUdDuQau5JUZJkwKLtOzvls3Jry8Qq4w5CW5aN7cq8wMUJm7dM43dP90vhjP3C_PRsx_2wie-kpbxVt74U6CMYdmm2Yxgl7h6LPrgybYE35skJaEq6tqWKDtspjhNaWOjmuIuHBgEd-2s3PHs2RoMFJzApZYrK0yr4Gxrd4cjCYYt8IX90matMb0iZdJB_GrEvUDpFaEhZNGIDLS6fakyRTgM3mPvwEcRDphfEB3OuMhw057MLtMQfXtjbdF3645dfc2YXAr0UyX", href: "/games" },
+                            { icon: "school", title: "Field Coaching", desc: "1-on-1 strategic insight from top-tier operatives. Mastering macro and mechanics.", color: "green", img: "https://lh3.googleusercontent.com/aida-public/AB6AXuCbVRAw9NnkVp6N26aqSVPJoKnpbTrrkR8PJekZ5hzvW1M0NnB4St-ZZAO-emJJFAZgcnPZPx3nAVlsObUt8pW30hzHtLlbH6ef0zPF4sZEVoC9Vu-IblngFj8k544hZ_PcSLxfrJUNiKMp7Xrvb8NLjLB_dESbJRPcPsUbWGYM3FjwwO7jsKGOOA5yDi_DlkDC1_RHL5WfOmqM4x9BfKv7Z191p3lM_zXFBB1JbCMsG9sRsEHsMZmfhU1RjcaY990wYWOybQQiIzGn", href: "/games" },
+                        ].map((s) => (
+                            <Link key={s.title} href={s.href} className="group relative aspect-video md:aspect-4/3 rounded-xl overflow-hidden border border-white/5 bg-[#161616] transition-all duration-300 hover:shadow-[0_0_30px_rgba(175,18,37,0.3)] hover:-translate-y-2 hover:border-primary">
+                                <div className="absolute inset-0 bg-linear-to-t from-[#0B0B0B] via-[#0B0B0B]/40 to-transparent z-10" />
+                                <div className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110" style={{ backgroundImage: `url('${s.img}')` }} />
+                                <div className="absolute bottom-0 left-0 right-0 p-8 z-20 flex flex-col gap-2">
+                                    <div className="size-12 rounded-lg bg-primary/10 border border-primary/20 backdrop-blur-md flex items-center justify-center mb-4 transition-colors group-hover:bg-primary group-hover:text-white group-hover:border-primary">
+                                        <span className="material-symbols-outlined text-xl">{s.icon}</span>
                                     </div>
-                                </Link>
-                            ))}
-                        </div>
+                                    <h3 className="text-2xl font-black text-white group-hover:text-primary transition-colors uppercase tracking-tight">{s.title}</h3>
+                                    <p className="text-slate-400 text-xs font-medium leading-relaxed max-w-sm">{s.desc}</p>
+                                </div>
+                            </Link>
+                        ))}
                     </div>
                 </section>
 

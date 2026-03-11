@@ -5,8 +5,8 @@ import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { notFound } from "next/navigation";
 import { useSession } from "next-auth/react";
-import { 
-    Shield, Clock, Lock, Zap, ChevronRight, Computer, 
+import {
+    Shield, Clock, Lock, Zap, ChevronRight, Computer,
     Gamepad2, ArrowRight, CheckCircle2, Rocket, TrendingUp, Heart
 } from "lucide-react";
 
@@ -52,7 +52,7 @@ export default function ServiceDetailsPage() {
     const { data: session } = useSession();
     const [service, setService] = useState<Service | null>(null);
     const [loading, setLoading] = useState(true);
-    
+
     // Form state
     const [platform, setPlatform] = useState("");
     const [completionMethod, setCompletionMethod] = useState("");
@@ -61,16 +61,16 @@ export default function ServiceDetailsPage() {
     const [quantity, setQuantity] = useState(1); // Default to 1
     const [selectedOptions, setSelectedOptions] = useState<Record<string, any>>({});
     const [activeTab, setActiveTab] = useState("description");
-    
+
     // Promo code state
     const [promoCodeData, setPromoCodeData] = useState<any>(null);
     const [promoCodeError, setPromoCodeError] = useState("");
     const [isValidatingPromo, setIsValidatingPromo] = useState(false);
-    
+
     // Payment modal state
     const [showPaymentModal, setShowPaymentModal] = useState(false);
     const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<string | null>(null);
-    
+
     // Favorite state
     const [isFavorite, setIsFavorite] = useState(false);
     const [favoriteLoading, setFavoriteLoading] = useState(false);
@@ -99,7 +99,7 @@ export default function ServiceDetailsPage() {
                     setService(data);
                     if (data.platforms?.length > 0) setPlatform(data.platforms[0]);
                     if (data.completionMethods?.length > 0) setCompletionMethod(data.completionMethods[0]);
-                    
+
                     // Check if service is favorited
                     if (session?.user) {
                         checkFavorite();
@@ -116,7 +116,7 @@ export default function ServiceDetailsPage() {
 
         fetchService();
     }, [serviceId, session]);
-    
+
     const checkFavorite = async () => {
         try {
             const res = await fetch('/api/favorites');
@@ -128,13 +128,13 @@ export default function ServiceDetailsPage() {
             console.error('Error checking favorite:', error);
         }
     };
-    
+
     const toggleFavorite = async () => {
         if (!session?.user) {
             router.push('/login?callbackUrl=' + encodeURIComponent(window.location.href));
             return;
         }
-        
+
         setFavoriteLoading(true);
         try {
             if (isFavorite) {
@@ -164,10 +164,10 @@ export default function ServiceDetailsPage() {
     // Calculate total price
     const calculateTotalPrice = () => {
         let price = 0;
-        
+
         // Check if this is a Coins service (price per unit)
         const isCoinsService = service?.name?.toLowerCase().includes('coin');
-        
+
         if (isCoinsService) {
             // For coins service, calculate based on quantity selected (no base price)
             service?.options?.forEach(option => {
@@ -179,7 +179,7 @@ export default function ServiceDetailsPage() {
         } else {
             // For other services (like Custom Loadout), start with base price
             price = Number(service?.basePrice || 0);
-            
+
             // Add price modifiers from selected options
             service?.options?.forEach(option => {
                 const selected = selectedOptions[option.id];
@@ -197,18 +197,18 @@ export default function ServiceDetailsPage() {
                     }
                 }
             });
-            
+
             // Multiply by quantity for non-coins services
             price *= quantity;
         }
-        
+
         // Add completion speed modifier (percentage of current price)
         if (completionSpeed === 'express') {
             price *= 1.20; // +20%
         } else if (completionSpeed === 'super_express') {
             price *= 1.40; // +40%
         }
-        
+
         // Apply promo code discount
         if (promoCodeData) {
             if (promoCodeData.discountType === 'percentage') {
@@ -217,26 +217,26 @@ export default function ServiceDetailsPage() {
                 price = Math.max(0, price - promoCodeData.discount);
             }
         }
-        
+
         return price.toFixed(2);
     };
-    
+
     // Validate promo code
     const validatePromoCode = async () => {
         if (!promoCode.trim()) return;
-        
+
         setIsValidatingPromo(true);
         setPromoCodeError("");
-        
+
         try {
             const res = await fetch('/api/promo-codes/validate', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ code: promoCode })
             });
-            
+
             const data = await res.json();
-            
+
             if (res.ok) {
                 setPromoCodeData(data);
                 setPromoCodeError("");
@@ -251,7 +251,7 @@ export default function ServiceDetailsPage() {
             setIsValidatingPromo(false);
         }
     };
-    
+
     // Handle order click
     const handleOrderClick = () => {
         if (!session) {
@@ -261,14 +261,14 @@ export default function ServiceDetailsPage() {
         // Show payment modal
         setShowPaymentModal(true);
     };
-    
+
     // Handle payment method selection and purchase
     const handlePurchase = async () => {
         if (!selectedPaymentMethod) {
             alert('Please select a payment method');
             return;
         }
-        
+
         try {
             // Create order in database
             const orderData = {
@@ -279,18 +279,18 @@ export default function ServiceDetailsPage() {
                 completionMethod,
                 completionSpeed,
                 promoCode: promoCodeData ? promoCode : null,
-                discount: promoCodeData ? (promoCodeData.discountType === 'percentage' 
+                discount: promoCodeData ? (promoCodeData.discountType === 'percentage'
                     ? (Number(calculateTotalPrice()) * promoCodeData.discount / 100)
                     : promoCodeData.discount) : 0,
                 selectedOptions
             };
-            
+
             const res = await fetch('/api/orders', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(orderData)
             });
-            
+
             if (res.ok) {
                 const order = await res.json();
                 // Process payment (to be implemented with actual payment gateway)
@@ -309,9 +309,9 @@ export default function ServiceDetailsPage() {
     // Calculate speed boost price for display
     const getSpeedBoostPrice = (speedType: string) => {
         let basePrice = 0;
-        
+
         const isCoinsService = service?.name?.toLowerCase().includes('coin');
-        
+
         if (isCoinsService) {
             // For coins service, calculate from coin amount only
             service?.options?.forEach(option => {
@@ -323,7 +323,7 @@ export default function ServiceDetailsPage() {
         } else {
             // For other services, start with base price
             basePrice = Number(service?.basePrice || 0);
-            
+
             // Add price from selected options
             service?.options?.forEach(option => {
                 const selected = selectedOptions[option.id];
@@ -341,7 +341,7 @@ export default function ServiceDetailsPage() {
             });
             basePrice *= quantity;
         }
-        
+
         if (speedType === 'express') {
             return (basePrice * 0.20).toFixed(2); // 20% of base
         } else if (speedType === 'super_express') {
@@ -363,87 +363,88 @@ export default function ServiceDetailsPage() {
     }
 
     return (
-        <div className="relative flex min-h-screen flex-col bg-[#0B0B0B] text-white font-[family-name:var(--font-space-grotesk)]">
-            <main className="flex-grow w-full px-6 py-8 max-w-7xl mx-auto">
-                {/* Breadcrumbs */}
-                <div className="flex items-center gap-2 text-sm text-gray-500 mb-8 font-[family-name:var(--font-noto-sans)]">
+        <div className="relative flex min-h screen flex-col bg-[#0B0B0B] text-white font-sans">
+            <main className="grow w-full max-w-[1440px] mx-auto px-6 lg:px-10 pt-9 pb-8">
+                {/* Tactical Breadcrumbs */}
+                <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 mb-9">
                     <Link href="/" className="hover:text-primary transition-colors">Home</Link>
-                    <ChevronRight className="size-3" />
+                    <span className="material-symbols-outlined text-[10px]">chevron_right</span>
                     <Link href="/games" className="hover:text-primary transition-colors">Games</Link>
-                    <ChevronRight className="size-3" />
+                    <span className="material-symbols-outlined text-[10px]">chevron_right</span>
                     <Link href={`/games/${service.game.slug}/services`} className="hover:text-primary transition-colors">{service.game.name}</Link>
-                    <ChevronRight className="size-3" />
-                    <span className="text-gray-300">{service.name}</span>
+                    <span className="material-symbols-outlined text-[10px]">chevron_right</span>
+                    <span className="text-white">{service.name}</span>
                 </div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 relative">
                     {/* Left Column */}
                     <div className="lg:col-span-8 flex flex-col gap-10">
                         {/* Hero Section */}
-                        <div className="relative rounded-2xl overflow-hidden border border-[#1c1c1c] bg-[#141414]">
+                        <div className="relative rounded-2xl overflow-hidden border border-white/5 bg-[#141414] shadow-2xl">
                             {/* Background Image (if available) */}
                             {service.image && (
-                                <div className="absolute inset-0 opacity-20">
+                                <div className="absolute inset-0 opacity-20 pointer-events-none">
                                     <img
                                         src={service.image}
                                         alt={service.name}
                                         className="w-full h-full object-cover"
                                     />
-                                    <div className="absolute inset-0 bg-gradient-to-r from-[#141414] via-[#141414]/95 to-[#141414]/80"></div>
+                                    <div className="absolute inset-0 bg-linear-to-r from-[#141414] via-[#141414]/95 to-transparent"></div>
                                 </div>
                             )}
-                            
-                            <div className="absolute top-0 right-0 w-64 h-64 bg-primary/10 blur-[80px] rounded-full pointer-events-none"></div>
-                            
-                            <div className="relative z-10 p-8 flex gap-6">
+
+                            <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 blur-[80px] rounded-full pointer-events-none"></div>
+
+                            <div className="relative z-10 p-8 flex flex-col md:flex-row gap-8">
                                 {/* Service Image Thumbnail */}
                                 {service.image && (
                                     <div className="hidden md:block shrink-0">
-                                        <div className="w-32 h-32 rounded-xl overflow-hidden border-2 border-primary/30 shadow-lg shadow-primary/20">
+                                        <div className="w-40 h-40 rounded-xl overflow-hidden border border-white/10 shadow-2xl group transition-all duration-500 hover:border-primary/50">
                                             <img
                                                 src={service.image}
                                                 alt={service.name}
-                                                className="w-full h-full object-cover"
+                                                className="w-full h-full object-cover group-hover:scale-110 transition-all duration-1000 opacity-60 group-hover:opacity-100"
                                             />
                                         </div>
                                     </div>
                                 )}
-                                
+
                                 <div className="flex flex-col gap-4 flex-1">
                                     <div className="flex items-center justify-between gap-4">
-                                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded bg-primary/10 border border-primary/20 text-primary text-xs font-bold uppercase tracking-wider">
-                                            <Zap className="size-3" />
-                                            Hot Service
+                                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-[10px] font-bold uppercase tracking-widest italic">
+                                            <span className="material-symbols-outlined text-xs">bolt</span>
+                                            Service Detail
                                         </div>
                                         <button
                                             onClick={toggleFavorite}
                                             disabled={favoriteLoading}
-                                            className={`flex items-center gap-2 px-4 py-2 rounded-lg border transition-all ${
-                                                isFavorite
-                                                    ? 'bg-primary/10 border-primary text-primary'
-                                                    : 'bg-[#1c1c1c] border-[#2a1a1c] text-gray-400 hover:border-primary/50 hover:text-primary'
-                                            }`}
+                                            className={`flex items-center gap-2 px-4 py-2 rounded-lg border transition-all duration-300 ${isFavorite
+                                                ? 'bg-primary border-primary text-white shadow-lg shadow-primary/20'
+                                                : 'bg-white/5 border-white/10 text-slate-400 hover:border-primary/50 hover:text-white'
+                                                }`}
                                         >
-                                            <Heart className={`size-4 ${isFavorite ? 'fill-current' : ''}`} />
-                                            <span className="text-sm font-bold">{isFavorite ? 'Saved' : 'Save'}</span>
+                                            <span className={`material-symbols-outlined text-[18px] ${isFavorite ? 'fill-1' : ''}`}>favorite</span>
+                                            <span className="text-[11px] font-black uppercase tracking-widest">{isFavorite ? 'Saved' : 'Save Asset'}</span>
                                         </button>
                                     </div>
-                                    <h1 className="text-4xl md:text-5xl font-bold text-white uppercase tracking-tight">{service.name}</h1>
-                                    <p className="text-gray-400 font-[family-name:var(--font-noto-sans)] leading-relaxed max-w-2xl">
+                                    <h1 className="text-4xl md:text-6xl font-black text-white uppercase tracking-tighter font-cairo">
+                                        {service.name}
+                                    </h1>
+                                    <p className="text-slate-400 text-sm font-medium leading-relaxed max-w-2xl italic">
                                         {service.description}
                                     </p>
-                                    <div className="flex flex-wrap gap-4 mt-2">
-                                        <div className="flex items-center gap-1.5 text-sm text-gray-300 bg-[#1c1c1c] px-3 py-1.5 rounded border border-[#2a1a1c]">
-                                            <CheckCircle2 className="size-4 text-primary" />
-                                            Verified Pros
+                                    <div className="flex flex-wrap gap-3 mt-4">
+                                        <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-slate-300 bg-white/5 px-4 py-2 rounded-lg border border-white/5">
+                                            <span className="material-symbols-outlined text-primary text-sm">verified</span>
+                                            Field Experts
                                         </div>
-                                        <div className="flex items-center gap-1.5 text-sm text-gray-300 bg-[#1c1c1c] px-3 py-1.5 rounded border border-[#2a1a1c]">
-                                            <Clock className="size-4 text-primary" />
-                                            Start within 15m
+                                        <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-slate-300 bg-white/5 px-4 py-2 rounded-lg border border-white/5">
+                                            <span className="material-symbols-outlined text-primary text-sm">schedule</span>
+                                            Rapid Deployment
                                         </div>
-                                        <div className="flex items-center gap-1.5 text-sm text-gray-300 bg-[#1c1c1c] px-3 py-1.5 rounded border border-[#2a1a1c]">
-                                            <Lock className="size-4 text-primary" />
-                                            VPN Protection
+                                        <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-slate-300 bg-white/5 px-4 py-2 rounded-lg border border-white/5">
+                                            <span className="material-symbols-outlined text-primary text-sm">shield_locked</span>
+                                            Encrypted Protocol
                                         </div>
                                     </div>
                                 </div>
@@ -533,7 +534,7 @@ export default function ServiceDetailsPage() {
                                             {option.values.sort((a, b) => a.order - b.order).map((value) => (
                                                 <label
                                                     key={value.id}
-                                                    className="flex items-center justify-between p-4 rounded-xl border border-[#2a1a1c] bg-[#141414] hover:bg-[#1c1c1c] cursor-pointer transition-all has-[:checked]:border-primary has-[:checked]:bg-primary/10"
+                                                    className="flex items-center justify-between p-4 rounded-xl border border-[#2a1a1c] bg-[#141414] hover:bg-[#1c1c1c] cursor-pointer transition-all has-checked:border-primary has-checked:bg-primary/10"
                                                 >
                                                     <div className="flex items-center gap-3">
                                                         <input
@@ -575,8 +576,8 @@ export default function ServiceDetailsPage() {
                                                 className="w-full bg-[#1c1c1c] border border-[#2a1a1c] rounded-lg p-4 flex items-center justify-between text-gray-300 hover:border-primary/50 transition-colors"
                                             >
                                                 <span className="font-medium">
-                                                    {selectedOptions[option.id] 
-                                                        ? option.values.find(v => v.value === selectedOptions[option.id])?.label 
+                                                    {selectedOptions[option.id]
+                                                        ? option.values.find(v => v.value === selectedOptions[option.id])?.label
                                                         : `Choose ${option.label.toLowerCase()}...`}
                                                 </span>
                                                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -604,9 +605,8 @@ export default function ServiceDetailsPage() {
                                                                     dropdown.classList.add('hidden');
                                                                 }
                                                             }}
-                                                            className={`w-full flex items-center justify-between p-3 rounded-lg hover:bg-[#252525] cursor-pointer transition-colors text-left ${
-                                                                selectedOptions[option.id] === value.value ? 'bg-primary/10 border border-primary/20' : ''
-                                                            }`}
+                                                            className={`w-full flex items-center justify-between p-3 rounded-lg hover:bg-[#252525] cursor-pointer transition-colors text-left ${selectedOptions[option.id] === value.value ? 'bg-primary/10 border border-primary/20' : ''
+                                                                }`}
                                                         >
                                                             <span className="text-sm text-gray-300 font-medium">{value.label}</span>
                                                             {value.priceModifier > 0 && (
@@ -634,7 +634,7 @@ export default function ServiceDetailsPage() {
                                                 className="w-full bg-[#1c1c1c] border border-[#2a1a1c] rounded-lg p-4 flex items-center justify-between text-gray-300 hover:border-primary/50 transition-colors"
                                             >
                                                 <span className="font-medium">
-                                                    {(selectedOptions[option.id] || []).length > 0 
+                                                    {(selectedOptions[option.id] || []).length > 0
                                                         ? `${(selectedOptions[option.id] || []).length} ${option.label.toLowerCase()} selected`
                                                         : `Choose ${option.label.toLowerCase()}...`}
                                                 </span>
@@ -729,7 +729,7 @@ export default function ServiceDetailsPage() {
                                                     className="w-full bg-[#1c1c1c] border border-[#2a1a1c] rounded-lg px-4 py-3 text-white text-lg font-bold focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary transition-colors"
                                                 />
                                             </div>
-                                            
+
                                             {/* Range Slider */}
                                             <div className="p-4 rounded-lg bg-[#1c1c1c] border border-[#2a1a1c]">
                                                 <input
@@ -761,9 +761,9 @@ export default function ServiceDetailsPage() {
                             {/* Completion Method */}
                             {service.completionMethods && service.completionMethods.length > 0 && (
                                 <section>
-                                    <h3 className="text-lg font-bold text-white uppercase tracking-wide mb-4 flex items-center gap-2">
-                                        <span className="w-1 h-5 bg-primary rounded-full"></span>
-                                        {(service.options?.length || 0) + (service.platforms?.length > 0 ? 2 : 1)}. Completion Method
+                                    <h3 className="text-lg font-black text-white uppercase tracking-widest mb-6 flex items-center gap-3 font-cairo">
+                                        <span className="w-1 h-6 bg-primary rounded-full"></span>
+                                        {(service.options?.length || 0) + (service.platforms?.length > 0 ? 2 : 1)}. Deployment Method
                                     </h3>
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                         {service.completionMethods.map((method) => (
@@ -776,16 +776,16 @@ export default function ServiceDetailsPage() {
                                                     onChange={(e) => setCompletionMethod(e.target.value)}
                                                     className="peer sr-only"
                                                 />
-                                                <div className="flex items-start gap-4 p-5 rounded-xl border border-[#2a1a1c] bg-[#141414] hover:bg-[#1c1c1c] transition-all peer-checked:border-primary peer-checked:bg-primary/10">
-                                                    <div className="size-5 rounded-full border border-gray-600 flex items-center justify-center mt-0.5 shrink-0 peer-checked:border-primary">
-                                                        <div className="size-2.5 bg-white rounded-full opacity-0 peer-checked:opacity-100"></div>
+                                                <div className="flex items-start gap-4 p-5 rounded-xl border-2 border-white/5 bg-[#141414] hover:border-primary/30 transition-all peer-checked:border-primary peer-checked:bg-primary/5">
+                                                    <div className="size-5 rounded-full border-2 border-slate-700 flex items-center justify-center mt-0.5 shrink-0 peer-checked:border-primary">
+                                                        <div className="size-2.5 bg-primary rounded-full opacity-0 peer-checked:opacity-100 transition-opacity"></div>
                                                     </div>
                                                     <div>
-                                                        <h4 className="font-bold text-white text-base mb-1">{method}</h4>
-                                                        <p className="text-xs text-gray-400 font-[family-name:var(--font-noto-sans)]">
+                                                        <h4 className="font-black text-white text-sm uppercase tracking-tight mb-1">{method}</h4>
+                                                        <p className="text-[11px] text-slate-500 font-medium leading-relaxed italic">
                                                             {method.toLowerCase().includes('piloted')
-                                                                ? 'Our pro logs into your account to complete the service. Requires account details.'
-                                                                : 'You play on your own account. Our booster will trade materials to you in-raid.'}
+                                                                ? 'Our pro operative logs into your account. Encryption Active.'
+                                                                : 'You play on your own account alongside our squad. In-raid trading active.'}
                                                         </p>
                                                     </div>
                                                 </div>
@@ -821,7 +821,7 @@ export default function ServiceDetailsPage() {
                                                     +${getSpeedBoostPrice('express')}
                                                 </span>
                                             </div>
-                                            <p className="text-xs text-gray-400 font-[family-name:var(--font-noto-sans)]">Priority queue. Estimated start: 15-30 mins.</p>
+                                            <p className="text-xs text-gray-400 font-cairo">Priority queue. Estimated start: 15-30 mins.</p>
                                         </div>
                                     </label>
 
@@ -844,7 +844,7 @@ export default function ServiceDetailsPage() {
                                                     +${getSpeedBoostPrice('super_express')}
                                                 </span>
                                             </div>
-                                            <p className="text-xs text-gray-400 font-[family-name:var(--font-noto-sans)]">Immediate start. Dedicated booster assigned instantly.</p>
+                                            <p className="text-xs text-gray-400 font-cairo">Immediate start. Dedicated booster assigned instantly.</p>
                                         </div>
                                     </label>
                                 </div>
@@ -866,41 +866,38 @@ export default function ServiceDetailsPage() {
                                 <div className="flex gap-8 overflow-x-auto">
                                     <button
                                         onClick={() => setActiveTab("description")}
-                                        className={`pb-4 text-sm font-bold uppercase tracking-wider transition-colors ${
-                                            activeTab === "description"
-                                                ? "text-primary border-b-2 border-primary"
-                                                : "text-gray-500 hover:text-gray-300"
-                                        }`}
+                                        className={`pb-4 text-sm font-bold uppercase tracking-wider transition-colors ${activeTab === "description"
+                                            ? "text-primary border-b-2 border-primary"
+                                            : "text-gray-500 hover:text-gray-300"
+                                            }`}
                                     >
                                         Description
                                     </button>
                                     <button
                                         onClick={() => setActiveTab("requirements")}
-                                        className={`pb-4 text-sm font-bold uppercase tracking-wider transition-colors ${
-                                            activeTab === "requirements"
-                                                ? "text-primary border-b-2 border-primary"
-                                                : "text-gray-500 hover:text-gray-300"
-                                        }`}
+                                        className={`pb-4 text-sm font-bold uppercase tracking-wider transition-colors ${activeTab === "requirements"
+                                            ? "text-primary border-b-2 border-primary"
+                                            : "text-gray-500 hover:text-gray-300"
+                                            }`}
                                     >
                                         Requirements
                                     </button>
                                     <button
                                         onClick={() => setActiveTab("reviews")}
-                                        className={`pb-4 text-sm font-bold uppercase tracking-wider transition-colors ${
-                                            activeTab === "reviews"
-                                                ? "text-primary border-b-2 border-primary"
-                                                : "text-gray-500 hover:text-gray-300"
-                                        }`}
+                                        className={`pb-4 text-sm font-bold uppercase tracking-wider transition-colors ${activeTab === "reviews"
+                                            ? "text-primary border-b-2 border-primary"
+                                            : "text-gray-500 hover:text-gray-300"
+                                            }`}
                                     >
                                         Customer Reviews (24)
                                     </button>
                                 </div>
                             </div>
-                            <div className="text-gray-400 font-[family-name:var(--font-noto-sans)] leading-relaxed space-y-4">
+                            <div className="text-gray-400 font-cairo leading-relaxed space-y-4">
                                 {activeTab === "description" && (
                                     <>
                                         <p>{service.description}</p>
-                                        <h4 className="text-white font-bold mt-4 mb-2 font-[family-name:var(--font-space-grotesk)]">Service Includes:</h4>
+                                        <h4 className="text-white font-bold mt-4 mb-2 font-cairo">Service Includes:</h4>
                                         <ul className="list-disc pl-5 space-y-1 text-gray-400">
                                             <li>Professional service completion by verified players</li>
                                             <li>Safe and secure delivery using VPN matching your location</li>
@@ -930,16 +927,16 @@ export default function ServiceDetailsPage() {
                     <div className="lg:col-span-4">
                         <div className="sticky top-28 space-y-6">
                             {/* Quantity Selector */}
-                            <div className="bg-[#141414] border border-[#1c1c1c] rounded-2xl p-6 shadow-2xl">
-                                <h3 className="text-lg font-bold text-white uppercase tracking-wide mb-4 flex items-center gap-2">
-                                    <span className="w-1 h-5 bg-primary rounded-full"></span>
-                                    Order Quantity
+                            <div className="bg-[#141414] border border-white/5 rounded-2xl p-6 shadow-2xl">
+                                <h3 className="text-lg font-black text-white uppercase tracking-widest mb-6 flex items-center gap-3 font-cairo">
+                                    <span className="w-1 h-6 bg-primary rounded-full"></span>
+                                    Operational Scale
                                 </h3>
-                                <div className="p-4 rounded-lg bg-[#1c1c1c] border border-[#2a1a1c]">
+                                <div className="p-6 rounded-xl bg-white/5 border border-white/5 shadow-inner">
                                     <div className="flex justify-between items-end mb-6">
-                                        <label className="text-xs text-gray-400 font-bold uppercase tracking-tight">Quantity</label>
-                                        <div className="text-2xl font-bold text-primary">
-                                            {quantity} <span className="text-sm text-gray-500 font-normal tracking-normal uppercase">Units</span>
+                                        <label className="text-[10px] text-slate-500 font-bold uppercase tracking-[0.2em]">Quantity Units</label>
+                                        <div className="text-3xl font-black text-white font-cairo">
+                                            {quantity} <span className="text-[10px] text-primary font-bold tracking-widest uppercase">QTY</span>
                                         </div>
                                     </div>
                                     <input
@@ -949,25 +946,23 @@ export default function ServiceDetailsPage() {
                                         step="1"
                                         value={quantity}
                                         onChange={(e) => setQuantity(Number(e.target.value))}
-                                        className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer"
+                                        className="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-primary"
                                     />
-                                    <div className="flex justify-between mt-3 text-[10px] text-gray-500">
-                                        <span>1</span>
-                                        {(service?.maxQuantity || 15) >= 5 && <span>5</span>}
-                                        {(service?.maxQuantity || 15) >= 10 && <span>10</span>}
-                                        <span>{service?.maxQuantity || 15}</span>
+                                    <div className="flex justify-between mt-4 text-[10px] font-black text-slate-500 uppercase tracking-widest">
+                                        <span>Min 01</span>
+                                        <span>Limit {service?.maxQuantity || 15}</span>
                                     </div>
                                 </div>
                             </div>
 
                             {/* Order Summary */}
-                            <div className="bg-[#141414] border border-[#1c1c1c] rounded-2xl p-6 shadow-2xl relative overflow-hidden">
-                                <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 blur-[60px] rounded-full pointer-events-none"></div>
-                                <h3 className="text-xl font-bold text-white uppercase tracking-tight mb-6">Order Summary</h3>
-                                
+                            <div className="bg-[#141414] border border-white/5 rounded-2xl p-6 shadow-2xl relative overflow-hidden group">
+                                <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 blur-[60px] rounded-full pointer-events-none group-hover:bg-primary/10 transition-colors"></div>
+                                <h3 className="text-lg font-black text-white uppercase tracking-widest mb-6 font-cairo">Mission Summary</h3>
+
                                 {/* Promo Code */}
-                                <div className="mb-6">
-                                    <label className="text-xs text-gray-400 font-bold uppercase tracking-tight mb-2 block">Promo Code</label>
+                                <div className="mb-8">
+                                    <label className="text-[10px] text-slate-500 font-bold uppercase tracking-[0.2em] mb-3 block italic">Access Key (Promo)</label>
                                     <div className="flex gap-2">
                                         <input
                                             type="text"
@@ -977,135 +972,127 @@ export default function ServiceDetailsPage() {
                                                 setPromoCodeError("");
                                                 setPromoCodeData(null);
                                             }}
-                                            placeholder="Enter code"
-                                            className="flex-1 bg-[#1c1c1c] border border-[#2a1a1c] rounded-lg px-3 py-2 text-white text-sm placeholder-gray-500 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary transition-colors"
+                                            placeholder="ENTER KEY..."
+                                            className="flex-1 bg-white/5 border border-white/5 rounded-lg px-4 py-3 text-white text-xs font-bold uppercase tracking-widest placeholder:text-slate-600 focus:border-primary/50 focus:outline-none focus:ring-1 focus:ring-primary/50 transition-all"
                                         />
                                         <button
                                             type="button"
                                             onClick={validatePromoCode}
                                             disabled={!promoCode.trim() || isValidatingPromo}
-                                            className="px-4 py-2 bg-primary hover:bg-primary-dark text-white text-sm font-bold uppercase rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                                            className="px-6 py-3 bg-[#222] hover:bg-primary text-white text-[10px] font-black uppercase tracking-widest rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed border border-white/5"
                                         >
-                                            {isValidatingPromo ? 'Checking...' : 'Apply'}
+                                            {isValidatingPromo ? 'AUTH...' : 'DECODER'}
                                         </button>
                                     </div>
                                     {promoCodeError && (
-                                        <p className="text-red-500 text-xs mt-2">{promoCodeError}</p>
+                                        <p className="text-primary text-[10px] font-black uppercase tracking-widest mt-3 flex items-center gap-1 leading-none">
+                                            <span className="material-symbols-outlined text-xs">error</span> {promoCodeError}
+                                        </p>
                                     )}
                                     {promoCodeData && (
-                                        <p className="text-green-500 text-xs mt-2">
-                                            ✓ {promoCodeData.name} applied! 
-                                            {promoCodeData.discountType === 'percentage' 
-                                                ? ` ${promoCodeData.discount}% off` 
-                                                : ` $${promoCodeData.discount} off`}
+                                        <p className="text-green-500 text-[10px] font-black uppercase tracking-widest mt-3 flex items-center gap-1 leading-none">
+                                            <span className="material-symbols-outlined text-xs">check_circle</span>
+                                            Access Granted: {promoCodeData.discountType === 'percentage' ? `${promoCodeData.discount}%` : `$${promoCodeData.discount}`}
                                         </p>
                                     )}
                                 </div>
 
-                                <div className="space-y-4 mb-6 border-b border-[#2a1a1c] pb-6">
-                                    <div className="flex justify-between text-sm">
-                                        <span className="text-gray-400">Service</span>
-                                        <span className="text-white font-medium text-right">{service.name}</span>
+                                <div className="space-y-4 mb-8 border-b border-white/5 pb-8">
+                                    <div className="flex justify-between items-center text-[10px]">
+                                        <span className="text-slate-500 font-bold uppercase tracking-widest italic">Operational Data</span>
+                                        <span className="text-white font-black uppercase tracking-tight text-right">{service.name}</span>
                                     </div>
                                     {platform && (
-                                        <div className="flex justify-between text-sm">
-                                            <span className="text-gray-400">Platform</span>
-                                            <span className="text-white font-medium">{platform}</span>
+                                        <div className="flex justify-between items-center text-[10px]">
+                                            <span className="text-slate-500 font-bold uppercase tracking-widest italic">Sector (Platform)</span>
+                                            <span className="text-white font-black uppercase tracking-tight">{platform}</span>
                                         </div>
                                     )}
-                                    <div className="flex justify-between text-sm">
-                                        <span className="text-gray-400">Quantity</span>
-                                        <span className="text-white font-medium">{quantity}</span>
+                                    <div className="flex justify-between items-center text-[10px]">
+                                        <span className="text-slate-500 font-bold uppercase tracking-widest italic">Resource Units</span>
+                                        <span className="text-white font-black uppercase tracking-tight">{quantity}</span>
                                     </div>
                                     {completionMethod && (
-                                        <div className="flex justify-between text-sm">
-                                            <span className="text-gray-400">Method</span>
-                                            <span className="text-white font-medium">{completionMethod}</span>
+                                        <div className="flex justify-between items-center text-[10px]">
+                                            <span className="text-slate-500 font-bold uppercase tracking-widest italic">Protocol (Method)</span>
+                                            <span className="text-white font-black uppercase tracking-tight">{completionMethod}</span>
                                         </div>
                                     )}
                                     {completionSpeed && (
-                                        <div className="flex justify-between text-sm">
-                                            <span className="text-gray-400">Speed</span>
-                                            <span className="text-white font-medium">
-                                                {completionSpeed === 'express' 
-                                                    ? `Express (+$${getSpeedBoostPrice('express')})` 
-                                                    : `Super Express (+$${getSpeedBoostPrice('super_express')})`}
+                                        <div className="flex justify-between items-center text-[10px]">
+                                            <span className="text-slate-500 font-bold uppercase tracking-widest italic">Urgency Status</span>
+                                            <span className="text-primary font-black uppercase tracking-tight">
+                                                {completionSpeed === 'express' ? 'EXPRESS +20%' : 'SUPER EXPRESS +40%'}
                                             </span>
                                         </div>
                                     )}
                                 </div>
-                                <div className="flex items-end justify-between mb-6">
-                                    <span className="text-gray-400 text-sm font-medium">Total Price</span>
-                                    <span className="text-3xl font-bold text-white">${calculateTotalPrice()}</span>
+
+                                <div className="flex items-end justify-between mb-8">
+                                    <div className="flex flex-col">
+                                        <span className="text-slate-500 text-[10px] font-bold uppercase tracking-[0.2em]">Total Allocation</span>
+                                        <span className="text-slate-600 text-[10px] italic">Finalized secure transaction</span>
+                                    </div>
+                                    <span className="text-4xl font-black text-white tracking-tighter font-cairo">${calculateTotalPrice()}</span>
                                 </div>
-                                <button 
+
+                                <button
                                     onClick={handleOrderClick}
-                                    className="w-full py-4 bg-primary hover:bg-primary-dark text-white font-bold uppercase tracking-widest rounded-lg flex items-center justify-center gap-2 group transition-all shadow-lg shadow-primary/20 hover:shadow-primary/40"
+                                    className="w-full py-5 bg-primary hover:bg-[#8a0e1d] text-white font-black text-sm uppercase tracking-[0.2em] rounded-xl flex items-center justify-center gap-3 group transition-all shadow-xl shadow-primary/20 hover:shadow-primary/40 transform hover:-translate-y-1"
                                 >
-                                    Order Now
-                                    <ArrowRight className="size-5 group-hover:translate-x-1 transition-transform" />
+                                    AUTHORIZE DEPLOYMENT
+                                    <span className="material-symbols-outlined text-xl group-hover:translate-x-1 transition-transform">bolt</span>
                                 </button>
-                                <div className="flex items-center justify-center gap-2 mt-4 text-[10px] text-gray-500 uppercase tracking-widest">
-                                    <Lock className="size-3" /> Secure 256-bit SSL Payment
+                                <div className="flex items-center justify-center gap-2 mt-6 text-[10px] text-slate-500 font-black uppercase tracking-widest">
+                                    <span className="material-symbols-outlined text-sm">lock</span> 256-bit Secure Protocol
                                 </div>
                             </div>
 
                             {/* Trust Badges */}
-                            <div className="bg-[#141414] border border-[#1c1c1c] rounded-xl p-6 grid grid-cols-2 gap-4">
-                                <div className="flex flex-col items-center text-center gap-2">
-                                    <div className="size-10 rounded-full bg-[#1c1c1c] flex items-center justify-center text-primary">
-                                        <Shield className="size-5" />
+                            <div className="bg-[#111111] border border-white/5 rounded-xl p-6 grid grid-cols-2 gap-4 shadow-2xl">
+                                {[
+                                    { icon: 'verified_user', label: 'Secured' },
+                                    { icon: 'support_agent', label: 'HQ Link' },
+                                    { icon: 'vpn_lock', label: 'Encrypted' },
+                                    { icon: 'payments', label: 'Verified' }
+                                ].map((badge) => (
+                                    <div key={badge.label} className="flex flex-col items-center text-center gap-2 group">
+                                        <div className="size-12 rounded-xl bg-white/5 border border-white/5 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all duration-300">
+                                            <span className="material-symbols-outlined text-xl">{badge.icon}</span>
+                                        </div>
+                                        <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest group-hover:text-slate-300 transition-colors">{badge.label}</span>
                                     </div>
-                                    <span className="text-xs font-bold text-gray-300">100% Safe</span>
-                                </div>
-                                <div className="flex flex-col items-center text-center gap-2">
-                                    <div className="size-10 rounded-full bg-[#1c1c1c] flex items-center justify-center text-primary">
-                                        <Clock className="size-5" />
-                                    </div>
-                                    <span className="text-xs font-bold text-gray-300">24/7 Support</span>
-                                </div>
-                                <div className="flex flex-col items-center text-center gap-2">
-                                    <div className="size-10 rounded-full bg-[#1c1c1c] flex items-center justify-center text-primary">
-                                        <Lock className="size-5" />
-                                    </div>
-                                    <span className="text-xs font-bold text-gray-300">VPN Protected</span>
-                                </div>
-                                <div className="flex flex-col items-center text-center gap-2">
-                                    <div className="size-10 rounded-full bg-[#1c1c1c] flex items-center justify-center text-primary">
-                                        <TrendingUp className="size-5" />
-                                    </div>
-                                    <span className="text-xs font-bold text-gray-300">Money Back</span>
-                                </div>
+                                ))}
                             </div>
                         </div>
                     </div>
                 </div>
             </main>
-            
+
             {/* Payment Method Modal */}
             {showPaymentModal && (
-                <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-                    <div className="bg-[#141414] border border-[#1c1c1c] rounded-2xl p-8 max-w-md w-full shadow-2xl relative">
+                <div className="fixed inset-0 bg-black/90 backdrop-blur-md z-100 flex items-center justify-center p-4">
+                    <div className="bg-[#0B0B0B] border border-white/5 rounded-2xl p-8 max-w-md w-full shadow-[0_0_50px_rgba(0,0,0,1)] relative overflow-hidden">
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-primary/10 blur-[60px] rounded-full pointer-events-none"></div>
+
                         {/* Close button */}
                         <button
                             onClick={() => {
                                 setShowPaymentModal(false);
                                 setSelectedPaymentMethod(null);
                             }}
-                            className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors"
+                            className="absolute top-6 right-6 text-slate-500 hover:text-white transition-colors"
                         >
-                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                            </svg>
+                            <span className="material-symbols-outlined">close</span>
                         </button>
 
-                        <h2 className="text-2xl font-bold text-white uppercase tracking-tight mb-2">Choose Payment Method</h2>
-                        <p className="text-sm text-gray-400 mb-6">Select your preferred payment method to complete your order</p>
+                        <h2 className="text-2xl font-black text-white uppercase tracking-widest mb-2 font-cairo">DEPLOYMENT GATEWAY</h2>
+                        <p className="text-[11px] text-slate-500 font-bold uppercase tracking-widest mb-8 italic">Choose your secure financial protocol</p>
 
                         {/* Payment Methods */}
-                        <div className="space-y-3 mb-6">
+                        <div className="space-y-4 mb-10">
                             {/* PayPal */}
-                            <label className="cursor-pointer block">
+                            <label className="cursor-pointer block group">
                                 <input
                                     type="radio"
                                     name="paymentMethod"
@@ -1114,25 +1101,25 @@ export default function ServiceDetailsPage() {
                                     onChange={(e) => setSelectedPaymentMethod(e.target.value)}
                                     className="peer sr-only"
                                 />
-                                <div className="flex items-center gap-4 p-4 rounded-xl border-2 border-[#2a1a1c] bg-[#1c1c1c] hover:border-primary/50 transition-all peer-checked:border-primary peer-checked:bg-primary/10">
-                                    <div className="size-12 rounded-lg bg-[#0070ba] flex items-center justify-center">
+                                <div className="flex items-center gap-4 p-5 rounded-2xl border-2 border-white/5 bg-white/5 hover:border-primary/50 transition-all peer-checked:border-primary peer-checked:bg-primary/5">
+                                    <div className="size-14 rounded-xl bg-[#0070ba] flex items-center justify-center shadow-lg">
                                         <svg className="w-8 h-8" viewBox="0 0 24 24" fill="white">
-                                            <path d="M20.067 8.478c.492.88.556 2.014.3 3.327-.74 3.806-3.276 5.12-6.514 5.12h-.5a.805.805 0 00-.794.68l-.04.22-.63 3.993-.028.15a.805.805 0 01-.794.68H7.72a.483.483 0 01-.477-.558L8.926 13.7a.805.805 0 01.794-.68h2.344c4.323 0 7.255-2.203 8.003-6.542z"/>
-                                            <path d="M6.124 3.65A.805.805 0 016.916 3h6.553c1.587 0 2.726.33 3.49 1.053.732.692 1.131 1.728 1.218 3.13-1.084 4.83-4.504 7.29-9.616 7.29H6.916a.805.805 0 00-.794.68l-.952 6.035a.483.483 0 01-.477.558H2.175a.483.483 0 01-.477-.558z" opacity=".7"/>
+                                            <path d="M20.067 8.478c.492.88.556 2.014.3 3.327-.74 3.806-3.276 5.12-6.514 5.12h-.5a.805.805 0 00-.794.68l-.04.22-.63 3.993-.028.15a.805.805 0 01-.794.68H7.72a.483.483 0 01-.477-.558L8.926 13.7a.805.805 0 01.794-.68h2.344c4.323 0 7.255-2.203 8.003-6.542z" />
+                                            <path d="M6.124 3.65A.805.805 0 016.916 3h6.553c1.587 0 2.726.33 3.49 1.053.732.692 1.131 1.728 1.218 3.13-1.084 4.83-4.504 7.29-9.616 7.29H6.916a.805.805 0 00-.794.68l-.952 6.035a.483.483 0 01-.477.558H2.175a.483.483 0 01-.477-.558z" opacity=".7" />
                                         </svg>
                                     </div>
                                     <div className="flex-1">
-                                        <h3 className="font-bold text-white">PayPal</h3>
-                                        <p className="text-xs text-gray-400">Fast and secure payment</p>
+                                        <h3 className="font-black text-white text-sm uppercase tracking-tight">PAYPAL SECURE</h3>
+                                        <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest italic">Instant Verification</p>
                                     </div>
-                                    <div className="size-5 rounded-full border-2 border-gray-600 flex items-center justify-center peer-checked:border-primary">
-                                        <div className="size-2.5 bg-primary rounded-full opacity-0 peer-checked:opacity-100"></div>
+                                    <div className="size-6 rounded-full border-2 border-slate-700 flex items-center justify-center peer-checked:border-primary transition-colors">
+                                        <div className="size-3 bg-primary rounded-full opacity-0 peer-checked:opacity-100 transition-opacity"></div>
                                     </div>
                                 </div>
                             </label>
 
                             {/* Crypto */}
-                            <label className="cursor-pointer block">
+                            <label className="cursor-pointer block group">
                                 <input
                                     type="radio"
                                     name="paymentMethod"
@@ -1141,18 +1128,16 @@ export default function ServiceDetailsPage() {
                                     onChange={(e) => setSelectedPaymentMethod(e.target.value)}
                                     className="peer sr-only"
                                 />
-                                <div className="flex items-center gap-4 p-4 rounded-xl border-2 border-[#2a1a1c] bg-[#1c1c1c] hover:border-primary/50 transition-all peer-checked:border-primary peer-checked:bg-primary/10">
-                                    <div className="size-12 rounded-lg bg-gradient-to-br from-orange-500 to-yellow-500 flex items-center justify-center">
-                                        <svg className="w-8 h-8" viewBox="0 0 24 24" fill="white">
-                                            <path d="M23.638 14.904c-1.602 6.43-8.113 10.34-14.542 8.736C2.67 22.05-1.244 15.525.362 9.105 1.962 2.67 8.475-1.243 14.9.358c6.43 1.605 10.342 8.115 8.738 14.548v-.002zm-6.35-4.613c.24-1.59-.974-2.45-2.64-3.03l.54-2.153-1.315-.33-.525 2.107c-.345-.087-.705-.167-1.064-.25l.526-2.127-1.32-.33-.54 2.165c-.285-.067-.565-.132-.84-.2l-1.815-.45-.35 1.407s.975.225.955.236c.535.136.63.486.615.766l-1.477 5.92c-.075.166-.24.406-.614.314.015.02-.96-.24-.96-.24l-.66 1.51 1.71.426.93.242-.54 2.19 1.32.327.54-2.17c.36.1.705.19 1.05.273l-.51 2.154 1.32.33.545-2.19c2.24.427 3.93.257 4.64-1.774.57-1.637-.03-2.58-1.217-3.196.854-.193 1.5-.76 1.68-1.93h.01zm-3.01 4.22c-.404 1.64-3.157.75-4.05.53l.72-2.9c.896.23 3.757.67 3.33 2.37zm.41-4.24c-.37 1.49-2.662.735-3.405.55l.654-2.64c.744.18 3.137.524 2.75 2.084v.006z"/>
-                                        </svg>
+                                <div className="flex items-center gap-4 p-5 rounded-2xl border-2 border-white/5 bg-white/5 hover:border-primary/50 transition-all peer-checked:border-primary peer-checked:bg-primary/5">
+                                    <div className="size-14 rounded-xl bg-linear-to-br from-orange-500 to-yellow-600 flex items-center justify-center shadow-lg">
+                                        <span className="material-symbols-outlined text-white text-3xl">currency_bitcoin</span>
                                     </div>
                                     <div className="flex-1">
-                                        <h3 className="font-bold text-white">Cryptocurrency</h3>
-                                        <p className="text-xs text-gray-400">Bitcoin, Ethereum & more</p>
+                                        <h3 className="font-black text-white text-sm uppercase tracking-tight">CRYPTO ANONYMOUS</h3>
+                                        <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest italic">BTC / ETH / USDT / LTC</p>
                                     </div>
-                                    <div className="size-5 rounded-full border-2 border-gray-600 flex items-center justify-center peer-checked:border-primary">
-                                        <div className="size-2.5 bg-primary rounded-full opacity-0 peer-checked:opacity-100"></div>
+                                    <div className="size-6 rounded-full border-2 border-slate-700 flex items-center justify-center peer-checked:border-primary transition-colors">
+                                        <div className="size-3 bg-primary rounded-full opacity-0 peer-checked:opacity-100 transition-opacity"></div>
                                     </div>
                                 </div>
                             </label>
@@ -1162,15 +1147,15 @@ export default function ServiceDetailsPage() {
                         <button
                             onClick={handlePurchase}
                             disabled={!selectedPaymentMethod}
-                            className="w-full py-4 bg-primary hover:bg-primary-dark text-white font-bold uppercase tracking-widest rounded-lg flex items-center justify-center gap-2 transition-all shadow-lg shadow-primary/20 hover:shadow-primary/40 disabled:opacity-50 disabled:cursor-not-allowed mb-4"
+                            className="w-full py-5 bg-primary hover:bg-[#8a0e1d] text-white font-black text-sm uppercase tracking-[0.2em] rounded-xl flex items-center justify-center gap-3 transition-all shadow-xl shadow-primary/20 disabled:opacity-50 disabled:cursor-not-allowed mb-6"
                         >
-                            Buy Now - ${calculateTotalPrice()}
+                            CONFIRM DEPLOYMENT - ${calculateTotalPrice()}
                         </button>
 
                         {/* Security Notice */}
-                        <div className="flex items-center justify-center gap-2 pt-4 border-t border-[#2a1a1c]">
-                            <Lock className="size-4 text-gray-400" />
-                            <span className="text-xs text-gray-400">We protect your privacy with advanced encryption</span>
+                        <div className="flex items-center justify-center gap-2 pt-6 border-t border-white/5 text-[10px] text-slate-600 font-black uppercase tracking-widest">
+                            <span className="material-symbols-outlined text-sm text-primary">verified</span>
+                            End-to-End Encrypted Financial Protocol
                         </div>
                     </div>
                 </div>
