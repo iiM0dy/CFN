@@ -15,8 +15,7 @@ export const metadata: Metadata = {
   title: "CFNboost",
   description: "Ascend your gaming performance with CFNboost. Professional boosting, coaching, and progression services delivered by top-tier players.",
   icons: {
-    icon: "/assets/cfn_square.png",
-    apple: "/assets/cfn_square.png",
+    icon: "/assets/cfn_no_background.png",
   },
   openGraph: {
     title: "CFNboost",
@@ -25,7 +24,7 @@ export const metadata: Metadata = {
     siteName: "CFNboost",
     images: [
       {
-        url: "/assets/cfn_og.png",
+        url: "/assets/cfn_no_background.png",
         width: 1200,
         height: 630,
         alt: "CFNboost Logo",
@@ -38,7 +37,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "CFNboost",
     description: "Professional gaming boosting and progression services.",
-    images: ["/assets/cfn_og.png"],
+    images: ["/assets/cfn_no_background.png"],
   },
 };
 
