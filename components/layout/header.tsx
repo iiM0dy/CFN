@@ -15,7 +15,7 @@ export function Header() {
     const menuHoverTimeout = useRef<NodeJS.Timeout | null>(null)
 
     return (
-        <nav className="sticky top-0 z-50 border-b border-[#2A2A2A] bg-[#0B0B0B]/90 backdrop-blur-md">
+        <nav className="sticky top-0 z-50 border-b border-[#2A2A2A] bg-[#080808]/90 backdrop-blur-md">
             <div className="max-w-[1440px] mx-auto px-6 lg:px-10 h-20 flex items-center justify-between">
                 {/* Left: Logo + Site name */}
                 <div className="flex items-center gap-10">
@@ -187,7 +187,7 @@ export function Header() {
 
             {/* Mobile Nav */}
             {mobileOpen && (
-                <div className="md:hidden border-t border-[#2A2A2A] bg-[#0B0B0B]/95 backdrop-blur-md">
+                <div className="md:hidden border-t border-[#2A2A2A] bg-[#080808]/95 backdrop-blur-md">
                     <div className="flex flex-col p-6 gap-4">
                         <Link href="/games" onClick={() => setMobileOpen(false)} className="text-sm font-bold text-primary uppercase tracking-wider mb-2">Explore Games →</Link>
                         <Link href="/games/valorant/services" onClick={() => setMobileOpen(false)} className="text-sm font-medium text-gray-300 hover:text-white transition-colors">Valorant</Link>

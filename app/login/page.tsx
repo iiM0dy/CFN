@@ -9,6 +9,7 @@ import { LoginSchema, RegisterSchema } from "@/schemas";
 import { login, register } from "@/actions/auth";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { CFNLogo } from "@/components/layout/cfnboost-logo";
 
 export default function LoginPage() {
     const [isLogin, setIsLogin] = useState(true);
@@ -57,7 +58,7 @@ export default function LoginPage() {
     };
 
     return (
-        <div className="bg-[#0B0B0B] text-white min-h-screen flex items-center justify-center p-4 relative overflow-hidden font-sans">
+        <div className="bg-[#080808] text-white min-h-screen flex items-center justify-center p-4 relative overflow-hidden font-sans">
             {/* Ambient Red Glow Background */}
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(175,18,37,0.15)_0%,rgba(11,11,11,0)_70%)] pointer-events-none z-0" />
             {/* Decorative geometric elements */}
@@ -80,9 +81,12 @@ export default function LoginPage() {
                     </div>
                     {/* Content on top of image */}
                     <div className="relative z-10">
-                        <div className="flex items-center gap-2 mb-8">
-                            <span className="material-symbols-outlined text-primary text-3xl">sports_esports</span>
-                            <span className="font-bold text-xl tracking-wider">CFNboost</span>
+                        <div className="flex items-center gap-4 mb-8">
+                            <CFNLogo className="size-10" />
+                            <span className="font-bold text-2xl tracking-tight uppercase font-[family-name:var(--font-space-grotesk)]">
+                                <span className="text-primary">CFN</span>
+                                <span className="text-white">BOOST</span>
+                            </span>
                         </div>
                     </div>
                     <div className="relative z-10 mt-auto">
@@ -117,9 +121,12 @@ export default function LoginPage() {
                 {/* Right Pane: Login Form */}
                 <div className="w-full md:w-7/12 bg-[#131313] flex flex-col p-8 md:p-12 lg:p-16 justify-center">
                     {/* Mobile Header Logo */}
-                    <div className="md:hidden flex items-center justify-center gap-2 mb-8 text-white">
-                        <span className="material-symbols-outlined text-primary text-3xl">sports_esports</span>
-                        <span className="font-bold text-xl tracking-wider">CFNboost</span>
+                    <div className="md:hidden flex items-center justify-center gap-3 mb-8 text-white">
+                        <CFNLogo className="size-8" />
+                        <span className="font-bold text-xl tracking-tight uppercase font-[family-name:var(--font-space-grotesk)]">
+                            <span className="text-primary">CFN</span>
+                            <span className="text-white">BOOST</span>
+                        </span>
                     </div>
 
                     {/* Tab Switcher */}

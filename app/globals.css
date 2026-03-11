@@ -4,7 +4,7 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  --background: #0B0B0B;
+  --background: #080808;
   --foreground: #ffffff;
 
   --card: #151515;
@@ -132,7 +132,7 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: #0B0B0B;
+  background: #080808;
 }
 
 ::-webkit-scrollbar-thumb {
