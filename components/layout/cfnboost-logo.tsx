@@ -4,7 +4,7 @@ export function CFNLogo({ className = "size-8" }: { className?: string }) {
     return (
         <div className={className}>
             <Image
-                src="/assets/cfn_no_background.png"
+                src="/assets/cfnboost-official-logo.png"
                 alt="CFNboost logo"
                 width={64}
                 height={64}

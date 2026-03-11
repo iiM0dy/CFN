@@ -21,12 +21,12 @@ export const metadata: Metadata = {
   title: "CFNboost",
   description: "Ascend your gaming performance with CFNboost. Professional boosting, coaching, and progression services delivered by top-tier players.",
   icons: {
-    icon: "/assets/cfn_no_background.png",
-    shortcut: "/assets/cfn_no_background.png",
-    apple: "/assets/cfn_no_background.png",
+    icon: "/assets/cfnboost-official-logo.png",
+    shortcut: "/assets/cfnboost-official-logo.png",
+    apple: "/assets/cfnboost-official-logo.png",
     other: {
       rel: "apple-touch-icon-precomposed",
-      url: "/assets/cfn_no_background.png",
+      url: "/assets/cfnboost-official-logo.png",
     },
   },
   openGraph: {
@@ -36,13 +36,13 @@ export const metadata: Metadata = {
     siteName: "CFNboost",
     images: [
       {
-        url: "/assets/cfn_no_background.png",
+        url: "/assets/cfnboost-official-logo.png",
         width: 1200,
         height: 630,
         alt: "CFNboost Logo",
       },
       {
-        url: "/assets/cfn_no_background.png",
+        url: "/assets/cfnboost-official-logo.png",
         width: 800,
         height: 800,
         alt: "CFNboost Square Logo",
@@ -55,7 +55,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "CFNboost",
     description: "Professional gaming boosting and progression services.",
-    images: ["/assets/cfn_no_background.png"],
+    images: ["/assets/cfnboost-official-logo.png"],
   },
 };
 
