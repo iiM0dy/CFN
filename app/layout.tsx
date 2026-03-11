@@ -19,7 +19,7 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.cfnboost.com"),
   title: "CFNboost",
-  description: "Ascend your gaming performance with CFNboost. Professional boosting, coaching, and progression services delivered by top-tier players.",
+  description: "Professional Gaming Boosting Services",
   icons: {
     icon: "/assets/cfnboost-v2.png",
     shortcut: "/assets/cfnboost-v2.png",
@@ -28,34 +28,6 @@ export const metadata: Metadata = {
       rel: "apple-touch-icon-precomposed",
       url: "/assets/cfnboost-v2.png",
     },
-  },
-  openGraph: {
-    title: "CFNboost",
-    description: "Professional gaming boosting and progression services.",
-    url: "https://www.cfnboost.com",
-    siteName: "CFNboost",
-    images: [
-      {
-        url: "/assets/cfnboost-v2.png",
-        width: 1200,
-        height: 630,
-        alt: "CFNboost Logo",
-      },
-      {
-        url: "/assets/cfnboost-v2.png",
-        width: 800,
-        height: 800,
-        alt: "CFNboost Square Logo",
-      },
-    ],
-    locale: "en_US",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "CFNboost",
-    description: "Professional gaming boosting and progression services.",
-    images: ["/assets/cfnboost-v2.png"],
   },
 };
 
