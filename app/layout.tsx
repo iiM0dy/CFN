@@ -12,8 +12,11 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: "CFNboost - Professional Gaming Boosting Services",
+  title: "CFNboost",
   description: "Ascend your gaming performance with CFNboost. Professional boosting, coaching, and progression services delivered by top-tier players.",
+  icons: {
+    icon: "/assets/cfn_no_background.png",
+  },
 };
 
 export default function RootLayout({
