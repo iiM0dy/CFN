@@ -24,7 +24,7 @@ export default function ContactPage() {
 
                     <div className="grid gap-6 mt-4">
                         <Link
-                            href="mailto:support@airwick.gg"
+                            href="mailto:support@cfnboost.com"
                             className="group flex items-center gap-4 p-4 rounded-xl bg-surface-dark border border-border-dark hover:border-primary/50 transition-colors"
                         >
                             <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white transition-all">
@@ -32,7 +32,7 @@ export default function ContactPage() {
                             </div>
                             <div>
                                 <p className="text-xs uppercase tracking-widest text-slate-500 font-bold">Email Us</p>
-                                <p className="text-lg font-medium">support@airwick.gg</p>
+                                <p className="text-lg font-medium">support@cfnboost.com</p>
                             </div>
                         </Link>
 
@@ -134,12 +134,6 @@ export default function ContactPage() {
                             </button>
                         </div>
 
-                        <p className="text-center text-xs text-slate-500 pt-2">
-                            By submitting this form, you agree to our
-                            <Link href="/privacy" className="text-primary hover:underline ml-1">Privacy Policy</Link>
-                            and
-                            <Link href="/terms" className="text-primary hover:underline ml-1">Terms of Service</Link>.
-                        </p>
                     </form>
                 </div>
             </div>

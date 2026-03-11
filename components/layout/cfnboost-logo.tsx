@@ -1,6 +1,6 @@
 import Image from "next/image"
 
-export function AirwickLogo({ className = "size-8" }: { className?: string }) {
+export function CFNLogo({ className = "size-8" }: { className?: string }) {
     return (
         <div className={className}>
             <Image

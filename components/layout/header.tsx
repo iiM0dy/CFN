@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { AirwickLogo } from "@/components/layout/airwick-logo"
+import { CFNLogo } from "@/components/layout/cfnboost-logo"
 import { UserNav } from "@/components/layout/user-nav"
 import { SearchModal } from "@/components/layout/search-modal"
 import { useRef, useState } from "react"
@@ -21,7 +21,7 @@ export function Header() {
                 <div className="flex items-center gap-10">
                     <Link href="/" className="flex items-center gap-3 group">
                         <div className="text-primary group-hover:text-white transition-colors duration-300">
-                            <AirwickLogo className="size-8" />
+                            <CFNLogo className="size-8" />
                         </div>
                         <span className="text-xl font-bold tracking-tight uppercase font-[family-name:var(--font-space-grotesk)]">
                             <span className="text-primary">CFN</span>

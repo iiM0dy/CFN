@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { AirwickLogo } from "@/components/layout/airwick-logo"
+import { CFNLogo } from "@/components/layout/cfnboost-logo"
 
 const footerLinks = {
     services: [
@@ -33,7 +33,7 @@ export function Footer() {
                     <div>
                         <Link href="/" className="flex items-center gap-3 mb-6">
                             <div className="text-primary">
-                                <AirwickLogo className="size-6" />
+                                <CFNLogo className="size-6" />
                             </div>
                             <span className="text-lg font-black tracking-tight font-[family-name:var(--font-space-grotesk)]">
                                 <span className="text-primary">CFN</span>

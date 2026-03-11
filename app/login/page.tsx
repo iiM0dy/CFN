@@ -82,7 +82,7 @@ export default function LoginPage() {
                     <div className="relative z-10">
                         <div className="flex items-center gap-2 mb-8">
                             <span className="material-symbols-outlined text-primary text-3xl">sports_esports</span>
-                            <span className="font-bold text-xl tracking-wider">AIRWICK</span>
+                            <span className="font-bold text-xl tracking-wider">CFNboost</span>
                         </div>
                     </div>
                     <div className="relative z-10 mt-auto">
@@ -119,7 +119,7 @@ export default function LoginPage() {
                     {/* Mobile Header Logo */}
                     <div className="md:hidden flex items-center justify-center gap-2 mb-8 text-white">
                         <span className="material-symbols-outlined text-primary text-3xl">sports_esports</span>
-                        <span className="font-bold text-xl tracking-wider">AIRWICK</span>
+                        <span className="font-bold text-xl tracking-wider">CFNboost</span>
                     </div>
 
                     {/* Tab Switcher */}
