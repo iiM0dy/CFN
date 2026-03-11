@@ -23,7 +23,7 @@ export function Header() {
                         <div className="text-primary group-hover:text-white transition-colors duration-300">
                             <AirwickLogo className="size-8" />
                         </div>
-                        <span className="text-xl font-black tracking-tight uppercase font-[family-name:var(--font-space-grotesk)]">
+                        <span className="text-xl font-bold tracking-tight uppercase font-[family-name:var(--font-space-grotesk)]">
                             <span className="text-primary">CFN</span>
                             <span className="text-white">BOOST</span>
                         </span>

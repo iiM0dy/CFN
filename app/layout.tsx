@@ -7,7 +7,8 @@ import "./globals.css";
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
   subsets: ["latin"],
-  display: "swap",
+  weight: ["300", "400", "500", "600", "700"],
+  display: "swap", // Keeping swap but we will manually handle the hero font better
 });
 
 export const metadata: Metadata = {

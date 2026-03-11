@@ -22,10 +22,10 @@ export function HeroSection() {
 
             <div className="relative z-30 max-w-[1440px] mx-auto px-6 lg:px-10 flex flex-col items-center text-center py-24">
                 {/* Main Heading */}
-                <h1 className="text-5xl md:text-7xl lg:text-[88px] font-black leading-[0.9] tracking-tighter text-white mb-6 italic drop-shadow-[0_0_30px_rgba(175,18,37,0.45)]">
+                <h1 className="text-5xl md:text-7xl lg:text-[88px] font-bold leading-[0.9] tracking-tighter text-white mb-6 italic drop-shadow-[0_0_30px_rgba(175,18,37,0.45)]">
                     ASCEND
                     <br />
-                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-white/80 to-white/40">
+                    <span className="text-white/0 bg-clip-text bg-gradient-to-r from-white via-white/80 to-white/40">
                         BEYOND LIMITS
                     </span>
                 </h1>
