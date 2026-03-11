@@ -1,7 +1,8 @@
 import { prisma } from "@/lib/prisma"
 import Link from "next/link"
 import { notFound } from "next/navigation"
-import { Search, Filter, CheckCircle2, ArrowRight, Shield, Clock, CheckCircle, ThumbsUp, ChevronRight } from "lucide-react"
+import { ServiceList } from "@/components/services/service-list"
+
 
 export default async function GameServicesPage({ params }: { params: Promise<{ gameSlug: string }> }) {
     const { gameSlug } = await params
@@ -56,130 +57,63 @@ export default async function GameServicesPage({ params }: { params: Promise<{ g
     }
 
     return (
-        <div className="bg-[#0B0B0B] text-white min-h-screen flex flex-col font-space-grotesk overflow-x-hidden">
-            <main className="grow w-full px-6 py-8 max-w-7xl mx-auto">
+        <div className="bg-[#0B0B0B] text-white min-h-screen flex flex-col font-sans overflow-x-hidden">
+            <main className="grow w-full max-w-[1440px] mx-auto px-6 lg:px-10 py-8">
                 {/* Breadcrumbs */}
-                <div className="flex items-center gap-2 text-sm text-gray-500 mb-8 font-noto-sans">
+                <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#555] mb-8">
                     <Link href="/" className="hover:text-primary transition-colors">Home</Link>
-                    <ChevronRight className="size-3" />
+                    <span className="material-symbols-outlined text-[10px]">chevron_right</span>
                     <Link href="/games" className="hover:text-primary transition-colors">Games</Link>
-                    <ChevronRight className="size-3" />
-                    <span className="text-gray-300">{game.name}</span>
+                    <span className="material-symbols-outlined text-[10px]">chevron_right</span>
+                    <span className="text-white">{game.name}</span>
                 </div>
 
-                {/* Hero Section */}
-                <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
-                    <div>
-                        <h1 className="text-4xl md:text-6xl font-black text-white uppercase tracking-tighter mb-4">
-                            {game.name} <span className="text-transparent bg-clip-text bg-linear-to-r from-primary to-rose-500">Services</span>
-                        </h1>
-                        <p className="text-gray-400 font-noto-sans max-w-2xl text-lg font-light leading-relaxed">
-                            {game.description || `Dominate ${game.name} with our premium boosting services. Our elite players are ready to assist you in reaching your goals.`}
-                        </p>
-                    </div>
-                    <div className="flex gap-2">
-                        <div className="relative group">
-                            <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-5 text-gray-500 group-focus-within:text-primary transition-colors" />
-                            <input
-                                className="bg-[#141414] border border-[#1c1c1c] text-white pl-10 pr-4 py-2.5 rounded-lg focus:ring-1 focus:ring-primary focus:border-primary placeholder-gray-600 outline-none w-full md:w-64 transition-all"
-                                placeholder="Search services..."
-                                type="text"
-                            />
+                {/* Cinematic Hero Section */}
+                <section className="relative mb-12 rounded-xl overflow-hidden w-full shadow-[0_0_50px_-10px_rgba(175,18,37,0.3)]">
+                    <div className="relative flex min-h-[400px] flex-col items-center justify-center p-8 text-center bg-cover bg-center"
+                        style={{ backgroundImage: `linear-gradient(to bottom, rgba(11, 11, 11, 0.7), rgba(11, 11, 11, 0.95)), url('${game.bgImage}')` }}>
+                        <div className="z-10 max-w-3xl">
+                            <div className="inline-flex items-center gap-2 px-3 py-1 mb-6 rounded-full bg-primary/20 border border-primary/30 text-primary text-[10px] font-bold uppercase tracking-widest">
+                                <span className="flex h-2 w-2 rounded-full bg-primary animate-pulse"></span>
+                                Elite {game.name} Services
+                            </div>
+                            <h1 className="text-5xl md:text-7xl font-black tracking-tighter text-white mb-4 uppercase font-cairo">
+                                <span className="text-primary">{game.name}</span> <span className="text-white">COMMAND</span>
+                            </h1>
+                            <p className="text-lg md:text-xl text-slate-300 font-light max-w-2xl mx-auto leading-relaxed">
+                                {game.description || `Secure your legacy in ${game.name}. Elite-tier progression and 
+                                professional coaching services tailored for future champions.`}
+                            </p>
                         </div>
-                        <button className="bg-[#141414] border border-[#1c1c1c] text-white p-2.5 rounded-lg hover:bg-[#1c1c1c] hover:border-primary/50 transition-all">
-                            <Filter className="size-5" />
-                        </button>
+                        {/* Subtle Glows */}
+                        <div className="absolute bottom-0 left-1/4 w-64 h-64 bg-primary/10 rounded-full blur-[120px]"></div>
+                        <div className="absolute top-0 right-1/4 w-64 h-64 bg-primary/10 rounded-full blur-[120px]"></div>
                     </div>
-                </div>
+                </section>
 
-                {/* Services Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pb-20">
-                    {game.services.map((service: any) => (
-                        <Link
-                            key={service.id}
-                            href={`/services/${service.id}`}
-                            className="group relative bg-[#141414] border border-[#1c1c1c] rounded-2xl overflow-hidden transition-all duration-300 hover:border-primary hover:-translate-y-1 hover:shadow-[0_10px_40px_-10px_rgba(175,18,37,0.3)] flex flex-col"
-                        >
-                            <div className="h-56 relative overflow-hidden bg-linear-to-br from-[#1c1c1c] to-[#0F0F0F]">
-                                {service.image ? (
-                                    <img
-                                        src={service.image}
-                                        alt={service.name}
-                                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                                    />
-                                ) : (
-                                    <div className="absolute inset-0 bg-linear-to-br from-primary/30 via-primary/10 to-transparent" />
-                                )}
-                                <div className="absolute top-4 right-4 bg-primary text-white text-xs font-bold px-3 py-1.5 rounded-lg shadow-lg shadow-primary/30 backdrop-blur-sm border border-primary/20">
-                                    HOT
-                                </div>
-                            </div>
+                <ServiceList initialServices={game.services} />
 
-                            <div className="p-6 flex flex-col grow relative z-10">
-                                <h3 className="text-xl font-bold text-white uppercase tracking-wide mb-3 group-hover:text-primary transition-colors">{service.name}</h3>
-                                <ul className="text-gray-400 text-sm font-noto-sans space-y-2 mb-6 grow">
-                                    <li className="flex items-start gap-2">
-                                        <CheckCircle2 className="size-4 text-primary mt-0.5 shrink-0" />
-                                        <span>Instant Start Guaranteed</span>
-                                    </li>
-                                    <li className="flex items-start gap-2">
-                                        <CheckCircle2 className="size-4 text-primary mt-0.5 shrink-0" />
-                                        <span>VPN Protected Sessions</span>
-                                    </li>
-                                    <li className="flex items-start gap-2">
-                                        <CheckCircle2 className="size-4 text-primary mt-0.5 shrink-0" />
-                                        <span>Professional & Elite Boosters</span>
-                                    </li>
-                                </ul>
-
-                                <div className="flex items-center justify-between mt-auto pt-4 border-t border-[#1c1c1c]">
-                                    <div className="flex flex-col">
-                                        <span className="text-[10px] text-gray-500 font-bold uppercase tracking-widest">Starting at</span>
-                                        <span className="text-xl font-black text-white tracking-tighter">${service.displayPrice || Number(service.basePrice).toFixed(2)}</span>
-                                    </div>
-                                    <div className="bg-primary hover:bg-primary-dark text-white text-xs font-bold uppercase px-5 py-2.5 rounded-lg flex items-center gap-2 shadow-lg shadow-primary/20 group-hover:shadow-primary/40 transition-all">
-                                        Order Now
-                                        <ArrowRight className="size-4" />
-                                    </div>
-                                </div>
-                            </div>
-                        </Link>
-                    ))}
-                </div>
-
-                {/* Features Section */}
-                <div className="mt-20 pt-10 border-t border-[#1c1c1c]">
+                {/* Trust Pillar Row */}
+                <section className="mt-12 py-12 border-t border-white/5 w-full">
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-                        <div className="flex flex-col items-center text-center gap-3 group">
-                            <div className="size-16 rounded-full bg-[#141414] border border-[#1c1c1c] flex items-center justify-center text-gray-600 group-hover:text-primary group-hover:border-primary/30 transition-all duration-300">
-                                <Shield className="size-8" />
-                            </div>
-                            <h4 className="text-white font-bold uppercase text-sm tracking-wider">100% Secure</h4>
-                            <p className="text-[10px] text-gray-500 uppercase font-bold tracking-widest leading-relaxed">Encrypted payments and data protection.</p>
+                        <div className="text-center group">
+                            <div className="text-3xl font-black text-white group-hover:text-primary transition-colors mb-1 tracking-tighter">50,000+</div>
+                            <div className="text-primary text-[10px] font-bold uppercase tracking-widest">Deployments Finished</div>
                         </div>
-                        <div className="flex flex-col items-center text-center gap-3 group">
-                            <div className="size-16 rounded-full bg-[#141414] border border-[#1c1c1c] flex items-center justify-center text-gray-600 group-hover:text-primary group-hover:border-primary/30 transition-all duration-300">
-                                <Clock className="size-8" />
-                            </div>
-                            <h4 className="text-white font-bold uppercase text-sm tracking-wider">24/7 Support</h4>
-                            <p className="text-[10px] text-gray-500 uppercase font-bold tracking-widest leading-relaxed">Live chat support available anytime.</p>
+                        <div className="text-center group">
+                            <div className="text-3xl font-black text-white group-hover:text-primary transition-colors mb-1 tracking-tighter">4.9/5</div>
+                            <div className="text-primary text-[10px] font-bold uppercase tracking-widest">Asset Rating</div>
                         </div>
-                        <div className="flex flex-col items-center text-center gap-3 group">
-                            <div className="size-16 rounded-full bg-[#141414] border border-[#1c1c1c] flex items-center justify-center text-gray-600 group-hover:text-primary group-hover:border-primary/30 transition-all duration-300">
-                                <CheckCircle className="size-8" />
-                            </div>
-                            <h4 className="text-white font-bold uppercase text-sm tracking-wider">Verified Pros</h4>
-                            <p className="text-[10px] text-gray-500 uppercase font-bold tracking-widest leading-relaxed">Top 1% players handling your account.</p>
+                        <div className="text-center group">
+                            <div className="text-3xl font-black text-white group-hover:text-primary transition-colors mb-1 tracking-tighter">500+</div>
+                            <div className="text-primary text-[10px] font-bold uppercase tracking-widest">Field Experts</div>
                         </div>
-                        <div className="flex flex-col items-center text-center gap-3 group">
-                            <div className="size-16 rounded-full bg-[#141414] border border-[#1c1c1c] flex items-center justify-center text-gray-600 group-hover:text-primary group-hover:border-primary/30 transition-all duration-300">
-                                <ThumbsUp className="size-8" />
-                            </div>
-                            <h4 className="text-white font-bold uppercase text-sm tracking-wider">Money Back</h4>
-                            <p className="text-[10px] text-gray-500 uppercase font-bold tracking-widest leading-relaxed">Satisfaction guaranteed on all orders.</p>
+                        <div className="text-center group">
+                            <div className="text-3xl font-black text-white group-hover:text-primary transition-colors mb-1 tracking-tighter">24/7</div>
+                            <div className="text-primary text-[10px] font-bold uppercase tracking-widest">HQ Monitoring</div>
                         </div>
                     </div>
-                </div>
+                </section>
             </main>
         </div>
     )

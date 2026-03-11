@@ -151,14 +151,16 @@ export function GameGrid({ initialGames, categories }: GameGridProps) {
         })}
 
         {/* Request Game Card - Adjusted for new design */}
-        <div className="group relative aspect-3/4 rounded-xl overflow-hidden border border-dashed border-white/10 bg-[#0B0B0B]/50 flex flex-col items-center justify-center text-center p-8 transition-all duration-300 hover:border-primary/50 hover:bg-[#0B0B0B] cursor-pointer">
-          <div className="w-16 h-16 rounded-full bg-white/5 border border-white/10 flex items-center justify-center mb-6 group-hover:border-primary/50 group-hover:bg-primary/5 transition-all duration-500">
-            <span className="material-symbols-outlined text-slate-500 group-hover:text-primary text-3xl transition-colors">add_circle</span>
+        <Link href="/contact">
+          <div className="group relative aspect-3/4 rounded-xl overflow-hidden border border-dashed border-white/10 bg-[#0B0B0B]/50 flex flex-col items-center justify-center text-center p-8 transition-all duration-300 hover:border-primary/50 hover:bg-[#0B0B0B] cursor-pointer">
+            <div className="w-16 h-16 rounded-full bg-white/5 border border-white/10 flex items-center justify-center mb-6 group-hover:border-primary/50 group-hover:bg-primary/5 transition-all duration-500">
+              <span className="material-symbols-outlined text-slate-500 group-hover:text-primary text-3xl transition-colors">add_circle</span>
+            </div>
+            <h3 className="text-xl font-bold text-white mb-2 uppercase tracking-tight">Game Not Found?</h3>
+            <p className="text-slate-500 text-xs leading-relaxed mb-6 max-w-[200px] uppercase tracking-wider">Contact Us to add a new game for CFNBOOST services</p>
+            <span className="text-[10px] font-bold text-primary tracking-widest border-b border-primary/0 group-hover:border-primary transition-all uppercase">Contact Us</span>
           </div>
-          <h3 className="text-xl font-bold text-white mb-2 uppercase tracking-tight">Game Not Found?</h3>
-          <p className="text-slate-500 text-xs leading-relaxed mb-6 max-w-[200px] uppercase tracking-wider">Request a new title for elite boost services</p>
-          <span className="text-[10px] font-bold text-primary tracking-widest border-b border-primary/0 group-hover:border-primary transition-all uppercase">Request Title</span>
-        </div>
+        </Link>
       </section>
     </>
   )
