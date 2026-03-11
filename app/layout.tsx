@@ -12,6 +12,7 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://www.cfnboost.com"),
   title: "CFNboost",
   description: "Ascend your gaming performance with CFNboost. Professional boosting, coaching, and progression services delivered by top-tier players.",
   icons: {
