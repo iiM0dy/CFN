@@ -38,7 +38,7 @@ export function PricingSection() {
                         <div className="inline-flex items-center gap-2 px-3 py-1 mb-6 rounded-full bg-primary/10 border border-primary/25 text-primary text-[10px] font-black uppercase tracking-[0.25em]">
                             Smart Pricing Algorithm
                         </div>
-                        <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-white mb-6 leading-none tracking-tighter italic">
+                        <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-white mb-6 leading-none tracking-tighter">
                             Transparent.
                             <br />
                             <span className="text-primary">Instant.</span>

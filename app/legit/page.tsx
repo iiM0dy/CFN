@@ -41,10 +41,6 @@ export default function LegitPage() {
                 ></div>
 
                 <div className="relative z-10 max-w-5xl px-6 text-center">
-                    <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/30 rounded-full px-4 py-1 mb-8">
-                        <span className="material-symbols-outlined text-primary text-sm">verified_user</span>
-                        <span className="text-xs font-bold tracking-widest uppercase text-primary">100% Ban-Free Guarantee</span>
-                    </div>
 
                     <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-6 uppercase">
                         Why CFNboost is <span className="text-primary">Legit</span>

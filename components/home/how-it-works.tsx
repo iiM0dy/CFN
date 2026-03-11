@@ -8,7 +8,7 @@ export function HowItWorks() {
                     <span className="text-[10px] font-black text-primary uppercase tracking-[0.4em]">
                         Ironclad Security
                     </span>
-                    <h2 className="mt-4 text-3xl md:text-4xl font-black text-white tracking-tighter uppercase italic">
+                    <h2 className="mt-4 text-3xl md:text-4xl font-black text-white tracking-tighter uppercase">
                         Trusted by the Community
                     </h2>
                 </div>

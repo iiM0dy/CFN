@@ -26,7 +26,7 @@ export function TestimonialsSection() {
         <section className="py-24 bg-[#050505]">
             <div className="max-w-[1440px] mx-auto px-6 lg:px-10">
                 <div className="flex flex-col md:flex-row justify-between items-center gap-8 mb-16">
-                    <h2 className="text-4xl md:text-5xl font-black text-white tracking-tighter italic uppercase">
+                    <h2 className="text-4xl md:text-5xl font-black text-white tracking-tighter uppercase">
                         Feedback Matrix
                     </h2>
                     <div className="flex gap-3">
@@ -47,9 +47,8 @@ export function TestimonialsSection() {
                     {testimonials.map((t, i) => (
                         <div
                             key={t.author}
-                            className={`relative rounded-2xl border border-white/10 bg-[#0a0a0a]/80 p-10 backdrop-blur-md overflow-hidden ${
-                                i === 1 ? "border-primary/40 shadow-[0_0_35px_rgba(175,18,37,0.25)]" : ""
-                            }`}
+                            className={`relative rounded-2xl border border-white/10 bg-[#0a0a0a]/80 p-10 backdrop-blur-md overflow-hidden ${i === 1 ? "border-primary/40 shadow-[0_0_35px_rgba(175,18,37,0.25)]" : ""
+                                }`}
                         >
                             <div className="absolute top-8 right-8 opacity-10">
                                 <svg className="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24">

@@ -16,7 +16,7 @@ export async function PopularGames() {
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-14">
                     <div>
                         <div className="h-px w-12 bg-primary mb-5" />
-                        <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tighter italic mb-3 uppercase">
+                        <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tighter mb-3 uppercase">
                             Dominant Titles
                         </h2>
                         <p className="text-gray-500 max-w-xl text-sm md:text-base font-medium">

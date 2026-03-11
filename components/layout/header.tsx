@@ -155,7 +155,7 @@ export function Header() {
                                 {/* Trust & Safety / Contact */}
                                 <div className="flex items-center justify-start gap-3">
                                     <Link
-                                        href="/trust-and-safety"
+                                        href="/legit"
                                         onClick={() => setMenuOpen(false)}
                                         className="px-3 py-1.5 rounded-full bg-[#1A1A1A] text-xs font-semibold text-gray-200 hover:bg-[#252525] hover:text-white transition-colors"
                                     >
