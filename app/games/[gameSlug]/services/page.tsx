@@ -31,11 +31,11 @@ export default async function GameServicesPage({ params }: { params: Promise<{ g
             WHERE s."gameId" = ${game.id}
             GROUP BY s.id
         `
-        
+
         // Calculate display price for each service
         game.services = services.map(service => {
             let displayPrice = Number(service.basePrice);
-            
+
             // For Coins service, calculate minimum purchasable amount
             if (service.name?.toLowerCase().includes('coin') && service.options && service.options.length > 0) {
                 const coinOption = service.options.find((opt: any) => opt.type === 'number');
@@ -43,7 +43,7 @@ export default async function GameServicesPage({ params }: { params: Promise<{ g
                     displayPrice = (Number(service.basePrice) * coinOption.minValue) / 1000;
                 }
             }
-            
+
             return {
                 ...service,
                 displayPrice: displayPrice.toFixed(2)
@@ -70,7 +70,7 @@ export default async function GameServicesPage({ params }: { params: Promise<{ g
                 {/* Hero Section */}
                 <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
                     <div>
-                        <h1 className="text-4xl md:text-6xl font-black text-white uppercase italic tracking-tighter mb-4">
+                        <h1 className="text-4xl md:text-6xl font-black text-white uppercase tracking-tighter mb-4">
                             {game.name} <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-rose-500">Services</span>
                         </h1>
                         <p className="text-gray-400 font-[family-name:var(--font-noto-sans)] max-w-2xl text-lg font-light leading-relaxed">
@@ -80,9 +80,9 @@ export default async function GameServicesPage({ params }: { params: Promise<{ g
                     <div className="flex gap-2">
                         <div className="relative group">
                             <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-5 text-gray-500 group-focus-within:text-primary transition-colors" />
-                            <input 
-                                className="bg-[#141414] border border-[#1c1c1c] text-white pl-10 pr-4 py-2.5 rounded-lg focus:ring-1 focus:ring-primary focus:border-primary placeholder-gray-600 outline-none w-full md:w-64 transition-all" 
-                                placeholder="Search services..." 
+                            <input
+                                className="bg-[#141414] border border-[#1c1c1c] text-white pl-10 pr-4 py-2.5 rounded-lg focus:ring-1 focus:ring-primary focus:border-primary placeholder-gray-600 outline-none w-full md:w-64 transition-all"
+                                placeholder="Search services..."
                                 type="text"
                             />
                         </div>
@@ -95,8 +95,8 @@ export default async function GameServicesPage({ params }: { params: Promise<{ g
                 {/* Services Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pb-20">
                     {game.services.map((service: any) => (
-                        <Link 
-                            key={service.id} 
+                        <Link
+                            key={service.id}
                             href={`/services/${service.id}`}
                             className="group relative bg-[#141414] border border-[#1c1c1c] rounded-2xl overflow-hidden transition-all duration-300 hover:border-primary hover:-translate-y-1 hover:shadow-[0_10px_40px_-10px_rgba(175,18,37,0.3)] flex flex-col"
                         >
@@ -135,7 +135,7 @@ export default async function GameServicesPage({ params }: { params: Promise<{ g
                                 <div className="flex items-center justify-between mt-auto pt-4 border-t border-[#1c1c1c]">
                                     <div className="flex flex-col">
                                         <span className="text-[10px] text-gray-500 font-bold uppercase tracking-widest">Starting at</span>
-                                        <span className="text-xl font-black text-white italic tracking-tighter">${service.displayPrice || Number(service.basePrice).toFixed(2)}</span>
+                                        <span className="text-xl font-black text-white tracking-tighter">${service.displayPrice || Number(service.basePrice).toFixed(2)}</span>
                                     </div>
                                     <div className="bg-primary hover:bg-primary-dark text-white text-xs font-bold uppercase px-5 py-2.5 rounded-lg flex items-center gap-2 shadow-lg shadow-primary/20 group-hover:shadow-primary/40 transition-all">
                                         Order Now

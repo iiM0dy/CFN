@@ -55,8 +55,8 @@ export default function StoryPage() {
                             <div>
                                 <h2 className="text-3xl font-bold text-white md:text-5xl">OUR MISSION</h2>
                                 <div className="mt-6 space-y-6 text-lg text-slate-300">
-                                    <p>At CFNboost, we believe that skill should be rewarded, not stifled by matchmaking algorithms or teammates who don&apos;t share your drive. We exist to remove the friction from your climb.</p>
-                                    <p>We aren&apos;t just a marketplace; we are a curated collective of the top 0.1% of players globally. When you choose CFNboost, you aren&apos;t just buying a boost—you are deploying a tactical asset to secure your objectives.</p>
+                                    <p>At <span className="font-cairo font-black">CFNboost</span>, we believe that skill should be rewarded, not stifled by matchmaking algorithms or teammates who don&apos;t share your drive. We exist to remove the friction from your climb.</p>
+                                    <p>We aren&apos;t just a marketplace; we are a curated collective of the top 0.1% of players globally. When you choose <span className="font-cairo font-black text-white">CFNboost</span>, you aren&apos;t just buying a boost—you are deploying a tactical asset to secure your objectives.</p>
                                 </div>
                             </div>
                             <div className="relative h-full min-h-[300px] w-full overflow-hidden rounded-xl border border-[#38292b]">
@@ -129,7 +129,10 @@ export default function StoryPage() {
                         <div className="col-span-1 md:col-span-2">
                             <div className="mb-4 flex items-center gap-3 text-white">
                                 <CFNLogo className="size-8" />
-                                <span className="text-lg font-bold font-[family-name:var(--font-space-grotesk)]">CFNboost</span>
+                                <span className="text-xl font-black tracking-tight uppercase font-cairo">
+                                    <span className="text-primary">CFN</span>
+                                    <span className="text-white">BOOST</span>
+                                </span>
                             </div>
                             <p className="max-w-xs text-sm leading-relaxed">The premier marketplace for competitive gaming services. Secure, anonymous, and elite.</p>
                         </div>
@@ -153,7 +156,7 @@ export default function StoryPage() {
                         </div>
                     </div>
                     <div className="mt-16 border-t border-[#38292b] pt-8 text-center text-xs text-slate-500">
-                        <span className="font-[family-name:var(--font-space-grotesk)]">© 2024 CFNboost Gaming Services. All rights reserved.</span>
+                        <span className="font-cairo font-black tracking-wide">© 2024 CFNBOOST Gaming Services. All rights reserved.</span>
                     </div>
                 </div>
             </footer>

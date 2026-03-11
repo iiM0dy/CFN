@@ -56,7 +56,7 @@ export default function ServicesPage() {
                                 </div>
                                 <div className="flex flex-col">
                                     <div className="flex text-yellow-500 text-sm">⭐⭐⭐⭐⭐</div>
-                                    <span className="text-xs text-gray-400 font-medium">4.9/5 Rating from 2000+ Orders</span>
+                                    <span className="text-xs text-gray-400 font-medium">4.9/5 Rating from 2000+ <span className="font-cairo font-bold">CFNboost</span> Orders</span>
                                 </div>
                             </div>
                         </div>
@@ -254,7 +254,10 @@ export default function ServicesPage() {
                         <div>
                             <div className="flex items-center gap-2 text-white mb-6">
                                 <span className="text-primary text-3xl">🎮</span>
-                                <h2 className="text-xl font-bold uppercase font-[family-name:var(--font-space-grotesk)]">CFNboost</h2>
+                                <span className="text-xl font-black tracking-tight uppercase font-cairo">
+                                    <span className="text-primary">CFN</span>
+                                    <span className="text-white">BOOST</span>
+                                </span>
                             </div>
                             <p className="text-gray-500 text-sm mb-6">The world&apos;s most trusted competitive gaming marketplace. Join thousands of players achieving their dream rank today.</p>
                         </div>
@@ -287,7 +290,7 @@ export default function ServicesPage() {
                         </div>
                     </div>
                     <div className="border-t border-[#38292b] pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-                        <p className="text-gray-600 text-xs text-center md:text-left font-[family-name:var(--font-space-grotesk)]">© 2023 CFNboost. All rights reserved. Valorant is a trademark of Riot Games, Inc. CFNboost is not endorsed by or affiliated with Riot Games.</p>
+                        <p className="text-gray-600 text-xs text-center md:text-left font-cairo font-black tracking-widest uppercase">© 2024 CFNBOOST. All rights reserved. Valorant is a trademark of Riot Games, Inc. <span className="font-cairo font-black">CFNboost</span> is not endorsed by or affiliated with Riot Games.</p>
                         <div className="flex gap-6 text-gray-600 text-xs">
                             <a className="hover:text-gray-400" href="#">Privacy Policy</a>
                             <a className="hover:text-gray-400" href="#">Cookie Policy</a>

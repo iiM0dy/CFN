@@ -43,7 +43,7 @@ export default function WallOfFamePage() {
                                     Customer <br className="hidden md:block" />Wall of Fame
                                 </h1>
                                 <p className="text-gray-300 text-lg md:text-xl font-normal leading-relaxed max-w-lg">
-                                    See why 50,000+ gamers trust CFNboost for their competitive edge. Real results from real players.
+                                    See why 50,000+ gamers trust <span className="font-cairo font-bold">CFNboost</span> for their competitive edge. Real results from real players.
                                 </p>
                             </div>
                             <div className="flex flex-wrap gap-4 w-full md:w-auto justify-start md:justify-end">
@@ -141,7 +141,7 @@ export default function WallOfFamePage() {
                 <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
                     <div className="flex items-center gap-3 text-white">
                         <CFNLogo className="size-8" />
-                        <span className="text-sm font-bold text-gray-400 font-[family-name:var(--font-space-grotesk)]">© 2023 CFNboost. All rights reserved.</span>
+                        <span className="text-sm font-black tracking-widest uppercase font-cairo text-gray-400">© 2024 CFNBOOST. All rights reserved.</span>
                     </div>
                     <div className="flex gap-6 text-sm text-gray-500">
                         <a className="hover:text-white transition-colors" href="#">Privacy Policy</a>

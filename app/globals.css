@@ -72,6 +72,7 @@
   --radius-lg: calc(var(--radius) + 4px);
   --font-sans: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, monospace;
+  --font-cairo: var(--font-cairo), ui-sans-serif, system-ui, sans-serif;
 }
 
 * {

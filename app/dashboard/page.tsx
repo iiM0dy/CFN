@@ -10,7 +10,10 @@ export default function DashboardPage() {
                 <div className="flex h-20 items-center gap-3 px-6 border-b border-[#38292b]">
                     <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-white text-xl">🎮</div>
                     <div className="flex flex-col">
-                        <span className="text-lg font-bold leading-none tracking-tight font-[family-name:var(--font-space-grotesk)]">CFNboost</span>
+                        <span className="text-lg font-black tracking-tight uppercase font-cairo">
+                            <span className="text-primary">CFN</span>
+                            <span className="text-white">BOOST</span>
+                        </span>
                         <span className="text-xs font-medium text-[#b89da1]">Elite Boosting</span>
                     </div>
                 </div>
@@ -47,7 +50,7 @@ export default function DashboardPage() {
 
             {/* Main Content */}
             <main className="flex flex-1 flex-col overflow-hidden bg-[#181112]">
-                
+
                 {/* Scrollable Content Area */}
                 <div className="flex-1 overflow-y-auto p-8">
                     <div className="mx-auto max-w-7xl space-y-8">

@@ -300,8 +300,11 @@ export default function RankBoostConfiguratorPage() {
             <footer className="border-t border-[#38292b] bg-[#181112] py-10 px-6 mt-10">
                 <div className="max-w-[1440px] mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
                     <div className="flex items-center gap-2">
-                        <h2 className="text-white text-lg font-bold font-[family-name:var(--font-space-grotesk)]">CFNboost</h2>
-                        <span className="text-[#b89da1] text-sm">© 2024</span>
+                        <span className="text-xl font-black tracking-tight uppercase font-cairo">
+                            <span className="text-primary">CFN</span>
+                            <span className="text-white">BOOST</span>
+                        </span>
+                        <span className="text-[#b89da1] text-sm font-bold ml-2">© 2024</span>
                     </div>
                     <div className="flex gap-6">
                         <a className="text-sm text-[#b89da1] hover:text-white" href="#">Terms</a>

@@ -23,7 +23,7 @@ export function Header() {
                         <div className="text-primary group-hover:text-white transition-colors duration-300">
                             <CFNLogo className="size-8" />
                         </div>
-                        <span className="text-xl font-bold tracking-tight uppercase font-[family-name:var(--font-space-grotesk)]">
+                        <span className="text-xl font-black tracking-tight uppercase font-cairo">
                             <span className="text-primary">CFN</span>
                             <span className="text-white">BOOST</span>
                         </span>
@@ -196,7 +196,7 @@ export function Header() {
                         <Link href="/games/throne-and-liberty/services" onClick={() => setMobileOpen(false)} className="text-sm font-medium text-gray-300 hover:text-white transition-colors">Throne and Liberty</Link>
                         <div className="h-px bg-white/5 my-2" />
                         <Link href="/story" onClick={() => setMobileOpen(false)} className="text-sm font-medium text-gray-300 hover:text-white transition-colors">Coaching</Link>
-                        <Link href="/wall-of-fame" onClick={() => setMobileOpen(false)} className="text-sm font-medium text-gray-300 hover:text-white transition-colors">Loyalty Program</Link>
+                        <Link href="/cashback" onClick={() => setMobileOpen(false)} className="text-sm font-medium text-gray-300 hover:text-white transition-colors">Loyalty Program</Link>
                         <Link href="/contact" onClick={() => setMobileOpen(false)} className="text-sm font-medium text-primary hover:text-primary-dark transition-colors">Become a Booster</Link>
                     </div>
                 </div>

@@ -8,13 +8,13 @@ const testimonials = [
         avatar: "https://lh3.googleusercontent.com/aida-public/AB6AXuBUYyZhJYTAnm3v14dfaNhV_psEjYBsmvmp9rRDBB4klGaep7z3IQeGnzoU4zby3pMpFqvM1Epq02WzbrnJiGRyLGT-YncIdtBBRv3lkkWXYfoJamD0RWz7J3VpfmPJRN0-EgKyENFG07OWwY6V2F4uxTZtI8MHfK6pV0mv-Ex83fo_sKDQlINs9d0nDGZ2quem7yb51GHKgaiOPfjlS0g0qVw9NOClmxBWdylhe110gtfzt7JOlTvpGFsE0OS6UFS5GquxorrNQlJJ",
     },
     {
-        quote: "Support was online at 3 AM to help me with my order. The transparency is what makes CFNboost the best. No sketchy business.",
+        quote: <>Support was online at 3 AM to help me with my order. The transparency is what makes <span className="font-cairo font-black text-primary">CFNboost</span> the best. No sketchy business.</>,
         author: "Sarah K.",
         tag: "LoL • Duo Queue",
         avatar: "https://lh3.googleusercontent.com/aida-public/AB6AXuAOvioGXQ6xKtNPx0DlGE-iOuwXunePADe0BLkNwn1csFdwZO96bOdBFyhQzR01gIkEGNLJya_2y-TUX5USd9F_XvvDzPdL-M854S1Qrx0XF0_O6XmRlw_OUu00Qp5PuNz7F6w871Hv-sph_LIJfh9K0b_bkz8jW-cQw8hvcccFX5aVCmL66o2t9WeuHATX6V86R8fz0nppR7lNhDzk_kehuGxkn8vPd6k7SWc4Vsw4loxtZbZLaAxtFTBPbPSV2nDaDeNwNm6f57Vr",
     },
     {
-        quote: "Used other sites before, but CFNboost is cleaner and faster. The booster respected my offline mode request perfectly.",
+        quote: <>Used other sites before, but <span className="font-cairo font-black text-primary">CFNboost</span> is cleaner and faster. The booster respected my offline mode request perfectly.</>,
         author: "David R.",
         tag: "CS2 • Premier",
         avatar: "https://lh3.googleusercontent.com/aida-public/AB6AXuCUroKfm0jdN3bJQQcefGxSqM-mvwX3x0uCdZ2rdgnZUL_ITRW0QnxHQnieebavOhdHvK2FyoYb8AmQExGBZ07DRT3rHXQVV5aEQRb1Qru0KjD8ffqlxlPL8i3ZCkajhJ5ZMiCon3mLgPTwDGxgOU_pd0C2r0uhLfAFnbBYh39GiyG9rDPQKC8ftPEf1pyA4e1Xh0MdrCxD_audHGJIMkDuQLIBQQZNECpPOWn_0OHIYZVYAGDHXr9mOAu1DyEOoP36T5mOhk6nXKIC",

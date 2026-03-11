@@ -8,7 +8,7 @@ export default function CheckoutPage() {
 
     return (
         <div className="bg-[#181112] text-white min-h-screen flex flex-col font-[family-name:var(--font-space-grotesk)]">
-            
+
             <main className="flex-grow flex justify-center py-10 px-4 sm:px-6 lg:px-8">
                 <div className="w-full max-w-7xl grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
                     {/* Left: Order Summary */}
@@ -58,7 +58,7 @@ export default function CheckoutPage() {
                             </div>
                         </div>
                         <div className="hidden lg:block px-4">
-                            <h4 className="text-sm font-bold text-white mb-3 font-[family-name:var(--font-space-grotesk)]">Why choose CFNboost?</h4>
+                            <h4 className="text-sm font-bold text-white mb-3 font-cairo">Why choose <span className="font-black uppercase tracking-tight"><span className="text-primary">CFN</span>BOOST</span>?</h4>
                             <ul className="space-y-2 text-sm text-[#b89da1]">
                                 <li className="flex gap-2"><span className="text-primary">✓</span> Top 500 Challengers only</li>
                                 <li className="flex gap-2"><span className="text-primary">✓</span> VPN Protection enabled</li>
@@ -180,7 +180,7 @@ export default function CheckoutPage() {
 
             <footer className="mt-auto border-t border-[#38292b] bg-[#261c1d] py-8 px-6 text-center">
                 <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
-                    <p className="text-[#b89da1] text-sm font-[family-name:var(--font-space-grotesk)]">© 2024 CFNboost Boosting. All rights reserved.</p>
+                    <p className="text-[#b89da1] text-sm font-cairo font-black tracking-widest uppercase">© 2024 CFNBOOST Boosting. All rights reserved.</p>
                     <div className="flex gap-6 text-sm font-medium">
                         <a className="text-[#b89da1] hover:text-white transition-colors" href="#">Terms of Service</a>
                         <a className="text-[#b89da1] hover:text-white transition-colors" href="#">Privacy Policy</a>

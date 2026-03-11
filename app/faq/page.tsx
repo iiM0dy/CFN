@@ -18,7 +18,7 @@ const faqData: Record<string, { q: string; a: string }[]> = {
         { q: "Are there any hidden fees?", a: "No. The price you see at checkout is the final price you pay. However, your payment provider or bank might charge currency conversion fees if your local currency differs from our store currency (USD)." },
     ],
     security: [
-        { q: "Is my account safe during boosting?", a: 'Yes. All CFNboost boosters are required to use VPNs matching your geographic location to mimic your login patterns. We also use "Appear Offline" mode by default to ensure privacy from your friends list.' },
+        { q: "Is my account safe during boosting?", a: 'Yes. All <span className="font-cairo font-bold">CFNboost</span> boosters are required to use VPNs matching your geographic location to mimic your login patterns. We also use "Appear Offline" mode by default to ensure privacy from your friends list.' },
         { q: "Do boosters have access to my inventory?", a: "Boosters are strictly prohibited from modifying, trading, or interacting with your inventory or in-game currency unless specifically requested as part of the service. Any violation results in an immediate ban of the booster and full compensation." },
     ],
     orders: [
@@ -141,7 +141,10 @@ export default function FAQPage() {
                     <div className="flex flex-col gap-4 max-w-sm">
                         <div className="flex items-center gap-3 text-white">
                             <CFNLogo className="size-8" />
-                            <span className="text-xl font-bold font-[family-name:var(--font-space-grotesk)]">CFNboost</span>
+                            <span className="text-xl font-black tracking-tight uppercase font-cairo">
+                                <span className="text-primary">CFN</span>
+                                <span className="text-white">BOOST</span>
+                            </span>
                         </div>
                         <p className="text-[#b89da1] text-sm">The premium marketplace for competitive gaming. Boost your rank, learn from the best, and dominate the leaderboards.</p>
                     </div>
@@ -167,7 +170,7 @@ export default function FAQPage() {
                     </div>
                 </div>
                 <div className="container mx-auto mt-12 pt-8 border-t border-[#533c3f] flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-[#b89da1]">
-                    <p className="font-[family-name:var(--font-space-grotesk)]">© 2024 CFNboost Inc. All rights reserved.</p>
+                    <p className="font-cairo font-black tracking-widest uppercase">© 2024 CFNBOOST Inc. All rights reserved.</p>
                     <div className="flex gap-6">
                         <a className="hover:text-white transition-colors" href="#">Privacy Policy</a>
                         <a className="hover:text-white transition-colors" href="#">Cookie Policy</a>

@@ -83,7 +83,7 @@ export default function LoginPage() {
                     <div className="relative z-10">
                         <div className="flex items-center gap-4 mb-8">
                             <CFNLogo className="size-10" />
-                            <span className="font-bold text-2xl tracking-tight uppercase font-[family-name:var(--font-space-grotesk)]">
+                            <span className="font-black text-2xl tracking-tight uppercase font-cairo">
                                 <span className="text-primary">CFN</span>
                                 <span className="text-white">BOOST</span>
                             </span>
@@ -123,7 +123,7 @@ export default function LoginPage() {
                     {/* Mobile Header Logo */}
                     <div className="md:hidden flex items-center justify-center gap-3 mb-8 text-white">
                         <CFNLogo className="size-8" />
-                        <span className="font-bold text-xl tracking-tight uppercase font-[family-name:var(--font-space-grotesk)]">
+                        <span className="font-black text-xl tracking-tight uppercase font-cairo">
                             <span className="text-primary">CFN</span>
                             <span className="text-white">BOOST</span>
                         </span>
@@ -300,13 +300,13 @@ export default function LoginPage() {
                     {/* Social Login */}
                     <div className="mt-8 grid grid-cols-3 gap-3">
                         <a className="flex justify-center items-center py-2.5 px-4 border border-[#2A2A2A] rounded-lg bg-[#1E1E1E] hover:bg-[#252525] hover:border-gray-600 transition-all group" href="#">
-                            <img alt="Google" className="h-5 w-5 opacity-70 group-hover:opacity-100 transition-opacity invert" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB8PdUd1KLuCsFOeX4Huh6J3jyNl0uFZE3Ugie3bS9XIvDgBZiyytMpZoz4aS0TZmQoOXXvAOd_THrsmhEPdX5JrLhLjJQKrsqLBywScg5YRrl23mQzR71cfYLFF0RCdW7c34uq56jLWPuwfgg-IkSZyyk4XYia9FTMCmAEjw4KyhOO7r0SXLT6ou_JNuasEzbHivpDee9StEUT4qaLlVjGC8V0q1yThdPizF-w9xk6RYa-qNmEoEmu2YlQMYB7tbyC-9pNlgJbFait" />
+                            <img alt="Google" className="h-5 w-5 opacity-70 group-hover:opacity-100 transition-opacity" src="/assets/cfn_no_background.png" />
                         </a>
                         <a className="flex justify-center items-center py-2.5 px-4 border border-[#2A2A2A] rounded-lg bg-[#1E1E1E] hover:bg-[#5865F2] hover:border-[#5865F2] hover:text-white transition-all group" href="#">
-                            <img alt="Discord" className="h-5 w-5 opacity-70 group-hover:opacity-100 transition-opacity invert" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBi5Tl4b1ceftbUK2ePDUEAXPvPeyp9XgHhEjJb1izeSeWFTnhIeFUzRlIU4iCxYCKrj8HRDI3v-yYgKD7qBC3wavhMTVkgMPMa8Xy2NhvYZyOzjlCWUI4Kx948WK5u3fz50CS8Sm2sLH0uJTwION2ubXBRbbbZLAInJfkrylGe_9y0cD0bKhBlu9_65E6K44YC2LzXXyfvXR1ITZG372E04fD6km_wnOuynH1V9ArCM5xA4E6ysGmGcrjCTficJNWjMxVSjr9rPvga" />
+                            <img alt="Discord" className="h-5 w-5 opacity-70 group-hover:opacity-100 transition-opacity" src="/assets/cfn_no_background.png" />
                         </a>
                         <a className="flex justify-center items-center py-2.5 px-4 border border-[#2A2A2A] rounded-lg bg-[#1E1E1E] hover:bg-[#171a21] hover:border-gray-500 transition-all group" href="#">
-                            <img alt="Steam" className="h-5 w-5 opacity-70 group-hover:opacity-100 transition-opacity invert" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBRk-AshHQ8XNQdfN9JOzSOnt7ikRs7CkEfbCK9KvYye4UGzuruoFyEn29ron751_JV1QTWWFJG17RvODFKnCqoLd_xPXIRqlL6Q_nIH16iMlRA9xKwvzBX0BHI1fEZQIO54gdHgMbjSTx5-jF94dbGrDHK7Km-mB0ZAVwsopCFi0EavUPUJQh3cCaGw0Gwerqu40L1eWJHm1ZvkwDuFDVjBxCFf71ethwmqz-DAGrIUb2pB9sIwH2srniMJy7SA_7dNvOGwZpDINnj" />
+                            <img alt="Steam" className="h-5 w-5 opacity-70 group-hover:opacity-100 transition-opacity" src="/assets/cfn_no_background.png" />
                         </a>
                     </div>
 

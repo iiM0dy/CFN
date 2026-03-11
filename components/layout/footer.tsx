@@ -35,7 +35,7 @@ export function Footer() {
                             <div className="text-primary">
                                 <CFNLogo className="size-6" />
                             </div>
-                            <span className="text-lg font-black tracking-tight font-[family-name:var(--font-space-grotesk)]">
+                            <span className="text-xl font-black tracking-tight uppercase font-cairo">
                                 <span className="text-primary">CFN</span>
                                 <span className="text-white">BOOST</span>
                             </span>
@@ -44,14 +44,17 @@ export function Footer() {
                             The world&apos;s most advanced marketplace for competitive gaming services. Elevate your potential today.
                         </p>
                         <div className="flex gap-4">
-                            <Link href="#" className="text-gray-500 hover:text-white transition-colors">
-                                <svg className="size-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+                            <Link href="mailto:support@cfnboost.com" className="text-gray-500 hover:text-white transition-all transform hover:scale-110">
+                                <img src="/assets/cfn_no_background.png" alt="Email" className="size-6 transition-all grayscale hover:grayscale-0" />
                             </Link>
-                            <Link href="#" className="text-gray-500 hover:text-white transition-colors">
-                                <svg className="size-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+                            <Link href="#" className="text-gray-500 hover:text-white transition-all transform hover:scale-110">
+                                <img src="/assets/cfn_no_background.png" alt="Discord" className="size-6 transition-all grayscale hover:grayscale-0" />
                             </Link>
-                            <Link href="#" className="text-gray-500 hover:text-white transition-colors">
-                                <svg className="size-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" /></svg>
+                            <Link href="#" className="text-gray-500 hover:text-white transition-all transform hover:scale-110">
+                                <img src="/assets/cfn_no_background.png" alt="WhatsApp" className="size-6 transition-all grayscale hover:grayscale-0" />
+                            </Link>
+                            <Link href="#" className="text-gray-500 hover:text-white transition-all transform hover:scale-110">
+                                <img src="/assets/cfn_no_background.png" alt="Twitter" className="size-6 transition-all grayscale hover:grayscale-0" />
                             </Link>
                         </div>
                     </div>
@@ -96,7 +99,7 @@ export function Footer() {
                 <div className="pt-8 border-t border-[#1A1A1A] flex flex-col md:flex-row justify-between items-center gap-4">
                     <p className="text-gray-600 text-xs">
                         © 2024{" "}
-                        <span className="font-semibold tracking-wide font-[family-name:var(--font-space-grotesk)]">
+                        <span className="font-black tracking-wide font-cairo">
                             <span className="text-primary">CFN</span>
                             <span className="text-white">BOOST</span>
                         </span>

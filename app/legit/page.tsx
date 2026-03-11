@@ -43,7 +43,7 @@ export default function LegitPage() {
                 <div className="relative z-10 max-w-5xl px-6 text-center">
 
                     <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-6 uppercase">
-                        Why CFNboost is <span className="text-primary">Legit</span>
+                        Why <span className="font-cairo font-black">CFNboost</span> is <span className="text-primary">Legit</span>
                     </h1>
 
                     <div className="flex flex-col md:flex-row items-center justify-center gap-6 mb-10">
@@ -58,7 +58,7 @@ export default function LegitPage() {
                                 </div>
                                 <p className="text-sm font-medium text-slate-400">4.9/5 stars from 10,000+ reviews</p>
                             </div>
-                            <div className="h-10 w-[1px] bg-[#2a1215]"></div>
+                            <div className="h-10 w-px bg-[#2a1215]"></div>
                             <img alt="Trustpilot Logo" className="h-6" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCkLHyJucL8Y4gNH3Ud3Ab1DjO-ufREWV3hFrUL0qEEUR3SWcxmV7NLirI0qTjNuGKbsMH1cec-NQ2NsEgy8Va81UYi3jo113lRTDbw7o1RqGhFWD18rK7992nkMeb1mE9nmdNqRdBDk81nyZ_vDVXEucAAtA_8vYSb6aKdRo_HsQOzq6Z8UEvCqaPgUCJcdA7RyPoOnKwQcVcT5Wru-NquCaDM_94WYvsvOiI7xciVJLpQzCuL26ZhYE6qJSEo-TqYZtT7H5-02Vm2" />
                         </div>
                     </div>
@@ -173,7 +173,7 @@ export default function LegitPage() {
                                 { step: 5, title: "Probation Period", desc: "30-day monitored trial with restricted access before reaching full Elite status." }
                             ].map((item) => (
                                 <div key={item.step} className="flex gap-6">
-                                    <div className="flex-shrink-0 w-8 h-8 rounded-full border border-primary text-primary flex items-center justify-center font-bold text-sm">{item.step}</div>
+                                    <div className="shrink-0 w-8 h-8 rounded-full border border-primary text-primary flex items-center justify-center font-bold text-sm">{item.step}</div>
                                     <div>
                                         <h5 className="font-bold mb-1">{item.title}</h5>
                                         <p className="text-sm text-slate-400">{item.desc}</p>
@@ -190,61 +190,56 @@ export default function LegitPage() {
                 <div className="max-w-7xl mx-auto px-6">
                     <p className="text-center text-[10px] font-black text-primary uppercase tracking-[0.4em] mb-12">Secure Payment Infrastructure</p>
 
-                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 items-center opacity-40 hover:opacity-100 transition-opacity">
-                        <div className="flex flex-col items-center gap-3">
-                            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-emerald-400/10 text-emerald-400">
-                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-10 items-center opacity-40 hover:opacity-100 transition-opacity text-[11px] font-semibold">
+                        <div className="flex justify-center">
+                            <div className="flex items-center gap-2 text-gray-300">
+                                <svg className="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 7h16M4 11h16M4 15h10" />
                                 </svg>
+                                <span className="uppercase tracking-wider">Encrypted gateway</span>
                             </div>
-                            <span className="text-[11px] font-semibold text-gray-300 uppercase tracking-wider">Encrypted gateway</span>
                         </div>
-
-                        <div className="flex flex-col items-center gap-3">
-                            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-emerald-400/10 text-emerald-400">
-                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div className="flex justify-center">
+                            <div className="flex items-center gap-2 text-gray-300">
+                                <svg className="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10l1.5 9h15L21 10H3z" />
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10V7a4 4 0 118 0v3" />
                                 </svg>
+                                <span className="uppercase tracking-wider">Secure checkout</span>
                             </div>
-                            <span className="text-[11px] font-semibold text-gray-300 uppercase tracking-wider">Secure checkout</span>
                         </div>
-
-                        <div className="flex flex-col items-center gap-3">
-                            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-emerald-400/10 text-emerald-400">
-                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div className="flex justify-center">
+                            <div className="flex items-center gap-2 text-gray-300">
+                                <svg className="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3l8 4v5c0 5-3 7-8 9-5-2-8-4-8-9V7l8-4z" />
                                 </svg>
+                                <span className="uppercase tracking-wider">Fraud protection</span>
                             </div>
-                            <span className="text-[11px] font-semibold text-gray-300 uppercase tracking-wider">Fraud protection</span>
                         </div>
-
-                        <div className="flex flex-col items-center gap-3">
-                            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-emerald-400/10 text-emerald-400">
-                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div className="flex justify-center">
+                            <div className="flex items-center gap-2 text-gray-300">
+                                <svg className="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 15a4 4 0 014-4h10a4 4 0 110 8H7a4 4 0 01-4-4z" />
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 11a4 4 0 117.8-1" />
                                 </svg>
+                                <span className="uppercase tracking-wider">Privacy first</span>
                             </div>
-                            <span className="text-[11px] font-semibold text-gray-300 uppercase tracking-wider">Privacy first</span>
                         </div>
-
-                        <div className="flex flex-col items-center gap-3">
-                            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-emerald-400/10 text-emerald-400">
-                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div className="flex justify-center">
+                            <div className="flex items-center gap-2 text-gray-300">
+                                <svg className="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 21h8M12 3v12m0 0l-4-4m4 4l4-4" />
                                 </svg>
+                                <span className="uppercase tracking-wider">Chargeback shield</span>
                             </div>
-                            <span className="text-[11px] font-semibold text-gray-300 uppercase tracking-wider">Chargeback shield</span>
                         </div>
-
-                        <div className="flex flex-col items-center gap-3">
-                            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-emerald-500/10 text-emerald-500">
-                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div className="flex justify-center">
+                            <div className="flex items-center gap-2 font-black text-xs text-gray-300 italic">
+                                <svg className="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                                 </svg>
+                                <span className="uppercase tracking-wider">SSL Secured</span>
                             </div>
-                            <span className="text-[11px] font-black text-gray-300 uppercase tracking-wider">SSL Secured</span>
                         </div>
                     </div>
                 </div>
@@ -266,10 +261,10 @@ export default function LegitPage() {
             </section>
 
             {/* Final CTA */}
-            <section className="py-24 bg-gradient-to-t from-primary/20 to-transparent">
+            <section className="py-24 bg-linear-to-t from-primary/20 to-transparent">
                 <div className="max-w-4xl mx-auto px-6 text-center">
                     <h2 className="text-4xl md:text-5xl font-bold uppercase mb-6">Ready to boost with confidence?</h2>
-                    <p className="text-slate-400 mb-10 text-lg">Join 50,000+ satisfied gamers who trust CFNboost for their competitive edge.</p>
+                    <p className="text-slate-400 mb-10 text-lg">Join 50,000+ satisfied gamers who trust <span className="font-cairo font-bold">CFNboost</span> for their competitive edge.</p>
                     <div className="flex flex-wrap justify-center gap-4">
                         <Link href="/games" className="bg-primary hover:bg-primary/90 text-white font-bold py-5 px-10 rounded-lg transition-all shadow-[0_0_20px_rgba(175,18,37,0.4)] transform hover:scale-105">
                             START YOUR ORDER
