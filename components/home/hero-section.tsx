@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import Image from "next/image"
 
 const heroImageUrl = "https://lh3.googleusercontent.com/aida-public/AB6AXuBRzeCjVHT9QvU5iuFnIQdzeOs-av89S_1lB5yoTaFyrc-EtsGzCvraXEA5GoRpwJAw-wLDTo1o05u_zG2Utbxxk10WUVXHJJze9XLxJkHOMM-YZhlQrlBPueceYHXeADva3CtmZ7iox5jx8C0D-hId2cucNZAO9py1RWkZ9pmA0QVlUvV8fB-kFjn6TKOgZQFA41xJsGQCeBytXOy77-TS0h5dzfkmCtWmbsW1SSB8DSdbylPqeTtdcDHHd87jCZvcMR9jtqPpu4NA"
 
@@ -14,18 +15,23 @@ export function HeroSection() {
                 <div
                     className="absolute inset-0 opacity-40 mix-blend-overlay z-10 bg-[linear-gradient(0deg,rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:40px_40px]"
                 />
-                <div
-                    className="w-full h-full bg-cover bg-center bg-no-repeat transition-transform duration-[20s] scale-110 hover:scale-100"
-                    style={{ backgroundImage: `url('${heroImageUrl}')` }}
-                />
+                <div className="absolute inset-0 opacity-40 mix-blend-overlay z-10">
+                    <Image
+                        src={heroImageUrl}
+                        alt="Background"
+                        fill
+                        className="object-cover object-center transition-transform duration-[20s] scale-110 hover:scale-100"
+                        priority
+                    />
+                </div>
             </div>
 
             <div className="relative z-30 max-w-[1440px] mx-auto px-6 lg:px-10 flex flex-col items-center text-center py-24">
                 {/* Main Heading */}
-                <h1 className="text-5xl md:text-7xl lg:text-[88px] font-bold leading-[0.9] tracking-tighter text-white mb-6 italic drop-shadow-[0_0_30px_rgba(175,18,37,0.45)]">
+                <h1 className="hero-title text-5xl md:text-7xl lg:text-[88px] font-bold leading-[0.9] tracking-tighter text-white mb-6 italic drop-shadow-[0_0_30px_rgba(175,18,37,0.45)]">
                     ASCEND
                     <br />
-                    <span className="text-white/0 bg-clip-text bg-gradient-to-r from-white via-white/80 to-white/40">
+                    <span className="hero-gradient-text">
                         BEYOND LIMITS
                     </span>
                 </h1>

@@ -8,7 +8,7 @@ const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
-  display: "swap", // Keeping swap but we will manually handle the hero font better
+  display: "block", // Hides text until font is ready to avoid Flash of Unstyled Text (FOUT)
 });
 
 export const metadata: Metadata = {
@@ -22,7 +22,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={spaceGrotesk.variable} suppressHydrationWarning>
+    <html lang="en" className={`${spaceGrotesk.variable} dark`} suppressHydrationWarning>
       <head>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
       </head>
