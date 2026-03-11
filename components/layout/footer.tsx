@@ -45,16 +45,16 @@ export function Footer() {
                         </p>
                         <div className="flex gap-4">
                             <Link href="mailto:support@cfnboost.com" className="text-gray-500 hover:text-white transition-all transform hover:scale-110">
-                                <img src="/assets/cfn_no_background.png" alt="Email" className="size-6 transition-all grayscale hover:grayscale-0" />
+                                <img src="/assets/cfnboost-official-logo.png" alt="Email" className="size-6 transition-all grayscale hover:grayscale-0" />
                             </Link>
                             <Link href="#" className="text-gray-500 hover:text-white transition-all transform hover:scale-110">
-                                <img src="/assets/cfn_no_background.png" alt="Discord" className="size-6 transition-all grayscale hover:grayscale-0" />
+                                <img src="/assets/cfnboost-official-logo.png" alt="Discord" className="size-6 transition-all grayscale hover:grayscale-0" />
                             </Link>
                             <Link href="#" className="text-gray-500 hover:text-white transition-all transform hover:scale-110">
-                                <img src="/assets/cfn_no_background.png" alt="WhatsApp" className="size-6 transition-all grayscale hover:grayscale-0" />
+                                <img src="/assets/cfnboost-official-logo.png" alt="WhatsApp" className="size-6 transition-all grayscale hover:grayscale-0" />
                             </Link>
                             <Link href="#" className="text-gray-500 hover:text-white transition-all transform hover:scale-110">
-                                <img src="/assets/cfn_no_background.png" alt="Twitter" className="size-6 transition-all grayscale hover:grayscale-0" />
+                                <img src="/assets/cfnboost-official-logo.png" alt="Twitter" className="size-6 transition-all grayscale hover:grayscale-0" />
                             </Link>
                         </div>
                     </div>

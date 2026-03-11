@@ -55,8 +55,8 @@ export default function StoryPage() {
                             <div>
                                 <h2 className="text-3xl font-bold text-white md:text-5xl">OUR MISSION</h2>
                                 <div className="mt-6 space-y-6 text-lg text-slate-300">
-                                    <p>At <span className="font-cairo font-black">CFNboost</span>, we believe that skill should be rewarded, not stifled by matchmaking algorithms or teammates who don&apos;t share your drive. We exist to remove the friction from your climb.</p>
-                                    <p>We aren&apos;t just a marketplace; we are a curated collective of the top 0.1% of players globally. When you choose <span className="font-cairo font-black text-white">CFNboost</span>, you aren&apos;t just buying a boost—you are deploying a tactical asset to secure your objectives.</p>
+                                    <p>At <span className="font-black text-white font-cairo">CFNboost</span>, we believe that skill should be rewarded, not stifled by matchmaking algorithms or teammates who don&apos;t share your drive. We exist to remove the friction from your climb.</p>
+                                    <p>We aren&apos;t just a marketplace; we are a curated collective of the top 0.1% of players globally. When you choose <span className="font-black font-cairo"><span className="text-primary">CFN</span><span className="text-white">boost</span></span>, you aren&apos;t just buying a boost—you are deploying a tactical asset to secure your objectives.</p>
                                 </div>
                             </div>
                             <div className="relative h-full min-h-[300px] w-full overflow-hidden rounded-xl border border-[#38292b]">

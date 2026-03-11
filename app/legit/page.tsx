@@ -43,7 +43,7 @@ export default function LegitPage() {
                 <div className="relative z-10 max-w-5xl px-6 text-center">
 
                     <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-6 uppercase">
-                        Why <span className="font-cairo font-black">CFNboost</span> is <span className="text-primary">Legit</span>
+                        Why <span className="font-black font-cairo"><span className="text-primary">CFN</span><span className="text-white">boost</span></span> is <span className="text-primary">Legit</span>
                     </h1>
 
                     <div className="flex flex-col md:flex-row items-center justify-center gap-6 mb-10">
@@ -264,7 +264,7 @@ export default function LegitPage() {
             <section className="py-24 bg-linear-to-t from-primary/20 to-transparent">
                 <div className="max-w-4xl mx-auto px-6 text-center">
                     <h2 className="text-4xl md:text-5xl font-bold uppercase mb-6">Ready to boost with confidence?</h2>
-                    <p className="text-slate-400 mb-10 text-lg">Join 50,000+ satisfied gamers who trust <span className="font-cairo font-bold">CFNboost</span> for their competitive edge.</p>
+                    <p className="text-slate-400 mb-10 text-lg">Join 50,000+ satisfied gamers who trust <span className="font-bold font-cairo"><span className="text-primary">CFN</span><span className="text-white">boost</span></span> for their competitive edge.</p>
                     <div className="flex flex-wrap justify-center gap-4">
                         <Link href="/games" className="bg-primary hover:bg-primary/90 text-white font-bold py-5 px-10 rounded-lg transition-all shadow-[0_0_20px_rgba(175,18,37,0.4)] transform hover:scale-105">
                             START YOUR ORDER

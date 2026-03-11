@@ -56,10 +56,10 @@ export default async function GameServicesPage({ params }: { params: Promise<{ g
     }
 
     return (
-        <div className="bg-[#0B0B0B] text-white min-h-screen flex flex-col font-[family-name:var(--font-space-grotesk)] overflow-x-hidden">
-            <main className="flex-grow w-full px-6 py-8 max-w-7xl mx-auto">
+        <div className="bg-[#0B0B0B] text-white min-h-screen flex flex-col font-space-grotesk overflow-x-hidden">
+            <main className="grow w-full px-6 py-8 max-w-7xl mx-auto">
                 {/* Breadcrumbs */}
-                <div className="flex items-center gap-2 text-sm text-gray-500 mb-8 font-[family-name:var(--font-noto-sans)]">
+                <div className="flex items-center gap-2 text-sm text-gray-500 mb-8 font-noto-sans">
                     <Link href="/" className="hover:text-primary transition-colors">Home</Link>
                     <ChevronRight className="size-3" />
                     <Link href="/games" className="hover:text-primary transition-colors">Games</Link>
@@ -71,9 +71,9 @@ export default async function GameServicesPage({ params }: { params: Promise<{ g
                 <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
                     <div>
                         <h1 className="text-4xl md:text-6xl font-black text-white uppercase tracking-tighter mb-4">
-                            {game.name} <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-rose-500">Services</span>
+                            {game.name} <span className="text-transparent bg-clip-text bg-linear-to-r from-primary to-rose-500">Services</span>
                         </h1>
-                        <p className="text-gray-400 font-[family-name:var(--font-noto-sans)] max-w-2xl text-lg font-light leading-relaxed">
+                        <p className="text-gray-400 font-noto-sans max-w-2xl text-lg font-light leading-relaxed">
                             {game.description || `Dominate ${game.name} with our premium boosting services. Our elite players are ready to assist you in reaching your goals.`}
                         </p>
                     </div>
@@ -100,7 +100,7 @@ export default async function GameServicesPage({ params }: { params: Promise<{ g
                             href={`/services/${service.id}`}
                             className="group relative bg-[#141414] border border-[#1c1c1c] rounded-2xl overflow-hidden transition-all duration-300 hover:border-primary hover:-translate-y-1 hover:shadow-[0_10px_40px_-10px_rgba(175,18,37,0.3)] flex flex-col"
                         >
-                            <div className="h-56 relative overflow-hidden bg-gradient-to-br from-[#1c1c1c] to-[#0F0F0F]">
+                            <div className="h-56 relative overflow-hidden bg-linear-to-br from-[#1c1c1c] to-[#0F0F0F]">
                                 {service.image ? (
                                     <img
                                         src={service.image}
@@ -108,16 +108,16 @@ export default async function GameServicesPage({ params }: { params: Promise<{ g
                                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                                     />
                                 ) : (
-                                    <div className="absolute inset-0 bg-gradient-to-br from-primary/30 via-primary/10 to-transparent" />
+                                    <div className="absolute inset-0 bg-linear-to-br from-primary/30 via-primary/10 to-transparent" />
                                 )}
                                 <div className="absolute top-4 right-4 bg-primary text-white text-xs font-bold px-3 py-1.5 rounded-lg shadow-lg shadow-primary/30 backdrop-blur-sm border border-primary/20">
                                     HOT
                                 </div>
                             </div>
 
-                            <div className="p-6 flex flex-col flex-grow relative z-10">
+                            <div className="p-6 flex flex-col grow relative z-10">
                                 <h3 className="text-xl font-bold text-white uppercase tracking-wide mb-3 group-hover:text-primary transition-colors">{service.name}</h3>
-                                <ul className="text-gray-400 text-sm font-[family-name:var(--font-noto-sans)] space-y-2 mb-6 flex-grow">
+                                <ul className="text-gray-400 text-sm font-noto-sans space-y-2 mb-6 grow">
                                     <li className="flex items-start gap-2">
                                         <CheckCircle2 className="size-4 text-primary mt-0.5 shrink-0" />
                                         <span>Instant Start Guaranteed</span>

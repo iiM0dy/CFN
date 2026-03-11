@@ -5,10 +5,15 @@
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>CFNBOOST EMPIRE | Elite Gaming Services</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap"
         rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap"
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
         rel="stylesheet" />
     <script id="tailwind-config">
         tailwind.config = {
@@ -16,546 +21,369 @@
             theme: {
                 extend: {
                     colors: {
-                        "primary": "#B11226",
-                        "background-dark": "#070405",
-                        "surface": "#0e090a",
-                        "surface-lighter": "#1a1112",
-                        "border-subtle": "rgba(177, 18, 38, 0.1)",
+                        "primary": "#af1225",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#0B0B0B",
+                        "card-dark": "#161616",
                     },
                     fontFamily: {
                         "display": ["Space Grotesk", "sans-serif"]
                     },
-                    borderRadius: { "DEFAULT": "0.375rem", "lg": "0.75rem", "xl": "1.25rem", "2xl": "1.75rem", "3xl": "2.5rem", "full": "9999px" },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
                 },
             },
         }
     </script>
     <style>
         body {
-            font-family: "Space Grotesk", sans-serif;
-            background-color: #070405;
-            color: #f8fafc
+            font-family: 'Space Grotesk', sans-serif;
         }
 
-        .hero-mesh {
-            background-image: radial-gradient(circle at 50% 50%, rgba(177, 18, 38, 0.08) 0%, transparent 60%), url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10 10L90 90M90 10L10 90' stroke='%23B11226' stroke-opacity='0.03' stroke-width='0.5'/%3E%3C/svg%3E")
+        .hero-glow {
+            box-shadow: 0 0 50px -10px rgba(175, 18, 37, 0.3);
         }
 
-        .glass {
-            background: rgba(20, 13, 14, 0.7);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.05)
+        .card-hover:hover {
+            box-shadow: 0 0 20px rgba(175, 18, 37, 0.4);
+            transform: translateY(-2px);
+            border-color: #af1225;
         }
 
-        .card-glow:hover {
-            box-shadow: 0 0 40px rgba(177, 18, 38, 0.08);
-            border-color: rgba(177, 18, 38, 0.3)
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+            height: 4px;
         }
 
-        .text-gradient-red {
-            background: linear-gradient(135deg, #fff 30%, #B11226 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #0B0B0B;
         }
 
-        .floating {
-            animation: floating 6s ease-in-out infinite
-        }
-
-        @keyframes floating {
-
-            0%,
-            100% {
-                transform: translateY(0px) rotate(0deg);
-            }
-
-            50% {
-                transform: translateY(-20px) rotate(1deg);
-            }
-        }
-
-        .ticker-wrap {
-            mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent)
-        }
-
-        .noise-texture {
-            background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuDg8YCDjBRH2759CvvgfQ-epcavC035GVaCuWUwHQi--Me2HW6M2YRQscpRt4CnpQ51I8nLGpp0nQXveUzZbz2ebO5oWbIfGSpfyRXeJRNMHhSpjeV-dNGHKcUUt0B2qtLjFWtXbXY2kAD0TLJ4IdDNLKte-q7Hd19R-kykkuX3pPSYAeMrKUj9NXH2SMTnmY_tC-9wr39QAwG972wPe1zlYYaeY8SUJFR8gIwaB04UZIsvJYmNwp1jxHQX2Lmn0Zu66jg8t8mGGdSS);
-            opacity: 0.03
-        }
-
-        .glow-subtle {
-            filter: drop-shadow(0 0 8px rgba(177, 18, 38, 0.4))
-        }
-
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-            display: inline-block;
-            vertical-align: middle;
-            line-height: 1;
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #af1225;
+            border-radius: 10px;
         }
     </style>
 </head>
 
-<body class="bg-background-dark text-slate-100 antialiased font-display selection:bg-primary selection:text-white">
-    <div class="relative flex min-h-screen w-full flex-col overflow-x-hidden">
-        <main class="flex-1">
-            <!-- Hero Section -->
-            <section class="relative min-h-[65vh] flex items-center justify-center pt-16 pb-16 hero-mesh">
-                <div class="absolute inset-0 noise-texture pointer-events-none"></div>
-                <div
-                    class="absolute top-1/4 -left-20 w-[500px] h-[500px] bg-primary/10 rounded-full blur-[150px] pointer-events-none">
-                </div>
-                <div class="relative z-10 w-full max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center">
-                    <div class="text-left">
-                        <div
-                            class="inline-flex items-center gap-3 px-5 py-2 mb-8 rounded-full bg-white/5 border border-white/10 text-primary text-[11px] font-black uppercase tracking-[0.25em] backdrop-blur-md">
-                            <span class="relative flex h-2 w-2">
-                                <span
-                                    class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-                                <span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
-                            </span>
-                            Elite Loyalty Ecosystem
-                        </div>
-                        <h1
-                            class="text-white text-7xl md:text-[5.5rem] font-black leading-[0.95] tracking-tighter mb-8 text-gradient-red">
-                            Ascend your <br />savings.
-                        </h1>
-                        <p class="text-slate-400 text-lg md:text-xl max-w-lg mb-12 leading-relaxed font-light">
-                            Premium cashback architecture for the competitive elite. Reclaim <span
-                                class="text-white font-semibold">up to 10%</span> on every contract and fund your path
-                            to Professional.
-                        </p>
-                        <div class="flex flex-wrap gap-12 mb-12 py-8 border-y border-white/5">
-                            <div>
-                                <p class="text-[11px] text-slate-500 uppercase tracking-[0.2em] font-bold mb-2">Platform
-                                    Volume</p>
-                                <p class="text-4xl font-bold text-white tracking-tighter">$1,248,590.42</p>
-                            </div>
-                            <div>
-                                <p class="text-[11px] text-slate-500 uppercase tracking-[0.2em] font-bold mb-2">Verified
-                                    Pros</p>
-                                <p class="text-4xl font-bold text-white tracking-tighter">12,402</p>
-                            </div>
-                        </div>
-                        <div class="flex flex-col sm:flex-row gap-5">
-                            <button
-                                class="bg-primary hover:bg-primary/90 text-white px-10 py-5 rounded-full font-bold text-sm uppercase tracking-[0.2em] shadow-2xl shadow-primary/30 transition-all hover:-translate-y-1 flex items-center justify-center gap-3">
-                                Join the Program <span
-                                    class="material-symbols-outlined text-xl glow-subtle">rocket_launch</span>
-                            </button>
-                        </div>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 antialiased min-h-screen">
+    <main class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Cinematic Hero Section -->
+        <section class="relative mb-12 rounded-xl overflow-hidden hero-glow">
+            <div class="relative flex min-h-[500px] flex-col items-center justify-center p-8 text-center bg-cover bg-center"
+                data-alt="Cinematic dark gaming setup with red ambient lighting"
+                style="background-image: linear-gradient(to bottom, rgba(11, 11, 11, 0.6), rgba(11, 11, 11, 0.95)), url('https://lh3.googleusercontent.com/aida-public/AB6AXuCwy7WyGmG3fseRw8CRbOv9Gg0GFzlSVuiHky7YhOhccQyRMNWYkv6eVynrUoyk2R9b_acVsPPcN__JBEs0PkIN85Cq6uiotQg5i2XE1S7UQ0UD78h9jpn5z-wbbDJczEmMJh0IUeIkcwg8FYDcnlkK_B80MU3pjrKs4MiaMQCmxUbh_Rs5NIfMQfBHAzacnWVjaruiZczTox9rhcRbpeMXXZAAlXOVgzhII8GvndG4aRV-sxwuEkSzwm3hStWhTlF3r4OhHDzf-NiC');">
+                <div class="z-10 max-w-3xl">
+                    <div
+                        class="inline-flex items-center gap-2 px-3 py-1 mb-6 rounded-full bg-primary/20 border border-primary/30 text-primary text-xs font-bold uppercase tracking-widest">
+                        <span class="flex h-2 w-2 rounded-full bg-primary animate-pulse"></span>
+                        Est. 2018 | Professional Standards
                     </div>
-                    <div class="relative hidden lg:flex justify-center items-center">
-                        <div class="relative w-full max-w-lg aspect-square flex items-center justify-center">
-                            <!-- Immersive Image -->
-                            <div class="absolute inset-0 bg-primary/20 rounded-full blur-[100px] animate-pulse"></div>
-                            <div class="relative z-20 floating">
-                                <div class="relative group">
-                                    <img alt="High-end Esports Setup"
-                                        class="w-full h-auto rounded-2xl shadow-2xl rotate-3 border border-white/20 brightness-[0.85] contrast-125 hover:brightness-100 transition-all duration-700"
-                                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuDDMHnnph4rYvSq-tnwygVrg7zcqzjEyFU7x2pO9dqLxo081DhTg-_j5D9wOWsqR6DpWeJim6jdMon_Qv_Nfw_4V57czVvNfuAzvYa3JWs9K5IQsbUQKEhfpymfG_qXvnYBK4qVi8EkuoUz8tEnGfwYN7fYX3TnNzsEBP6AJ7t2WgIqLRhIwj8bMUNSLNFl2vXzExvo-hNzmXoHgf2GFTbY6DgBMAryCBOfhUA4s0g-xcWObB0UWZ_B6zYn9xbEzc7pOaWqrAyfnArq" />
-                                    <div
-                                        class="absolute inset-0 rounded-2xl ring-1 ring-inset ring-white/10 group-hover:ring-primary/40 transition-all">
-                                    </div>
-                                </div>
-                                <!-- Balance Card -->
-                                <div
-                                    class="absolute -bottom-8 -right-8 glass p-7 rounded-2xl shadow-3xl border border-primary/20 hover:border-primary/40 transition-colors">
-                                    <div class="flex items-center gap-3 mb-4">
-                                        <div class="w-8 h-8 rounded bg-primary/20 flex items-center justify-center">
-                                            <span
-                                                class="material-symbols-outlined text-primary text-xl glow-subtle">account_balance_wallet</span>
-                                        </div>
-                                        <p class="text-[11px] text-slate-400 font-bold uppercase tracking-[0.2em]">Live
-                                            Wallet</p>
-                                    </div>
-                                    <p class="text-3xl font-black text-white tracking-tight">$452.20</p>
-                                    <div class="flex items-center gap-1.5 mt-3">
-                                        <span
-                                            class="material-symbols-outlined text-green-500 text-sm">trending_up</span>
-                                        <span class="text-[11px] text-green-500 font-black tracking-widest">+12.4%
-                                            MONTHLY</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <h1 class="text-5xl md:text-7xl font-bold tracking-tighter text-slate-100 mb-4 uppercase">
+                        CFNBOOST <span class="text-primary">EMPIRE</span>
+                    </h1>
+                    <p class="text-lg md:text-xl text-slate-300 font-light max-w-2xl mx-auto leading-relaxed">
+                        Experience the gold standard in competitive gaming. Secure, elite-tier rank boosting and
+                        professional coaching services tailored for champions.
+                    </p>
+                    <div class="mt-10 flex flex-wrap justify-center gap-4">
+                        <button
+                            class="bg-primary hover:bg-primary/90 text-white px-8 py-4 rounded-lg font-bold transition-all shadow-lg shadow-primary/20 flex items-center gap-2">
+                            EXPLORE SERVICES
+                            <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                        </button>
+                        <button
+                            class="bg-white/5 hover:bg-white/10 border border-white/10 text-white px-8 py-4 rounded-lg font-bold transition-all backdrop-blur-md">
+                            OUR PHILOSOPHY
+                        </button>
                     </div>
                 </div>
-            </section>
-            <!-- Dynamic Live Feed -->
-            <div class="bg-surface border-y border-white/5 py-5 overflow-hidden ticker-wrap relative">
-                <div class="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-background-dark to-transparent z-10">
-                </div>
-                <div class="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-background-dark to-transparent z-10">
-                </div>
-                <div class="flex items-center gap-16 animate-infinite-scroll whitespace-nowrap px-4">
-                    <div class="flex items-center gap-4 shrink-0">
-                        <span class="material-symbols-outlined text-primary text-sm glow-subtle">sensors</span>
-                        <span class="text-[11px] font-black text-slate-500 uppercase tracking-[0.3em]">Live
-                            Redemptions:</span>
+                <!-- Subtle Red Glow Elements -->
+                <div class="absolute bottom-0 left-1/4 w-64 h-64 bg-primary/10 rounded-full blur-[120px]"></div>
+                <div class="absolute top-0 right-1/4 w-64 h-64 bg-primary/10 rounded-full blur-[120px]"></div>
+            </div>
+        </section>
+        <!-- Search & Filter Bar -->
+        <section class="mb-12 sticky top-4 z-30">
+            <div class="bg-card-dark/80 backdrop-blur-xl border border-white/5 p-4 rounded-xl shadow-2xl">
+                <div class="flex flex-col lg:flex-row gap-4">
+                    <div class="relative flex-1">
+                        <span
+                            class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-500">search</span>
+                        <input
+                            class="w-full bg-background-dark border-white/5 focus:border-primary/50 focus:ring-1 focus:ring-primary/50 rounded-lg pl-12 py-3 text-slate-100 placeholder:text-slate-600 font-medium"
+                            placeholder="Search elite services (e.g. Valorant Immortal, LoL Challenger)..."
+                            type="text" />
                     </div>
-                    <div class="flex items-center gap-4 bg-white/5 px-4 py-2 rounded-lg border border-white/5">
-                        <span class="text-xs font-bold text-white">Slayer99</span>
-                        <div class="w-1 h-1 rounded-full bg-slate-700"></div>
-                        <span class="text-xs text-slate-500">Global Elite</span>
-                        <span class="text-xs font-bold text-primary">+$42.50</span>
-                    </div>
-                    <div class="flex items-center gap-4 bg-white/5 px-4 py-2 rounded-lg border border-white/5">
-                        <span class="text-xs font-bold text-white">GhostWalker</span>
-                        <div class="w-1 h-1 rounded-full bg-slate-700"></div>
-                        <span class="text-xs text-slate-500">Immortal</span>
-                        <span class="text-xs font-bold text-primary">+$15.20</span>
-                    </div>
-                    <div class="flex items-center gap-4 bg-white/5 px-4 py-2 rounded-lg border border-white/5">
-                        <span class="text-xs font-bold text-white">ViperQueen</span>
-                        <div class="w-1 h-1 rounded-full bg-slate-700"></div>
-                        <span class="text-xs text-slate-500">Diamond III</span>
-                        <span class="text-xs font-bold text-primary">+$8.40</span>
-                    </div>
-                    <div class="flex items-center gap-4 bg-white/5 px-4 py-2 rounded-lg border border-white/5">
-                        <span class="text-xs font-bold text-white">Nightmare</span>
-                        <div class="w-1 h-1 rounded-full bg-slate-700"></div>
-                        <span class="text-xs text-slate-500">Ascendant</span>
-                        <span class="text-xs font-bold text-primary">+$65.00</span>
-                    </div>
-                    <!-- Duplicate for seamless scroll -->
-                    <div class="flex items-center gap-4 bg-white/5 px-4 py-2 rounded-lg border border-white/5">
-                        <span class="text-xs font-bold text-white">PixelSlayer</span>
-                        <div class="w-1 h-1 rounded-full bg-slate-700"></div>
-                        <span class="text-xs text-slate-500">Radiant</span>
-                        <span class="text-xs font-bold text-primary">+$12.30</span>
+                    <div class="flex gap-2 overflow-x-auto custom-scrollbar pb-2 lg:pb-0">
+                        <button
+                            class="flex items-center gap-2 bg-primary text-white px-5 py-2 rounded-lg font-semibold whitespace-nowrap">
+                            <span class="material-symbols-outlined text-sm">grid_view</span>
+                            All Categories
+                        </button>
+                        <button
+                            class="flex items-center gap-2 bg-white/5 hover:bg-white/10 text-slate-400 hover:text-slate-100 px-5 py-2 rounded-lg font-semibold transition-colors whitespace-nowrap">
+                            <span class="material-symbols-outlined text-sm">target</span>
+                            FPS
+                        </button>
+                        <button
+                            class="flex items-center gap-2 bg-white/5 hover:bg-white/10 text-slate-400 hover:text-slate-100 px-5 py-2 rounded-lg font-semibold transition-colors whitespace-nowrap">
+                            <span class="material-symbols-outlined text-sm">swords</span>
+                            MOBA
+                        </button>
+                        <button
+                            class="flex items-center gap-2 bg-white/5 hover:bg-white/10 text-slate-400 hover:text-slate-100 px-5 py-2 rounded-lg font-semibold transition-colors whitespace-nowrap">
+                            <span class="material-symbols-outlined text-sm">shield</span>
+                            RPG
+                        </button>
+                        <button
+                            class="flex items-center gap-2 bg-white/5 hover:bg-white/10 text-slate-400 hover:text-slate-100 px-5 py-2 rounded-lg font-semibold transition-colors whitespace-nowrap">
+                            <span class="material-symbols-outlined text-sm">military_tech</span>
+                            Battle Royale
+                        </button>
+                        <button
+                            class="flex items-center gap-2 bg-white/5 hover:bg-white/10 text-slate-400 hover:text-slate-100 px-5 py-2 rounded-lg font-semibold transition-colors whitespace-nowrap">
+                            <span class="material-symbols-outlined text-sm">tune</span>
+                            Filters
+                        </button>
                     </div>
                 </div>
             </div>
-            <!-- How It Works Section -->
-            <section class="py-32 px-6 lg:px-20 max-w-7xl mx-auto relative">
-                <div class="text-center mb-24">
-                    <h2 class="text-5xl font-black text-white mb-6 tracking-tighter">Engineered for Value</h2>
-                    <p class="text-slate-400 max-w-2xl mx-auto text-lg font-light leading-relaxed">Sophisticated rewards
-                        integration designed for the modern competitor.</p>
+        </section>
+        <!-- Games Grid -->
+        <section>
+            <div class="flex justify-between items-end mb-8 px-2">
+                <div>
+                    <h2 class="text-2xl font-bold text-slate-100 uppercase tracking-tight">Active Battlegrounds</h2>
+                    <p class="text-slate-500 text-sm mt-1">Select a title to view professional tier packages</p>
                 </div>
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                    <div
-                        class="relative p-12 rounded-[2rem] bg-surface/40 border border-white/5 card-glow transition-all group overflow-hidden">
-                        <div class="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full blur-3xl -mr-16 -mt-16">
-                        </div>
-                        <div
-                            class="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mb-10 border border-primary/20 text-primary group-hover:scale-110 transition-transform">
-                            <span class="material-symbols-outlined text-3xl glow-subtle">token</span>
-                        </div>
-                        <div class="text-[11px] text-primary font-black uppercase tracking-[0.3em] mb-4">Phase 01</div>
-                        <h3 class="text-2xl font-bold text-white mb-4">Execute Contract</h3>
-                        <p class="text-slate-400 font-light leading-relaxed">Initiate any service across our
-                            marketplace. All transactions are logged instantly.</p>
-                    </div>
-                    <div
-                        class="relative p-12 rounded-[2rem] bg-surface/40 border border-white/5 card-glow transition-all group overflow-hidden">
-                        <div class="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full blur-3xl -mr-16 -mt-16">
-                        </div>
-                        <div
-                            class="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mb-10 border border-primary/20 text-primary group-hover:scale-110 transition-transform">
-                            <span class="material-symbols-outlined text-3xl glow-subtle">military_tech</span>
-                        </div>
-                        <div class="text-[11px] text-primary font-black uppercase tracking-[0.3em] mb-4">Phase 02</div>
-                        <h3 class="text-2xl font-bold text-white mb-4">Accumulate Credits</h3>
-                        <p class="text-slate-400 font-light leading-relaxed">Dynamic cashback calculations applied based
-                            on your current tier status.</p>
-                    </div>
-                    <div
-                        class="relative p-12 rounded-[2rem] bg-surface/40 border border-white/5 card-glow transition-all group overflow-hidden">
-                        <div class="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full blur-3xl -mr-16 -mt-16">
-                        </div>
-                        <div
-                            class="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mb-10 border border-primary/20 text-primary group-hover:scale-110 transition-transform">
-                            <span class="material-symbols-outlined text-3xl glow-subtle">currency_exchange</span>
-                        </div>
-                        <div class="text-[11px] text-primary font-black uppercase tracking-[0.3em] mb-4">Phase 03</div>
-                        <h3 class="text-2xl font-bold text-white mb-4">Instant Liquidity</h3>
-                        <p class="text-slate-400 font-light leading-relaxed">Redeem your wallet balance for any
-                            marketplace asset with zero friction.</p>
-                    </div>
+                <div class="text-slate-400 text-sm font-medium">
+                    Showing <span class="text-primary">12</span> Premium Games
                 </div>
-            </section>
-            <!-- Tiered Rewards Progress -->
-            <section class="py-32 px-6 lg:px-20 bg-surface/40 relative overflow-hidden border-y border-white/5">
-                <div class="absolute top-0 right-0 w-[600px] h-[600px] bg-primary/5 blur-[150px]"></div>
-                <div class="max-w-7xl mx-auto">
-                    <div class="flex flex-col md:flex-row justify-between items-end mb-24 gap-12">
-                        <div class="max-w-xl">
-                            <h2 class="text-5xl font-black text-white mb-6 tracking-tighter">The Hierarchy</h2>
-                            <p class="text-slate-400 text-lg font-light leading-relaxed">Advanced progression mechanics.
-                                Your influence in the ecosystem scales with your participation.</p>
-                        </div>
-                        <div class="glass p-8 rounded-2xl shadow-xl">
-                            <p class="text-[11px] text-slate-500 uppercase tracking-[0.3em] font-black mb-2">Current
-                                Identity</p>
-                            <div class="flex items-center gap-4">
-                                <span class="text-3xl font-black text-white tracking-tighter">INITIATE</span>
-                                <span
-                                    class="px-3 py-1 bg-slate-800 text-white text-[10px] font-black rounded tracking-widest uppercase">Rank
-                                    01</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                        <!-- Bronze -->
-                        <div
-                            class="group relative p-10 rounded-3xl bg-white/[0.02] border border-white/5 card-glow transition-all">
-                            <div class="flex items-center justify-between mb-10">
-                                <span
-                                    class="material-symbols-outlined text-[#cd7f32] text-4xl glow-subtle">shield</span>
-                                <span
-                                    class="text-[11px] font-black text-slate-500 uppercase tracking-widest">Bronze</span>
-                            </div>
-                            <div class="mb-12">
-                                <h4 class="text-6xl font-black text-white mb-2">2%</h4>
-                                <p class="text-[11px] text-slate-500 font-bold uppercase tracking-[0.2em]">Base
-                                    Multiplier</p>
-                            </div>
-                            <div class="space-y-5 mb-10">
-                                <div class="flex items-center gap-3 text-xs text-slate-400">
-                                    <span
-                                        class="material-symbols-outlined text-primary text-lg glow-subtle">check_circle</span>
-                                    Marketplace Access
-                                </div>
-                                <div class="flex items-center gap-3 text-xs text-slate-400">
-                                    <span
-                                        class="material-symbols-outlined text-primary text-lg glow-subtle">check_circle</span>
-                                    Referral Rewards
-                                </div>
-                            </div>
-                            <div class="pt-8 border-t border-white/5">
-                                <div
-                                    class="flex justify-between text-[11px] text-slate-500 font-black uppercase mb-3 tracking-widest">
-                                    <span>Status</span>
-                                    <span>ACTIVE</span>
-                                </div>
-                                <div class="w-full bg-white/5 rounded-full h-1.5 overflow-hidden">
-                                    <div class="bg-[#cd7f32] h-full w-full"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Silver -->
-                        <div
-                            class="group relative p-10 rounded-3xl bg-white/[0.02] border border-white/5 card-glow transition-all">
-                            <div class="flex items-center justify-between mb-10">
-                                <span
-                                    class="material-symbols-outlined text-[#c0c0c0] text-4xl glow-subtle">swords</span>
-                                <span
-                                    class="text-[11px] font-black text-slate-500 uppercase tracking-widest">Silver</span>
-                            </div>
-                            <div class="mb-12">
-                                <h4 class="text-6xl font-black text-white mb-2">5%</h4>
-                                <p class="text-[11px] text-slate-500 font-bold uppercase tracking-[0.2em]">Tier II
-                                    Multiplier</p>
-                            </div>
-                            <div class="space-y-5 mb-10">
-                                <div class="flex items-center gap-3 text-xs text-white/80 font-semibold">
-                                    <span
-                                        class="material-symbols-outlined text-primary text-lg glow-subtle">check_circle</span>
-                                    Priority Queuing
-                                </div>
-                                <div class="flex items-center gap-3 text-xs text-slate-400">
-                                    <span
-                                        class="material-symbols-outlined text-primary text-lg glow-subtle">check_circle</span>
-                                    Discord Elite Role
-                                </div>
-                            </div>
-                            <div class="pt-8 border-t border-white/5">
-                                <div
-                                    class="flex justify-between text-[11px] text-slate-500 font-black uppercase mb-3 tracking-widest">
-                                    <span>Threshold</span>
-                                    <span>$500</span>
-                                </div>
-                                <div class="w-full bg-white/5 rounded-full h-1.5 overflow-hidden">
-                                    <div class="bg-white/10 h-full w-0"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Gold -->
-                        <div
-                            class="group relative p-10 rounded-3xl bg-primary/10 border border-primary/30 ring-1 ring-primary/40 shadow-2xl scale-105 z-10 overflow-hidden">
-                            <div class="absolute inset-0 noise-texture"></div>
-                            <div
-                                class="absolute -top-4 left-1/2 -translate-x-1/2 bg-primary text-white text-[10px] font-black px-6 py-1.5 rounded-full uppercase tracking-[0.3em] shadow-xl">
-                                Most Optimized</div>
-                            <div class="flex items-center justify-between mb-10">
-                                <span
-                                    class="material-symbols-outlined text-[#ffd700] text-4xl glow-subtle">workspace_premium</span>
-                                <span class="text-[11px] font-black text-primary uppercase tracking-widest">Gold</span>
-                            </div>
-                            <div class="mb-12">
-                                <h4 class="text-6xl font-black text-white mb-2">7.5%</h4>
-                                <p class="text-[11px] text-slate-400 font-bold uppercase tracking-[0.2em]">Elite
-                                    Multiplier</p>
-                            </div>
-                            <div class="space-y-5 mb-10">
-                                <div class="flex items-center gap-3 text-xs text-white font-bold">
-                                    <span
-                                        class="material-symbols-outlined text-primary text-lg glow-subtle">check_circle</span>
-                                    Dedicated Agent
-                                </div>
-                                <div class="flex items-center gap-3 text-xs text-white font-bold">
-                                    <span
-                                        class="material-symbols-outlined text-primary text-lg glow-subtle">check_circle</span>
-                                    Early Access Passes
-                                </div>
-                            </div>
-                            <div class="pt-8 border-t border-primary/20">
-                                <div
-                                    class="flex justify-between text-[11px] text-slate-400 font-black uppercase mb-3 tracking-widest">
-                                    <span>Threshold</span>
-                                    <span>$2,500</span>
-                                </div>
-                                <div class="w-full bg-primary/20 rounded-full h-1.5 overflow-hidden">
-                                    <div class="bg-[#ffd700] h-full w-0"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Elite -->
-                        <div
-                            class="group relative p-10 rounded-3xl bg-black border border-white/10 card-glow transition-all overflow-hidden">
-                            <div
-                                class="absolute inset-0 opacity-20 pointer-events-none bg-[radial-gradient(circle_at_50%_50%,_#B11226_0%,_transparent_70%)]">
-                            </div>
-                            <div class="flex items-center justify-between mb-10">
-                                <span class="material-symbols-outlined text-primary text-4xl glow-subtle">diamond</span>
-                                <span
-                                    class="text-[11px] font-black text-slate-400 uppercase tracking-widest">Elite</span>
-                            </div>
-                            <div class="mb-12">
-                                <h4 class="text-6xl font-black text-white mb-2">10%</h4>
-                                <p class="text-[11px] text-slate-500 font-bold uppercase tracking-[0.2em]">Apex
-                                    Multiplier</p>
-                            </div>
-                            <div class="space-y-5 mb-10">
-                                <div class="flex items-center gap-3 text-xs text-white font-bold">
-                                    <span class="material-symbols-outlined text-primary text-lg glow-subtle">star</span>
-                                    Private LAN Events
-                                </div>
-                                <div class="flex items-center gap-3 text-xs text-white font-bold">
-                                    <span class="material-symbols-outlined text-primary text-lg glow-subtle">star</span>
-                                    Global Leaderboard
-                                </div>
-                            </div>
-                            <div class="pt-8 border-t border-white/10">
-                                <span
-                                    class="text-[11px] text-primary font-black uppercase tracking-[0.3em] animate-pulse">INVITATION
-                                    ONLY</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            <!-- Referral Section -->
-            <section class="py-32 px-6 lg:px-20 max-w-7xl mx-auto">
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <!-- Game Card 1 -->
                 <div
-                    class="relative bg-gradient-to-br from-surface-lighter to-background-dark p-16 rounded-[3.5rem] border border-white/5 overflow-hidden flex flex-col lg:flex-row items-center justify-between gap-16">
-                    <div class="absolute top-0 right-0 w-[60%] h-full bg-primary/5 blur-[150px]"></div>
-                    <div
-                        class="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-primary/30 to-transparent">
-                    </div>
-                    <div class="relative z-10 max-w-xl text-center lg:text-left">
-                        <div
-                            class="inline-flex items-center gap-3 mb-8 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20">
-                            <span class="material-symbols-outlined text-primary text-sm glow-subtle">group_add</span>
-                            <span class="text-primary font-black uppercase tracking-[0.3em] text-[10px]">Expansion
-                                Protocol</span>
-                        </div>
-                        <h2 class="text-5xl md:text-6xl font-black text-white mb-8 tracking-tighter">Deploy your
-                            <br /><span class="text-primary">affiliate link.</span></h2>
-                        <p class="text-slate-400 text-lg mb-12 leading-relaxed font-light">Scale your wallet balance by
-                            recruiting your network. Earn <span class="text-white font-bold">$20.00 credits</span> for
-                            every qualified active recruit.</p>
-                        <div
-                            class="flex flex-col sm:flex-row gap-3 bg-black/60 p-2.5 rounded-2xl border border-white/10 backdrop-blur-xl">
-                            <div
-                                class="flex-1 px-6 py-4 text-slate-300 text-sm font-mono truncate items-center flex tracking-wider">
-                                airwick.gg/ref/elite_x_ray
-                            </div>
-                            <button
-                                class="bg-primary hover:bg-primary/90 text-white px-10 py-4 rounded-xl font-bold text-xs uppercase tracking-[0.2em] transition-all shadow-xl shadow-primary/30 hover:shadow-primary/50">
-                                Copy Protocol
-                            </button>
-                        </div>
+                    class="group relative aspect-[3/4] rounded-xl overflow-hidden border border-white/5 bg-card-dark card-hover transition-all duration-300 cursor-pointer">
+                    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                        data-alt="Futuristic tactical shooter character artwork"
+                        style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB8VFGC20t3AsiDBVbO8vsnm84C_19-gOkxcm-IWHBiNCQmljnbmLFVqNtzs0805WddImNy0jRjBRTWbPQ6k0146VSw0JnUTIBEZCSxza0jyqwdnu_apCewS3NTtGWNcVUDtNlKM8m05xb1CkJ_XH5XfMeuaA-tbjBa4LsYQfkGt89SB8TLJnhevU8QYFwaHSB3pA9eK19xHBBAoUaecj9g53RDaaGBjKevfRDivD_gMLfYZSBKaZrxjEeewe6KoKNK1SWyvTudMlcW');">
                     </div>
                     <div
-                        class="relative z-10 w-full lg:w-5/12 aspect-[4/3] rounded-3xl overflow-hidden shadow-3xl border border-white/10 group">
-                        <img alt="Premium Gaming Hardware"
-                            class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000 brightness-75 grayscale-[0.2]"
-                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuBW_dBgh9Pt05WDbhoNG_Llw-Hcf3m17cbChpL9YJG-AA3b-6GinyDBPF1mijP4iDKvVC0jzJ4sInSXfkvsGjEi9jNA07n02RdpiWIrqXRRzLZxCYu4FvQhmv5nZssCLN7tsgww3gqTSsFAOeCYg7ItT5lGsl91jr5CU4il1kplPy6WqQf4_EmSVb5lBmXHPiWmUNZND0v-WYMl_b7HlfrRuWJkETbxfDoCRT5KeGNShaK88WJCBcCTNz1QR-7tybjbtGIhyRvA81w9" />
+                        class="absolute inset-0 bg-gradient-to-t from-background-dark via-background-dark/40 to-transparent">
+                    </div>
+                    <div
+                        class="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    </div>
+                    <div class="absolute bottom-0 left-0 right-0 p-6 z-10">
+                        <h3 class="text-2xl font-bold text-white mb-1 group-hover:text-primary transition-colors">
+                            VALORANT</h3>
+                        <p class="text-slate-300 text-sm font-medium uppercase tracking-wider">Elite Rank Boosting</p>
                         <div
-                            class="absolute inset-0 bg-gradient-to-t from-background-dark/90 via-transparent to-transparent">
-                        </div>
-                        <div class="absolute bottom-8 left-8">
-                            <div class="flex -space-x-3 mb-5">
-                                <div
-                                    class="w-12 h-12 rounded-full border-2 border-primary bg-slate-800 shadow-xl overflow-hidden">
-                                    <img alt="user"
-                                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuC9Vc6fkYuxPxr7Ek1YRpKhsYzcS1mxBs9uTOizWmdoZ6B8rPpyGt-xXDcmWwAVg3GFQfPcy_Z-bgNblqrhi7NAg0cDSvaghkt9vhcyY0jmVUEgDNLCvWQDFjHRly8_tuEV0r_PPZRcM4bhD2XzWNWJ97OHZk1JPXhhK4NJ9ES4qCZ2tBuQDcNsQNtcd7bWA6MK8lgc1wRfIkuZ0ptv_CNfI-io44G98dEUFOAYdvd42IJ70p-kx-NYETmpUaMHMFpOHkNGhU0MGTI8" />
-                                </div>
-                                <div
-                                    class="w-12 h-12 rounded-full border-2 border-primary bg-slate-700 shadow-xl overflow-hidden">
-                                    <img alt="user"
-                                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuBpI54GmUnTGthJzoraBbiK2DrDcTa_Za92exv4uVL3S_jgDK9VEmSSwZcX-uo35Dh4VVLU-jCOR4zTC-JmzEs4jBI6IVZLJllxoHOVDuIM6HvQK-97-462s4KPcHckp2usBnYOJ6fQ_Ty7oWulZ6gAJz3LX8y-3ktG2DshW6w53W3PnVCywdDV_el261YOT0S2za6m8D2BD7g7WNXTAYQlTucNAN6A82J1W2iSFSSi5E3u59-eQm55zVnHlKQ0CpQl3Np2RVNfgrEN" />
-                                </div>
-                                <div
-                                    class="w-12 h-12 rounded-full border-2 border-primary bg-slate-600 shadow-xl overflow-hidden">
-                                    <img alt="user"
-                                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuDf1vmE5rV3LxdB57QMUIaEVUiaBwQTUJqrsoOo6hzXkwXWM-SPyEt8y7M78um4Aq6zXam8q4TWPcwaPYyC9xFOlLDfYFkgAc8P_tK97ZIiLN8b3qqBCwngE0tOQij47zgQsfBMPxB_5A3-F1TsP4tFEZFN2eyySX6gJUyn9rp4k33e1TomHGDO1Ij3NHfvc-wK--POroeC8m6M7F5AS1gfkbvBFYjPt8JyQCw3labbheAI9W03JPiU18_62aWgeUtzzogFtRF4Xn4O" />
-                                </div>
-                                <div
-                                    class="w-12 h-12 rounded-full border-2 border-primary flex items-center justify-center bg-primary text-[10px] font-black text-white shadow-xl">
-                                    +14K</div>
-                            </div>
-                            <p class="text-[11px] font-black text-white uppercase tracking-[0.3em]">RECRUITED THIS CYCLE
-                            </p>
+                            class="mt-4 flex items-center justify-between opacity-0 group-hover:opacity-100 transition-all translate-y-4 group-hover:translate-y-0">
+                            <span class="text-xs font-bold text-primary">VIEW PACKAGES</span>
+                            <span class="material-symbols-outlined text-primary text-sm">north_east</span>
                         </div>
                     </div>
                 </div>
-            </section>
-            <!-- Final CTA -->
-            <section class="py-40 px-6 text-center relative overflow-hidden">
+                <!-- Game Card 2 -->
                 <div
-                    class="absolute inset-0 bg-[radial-gradient(circle_at_50%_100%,_#B11226_0%,_transparent_60%)] opacity-20">
-                </div>
-                <div class="relative z-10 max-w-4xl mx-auto">
-                    <h2 class="text-6xl md:text-8xl font-black text-white mb-10 tracking-tighter leading-none">Dominate
-                        the <br />economy.</h2>
-                    <p class="text-slate-400 mb-14 text-xl font-light leading-relaxed max-w-2xl mx-auto">Integrate with
-                        the most advanced reward ecosystem in competitive history. Your Tier 1 status awaits.</p>
-                    <div class="flex flex-col sm:flex-row justify-center gap-8">
-                        <button
-                            class="bg-primary hover:bg-primary/90 text-white px-16 py-7 rounded-full font-black text-xl uppercase tracking-[0.25em] shadow-2xl shadow-primary/40 transition-all transform hover:scale-105 hover:-translate-y-1">
-                            Initialize Session
-                        </button>
+                    class="group relative aspect-[3/4] rounded-xl overflow-hidden border border-white/5 bg-card-dark card-hover transition-all duration-300 cursor-pointer">
+                    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                        data-alt="League of Legends inspired fantasy character art"
+                        style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBW3dTjkvhZI_R1ZuhUN3X2NYOrtHGt7P29mvDsq74gcIvaFfUyKfdXt6kSRSELInWGVRMNXxNQfExuHpvM4oe9kNP1Q8tge6MHNMJbapR1VS5-n_gGEPa3wA_2R1OMoWmK5YSf8c1139yEFTXeXbTqd-ja84w1BqJnPVWH87YGdOO5h3t3VdPqIYEwLZdfjmcJq16sQf2xd2vE3IdwkvNUzuOEklxm4x4snyD8DLBi8yGZxtbubvoT2Q7hpkBU03pmy9gjOg_nJ73Q');">
                     </div>
-                    <p class="mt-16 text-slate-700 text-[11px] uppercase tracking-[0.6em] font-black">Professional
-                        Infrastructure • End-to-End Encryption • Instant Settlement</p>
+                    <div
+                        class="absolute inset-0 bg-gradient-to-t from-background-dark via-background-dark/40 to-transparent">
+                    </div>
+                    <div
+                        class="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    </div>
+                    <div class="absolute bottom-0 left-0 right-0 p-6 z-10">
+                        <h3 class="text-2xl font-bold text-white mb-1 group-hover:text-primary transition-colors">LEAGUE
+                            OF LEGENDS</h3>
+                        <p class="text-slate-300 text-sm font-medium uppercase tracking-wider">Professional Ranking</p>
+                        <div
+                            class="mt-4 flex items-center justify-between opacity-0 group-hover:opacity-100 transition-all translate-y-4 group-hover:translate-y-0">
+                            <span class="text-xs font-bold text-primary">VIEW PACKAGES</span>
+                            <span class="material-symbols-outlined text-primary text-sm">north_east</span>
+                        </div>
+                    </div>
                 </div>
-            </section>
-        </main>
-    </div>
-    <style>
-        @keyframes infinite-scroll {
-            from {
-                transform: translateX(0);
-            }
-
-            to {
-                transform: translateX(-50%);
-            }
-        }
-
-        .animate-infinite-scroll {
-            animation: infinite-scroll 50s linear infinite;
-            width: max-content;
-        }
-
-        .shadow-3xl {
-            box-shadow: 0 35px 60px -15px rgba(0, 0, 0, 0.5);
-        }
-    </style>
+                <!-- Game Card 3 -->
+                <div
+                    class="group relative aspect-[3/4] rounded-xl overflow-hidden border border-white/5 bg-card-dark card-hover transition-all duration-300 cursor-pointer">
+                    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                        data-alt="Apex Legends style tactical sci-fi setting"
+                        style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAFFSCZMZynTKhJRqhNQ_lGhzruR-kUsaMBzMe04q1CsauYyMYyzKcb1AQ362jYv6jO-RqNrfG75eFrr_qrw94et2OBKfV7HlwHy-0e94Cju3jOBWdmPhGvn424IbDQt_B1YIw2NoEZAQYzAd2wxkwghYUq0NF69FGpOMsKGFZhVYu5slTXmmpiVz-wFBMqrSzWOn84T-FLcID6lAbUE2hNvfMu9tOTelOeovD9Epqjv_PLPwbiLjzegDb6yosGHK7uCv9Lwk4zMUOA');">
+                    </div>
+                    <div
+                        class="absolute inset-0 bg-gradient-to-t from-background-dark via-background-dark/40 to-transparent">
+                    </div>
+                    <div
+                        class="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    </div>
+                    <div class="absolute bottom-0 left-0 right-0 p-6 z-10">
+                        <h3 class="text-2xl font-bold text-white mb-1 group-hover:text-primary transition-colors">APEX
+                            LEGENDS</h3>
+                        <p class="text-slate-300 text-sm font-medium uppercase tracking-wider">Master Tier Service</p>
+                        <div
+                            class="mt-4 flex items-center justify-between opacity-0 group-hover:opacity-100 transition-all translate-y-4 group-hover:translate-y-0">
+                            <span class="text-xs font-bold text-primary">VIEW PACKAGES</span>
+                            <span class="material-symbols-outlined text-primary text-sm">north_east</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Game Card 4 -->
+                <div
+                    class="group relative aspect-[3/4] rounded-xl overflow-hidden border border-white/5 bg-card-dark card-hover transition-all duration-300 cursor-pointer">
+                    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                        data-alt="CS2 tactical environment artwork"
+                        style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDfrYBHcRQYHOFDBZuu-WiI3nvho-0vr1eR0gCLe_VYtzMMBar-rJueVeYQ_X9PBSBOeUuNELsEFIGjrgLM5EIHLo3Dk6WiAYcvJMKQbnKog_Zk5VVkP975VnocdA1UZi-iLiS961mGBnYlN3hW67lc82_GR4vamccGgI7RX4OxDZeSCOr_sE-n8Cm-YuPryon44J4n0K-35jddgPq87SauDCpApe4afLDQKdG69RjUk0iGw_t2vOlb4lTC952H8MwdbdQYcgVfRs_3');">
+                    </div>
+                    <div
+                        class="absolute inset-0 bg-gradient-to-t from-background-dark via-background-dark/40 to-transparent">
+                    </div>
+                    <div
+                        class="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    </div>
+                    <div class="absolute bottom-0 left-0 right-0 p-6 z-10">
+                        <h3 class="text-2xl font-bold text-white mb-1 group-hover:text-primary transition-colors">
+                            COUNTER-STRIKE 2</h3>
+                        <p class="text-slate-300 text-sm font-medium uppercase tracking-wider">Elite Service Tier</p>
+                        <div
+                            class="mt-4 flex items-center justify-between opacity-0 group-hover:opacity-100 transition-all translate-y-4 group-hover:translate-y-0">
+                            <span class="text-xs font-bold text-primary">VIEW PACKAGES</span>
+                            <span class="material-symbols-outlined text-primary text-sm">north_east</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Game Card 5 -->
+                <div
+                    class="group relative aspect-[3/4] rounded-xl overflow-hidden border border-white/5 bg-card-dark card-hover transition-all duration-300 cursor-pointer">
+                    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                        data-alt="Dota 2 style fantasy environment"
+                        style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBfaZ4SnwIqKne9-qufe4JHJWSZFnupuN1TDKxk0wVWXcZUsU7ClI1JnVV4t-d8IDxXzjeJNKQGKtcLYUR7CMFqintqGmMdEI5NKmrFB-nzVJBNtw77KGAAQRsl4xNtTG9aEJ5ocytEDs3nyDtY-E6O_eRgiYyZy2D8n_-1IyY6R8-B6hqmYZN2B6Ct4c2dKf0-Sf9qUfpzs9RAFqyLSgjLx_PIfeJe7T1ZkrO3-_5-8FYEcMCMcQ_3bm35M05W8T6hFk6THu1yGzeG');">
+                    </div>
+                    <div
+                        class="absolute inset-0 bg-gradient-to-t from-background-dark via-background-dark/40 to-transparent">
+                    </div>
+                    <div
+                        class="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    </div>
+                    <div class="absolute bottom-0 left-0 right-0 p-6 z-10">
+                        <h3 class="text-2xl font-bold text-white mb-1 group-hover:text-primary transition-colors">DOTA 2
+                        </h3>
+                        <p class="text-slate-300 text-sm font-medium uppercase tracking-wider">MMR Calibration</p>
+                        <div
+                            class="mt-4 flex items-center justify-between opacity-0 group-hover:opacity-100 transition-all translate-y-4 group-hover:translate-y-0">
+                            <span class="text-xs font-bold text-primary">VIEW PACKAGES</span>
+                            <span class="material-symbols-outlined text-primary text-sm">north_east</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Game Card 6 -->
+                <div
+                    class="group relative aspect-[3/4] rounded-xl overflow-hidden border border-white/5 bg-card-dark card-hover transition-all duration-300 cursor-pointer">
+                    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                        data-alt="Call of Duty military combat scenery"
+                        style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDirOSr_7TuGD-KTsrJZpg3_VCkpVxZgXVE61bBf7FHX34InDPFXEmTDqxzC2cZmuJSHjgor_iNsWyaQ1XYm7CDOPAV11SPlhl3WfiVlHY9xXsev4TZd4tfPos5P2pBhHWxtPG7pyC5DbPKo2eJu708h0hu7mnFe9uezif0LFzUfiG3cRVcDU3e9h_uaBS1Rm9SsySHpwbx6k9Q54BnZNDz_F-XkQyqYiuVRUscTPLZNNSeWd4AOFiXyFNj9sXxJeQvojdqDu9STcGD');">
+                    </div>
+                    <div
+                        class="absolute inset-0 bg-gradient-to-t from-background-dark via-background-dark/40 to-transparent">
+                    </div>
+                    <div
+                        class="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    </div>
+                    <div class="absolute bottom-0 left-0 right-0 p-6 z-10">
+                        <h3 class="text-2xl font-bold text-white mb-1 group-hover:text-primary transition-colors">MW3 /
+                            WARZONE</h3>
+                        <p class="text-slate-300 text-sm font-medium uppercase tracking-wider">Camo &amp; Rank Services
+                        </p>
+                        <div
+                            class="mt-4 flex items-center justify-between opacity-0 group-hover:opacity-100 transition-all translate-y-4 group-hover:translate-y-0">
+                            <span class="text-xs font-bold text-primary">VIEW PACKAGES</span>
+                            <span class="material-symbols-outlined text-primary text-sm">north_east</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Game Card 7 -->
+                <div
+                    class="group relative aspect-[3/4] rounded-xl overflow-hidden border border-white/5 bg-card-dark card-hover transition-all duration-300 cursor-pointer">
+                    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                        data-alt="Overwatch style futuristic hero artwork"
+                        style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDglybKlt9rTNgbnJmsVpS9siCsCCdmToLbsOFMxXIBOICzJ2V7Ipac2SrkSKfFghc616jN02jaH25WHGPEbXWuCNpAU1Jl4_PuyZc9B6fFaHdmaZXXKDOpXM7f3Gtfm7j8tBtTWUafrpmFeQaZyPd_s0Yhl0G93A50xEWcdRr_x9RAVPE8u1pfvA0vf0fzEv7MfNt8mEk-Mp16ty1OeozfR3kDFhH4k7yW9g8jKVvprufp-MLNR8WBUKNY8Mg5rBdKi--p_hBXGi1A');">
+                    </div>
+                    <div
+                        class="absolute inset-0 bg-gradient-to-t from-background-dark via-background-dark/40 to-transparent">
+                    </div>
+                    <div
+                        class="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    </div>
+                    <div class="absolute bottom-0 left-0 right-0 p-6 z-10">
+                        <h3 class="text-2xl font-bold text-white mb-1 group-hover:text-primary transition-colors">
+                            OVERWATCH 2</h3>
+                        <p class="text-slate-300 text-sm font-medium uppercase tracking-wider">Top 500 Specialists</p>
+                        <div
+                            class="mt-4 flex items-center justify-between opacity-0 group-hover:opacity-100 transition-all translate-y-4 group-hover:translate-y-0">
+                            <span class="text-xs font-bold text-primary">VIEW PACKAGES</span>
+                            <span class="material-symbols-outlined text-primary text-sm">north_east</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Game Card 8 -->
+                <div
+                    class="group relative aspect-[3/4] rounded-xl overflow-hidden border border-white/5 bg-card-dark card-hover transition-all duration-300 cursor-pointer">
+                    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                        data-alt="World of Warcraft dragon and fantasy art"
+                        style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBxotD3CNCy5R8Hk-GbJgDOQPvMxvQQzh1qL0KY0GjpRz4QgbPsHF4eD8cWw_qk8LSLOY5onUg6jZmSWB5j663Z1H10Z7Za519NjdnV3zMcSEXahVVCXGlrHb4GZGrQNE8eQhAyQBTEcu1sNeQW-Tzi4BsjvsIodqCyZMGOzIvc7xshUzCpF_LadxJZ30ozejmlUFMG2VE-t009xm_-mhuhQr8SlpMVgNwIsy_3eK6PZ60ina_RPCzlJQQz9YD06sMedFTfBiX09zAv');">
+                    </div>
+                    <div
+                        class="absolute inset-0 bg-gradient-to-t from-background-dark via-background-dark/40 to-transparent">
+                    </div>
+                    <div
+                        class="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    </div>
+                    <div class="absolute bottom-0 left-0 right-0 p-6 z-10">
+                        <h3 class="text-2xl font-bold text-white mb-1 group-hover:text-primary transition-colors">WOW
+                            DRAGONFLIGHT</h3>
+                        <p class="text-slate-300 text-sm font-medium uppercase tracking-wider">Mythic+ &amp; Raid Runs
+                        </p>
+                        <div
+                            class="mt-4 flex items-center justify-between opacity-0 group-hover:opacity-100 transition-all translate-y-4 group-hover:translate-y-0">
+                            <span class="text-xs font-bold text-primary">VIEW PACKAGES</span>
+                            <span class="material-symbols-outlined text-primary text-sm">north_east</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Trust Metrics -->
+        <section class="mt-20 py-12 border-t border-white/5">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-slate-100 mb-1">50,000+</div>
+                    <div class="text-primary text-xs font-bold uppercase tracking-widest">Orders Completed</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-slate-100 mb-1">4.9/5</div>
+                    <div class="text-primary text-xs font-bold uppercase tracking-widest">Trustpilot Rating</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-slate-100 mb-1">500+</div>
+                    <div class="text-primary text-xs font-bold uppercase tracking-widest">Elite Boosters</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-slate-100 mb-1">24/7</div>
+                    <div class="text-primary text-xs font-bold uppercase tracking-widest">Active Support</div>
+                </div>
+            </div>
+        </section>
+    </main>
 </body>
 
 </html>

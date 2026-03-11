@@ -83,7 +83,7 @@ export default function LoginPage() {
                     <div className="relative z-10">
                         <div className="flex items-center gap-4 mb-8">
                             <CFNLogo className="size-10" />
-                            <span className="font-black text-2xl tracking-tight uppercase font-cairo">
+                            <span className="font-black text-2xl tracking-tight uppercase">
                                 <span className="text-primary">CFN</span>
                                 <span className="text-white">BOOST</span>
                             </span>
@@ -123,7 +123,7 @@ export default function LoginPage() {
                     {/* Mobile Header Logo */}
                     <div className="md:hidden flex items-center justify-center gap-3 mb-8 text-white">
                         <CFNLogo className="size-8" />
-                        <span className="font-black text-xl tracking-tight uppercase font-cairo">
+                        <span className="font-black text-xl tracking-tight uppercase">
                             <span className="text-primary">CFN</span>
                             <span className="text-white">BOOST</span>
                         </span>
@@ -300,13 +300,13 @@ export default function LoginPage() {
                     {/* Social Login */}
                     <div className="mt-8 grid grid-cols-3 gap-3">
                         <a className="flex justify-center items-center py-2.5 px-4 border border-[#2A2A2A] rounded-lg bg-[#1E1E1E] hover:bg-[#252525] hover:border-gray-600 transition-all group" href="#">
-                            <img alt="Google" className="h-5 w-5 opacity-70 group-hover:opacity-100 transition-opacity" src="/assets/cfn_no_background.png" />
+                            <img alt="Google" className="h-5 w-5 opacity-70 group-hover:opacity-100 transition-opacity" src="/assets/cfnboost-official-logo.png" />
                         </a>
                         <a className="flex justify-center items-center py-2.5 px-4 border border-[#2A2A2A] rounded-lg bg-[#1E1E1E] hover:bg-[#5865F2] hover:border-[#5865F2] hover:text-white transition-all group" href="#">
-                            <img alt="Discord" className="h-5 w-5 opacity-70 group-hover:opacity-100 transition-opacity" src="/assets/cfn_no_background.png" />
+                            <img alt="Discord" className="h-5 w-5 opacity-70 group-hover:opacity-100 transition-opacity" src="/assets/cfnboost-official-logo.png" />
                         </a>
                         <a className="flex justify-center items-center py-2.5 px-4 border border-[#2A2A2A] rounded-lg bg-[#1E1E1E] hover:bg-[#171a21] hover:border-gray-500 transition-all group" href="#">
-                            <img alt="Steam" className="h-5 w-5 opacity-70 group-hover:opacity-100 transition-opacity" src="/assets/cfn_no_background.png" />
+                            <img alt="Steam" className="h-5 w-5 opacity-70 group-hover:opacity-100 transition-opacity" src="/assets/cfnboost-official-logo.png" />
                         </a>
                     </div>
 

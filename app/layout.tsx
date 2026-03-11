@@ -18,6 +18,8 @@ const cairo = Cairo({
   display: "swap",
 });
 
+
+
 export const viewport: Viewport = {
   themeColor: "#080808",
   colorScheme: "dark",
@@ -28,12 +30,12 @@ export const metadata: Metadata = {
   title: "CFNboost",
   description: "The world's most advanced marketplace for competitive gaming services. Elevate your potential today with CFNboost.",
   icons: {
-    icon: "/assets/cfn_no_background.png",
-    shortcut: "/assets/cfn_no_background.png",
-    apple: "/assets/cfn_no_background.png",
+    icon: "/assets/cfnboost-official-logo.png",
+    shortcut: "/assets/cfnboost-official-logo.png",
+    apple: "/assets/cfnboost-official-logo.png",
     other: {
       rel: "apple-touch-icon-precomposed",
-      url: "/assets/cfn_no_background.png",
+      url: "/assets/cfnboost-official-logo.png",
     },
   },
   openGraph: {
