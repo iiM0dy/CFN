@@ -8,7 +8,7 @@ const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
-  display: "block", // Hides text until font is ready to avoid Flash of Unstyled Text (FOUT)
+  display: "block",
 });
 
 export const metadata: Metadata = {

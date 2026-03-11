@@ -32,9 +32,9 @@ export function PricingSection() {
         <section className="py-24 bg-[#080808] border-y border-white/5 relative overflow-hidden">
             <div className="absolute top-0 right-0 w-1/3 h-full bg-primary/10 blur-[120px] pointer-events-none" />
             <div className="relative max-w-[1440px] mx-auto px-6 lg:px-10">
-                <div className="flex flex-col lg:flex-row gap-16 items-center">
+                <div className="flex flex-col md:flex-row gap-16 items-center">
                     {/* Left Content */}
-                    <div className="lg:w-1/2">
+                    <div className="md:w-1/2">
                         <div className="inline-flex items-center gap-2 px-3 py-1 mb-6 rounded-full bg-primary/10 border border-primary/25 text-primary text-[10px] font-black uppercase tracking-[0.25em]">
                             Smart Pricing Algorithm
                         </div>
@@ -82,7 +82,7 @@ export function PricingSection() {
                     </div>
 
                     {/* Calculator Widget */}
-                    <div className="lg:w-1/2 w-full relative">
+                    <div className="md:w-1/2 w-full relative">
                         {/* Glow effect */}
                         <div className="absolute inset-0 bg-primary/20 blur-[100px] rounded-full" />
 
