@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Space_Grotesk } from "next/font/google";
 import { Providers } from "@/components/providers";
 import { Header } from "@/components/layout/header";
@@ -11,12 +11,23 @@ const spaceGrotesk = Space_Grotesk({
   display: "block",
 });
 
+export const viewport: Viewport = {
+  themeColor: "#080808",
+  colorScheme: "dark",
+};
+
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.cfnboost.com"),
   title: "CFNboost",
   description: "Ascend your gaming performance with CFNboost. Professional boosting, coaching, and progression services delivered by top-tier players.",
   icons: {
     icon: "/assets/cfn_no_background.png",
+    shortcut: "/assets/cfn_no_background.png",
+    apple: "/assets/cfn_no_background.png",
+    other: {
+      rel: "apple-touch-icon-precomposed",
+      url: "/assets/cfn_no_background.png",
+    },
   },
   openGraph: {
     title: "CFNboost",
@@ -29,6 +40,12 @@ export const metadata: Metadata = {
         width: 1200,
         height: 630,
         alt: "CFNboost Logo",
+      },
+      {
+        url: "/assets/cfn_no_background.png",
+        width: 800,
+        height: 800,
+        alt: "CFNboost Square Logo",
       },
     ],
     locale: "en_US",
