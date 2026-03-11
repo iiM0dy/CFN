@@ -1,6 +1,32 @@
 "use client"
 
 import Link from "next/link"
+import { useState } from "react"
+
+function FAQItem({ q, a }: { q: string, a: string }) {
+    const [isOpen, setIsOpen] = useState(false)
+
+    return (
+        <div className="bg-[#161616] border border-[#2a1215] rounded-lg overflow-hidden transition-all duration-300">
+            <button
+                onClick={() => setIsOpen(!isOpen)}
+                className="w-full flex items-center justify-between p-6 cursor-pointer hover:bg-white/5 transition-colors text-left"
+            >
+                <span className="font-bold">{q}</span>
+                <span className={`material-symbols-outlined text-primary transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}>
+                    expand_more
+                </span>
+            </button>
+            <div
+                className={`overflow-hidden transition-all duration-300 ease-in-out ${isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}
+            >
+                <div className="px-6 pb-6 pt-4 text-slate-400 text-sm leading-relaxed border-t border-white/5">
+                    {a}
+                </div>
+            </div>
+        </div>
+    )
+}
 
 export default function LegitPage() {
     return (
@@ -88,7 +114,7 @@ export default function LegitPage() {
                     </div>
 
                     {/* Protocol Card 4 */}
-                    <div className="bg-[#161616] border border-[#2a1215] p-8 rounded-xl hover:shadow-[0_0_30_rgba(175,18,37,0.3)] transition-all group">
+                    <div className="bg-[#161616] border border-[#2a1215] p-8 rounded-xl hover:shadow-[0_0_30px_rgba(175,18,37,0.3)] transition-all group">
                         <div className="w-14 h-14 bg-primary/10 rounded-lg flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-colors">
                             <span className="material-symbols-outlined text-primary text-3xl">visibility_off</span>
                         </div>
@@ -163,39 +189,82 @@ export default function LegitPage() {
                 </div>
             </section>
 
-            {/* Verified Payment Partners */}
-            <section className="py-12 border-y border-border-dark bg-[#161616]/30">
-                <div className="max-w-7xl mx-auto px-6 overflow-hidden">
-                    <p className="text-center text-xs font-bold uppercase tracking-widest text-slate-500 mb-8">Secure Payment Infrastructure</p>
-                    <div className="flex flex-wrap justify-center items-center gap-12 opacity-30 grayscale hover:opacity-100 transition-opacity">
-                        <img alt="PayPal" className="h-6" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCa2MTqCHNLGemzBvgBJ79VeEk-NKUcX8zMXt-NdDUENGBR8Sn0OBsMHOFVTtzf_GhDVlB6Cis5DVP6LoJ_YLLBFu5c3PSC0Tp_f7PN99fK9GnQPd7KhwrxPnf7dLHMFoBqkPdtq-HRfJMaBhi_SyBkmhwk7GzEG75gJUlbCuV-pZIW8o3VwTV1mTqgNDfDD9mz_BHfV4dVwkYMcWawGbfgQRo6p7YuH2OwvCptckXCWbbpJ5t9XDwZQh69X-MBAE43bd67XN60r3lj" />
-                        <img alt="Stripe" className="h-6" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBA6hD853uvHj7v_1UJM02sStpig3jGEILJ5_KtGPfEr-bqp5PDVzX8xRUBWApGxXHtoCQTAUgIc6gtnAah8xZsBMBnsp9NpcpqNw5EID6-LOUMWRu0kp3z-jbTp1-2XMfTiIGNTEFVmb2UDtwQa9Zufln-L2f6H8ZsFJR-0PcGks9-Cc-xlV3wj8SivDcI44Ie5V7BD2NakIZnUC5e70sKxV1hyuhtaWeBYSDCDOQgGHa599a8MVeoaKeqiMY5OcLEi94rkRvvgFyU" />
-                        <img alt="Skrill" className="h-6" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAvyUZnk8ieiA1BAVN0dFII2Lfb2CBAgbDEv-hkMtp6vkor2eCZlS61D_7ZBHygGFY5p5s7bJYHXTjSB_hFe2-7n4TYr5yYz27oLPpC1dEUW4I4nzECRJJB2uWzjtyU48ynNBubPErsNf4u6YfXb3ZVRv9tamBhDHCZOijWTtPB57CeDJcVU_bZ41fyAqqOx5qzLxLXnNKLNJRsLpu5W-otKsTuqvt9uhCGHdiDyrxNr2hnONuJJrFPf2Qyi4ut5EOgpKNPdPrMDjjl" />
-                        <img alt="Coinbase" className="h-6" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDylCmSpDYIsR-Yz0kJ3ueEdCHhGzWUUkuStmkKFkfkC_ttxcU34yM4Bag7d3rpOd2wv4EsBjS-EakgR71ss9-hCzcCYfARcjHHySXo_Y4MFGVk0hyNBClvGAGXzBK9AVR3Iuz3gRkEwmU7HpYtnIlcLm9o0L0Jd0x3EjBVxmBQ5bhhl6M9EVFiYQwgm_oh-p16CoBjhN-hoXyXxIO-Wawk8gxMEESdxfao_Tmew9xmKUWOObAVoLP3cZ5tAhwLqvEpR9Wc5xgB68FQ" />
-                        <img alt="ApplePay" className="h-6" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCHOETGceyLRgztooyc5PFd4yWmon6iG-Cz-lNyXab7_aaBkk5zB_EPnB6kKkeIRPwK1ByBOYV3E9t6C0uzaTx6ypAZDiY3jurB4bxa7du2yAuJ_1UO6jVnJfpkaJyHRGUIq0gBSGOzXENzigJISKsy7wdPFcHTSnzXyjs9BhTdU0j065CAxZvoKe0LEp0r8BZx2SN4JrhfINrhAe7ObLyzo8iFBSH50LmIiFCwwhaUVmNUEbG4m6XGVBdxg4zglVzlGo2htGdOwpXC" />
+            {/* Secure Payment Infrastructure - Updated with Home Page style icons */}
+            <section className="py-24 border-y border-border-dark bg-[#050505]">
+                <div className="max-w-7xl mx-auto px-6">
+                    <p className="text-center text-[10px] font-black text-primary uppercase tracking-[0.4em] mb-12">Secure Payment Infrastructure</p>
+
+                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 items-center opacity-40 hover:opacity-100 transition-opacity">
+                        <div className="flex flex-col items-center gap-3">
+                            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-emerald-400/10 text-emerald-400">
+                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 7h16M4 11h16M4 15h10" />
+                                </svg>
+                            </div>
+                            <span className="text-[11px] font-semibold text-gray-300 uppercase tracking-wider">Encrypted gateway</span>
+                        </div>
+
+                        <div className="flex flex-col items-center gap-3">
+                            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-emerald-400/10 text-emerald-400">
+                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10l1.5 9h15L21 10H3z" />
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10V7a4 4 0 118 0v3" />
+                                </svg>
+                            </div>
+                            <span className="text-[11px] font-semibold text-gray-300 uppercase tracking-wider">Secure checkout</span>
+                        </div>
+
+                        <div className="flex flex-col items-center gap-3">
+                            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-emerald-400/10 text-emerald-400">
+                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3l8 4v5c0 5-3 7-8 9-5-2-8-4-8-9V7l8-4z" />
+                                </svg>
+                            </div>
+                            <span className="text-[11px] font-semibold text-gray-300 uppercase tracking-wider">Fraud protection</span>
+                        </div>
+
+                        <div className="flex flex-col items-center gap-3">
+                            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-emerald-400/10 text-emerald-400">
+                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 15a4 4 0 014-4h10a4 4 0 110 8H7a4 4 0 01-4-4z" />
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 11a4 4 0 117.8-1" />
+                                </svg>
+                            </div>
+                            <span className="text-[11px] font-semibold text-gray-300 uppercase tracking-wider">Privacy first</span>
+                        </div>
+
+                        <div className="flex flex-col items-center gap-3">
+                            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-emerald-400/10 text-emerald-400">
+                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 21h8M12 3v12m0 0l-4-4m4 4l4-4" />
+                                </svg>
+                            </div>
+                            <span className="text-[11px] font-semibold text-gray-300 uppercase tracking-wider">Chargeback shield</span>
+                        </div>
+
+                        <div className="flex flex-col items-center gap-3">
+                            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-emerald-500/10 text-emerald-500">
+                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                            </div>
+                            <span className="text-[11px] font-black text-gray-300 uppercase tracking-wider">SSL Secured</span>
+                        </div>
                     </div>
                 </div>
             </section>
 
-            {/* FAQ Section */}
+            {/* FAQ Section - Updated with smooth Opening Effect and Padding */}
             <section className="py-24 max-w-4xl mx-auto px-6">
-                <h2 className="text-3xl font-bold uppercase text-center mb-16">Trust & Reliability FAQ</h2>
+                <h2 className="text-3xl font-bold uppercase text-center mb-16 underline decoration-primary/30 underline-offset-8">Trust & Reliability FAQ</h2>
                 <div className="space-y-4">
                     {[
-                        { q: "Can I get banned for using your services?", a: "Zero customers have been banned for our boosting services in the last 24 months. We use premium residential VPNs and mimic your human behavior patterns to ensure anti-cheat systems cannot flag the activity." },
-                        { q: "Who has access to my account details?", a: "Our platform uses secure API-based authentication. Your password is encrypted. Boosters use a one-click launcher that never reveals your credentials to them." },
-                        { q: "What happens if my account is compromised?", a: "Our Safety Insurance policy covers the full market value of your account plus a 200% service credit. We maintain a $50,000 cash reserve for protection." },
-                        { q: "Can I play other games while boosting is in progress?", a: "Yes, as long as you're not on the same platform simultaneously. We coordinate schedules via our dashboard." }
+                        { q: "Can I get banned for using your services?", a: "Zero customers have been banned for our boosting services in the last 24 months. We use premium residential VPNs and mimic your human behavior patterns (including break times and movement variance) to ensure anti-cheat systems cannot flag the activity." },
+                        { q: "Who has access to my account details?", a: "Our platform uses a secure API-based authentication. Your actual password is encrypted and only ever visible to our lead security officer if manual intervention is required. The booster uses a \"one-click\" launcher that does not reveal your credentials to them." },
+                        { q: "What happens if my account is compromised?", a: "In the extremely unlikely event of an account issue, our Safety Insurance policy covers the full market value of your account plus a 200% service credit. We maintain a $50,000 cash reserve specifically for customer protection." },
+                        { q: "Can I play other games while boosting is in progress?", a: "Yes, as long as you are not logging into the same platform (e.g., Steam or Battle.net) simultaneously. We coordinate schedules via our dashboard to ensure no overlapping logins occur." }
                     ].map((faq, i) => (
-                        <details key={i} className="group bg-[#161616] border border-[#2a1215] rounded-lg overflow-hidden">
-                            <summary className="flex items-center justify-between p-6 cursor-pointer hover:bg-white/5 transition-colors">
-                                <span className="font-bold">{faq.q}</span>
-                                <span className="material-symbols-outlined text-primary group-open:rotate-180 transition-transform">expand_more</span>
-                            </summary>
-                            <div className="px-6 pb-6 text-slate-400 text-sm leading-relaxed">
-                                {faq.a}
-                            </div>
-                        </details>
+                        <FAQItem key={i} q={faq.q} a={faq.a} />
                     ))}
                 </div>
             </section>
@@ -206,11 +275,11 @@ export default function LegitPage() {
                     <h2 className="text-4xl md:text-5xl font-bold uppercase mb-6">Ready to boost with confidence?</h2>
                     <p className="text-slate-400 mb-10 text-lg">Join 50,000+ satisfied gamers who trust CFNboost for their competitive edge.</p>
                     <div className="flex flex-wrap justify-center gap-4">
-                        <Link href="/games" className="bg-primary hover:bg-primary/90 text-white font-bold py-5 px-10 rounded-lg transition-all shadow-[0_0_20px_rgba(175,18,37,0.4)]">
+                        <Link href="/games" className="bg-primary hover:bg-primary/90 text-white font-bold py-5 px-10 rounded-lg transition-all shadow-[0_0_20px_rgba(175,18,37,0.4)] transform hover:scale-105">
                             START YOUR ORDER
                         </Link>
-                        <Link href="/contact" className="bg-transparent border border-white/20 hover:border-white/40 text-white font-bold py-5 px-10 rounded-lg transition-all flex items-center gap-2">
-                            <span className="material-symbols-outlined">headset_mic</span>
+                        <Link href="/contact" className="bg-transparent border border-white/20 hover:border-white/40 text-white font-bold py-5 px-10 rounded-lg transition-all flex items-center gap-2 group">
+                            <span className="material-symbols-outlined group-hover:text-primary transition-colors">headset_mic</span>
                             TALK TO SUPPORT
                         </Link>
                     </div>
