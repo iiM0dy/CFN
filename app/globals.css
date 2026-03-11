@@ -143,7 +143,6 @@ body {
 
 /* Critical Hero Styles to prevent FOUT/Flash */
 .hero-title {
-  font-style: italic !important;
   line-height: 0.9 !important;
   letter-spacing: -0.05em !important;
   font-family: var(--font-space-grotesk), sans-serif;

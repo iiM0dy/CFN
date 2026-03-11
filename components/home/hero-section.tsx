@@ -28,7 +28,7 @@ export function HeroSection() {
 
             <div className="relative z-30 max-w-[1440px] mx-auto px-6 lg:px-10 flex flex-col items-center text-center py-24">
                 {/* Main Heading */}
-                <h1 className="hero-title text-5xl md:text-7xl lg:text-[88px] font-bold leading-[0.9] tracking-tighter text-white mb-6 italic drop-shadow-[0_0_30px_rgba(175,18,37,0.45)]">
+                <h1 className="hero-title text-5xl md:text-7xl lg:text-[88px] font-bold leading-[0.9] tracking-tighter text-white mb-6 drop-shadow-[0_0_30px_rgba(175,18,37,0.45)]">
                     ASCEND
                     <br />
                     <span className="hero-gradient-text">
@@ -38,7 +38,9 @@ export function HeroSection() {
 
                 {/* Subtitle */}
                 <p className="text-base md:text-lg text-gray-400 mb-10 max-w-2xl mx-auto font-medium leading-relaxed tracking-tight">
-                    The industry standard for professional competitive rank advancement. Secure, anonymous, and executed by the world&apos;s top 0.1% talent.
+                    Professional boosting and progression services delivered by top-tier players.
+                    <br />
+                    Fast results. Secure process. Real progress.
                 </p>
 
                 {/* CTAs */}
