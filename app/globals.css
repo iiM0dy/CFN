@@ -163,3 +163,18 @@ body {
 html.dark {
   color-scheme: dark;
 }
+
+/* Supplemental Contact Page Styles */
+.glow-button {
+  box-shadow: 0 0 15px rgba(175, 18, 37, 0.4);
+  transition: all 0.3s ease;
+}
+
+.glow-button:hover {
+  box-shadow: 0 0 25px rgba(175, 18, 37, 0.6);
+}
+
+.input-focus:focus {
+  border-color: var(--primary) !important;
+  box-shadow: 0 0 0 2px rgba(175, 18, 37, 0.2) !important;
+}
