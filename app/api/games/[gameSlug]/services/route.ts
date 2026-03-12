@@ -10,7 +10,10 @@ export async function GET(
 
         // Find the game first
         const game = await prisma.gameService.findUnique({
-            where: { slug: gameSlug }
+            where: {
+                slug: gameSlug,
+                isActive: true
+            }
         })
 
         if (!game) {

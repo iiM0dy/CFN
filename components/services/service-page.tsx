@@ -57,16 +57,16 @@ export function ServicePage({ game, tagline, description, stats, services }: Ser
                     <div className="absolute -bottom-20 -right-20 w-96 h-96 bg-primary/5 blur-[120px] rounded-full pointer-events-none"></div>
 
                     <div className="relative z-10 max-w-3xl">
-                        <div className="inline-flex items-center gap-2 px-3 py-1 mb-8 rounded-full bg-primary/20 border border-primary/30 text-primary text-[10px] font-black uppercase tracking-widest italic">
+                        <div className="inline-flex items-center gap-2 px-3 py-1 mb-8 rounded-full bg-primary/20 border border-primary/30 text-primary text-[10px] font-black uppercase tracking-widest">
                             <span className="flex h-2 w-2 rounded-full bg-primary"></span>
                             Verified Specialist Network Active
                         </div>
                         <h1 className="text-5xl md:text-7xl font-black tracking-tighter text-white mb-8 uppercase leading-tight">
                             {tagline.split(' ').map((word, i) => (
-                                <span key={i} className={i === tagline.split(' ').length - 1 ? "text-primary italic" : ""}>{word} </span>
+                                <span key={i} className={i === tagline.split(' ').length - 1 ? "text-primary" : ""}>{word} </span>
                             ))}
                         </h1>
-                        <p className="text-slate-400 text-lg font-medium leading-relaxed italic mb-12">
+                        <p className="text-slate-400 text-lg font-medium leading-relaxed mb-12">
                             {description}
                         </p>
 
@@ -85,7 +85,7 @@ export function ServicePage({ game, tagline, description, stats, services }: Ser
                 <section>
                     <div className="flex items-center gap-4 mb-12">
                         <span className="h-px bg-white/5 grow"></span>
-                        <h2 className="text-2xl font-black text-white uppercase tracking-widest italic px-4">Available Services</h2>
+                        <h2 className="text-2xl font-black text-white uppercase tracking-widest px-4">Available Services</h2>
                         <span className="h-px bg-white/5 grow"></span>
                     </div>
 
@@ -102,7 +102,7 @@ export function ServicePage({ game, tagline, description, stats, services }: Ser
                                         <h3 className="text-xl font-black text-white uppercase tracking-tight group-hover:text-primary transition-colors">{service.name}</h3>
                                         <div className="flex items-center gap-1">
                                             <span className="material-symbols-outlined text-[10px] text-primary">verified</span>
-                                            <span className="text-[9px] font-black text-slate-500 uppercase tracking-widest italic">Guaranteed Success</span>
+                                            <span className="text-[9px] font-black text-slate-500 uppercase tracking-widest">Guaranteed Success</span>
                                         </div>
                                     </div>
                                     <div className="flex flex-col items-end">
@@ -110,7 +110,7 @@ export function ServicePage({ game, tagline, description, stats, services }: Ser
                                     </div>
                                 </div>
 
-                                <p className="text-slate-400 text-sm font-medium leading-relaxed italic mb-8 h-12 overflow-hidden line-clamp-2">{service.description}</p>
+                                <p className="text-slate-400 text-sm font-medium leading-relaxed mb-8 h-12 overflow-hidden line-clamp-2">{service.description}</p>
 
                                 <div className="flex flex-wrap gap-2 mb-10">
                                     {service.features.map((f) => (

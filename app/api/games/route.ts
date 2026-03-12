@@ -4,6 +4,7 @@ import { NextResponse } from "next/server"
 export async function GET() {
     try {
         const games = await prisma.gameService.findMany({
+            where: { isActive: true },
             orderBy: { name: 'asc' }
         })
 

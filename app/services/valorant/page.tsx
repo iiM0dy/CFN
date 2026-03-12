@@ -62,14 +62,14 @@ export default function ValorantBoostPage() {
                             <div className="absolute -bottom-10 -right-10 w-64 h-64 bg-primary/5 blur-[80px] rounded-full"></div>
 
                             <div className="relative z-10">
-                                <div className="inline-flex items-center gap-2 px-3 py-1 mb-6 rounded-full bg-primary/20 border border-primary/30 text-primary text-[10px] font-black uppercase tracking-widest italic">
+                                <div className="inline-flex items-center gap-2 px-3 py-1 mb-6 rounded-full bg-primary/20 border border-primary/30 text-primary text-[10px] font-black uppercase tracking-widest">
                                     <span className="flex h-2 w-2 rounded-full bg-primary"></span>
                                     Operation: Radiance Active
                                 </div>
                                 <h1 className="text-4xl md:text-6xl font-black tracking-tighter text-white mb-6 uppercase leading-tight">
-                                    VALORANT <span className="text-primary italic">RANK AUGMENTATION</span>
+                                    VALORANT <span className="text-primary">RANK AUGMENTATION</span>
                                 </h1>
-                                <p className="text-slate-400 max-w-xl text-base font-medium leading-relaxed italic">
+                                <p className="text-slate-400 max-w-xl text-base font-medium leading-relaxed">
                                     Secure your place among the elite. Our verified Radiant-tier operatives are standing by to execute your rank advancement protocol.
                                 </p>
 
@@ -91,13 +91,13 @@ export default function ValorantBoostPage() {
                         <div className="bg-[#111111] border border-white/5 rounded-2xl p-8 shadow-xl">
                             <div className="flex items-center gap-4 mb-10">
                                 <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-white font-black text-xs">01</span>
-                                <h3 className="text-xl font-black text-white uppercase tracking-widest italic">ELO Coordinator</h3>
+                                <h3 className="text-xl font-black text-white uppercase tracking-widest">ELO Coordinator</h3>
                             </div>
 
                             <div className="space-y-12">
                                 {/* Current Status */}
                                 <div>
-                                    <label className="block text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] mb-6 italic">Current Tactical Division</label>
+                                    <label className="block text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] mb-6">Current Tactical Division</label>
                                     <div className="grid grid-cols-3 sm:grid-cols-6 lg:grid-cols-9 gap-3">
                                         {ranks.map((r, i) => (
                                             <button
@@ -118,7 +118,7 @@ export default function ValorantBoostPage() {
 
                                 {/* Desired Status */}
                                 <div>
-                                    <label className="block text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] mb-6 italic">Desired Target Division</label>
+                                    <label className="block text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] mb-6">Desired Target Division</label>
                                     <div className="grid grid-cols-3 sm:grid-cols-6 lg:grid-cols-9 gap-3">
                                         {ranks.map((r, i) => (
                                             <button
@@ -140,7 +140,7 @@ export default function ValorantBoostPage() {
                         <div className="bg-[#111111] border border-white/5 rounded-2xl p-8 shadow-xl">
                             <div className="flex items-center gap-4 mb-8">
                                 <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-white font-black text-xs">02</span>
-                                <h3 className="text-xl font-black text-white uppercase tracking-widest italic">Augmentation Protocols</h3>
+                                <h3 className="text-xl font-black text-white uppercase tracking-widest">Augmentation Protocols</h3>
                             </div>
                             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
                                 {addons.map((addon) => (
@@ -148,7 +148,7 @@ export default function ValorantBoostPage() {
                                         <div className="absolute top-0 right-0 w-16 h-16 bg-primary/5 blur-xl rounded-full group-hover:bg-primary/10"></div>
                                         <span className="material-symbols-outlined text-primary mb-3 text-xl">{addon.icon}</span>
                                         <h4 className="text-[10px] font-black text-white uppercase tracking-wider mb-1">{addon.name}</h4>
-                                        <p className="text-[9px] text-slate-500 font-bold mb-3 uppercase leading-tight italic">{addon.desc}</p>
+                                        <p className="text-[9px] text-slate-500 font-bold mb-3 uppercase leading-tight">{addon.desc}</p>
                                         <div className="mt-auto text-primary font-black text-[9px] tracking-widest uppercase">{addon.price}</div>
                                     </button>
                                 ))}
@@ -161,23 +161,23 @@ export default function ValorantBoostPage() {
                         <div className="sticky top-28 space-y-6">
                             <div className="bg-[#111111] border border-white/5 rounded-2xl p-8 shadow-2xl relative overflow-hidden group">
                                 <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 blur-[60px] rounded-full pointer-events-none group-hover:bg-primary/10 transition-colors"></div>
-                                <h3 className="text-xl font-black text-white uppercase tracking-widest mb-8 italic">Mission Log</h3>
+                                <h3 className="text-xl font-black text-white uppercase tracking-widest mb-8">Mission Log</h3>
 
                                 <div className="space-y-6 mb-10 border-b border-white/5 pb-10">
                                     <div className="flex justify-between items-center text-[10px]">
-                                        <span className="text-slate-500 font-black uppercase tracking-widest italic">Operation Type</span>
+                                        <span className="text-slate-500 font-black uppercase tracking-widest">Operation Type</span>
                                         <span className="text-white font-black uppercase tracking-tighter">VALORANT RANK UP</span>
                                     </div>
                                     <div className="flex justify-between items-center text-[10px]">
-                                        <span className="text-slate-500 font-black uppercase tracking-widest italic">Current Sector</span>
+                                        <span className="text-slate-500 font-black uppercase tracking-widest">Current Sector</span>
                                         <span className="text-white font-black">{ranks[currentRank].name}</span>
                                     </div>
                                     <div className="flex justify-between items-center text-[10px]">
-                                        <span className="text-slate-500 font-black uppercase tracking-widest italic">Target Sector</span>
+                                        <span className="text-slate-500 font-black uppercase tracking-widest">Target Sector</span>
                                         <span className="text-primary font-black">{ranks[desiredRank].name}</span>
                                     </div>
                                     <div className="flex justify-between items-center text-[10px]">
-                                        <span className="text-slate-500 font-black uppercase tracking-widest italic">ETA window</span>
+                                        <span className="text-slate-500 font-black uppercase tracking-widest">ETA window</span>
                                         <span className="text-white font-black">~{getDays()} OPS DAYS</span>
                                     </div>
                                 </div>
@@ -185,7 +185,7 @@ export default function ValorantBoostPage() {
                                 <div className="flex items-end justify-between mb-8">
                                     <div className="flex flex-col">
                                         <span className="text-slate-500 text-[10px] font-black uppercase tracking-[0.2em] mb-1">Total Allocation</span>
-                                        <span className="text-slate-600 text-[10px] italic">Secured Tactical Fund</span>
+                                        <span className="text-slate-600 text-[10px]">Secured Tactical Fund</span>
                                     </div>
                                     <span className="text-5xl font-black text-white tracking-tighter font-cairo">${getPrice()}</span>
                                 </div>
@@ -195,7 +195,7 @@ export default function ValorantBoostPage() {
                                     <span className="material-symbols-outlined text-xl group-hover:translate-x-1 transition-transform">shopping_cart</span>
                                 </Link>
 
-                                <div className="flex items-center justify-center gap-2 mt-8 text-[10px] text-slate-500 font-black uppercase tracking-widest italic">
+                                <div className="flex items-center justify-center gap-2 mt-8 text-[10px] text-slate-500 font-black uppercase tracking-widest">
                                     <span className="material-symbols-outlined text-xs text-primary">lock</span>
                                     Neural Link Encrypted (256-bit)
                                 </div>

@@ -22,6 +22,7 @@ export async function GET(request: Request) {
                     },
                     {
                         game: {
+                            isActive: true,
                             name: {
                                 contains: query,
                                 mode: 'insensitive'

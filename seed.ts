@@ -91,50 +91,6 @@ async function seed() {
       isPopular: true,
       services: [
         {
-          name: "Rank Boosting",
-          description: "Climb the ranks with our elite ARC Raiders players.",
-          basePrice: 12.00,
-          platforms: ["PC", "Console"],
-          completionMethods: ["Solo", "Duo"],
-          options: [
-            {
-              label: "Current Rank",
-              type: "select",
-              required: true,
-              order: 1,
-              values: [
-                { label: "Bronze", value: "bronze", priceModifier: 0, order: 1 },
-                { label: "Silver", value: "silver", priceModifier: 5, order: 2 },
-                { label: "Gold", value: "gold", priceModifier: 10, order: 3 },
-                { label: "Platinum", value: "platinum", priceModifier: 15, order: 4 },
-                { label: "Diamond", value: "diamond", priceModifier: 25, order: 5 },
-              ]
-            },
-            {
-              label: "Desired Rank",
-              type: "select",
-              required: true,
-              order: 2,
-              values: [
-                { label: "Silver", value: "silver", priceModifier: 10, order: 1 },
-                { label: "Gold", value: "gold", priceModifier: 20, order: 2 },
-                { label: "Platinum", value: "platinum", priceModifier: 35, order: 3 },
-                { label: "Diamond", value: "diamond", priceModifier: 50, order: 4 },
-                { label: "Master", value: "master", priceModifier: 80, order: 5 },
-              ]
-            },
-            {
-              label: "Priority Queue",
-              type: "checkbox",
-              required: false,
-              order: 3,
-              values: [
-                { label: "Start within 1 hour", value: "priority", priceModifier: 15, order: 1 },
-              ]
-            }
-          ]
-        },
-        {
           name: "Blueprints",
           description: "Get the best gear and resources efficiently.",
           basePrice: 20.00,
@@ -467,7 +423,7 @@ async function seed() {
     if (services) {
       for (const service of services) {
         const { options, ...serviceData } = service as any
-        
+
         // Find or create service
         let upsertedService = await prisma.service.findFirst({
           where: { name: service.name, gameId: upsertedGame.id }

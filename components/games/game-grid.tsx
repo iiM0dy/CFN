@@ -82,7 +82,7 @@ export function GameGrid({ initialGames, categories }: GameGridProps) {
           </h2>
           <p className="text-slate-500 text-[10px] font-bold uppercase tracking-widest mt-1">Select title to deploy professional experts</p>
         </div>
-        <div className="text-slate-600 text-[10px] font-black uppercase tracking-[0.2em] hidden sm:block italic">
+        <div className="text-slate-600 text-[10px] font-black uppercase tracking-[0.2em] hidden sm:block">
           Network Capacity: <span className="text-primary">{filteredGames.length} ACTIVE NODES</span>
         </div>
       </div>
@@ -137,14 +137,14 @@ export function GameGrid({ initialGames, categories }: GameGridProps) {
                 <h3 className="text-2xl font-black text-white mb-1 group-hover:text-primary transition-colors uppercase tracking-tight">
                   {game.name}
                 </h3>
-                <p className="text-slate-400 text-[10px] font-bold uppercase tracking-widest line-clamp-1 italic">
+                <p className="text-slate-400 text-[10px] font-bold uppercase tracking-widest line-clamp-1">
                   {game.description || 'Verified Service Node'}
                 </p>
 
                 {game.isActive && (
                   <div className="mt-4 flex items-center justify-center transition-all duration-500 opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0">
                     <div className="flex items-center gap-2 group/btn">
-                      <span className="text-[10px] font-black text-primary tracking-[0.3em] uppercase italic">
+                      <span className="text-[10px] font-black text-primary tracking-[0.3em] uppercase">
                         VIEW PACKAGES
                       </span>
                       <span className="material-symbols-outlined text-primary text-sm">
@@ -164,9 +164,9 @@ export function GameGrid({ initialGames, categories }: GameGridProps) {
             <div className="w-20 h-20 rounded-2xl bg-[#111111] border border-white/10 flex items-center justify-center mb-8 shadow-xl group-hover:border-primary/50 group-hover:bg-primary/5 group-hover:rotate-12 transition-all duration-700">
               <span className="material-symbols-outlined text-slate-500 group-hover:text-primary text-4xl transition-colors">add_moderator</span>
             </div>
-            <h3 className="text-2xl font-black text-white mb-3 uppercase tracking-tighter italic">Game Not Found?</h3>
-            <p className="text-slate-600 text-[10px] font-black leading-relaxed mb-8 max-w-[220px] uppercase tracking-[0.2em] italic">Contact Us to add a new game for CFNBOOST services</p>
-            <span className="px-6 py-2.5 bg-[#161616] border border-white/5 rounded-lg text-[9px] font-black text-slate-300 tracking-[0.3em] group-hover:bg-primary group-hover:text-white group-hover:border-primary transition-all uppercase italic">CONTACT US</span>
+            <h3 className="text-2xl font-black text-white mb-3 uppercase tracking-tighter">Game Not Found?</h3>
+            <p className="text-slate-600 text-[10px] font-black leading-relaxed mb-8 max-w-[220px] uppercase tracking-[0.2em]">Contact Us to add a new game for CFNBOOST services</p>
+            <span className="px-6 py-2.5 bg-[#161616] border border-white/5 rounded-lg text-[9px] font-black text-slate-300 tracking-[0.3em] group-hover:bg-primary group-hover:text-white group-hover:border-primary transition-all uppercase">CONTACT US</span>
           </div>
         </Link>
 

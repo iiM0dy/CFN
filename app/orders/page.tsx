@@ -155,7 +155,7 @@ export default function MyOrdersPage() {
             <div className="size-20 rounded-2xl bg-primary/5 flex items-center justify-center mx-auto mb-6">
               <span className="material-symbols-outlined text-primary text-4xl">fingerprint</span>
             </div>
-            <h3 className="text-2xl font-black text-white uppercase tracking-widest mb-4 italic">IDENTITY UNKNOWN</h3>
+            <h3 className="text-2xl font-black text-white uppercase tracking-widest mb-4">IDENTITY UNKNOWN</h3>
             <p className="text-slate-500 text-xs font-bold uppercase tracking-widest mb-10 max-w-sm mx-auto leading-relaxed">
               Connect your neural link to track active deployments and access historical operation data.
             </p>
@@ -178,7 +178,7 @@ export default function MyOrdersPage() {
           <div className="text-center py-20 bg-[#141414]/50 border border-dashed border-white/5 rounded-2xl">
             <Package className="size-16 text-gray-600 mx-auto mb-4" />
             <h3 className="text-xl font-bold text-gray-400 mb-2">No orders found</h3>
-            <p className="text-gray-500 mb-6 uppercase tracking-widest text-[10px] font-black italic">No active deployments detected in this sector</p>
+            <p className="text-gray-500 mb-6 uppercase tracking-widest text-[10px] font-black">No active deployments detected in this sector</p>
             <Link
               href="/games"
               className="inline-flex items-center gap-2 px-6 py-3 bg-primary hover:bg-[#8a0e1d] text-white text-[10px] font-black uppercase tracking-widest rounded-lg transition-all"

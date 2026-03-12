@@ -29,9 +29,9 @@ export function ServiceList({ initialServices }: ServiceListProps) {
                 <div className="space-y-1">
                     <h2 className="text-3xl font-black text-white uppercase tracking-tighter flex items-center gap-4">
                         <span className="h-10 w-1.5 bg-primary rounded-full"></span>
-                        Available <span className="text-primary italic">Services</span>
+                        Available <span className="text-primary">Services</span>
                     </h2>
-                    <p className="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em] ml-5 italic">Selection ready for initiation</p>
+                    <p className="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em] ml-5">Selection ready for initiation</p>
                 </div>
 
                 <div className="relative group min-w-[320px]">
@@ -71,25 +71,15 @@ export function ServiceList({ initialServices }: ServiceListProps) {
                         </div>
 
                         {/* Status Badge */}
-                        <div className="absolute top-5 right-5 z-20 px-3 py-1 bg-primary/20 backdrop-blur-md border border-primary/30 text-primary text-[9px] font-black uppercase tracking-[0.2em] rounded-lg shadow-xl italic transition-all duration-300">
+                        <div className="absolute top-5 right-5 z-20 px-3 py-1 bg-primary/20 backdrop-blur-md border border-primary/30 text-primary text-[9px] font-black uppercase tracking-[0.2em] rounded-lg shadow-xl transition-all duration-300">
                             ACTIVE
                         </div>
 
                         <div className="absolute bottom-0 left-0 right-0 p-8 z-10 transition-transform duration-500 group-hover:-translate-y-2">
-                            <h3 className="text-2xl font-black text-white mb-3 group-hover:text-primary transition-colors uppercase tracking-tighter leading-tight italic">
+                            <h3 className="text-2xl font-black text-white mb-3 group-hover:text-primary transition-colors uppercase tracking-tighter leading-tight">
                                 {service.name}
                             </h3>
 
-                            <div className="flex flex-col gap-2 mb-8 border-l-2 border-primary/20 pl-4">
-                                <div className="flex items-center gap-2 text-slate-400 text-[9px] font-black uppercase tracking-[0.15em]">
-                                    <span className="material-symbols-outlined text-[14px] text-primary">verified_user</span>
-                                    VPN P-ACTIVE
-                                </div>
-                                <div className="flex items-center gap-2 text-slate-400 text-[9px] font-black uppercase tracking-[0.15em]">
-                                    <span className="material-symbols-outlined text-[14px] text-primary">bolt</span>
-                                    INSTANT INIT
-                                </div>
-                            </div>
 
                             <div className="flex items-center justify-between pt-6 border-t border-white/5 group-hover:border-primary/20 transition-colors">
                                 <div>
@@ -113,8 +103,8 @@ export function ServiceList({ initialServices }: ServiceListProps) {
                 {filteredServices.length === 0 && (
                     <div className="col-span-full py-40 text-center bg-[#111111]/50 rounded-3xl border border-dashed border-white/5">
                         <span className="material-symbols-outlined text-6xl text-slate-800 mb-6 block animate-pulse">radar</span>
-                        <h3 className="text-3xl font-black text-white uppercase tracking-tighter italic">No Signals Detected</h3>
-                        <p className="text-slate-600 text-xs mt-2 uppercase tracking-[0.5em] font-black italic">Adjust tactical search frequency</p>
+                        <h3 className="text-3xl font-black text-white uppercase tracking-tighter">No Signals Detected</h3>
+                        <p className="text-slate-600 text-xs mt-2 uppercase tracking-[0.5em] font-black">Adjust tactical search frequency</p>
                     </div>
                 )}
 
@@ -124,9 +114,9 @@ export function ServiceList({ initialServices }: ServiceListProps) {
                         <div className="w-20 h-20 rounded-2xl bg-[#111111] border border-white/10 flex items-center justify-center mb-8 shadow-xl group-hover:border-primary/50 group-hover:bg-primary/5 group-hover:rotate-12 transition-all duration-700">
                             <span className="material-symbols-outlined text-slate-500 group-hover:text-primary text-4xl transition-colors">add_moderator</span>
                         </div>
-                        <h3 className="text-2xl font-black text-white mb-3 uppercase tracking-tighter italic">Custom <span className="text-primary italic">Request</span></h3>
-                        <p className="text-slate-600 text-[10px] font-black leading-relaxed mb-8 max-w-[220px] uppercase tracking-[0.2em] italic">Don't see what you need? Tell us what you're looking for and we'll make it happen.</p>
-                        <span className="px-6 py-2.5 bg-[#161616] border border-white/5 rounded-lg text-[9px] font-black text-slate-300 tracking-[0.3em] group-hover:bg-primary group-hover:text-white group-hover:border-primary transition-all uppercase italic">GET IN TOUCH</span>
+                        <h3 className="text-2xl font-black text-white mb-3 uppercase tracking-tighter">Custom <span className="text-primary">Request</span></h3>
+                        <p className="text-slate-600 text-[10px] font-black leading-relaxed mb-8 max-w-[220px] uppercase tracking-[0.2em]">Don't see what you need? Tell us what you're looking for and we'll make it happen.</p>
+                        <span className="px-6 py-2.5 bg-[#161616] border border-white/5 rounded-lg text-[9px] font-black text-slate-300 tracking-[0.3em] group-hover:bg-primary group-hover:text-white group-hover:border-primary transition-all uppercase">GET IN TOUCH</span>
                     </div>
                 </Link>
             </div>

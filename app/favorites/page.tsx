@@ -166,16 +166,6 @@ export default function FavoritesPage() {
                                         {fav.service.name}
                                     </h3>
 
-                                    <div className="flex flex-col gap-2 mb-8 border-l-2 border-primary/20 pl-4">
-                                        <div className="flex items-center gap-2 text-slate-400 text-[9px] font-black uppercase tracking-[0.15em]">
-                                            <span className="material-symbols-outlined text-[14px] text-primary">verified_user</span>
-                                            VPN P-ACTIVE
-                                        </div>
-                                        <div className="flex items-center gap-2 text-slate-400 text-[9px] font-black uppercase tracking-[0.15em]">
-                                            <span className="material-symbols-outlined text-[14px] text-primary">bolt</span>
-                                            INSTANT INIT
-                                        </div>
-                                    </div>
 
                                     <div className="flex items-center justify-between pt-6 border-t border-white/5 group-hover:border-primary/20 transition-colors">
                                         <div>

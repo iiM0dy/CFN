@@ -28,7 +28,7 @@ export default function ServicesPage() {
                     <div className="relative flex min-h-[500px] flex-col items-center justify-center p-8 text-center bg-cover bg-center"
                         style={{ backgroundImage: `linear-gradient(to bottom, rgba(11, 11, 11, 0.7), rgba(11, 11, 11, 0.95)), url('https://lh3.googleusercontent.com/aida-public/AB6AXuDtT1jxDnxtsGIYRHSMliDraQn_yLp0tQ7G1WJ7RCBN9NdrKIRTuaGkdIUKlrOvPWikxRxk5MFhBRZjKk7hGER1bAQZpd0cuR4jwWRnD-eHOlI6Wibh51FP3RZtyZQEx0Onbt05ETSRiUQkyWD186PINwATOjSsIKbW8-9-8vg4hpw9lLtovh2yKoqwOxKHZTwisuocZjUJrBv0kjSCJBPT2IX4YE5Q4R-fB5jc1nDqjIRKmMsBObn6_FxrzBqZRmrO3dwv-CAHdgJW')` }}>
                         <div className="z-10 max-w-4xl">
-                            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-[10px] font-bold uppercase tracking-widest italic">
+                            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-[10px] font-bold uppercase tracking-widest">
                                 <span className="material-symbols-outlined text-xs">bolt</span>
                                 Service Detail
                             </div>
