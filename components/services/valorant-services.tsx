@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button"
 import { useCart } from "@/lib/store"
 import { Swords, ShieldCheck, Clock, Star, ChevronRight } from "lucide-react"
 import { toast } from "sonner"
+import { useCurrency } from "@/context/currency-context"
 
 const services = [
     {
@@ -11,7 +12,6 @@ const services = [
         name: "Rank Boost",
         description: "Climb from your current rank to your desired rank. Our Radiant-tier boosters use VPN protection and offline mode for maximum security.",
         price: 25.00,
-        priceLabel: "From $25",
         features: ["VPN Protected", "Offline Mode", "Live Tracking"],
     },
     {
@@ -19,7 +19,6 @@ const services = [
         name: "Duo Queue",
         description: "Play alongside a professional booster. Learn while you climb. Communicate via voice chat for coordinated plays.",
         price: 35.00,
-        priceLabel: "From $35",
         features: ["Play Together", "Voice Comms", "Learn & Win"],
     },
     {
@@ -27,7 +26,6 @@ const services = [
         name: "Placement Matches",
         description: "Let our pros handle your placement games for the best possible starting rank. Available at the start of every act.",
         price: 40.00,
-        priceLabel: "From $40",
         features: ["5/10 Games", "Best Start", "Act Ready"],
     },
     {
@@ -35,7 +33,6 @@ const services = [
         name: "1-on-1 Coaching",
         description: "Get personalized coaching from Immortal and Radiant players. VOD reviews, live coaching, and performance analysis.",
         price: 30.00,
-        priceLabel: "$30/hour",
         features: ["VOD Review", "Live Session", "Custom Plan"],
     },
 ]
@@ -49,6 +46,7 @@ const stats = [
 
 export function ValorantServices() {
     const { addItem } = useCart()
+    const { formatPrice } = useCurrency()
 
     const handleAdd = (service: typeof services[0]) => {
         addItem({
@@ -103,7 +101,9 @@ export function ValorantServices() {
                             >
                                 <div className="flex justify-between items-start mb-4">
                                     <h3 className="text-lg font-semibold">{service.name}</h3>
-                                    <span className="text-lg font-bold text-primary">{service.priceLabel}</span>
+                                    <span className="text-lg font-bold text-primary">
+                                        {service.id === "val-coaching" ? `${formatPrice(service.price)}/hour` : `From ${formatPrice(service.price)}`}
+                                    </span>
                                 </div>
                                 <p className="text-sm text-muted-foreground mb-5 leading-relaxed">
                                     {service.description}

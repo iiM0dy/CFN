@@ -3,7 +3,8 @@
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { useCart } from "@/lib/store"
-import { toast } from "sonner" // Need to install sonner later or use simple alert or nothing
+import { useCurrency } from "@/context/currency-context"
+import { toast } from "sonner"
 
 interface Product {
     id: string
@@ -15,6 +16,7 @@ interface Product {
 
 export function ProductCard({ product }: { product: Product }) {
     const { addItem } = useCart()
+    const { formatPrice } = useCurrency()
 
     const handleAddToCart = () => {
         addItem({
@@ -24,7 +26,7 @@ export function ProductCard({ product }: { product: Product }) {
             quantity: 1,
             image: product.image
         })
-        // toast("Added to cart")
+        toast.success(`${product.name} added to cart`)
     }
 
     return (
@@ -37,7 +39,7 @@ export function ProductCard({ product }: { product: Product }) {
                 <CardDescription>{product.description}</CardDescription>
             </CardHeader>
             <CardContent className="flex-1">
-                <p className="text-2xl font-bold text-primary">${product.price.toFixed(2)}</p>
+                <p className="text-2xl font-bold text-primary">{formatPrice(product.price)}</p>
             </CardContent>
             <CardFooter>
                 <Button className="w-full" onClick={handleAddToCart}>Add to Cart</Button>

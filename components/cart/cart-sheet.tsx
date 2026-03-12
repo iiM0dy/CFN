@@ -11,10 +11,12 @@ import {
     SheetTrigger,
 } from "@/components/ui/sheet"
 import { useRouter } from "next/navigation"
+import { useCurrency } from "@/context/currency-context"
 
 export function CartSheet() {
     const router = useRouter()
     const { items, total, removeItem } = useCart()
+    const { formatPrice } = useCurrency()
 
     return (
         <Sheet>
@@ -44,7 +46,7 @@ export function CartSheet() {
                                     <div className="flex flex-col">
                                         <span className="font-medium">{item.name}</span>
                                         <span className="text-sm text-muted-foreground">
-                                            Qty: {item.quantity} x ${item.price}
+                                            Qty: {item.quantity} x {formatPrice(item.price)}
                                         </span>
                                     </div>
                                     <Button
@@ -63,7 +65,7 @@ export function CartSheet() {
                     <div className="border-t pt-4 mt-auto">
                         <div className="flex items-center justify-between mb-4 font-medium">
                             <span>Total</span>
-                            <span>${total.toFixed(2)}</span>
+                            <span>{formatPrice(total)}</span>
                         </div>
                         <Button
                             className="w-full"

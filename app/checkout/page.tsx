@@ -2,8 +2,10 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { useCurrency } from "@/context/currency-context";
 
 export default function CheckoutPage() {
+    const { formatPrice } = useCurrency();
     const [paymentMethod, setPaymentMethod] = useState<"card" | "paypal" | "crypto">("card");
 
     return (
@@ -28,21 +30,21 @@ export default function CheckoutPage() {
                             <div className="py-6 flex flex-col gap-4 border-b border-[#38292b]">
                                 <div className="flex justify-between items-center text-sm">
                                     <span className="text-[#b89da1]">Base Price</span>
-                                    <span className="font-medium">$120.00</span>
+                                    <span className="font-medium">{formatPrice(120.00)}</span>
                                 </div>
                                 <div className="flex justify-between items-center text-sm">
                                     <span className="text-[#b89da1] flex items-center gap-2">⚡ Priority Order</span>
-                                    <span className="font-medium">+$15.00</span>
+                                    <span className="font-medium">+{formatPrice(15.00)}</span>
                                 </div>
                                 <div className="flex justify-between items-center text-sm">
                                     <span className="text-[#b89da1] flex items-center gap-2">👻 Offline Mode</span>
-                                    <span className="font-medium">+$10.00</span>
+                                    <span className="font-medium">+{formatPrice(10.00)}</span>
                                 </div>
                             </div>
                             <div className="pt-6 flex flex-col gap-2">
                                 <div className="flex justify-between items-end">
                                     <span className="text-[#b89da1] font-medium">Total to pay</span>
-                                    <span className="text-3xl font-bold text-white">$145.00</span>
+                                    <span className="text-3xl font-bold text-white">{formatPrice(145.00)}</span>
                                 </div>
                                 <p className="text-xs text-[#b89da1] text-right mt-1">Includes all applicable taxes</p>
                             </div>
@@ -167,7 +169,7 @@ export default function CheckoutPage() {
                             {/* Submit */}
                             <div className="mt-4">
                                 <button className="w-full bg-primary hover:bg-[#8a0e1c] text-white font-bold text-lg py-4 px-6 rounded-lg transition-all shadow-[0_0_20px_rgba(175,18,37,0.4)] hover:shadow-[0_0_30px_rgba(175,18,37,0.6)] flex items-center justify-center gap-3 group">
-                                    🔒 Pay $145.00 &amp; Start Boost
+                                    🔒 Pay {formatPrice(145.00)} &amp; Start Boost
                                 </button>
                                 <p className="text-center text-xs text-[#b89da1] mt-4 flex items-center justify-center gap-1">
                                     🛡️ Payments are processed securely by Stripe.

@@ -2,8 +2,10 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { useCurrency } from "@/context/currency-context";
 
 export default function ServicesPage() {
+    const { formatPrice } = useCurrency();
     const [openFaq, setOpenFaq] = useState<number | null>(0);
 
     const faqs = [
@@ -164,7 +166,7 @@ export default function ServicesPage() {
                                             <div className="flex justify-between items-center mb-4 pb-4 border-b border-[#38292b]"><span className="text-gray-400 text-sm">ETA</span><span className="text-white text-sm font-medium">~14 Hours</span></div>
                                             <div className="flex justify-between items-end mb-1">
                                                 <span className="text-gray-400 font-medium">Total</span>
-                                                <span className="text-3xl font-bold text-primary">$24.50</span>
+                                                <span className="text-3xl font-bold text-primary">{formatPrice(24.50)}</span>
                                             </div>
                                         </div>
                                         <div className="mt-8 flex flex-col gap-3">

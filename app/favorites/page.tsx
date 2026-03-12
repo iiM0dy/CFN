@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useCurrency } from "@/context/currency-context";
 
 interface Favorite {
     id: string;
@@ -23,6 +24,7 @@ interface Favorite {
 export default function FavoritesPage() {
     const { data: session, status } = useSession();
     const router = useRouter();
+    const { formatPrice } = useCurrency();
     const [favorites, setFavorites] = useState<Favorite[]>([]);
     const [loading, setLoading] = useState(true);
 
@@ -168,11 +170,8 @@ export default function FavoritesPage() {
 
 
                                     <div className="flex items-center justify-between pt-6 border-t border-white/5 group-hover:border-primary/20 transition-colors">
-                                        <div>
-                                            <div className="text-3xl font-black text-white tracking-tighter font-cairo">
-                                                <span className="text-primary/50 text-xl font-medium mr-0.5">$</span>
-                                                {fav.service.displayPrice}
-                                            </div>
+                                        <div className="text-3xl font-black text-white tracking-tighter font-cairo">
+                                            {formatPrice(Number(fav.service.displayPrice))}
                                         </div>
                                         <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-white/5 border border-white/10 text-white group-hover:bg-primary group-hover:border-primary group-hover:text-white group-hover:rotate-45 transition-all duration-500 shadow-xl">
                                             <span className="material-symbols-outlined text-lg">north_east</span>

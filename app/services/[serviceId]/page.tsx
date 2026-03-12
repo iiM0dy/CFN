@@ -9,6 +9,7 @@ import {
     Shield, Clock, Lock, Zap, ChevronRight, Computer,
     Gamepad2, ArrowRight, CheckCircle2, Rocket, TrendingUp, Heart
 } from "lucide-react";
+import { useCurrency } from "@/context/currency-context";
 
 interface ServiceOptionValue {
     id: string;
@@ -50,8 +51,10 @@ export default function ServiceDetailsPage() {
     const { serviceId } = useParams();
     const router = useRouter();
     const { data: session } = useSession();
+    const { formatPrice } = useCurrency();
     const [service, setService] = useState<Service | null>(null);
     const [loading, setLoading] = useState(true);
+    const [minPrice, setMinPrice] = useState<number>(0);
 
     // Form state
     const [platform, setPlatform] = useState("");
@@ -99,6 +102,25 @@ export default function ServiceDetailsPage() {
                     setService(data);
                     if (data.platforms?.length > 0) setPlatform(data.platforms[0]);
                     if (data.completionMethods?.length > 0) setCompletionMethod(data.completionMethods[0]);
+
+                    // Calculate minimum starting price
+                    let bPrice = Number(data.basePrice);
+                    let minAddPrice = 0;
+                    data.options?.forEach((opt: any) => {
+                        if (opt.type === 'number' || opt.type === 'range') {
+                            if (opt.minValue && opt.minValue > 0) {
+                                if (data.name?.toLowerCase().includes('coin')) {
+                                    bPrice = (bPrice * opt.minValue) / 1000;
+                                } else {
+                                    bPrice = bPrice * opt.minValue;
+                                }
+                            }
+                        } else if (opt.required && opt.values && opt.values.length > 0) {
+                            const prices = opt.values.map((v: any) => Number(v.priceModifier || 0));
+                            minAddPrice += Math.min(...prices);
+                        }
+                    });
+                    setMinPrice(bPrice + minAddPrice);
 
                     // Pre-select cheapest variants for required options
                     const initialSelections: Record<string, any> = {};
@@ -236,7 +258,7 @@ export default function ServiceDetailsPage() {
             }
         }
 
-        return price.toFixed(2);
+        return price;
     };
 
     // Validate promo code
@@ -357,11 +379,11 @@ export default function ServiceDetailsPage() {
         }
 
         if (speedType === 'express') {
-            return (basePrice * 0.20).toFixed(2); // 20% of base
+            return basePrice * 0.20; // 20% of base
         } else if (speedType === 'super_express') {
-            return (basePrice * 0.40).toFixed(2); // 40% of base
+            return basePrice * 0.40; // 40% of base
         }
-        return '0.00';
+        return 0;
     };
 
     if (loading) {
@@ -441,9 +463,17 @@ export default function ServiceDetailsPage() {
                                             <span className="text-[11px] font-black uppercase tracking-widest">{isFavorite ? 'Saved' : 'Save Asset'}</span>
                                         </button>
                                     </div>
-                                    <h1 className="text-4xl md:text-6xl font-black text-white uppercase tracking-tighter font-cairo">
-                                        {service.name}
-                                    </h1>
+                                    <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+                                        <h1 className="text-4xl md:text-6xl font-black text-white uppercase tracking-tighter font-cairo">
+                                            {service.name}
+                                        </h1>
+                                        <div className="flex flex-col items-start md:items-end bg-primary/5 px-4 py-2 rounded-xl border border-primary/20 backdrop-blur-sm">
+                                            <span className="text-[9px] font-black text-primary uppercase tracking-widest mb-1 leading-none">Starting From</span>
+                                            <span className="text-3xl font-black text-white tracking-tighter font-cairo leading-none">
+                                                {formatPrice(minPrice)}
+                                            </span>
+                                        </div>
+                                    </div>
                                     <p className="text-slate-400 text-sm font-medium leading-relaxed max-w-2xl italic">
                                         {service.description}
                                     </p>
@@ -530,7 +560,7 @@ export default function ServiceDetailsPage() {
                                                             <h4 className="font-bold text-white text-base">{value.label}</h4>
                                                             {value.priceModifier > 0 ? (
                                                                 <span className="text-xs bg-primary/10 text-primary border border-primary/20 px-2 py-1 rounded">
-                                                                    +${value.priceModifier}
+                                                                    +{formatPrice(value.priceModifier)}
                                                                 </span>
                                                             ) : (
                                                                 <span className="text-xs bg-gray-800 text-gray-400 px-2 py-1 rounded">Free</span>
@@ -569,7 +599,7 @@ export default function ServiceDetailsPage() {
                                                         <span className="text-sm text-gray-300 font-medium">{value.label}</span>
                                                     </div>
                                                     {value.priceModifier > 0 && (
-                                                        <span className="text-sm font-bold text-primary">+${Number(value.priceModifier).toFixed(2)}</span>
+                                                        <span className="text-sm font-bold text-primary">+{formatPrice(value.priceModifier)}</span>
                                                     )}
                                                 </label>
                                             ))}
@@ -624,7 +654,7 @@ export default function ServiceDetailsPage() {
                                                         >
                                                             <span className="text-sm text-gray-300 font-medium">{value.label}</span>
                                                             {value.priceModifier > 0 && (
-                                                                <span className="text-sm font-bold text-primary">+${value.priceModifier}</span>
+                                                                <span className="text-sm font-bold text-primary">+{formatPrice(value.priceModifier)}</span>
                                                             )}
                                                         </button>
                                                     ))}
@@ -687,7 +717,7 @@ export default function ServiceDetailsPage() {
                                                                 <span className="text-sm text-gray-300 font-medium">{value.label}</span>
                                                             </div>
                                                             {value.priceModifier > 0 && (
-                                                                <span className="text-sm font-bold text-primary">+${Number(value.priceModifier).toFixed(2)}</span>
+                                                                <span className="text-sm font-bold text-primary">+{formatPrice(value.priceModifier)}</span>
                                                             )}
                                                         </label>
                                                     ))}
@@ -1006,7 +1036,7 @@ export default function ServiceDetailsPage() {
                                     {promoCodeData && (
                                         <p className="text-green-500 text-[10px] font-black uppercase tracking-widest mt-3 flex items-center gap-1 leading-none">
                                             <span className="material-symbols-outlined text-xs">check_circle</span>
-                                            Access Granted: {promoCodeData.discountType === 'percentage' ? `${promoCodeData.discount}%` : `$${promoCodeData.discount}`}
+                                            Access Granted: {promoCodeData.discountType === 'percentage' ? `${promoCodeData.discount}%` : formatPrice(promoCodeData.discount)}
                                         </p>
                                     )}
                                 </div>
@@ -1047,7 +1077,7 @@ export default function ServiceDetailsPage() {
                                         <span className="text-slate-500 text-[10px] font-bold uppercase tracking-[0.2em]">Total Allocation</span>
                                         <span className="text-slate-600 text-[10px] italic">Finalized secure transaction</span>
                                     </div>
-                                    <span className="text-4xl font-black text-white tracking-tighter font-cairo">${calculateTotalPrice()}</span>
+                                    <span className="text-4xl font-black text-white tracking-tighter font-cairo">{formatPrice(calculateTotalPrice())}</span>
                                 </div>
 
                                 <button
@@ -1163,7 +1193,7 @@ export default function ServiceDetailsPage() {
                             disabled={!selectedPaymentMethod}
                             className="w-full py-5 bg-primary hover:bg-[#8a0e1d] text-white font-black text-sm uppercase tracking-[0.2em] rounded-xl flex items-center justify-center gap-3 transition-all shadow-xl shadow-primary/20 disabled:opacity-50 disabled:cursor-not-allowed mb-6"
                         >
-                            CONFIRM DEPLOYMENT - ${calculateTotalPrice()}
+                            CONFIRM DEPLOYMENT - {formatPrice(calculateTotalPrice())}
                         </button>
 
                         {/* Security Notice */}

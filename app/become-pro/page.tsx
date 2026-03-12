@@ -62,7 +62,7 @@ export default function BecomeProPage() {
                                 <a href="#join-network" className="px-10 py-5 bg-primary hover:bg-[#8a0e1d] text-white font-black uppercase tracking-[0.3em] rounded-2xl transition-all shadow-2xl shadow-primary/30 text-sm">
                                     Initialize Application
                                 </a>
-                                <div className="flex items-center gap-4 px-8 py-5 rounded-2xl border border-white/10 bg-white/[0.02]">
+                                <div className="flex items-center gap-4 px-8 py-5 rounded-2xl border border-white/10 bg-white/2">
                                     <span className="text-xs font-black uppercase tracking-widest text-slate-500">Payout methods:</span>
                                     <div className="flex gap-4 opacity-70">
                                         <span className="material-symbols-outlined text-xl">payments</span>
@@ -174,7 +174,7 @@ export default function BecomeProPage() {
                                 Prepare your competitive history. We review all applications within 48 hours. Professionalism is non-negotiable.
                             </p>
 
-                            <div className="flex items-center gap-6 p-6 rounded-3xl bg-white/[0.02] border border-white/5">
+                            <div className="flex items-center gap-6 p-6 rounded-3xl bg-white/2 border border-white/5">
                                 <span className="material-symbols-outlined text-4xl text-primary">contact_support</span>
                                 <div>
                                     <h4 className="text-white font-black text-xs uppercase tracking-widest mb-1">Deployment Support</h4>
@@ -209,11 +209,11 @@ export default function BecomeProPage() {
                                             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                                                 <div className="space-y-2">
                                                     <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest pl-1">Full Name / Alias</label>
-                                                    <input required type="text" className="w-full bg-white/[0.03] border border-white/5 rounded-2xl px-6 py-5 text-white focus:border-primary transition-all outline-none font-bold text-sm" placeholder="e.g. Ghost_X" />
+                                                    <input required type="text" className="w-full bg-white/3 border border-white/5 rounded-2xl px-6 py-5 text-white focus:border-primary transition-all outline-none font-bold text-sm" placeholder="e.g. Ghost_X" />
                                                 </div>
                                                 <div className="space-y-2">
                                                     <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest pl-1">Discord ID</label>
-                                                    <input required type="text" className="w-full bg-white/[0.03] border border-white/5 rounded-2xl px-6 py-5 text-white focus:border-primary transition-all outline-none font-bold text-sm" placeholder="username#0000" />
+                                                    <input required type="text" className="w-full bg-white/3 border border-white/5 rounded-2xl px-6 py-5 text-white focus:border-primary transition-all outline-none font-bold text-sm" placeholder="username#0000" />
                                                 </div>
                                             </div>
 
@@ -224,7 +224,7 @@ export default function BecomeProPage() {
                                                         <div
                                                             key={game}
                                                             onClick={() => toggleGame(game)}
-                                                            className={`flex items-center justify-center py-4 rounded-xl border transition-all cursor-pointer font-black text-[10px] uppercase tracking-widest ${selectedGames.includes(game) ? 'bg-primary border-primary text-white' : 'bg-white/[0.02] border-white/5 text-slate-500 hover:border-white/20'}`}
+                                                            className={`flex items-center justify-center py-4 rounded-xl border transition-all cursor-pointer font-black text-[10px] uppercase tracking-widest ${selectedGames.includes(game) ? 'bg-primary border-primary text-white' : 'bg-white/2 border-white/5 text-slate-500 hover:border-white/20'}`}
                                                         >
                                                             {game}
                                                         </div>
@@ -234,7 +234,7 @@ export default function BecomeProPage() {
 
                                             <div className="space-y-2">
                                                 <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest pl-1">Experience Summary</label>
-                                                <textarea required className="w-full bg-white/[0.03] border border-white/5 rounded-2xl px-6 py-5 text-white focus:border-primary transition-all outline-none font-bold text-sm min-h-[140px]" placeholder="List your peak ranks and past professional team experience..." />
+                                                <textarea required className="w-full bg-white/3 border border-white/5 rounded-2xl px-6 py-5 text-white focus:border-primary transition-all outline-none font-bold text-sm min-h-[140px]" placeholder="List your peak ranks and past professional team experience..." />
                                             </div>
 
                                             <button

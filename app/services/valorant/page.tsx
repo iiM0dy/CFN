@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { useCurrency } from "@/context/currency-context";
 
 const ranks = [
     { name: "Iron", short: "Iron", color: "bg-zinc-500" },
@@ -26,6 +27,7 @@ const addons = [
 ];
 
 export default function ValorantBoostPage() {
+    const { formatPrice } = useCurrency();
     const [currentRank, setCurrentRank] = useState(2); // Silver
     const [desiredRank, setDesiredRank] = useState(4); // Plat
     const [platform, setPlatform] = useState<"PC" | "Console">("PC");
@@ -33,7 +35,7 @@ export default function ValorantBoostPage() {
     const getPrice = () => {
         const basePrice = 12.50;
         const rankDiff = Math.max(0, desiredRank - currentRank);
-        return (basePrice + (rankDiff * 18.50)).toFixed(2);
+        return basePrice + (rankDiff * 18.50);
     };
 
     const getDays = () => {
@@ -187,7 +189,7 @@ export default function ValorantBoostPage() {
                                         <span className="text-slate-500 text-[10px] font-black uppercase tracking-[0.2em] mb-1">Total Allocation</span>
                                         <span className="text-slate-600 text-[10px]">Secured Tactical Fund</span>
                                     </div>
-                                    <span className="text-5xl font-black text-white tracking-tighter font-cairo">${getPrice()}</span>
+                                    <span className="text-5xl font-black text-white tracking-tighter font-cairo">{formatPrice(getPrice())}</span>
                                 </div>
 
                                 <Link href="/checkout" className="w-full py-5 bg-primary hover:bg-[#8a0e1d] text-white font-black text-sm uppercase tracking-[0.2em] rounded-xl flex items-center justify-center gap-3 transition-all shadow-xl shadow-primary/20 transform hover:-translate-y-1 group">

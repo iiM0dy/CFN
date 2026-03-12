@@ -1,8 +1,10 @@
 "use client"
 
 import { useState } from "react"
+import { useCurrency } from "@/context/currency-context"
 
 export function PricingSection() {
+    const { formatPrice } = useCurrency()
     const [currentRank, setCurrentRank] = useState(40)
     const [desiredRank, setDesiredRank] = useState(70)
 
@@ -25,7 +27,7 @@ export function PricingSection() {
         return rankLabels[closest] || "Unranked"
     }
 
-    const price = Math.max(15, ((desiredRank - currentRank) * 1.5)).toFixed(2)
+    const price = Math.max(15, ((desiredRank - currentRank) * 1.5))
     const days = Math.max(1, Math.round((desiredRank - currentRank) / 30))
 
     return (
@@ -163,7 +165,7 @@ export function PricingSection() {
                                 <div className="grid grid-cols-2 gap-4">
                                     <div className="bg-primary/5 border border-primary/20 rounded-2xl p-5 group hover:bg-primary/10 transition-all">
                                         <span className="text-[9px] font-black text-primary uppercase tracking-[0.2em] block mb-1">Acquisition Cost</span>
-                                        <div className="text-3xl font-black text-white tracking-tighter">${price}</div>
+                                        <div className="text-3xl font-black text-white tracking-tighter">{formatPrice(price)}</div>
                                     </div>
                                     <div className="bg-white/[0.03] border border-white/5 rounded-2xl p-5 transition-all">
                                         <span className="text-[9px] font-black text-slate-500 uppercase tracking-[0.2em] block mb-1">Time to Target</span>

@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react"
 import { X, ChevronRight } from "lucide-react"
 import Link from "next/link"
+import { useCurrency } from "@/context/currency-context"
 
 interface SearchModalProps {
   isOpen: boolean
@@ -21,9 +22,12 @@ interface Service {
   name: string
   basePrice: string
   image?: string
+  game?: { name: string }
+  displayPrice?: string
 }
 
 export function SearchModal({ isOpen, onClose }: SearchModalProps) {
+  const { formatPrice } = useCurrency()
   const [hoveredGame, setHoveredGame] = useState<string | null>(null)
   const [games, setGames] = useState<Game[]>([])
   const [services, setServices] = useState<Record<string, Service[]>>({})
@@ -235,7 +239,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                         <span className="h-px bg-white/10 grow"></span>
                       </div>
                       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                        {searchResults.map((service: any) => (
+                        {searchResults.map((service: Service) => (
                           <Link
                             key={service.id}
                             href={`/services/${service.id}`}
@@ -247,6 +251,9 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                               <h4 className="font-bold text-white group-hover:text-white transition-colors uppercase tracking-tight leading-tight">
                                 {service.name}
                               </h4>
+                              <div className="mt-3 text-[11px] font-black text-white/50 group-hover:text-primary transition-colors">
+                                {formatPrice(service.displayPrice ? Number(service.displayPrice) : Number(service.basePrice))}
+                              </div>
                             </div>
                             <div className="absolute top-0 right-0 p-3 opacity-0 group-hover:opacity-100 transition-opacity">
                               <span className="material-symbols-outlined text-primary text-sm">north_east</span>
@@ -296,8 +303,8 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                           <h4 className="font-bold text-slate-200 group-hover:text-white transition-colors uppercase tracking-tight">
                             {service.name}
                           </h4>
-                          <span className="absolute bottom-4 right-4 text-[10px] font-black text-primary opacity-0 group-hover:opacity-100 transition-all translate-x-2 group-hover:translate-x-0">
-                            VIEW
+                          <span className="absolute bottom-4 right-4 text-[10px] font-black text-primary group-hover:translate-x-0 transition-all">
+                            {formatPrice(service.displayPrice ? Number(service.displayPrice) : Number(service.basePrice))}
                           </span>
                         </Link>
                       ))}

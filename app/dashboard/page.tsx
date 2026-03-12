@@ -1,8 +1,11 @@
 "use client";
 
+import { useState } from "react";
+import { useCurrency } from "@/context/currency-context";
 import Link from "next/link";
 
 export default function DashboardPage() {
+    const { formatPrice } = useCurrency();
     return (
         <div className="flex min-h-[calc(100vh-5rem)] w-full overflow-hidden bg-[#181112] text-white antialiased font-[family-name:var(--font-space-grotesk)]">
             {/* Sidebar */}
@@ -64,8 +67,8 @@ export default function DashboardPage() {
                                     <span className="text-xl">👛</span>
                                 </div>
                                 <div className="mt-4 flex items-baseline gap-2">
-                                    <span className="text-3xl font-bold text-white">$1,250.00</span>
-                                    <span className="text-sm font-medium text-emerald-500">+ $50.00</span>
+                                    <span className="text-3xl font-bold text-white">{formatPrice(1250.00)}</span>
+                                    <span className="text-sm font-medium text-emerald-500">+ {formatPrice(50.00)}</span>
                                 </div>
                                 <button className="mt-4 w-full rounded-lg bg-[#38292b] py-2 text-xs font-bold uppercase tracking-wider text-white hover:bg-[#4a3639] transition-colors">Top Up Balance</button>
                             </div>
@@ -171,7 +174,7 @@ export default function DashboardPage() {
                                             <td className="px-6 py-4 font-medium text-white">#8821</td>
                                             <td className="px-6 py-4">League of Legends Duo</td>
                                             <td className="px-6 py-4">Oct 24, 2023</td>
-                                            <td className="px-6 py-4 text-white font-bold">$125.00</td>
+                                            <td className="px-6 py-4 text-white font-bold">{formatPrice(125.00)}</td>
                                             <td className="px-6 py-4"><span className="inline-flex items-center rounded-full bg-blue-500/10 px-2 py-1 text-xs font-medium text-blue-400 ring-1 ring-inset ring-blue-500/20">Active</span></td>
                                             <td className="px-6 py-4 text-right"><button className="text-[#b89da1] hover:text-white">⋮</button></td>
                                         </tr>
@@ -179,7 +182,7 @@ export default function DashboardPage() {
                                             <td className="px-6 py-4 font-medium text-white">#8755</td>
                                             <td className="px-6 py-4">Valorant Rank Boost</td>
                                             <td className="px-6 py-4">Oct 12, 2023</td>
-                                            <td className="px-6 py-4 text-white font-bold">$85.00</td>
+                                            <td className="px-6 py-4 text-white font-bold">{formatPrice(85.00)}</td>
                                             <td className="px-6 py-4"><span className="inline-flex items-center rounded-full bg-emerald-500/10 px-2 py-1 text-xs font-medium text-emerald-400 ring-1 ring-inset ring-emerald-500/20">Completed</span></td>
                                             <td className="px-6 py-4 text-right"><button className="text-[#b89da1] hover:text-white">⋮</button></td>
                                         </tr>
@@ -187,7 +190,7 @@ export default function DashboardPage() {
                                             <td className="px-6 py-4 font-medium text-white">#8201</td>
                                             <td className="px-6 py-4">Apex Legends Coaching</td>
                                             <td className="px-6 py-4">Sep 28, 2023</td>
-                                            <td className="px-6 py-4 text-white font-bold">$40.00</td>
+                                            <td className="px-6 py-4 text-white font-bold">{formatPrice(40.00)}</td>
                                             <td className="px-6 py-4"><span className="inline-flex items-center rounded-full bg-emerald-500/10 px-2 py-1 text-xs font-medium text-emerald-400 ring-1 ring-inset ring-emerald-500/20">Completed</span></td>
                                             <td className="px-6 py-4 text-right"><button className="text-[#b89da1] hover:text-white">⋮</button></td>
                                         </tr>

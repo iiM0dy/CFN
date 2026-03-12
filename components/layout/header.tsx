@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation"
 import { CFNLogo } from "@/components/layout/cfnboost-logo"
 import { UserNav } from "@/components/layout/user-nav"
 import { SearchModal } from "@/components/layout/search-modal"
+import { CurrencySwitcher } from "@/components/layout/currency-switcher"
 import { useRef, useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 
@@ -93,6 +94,10 @@ export function Header() {
                                 />
                             </svg>
                         </button>
+
+                        <div className="hidden sm:block">
+                            <CurrencySwitcher />
+                        </div>
 
                         <UserNav />
 
@@ -241,6 +246,12 @@ export function Header() {
                                     <span className="material-symbols-outlined text-lg">favorite</span>
                                     <span className="text-xs font-black uppercase tracking-widest">Saved</span>
                                 </Link>
+                            </div>
+
+                            {/* Currency Selection - Mobile */}
+                            <div className="bg-[#1A1A1A] p-5 rounded-2xl border border-white/5 flex items-center justify-between">
+                                <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest pl-1">Global Currency</span>
+                                <CurrencySwitcher />
                             </div>
 
                             {/* Gaming Sections */}

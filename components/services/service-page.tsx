@@ -3,6 +3,7 @@
 import { useCart } from "@/lib/store"
 import { toast } from "sonner"
 import Link from "next/link"
+import { useCurrency } from "@/context/currency-context"
 
 type ServiceItem = {
     id: string
@@ -28,6 +29,7 @@ type ServicePageProps = {
 
 export function ServicePage({ game, tagline, description, stats, services }: ServicePageProps) {
     const { addItem } = useCart()
+    const { formatPrice } = useCurrency()
 
     const handleAdd = (service: ServiceItem) => {
         addItem({
@@ -106,7 +108,8 @@ export function ServicePage({ game, tagline, description, stats, services }: Ser
                                         </div>
                                     </div>
                                     <div className="flex flex-col items-end">
-                                        <span className="text-2xl font-black text-white tracking-tighter font-cairo">{service.priceLabel}</span>
+                                        <span className="text-[9px] font-black text-slate-500 uppercase tracking-widest mb-1 leading-none">Starting From</span>
+                                        <span className="text-2xl font-black text-white tracking-tighter font-cairo leading-none">{formatPrice(service.price)}</span>
                                     </div>
                                 </div>
 

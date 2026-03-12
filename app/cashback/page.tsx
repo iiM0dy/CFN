@@ -17,8 +17,10 @@ import {
     CheckCircle,
     Star
 } from "lucide-react"
+import { useCurrency } from "@/context/currency-context"
 
 export default function CashbackPage() {
+    const { formatPrice } = useCurrency()
     return (
         <div className="bg-[#070405] text-slate-100 antialiased selection:bg-[#B11226] selection:text-white min-h-screen font-(family-name:--font-space-grotesk)">
             <style jsx>{`
@@ -92,7 +94,7 @@ export default function CashbackPage() {
                             <div className="flex flex-wrap gap-12 mb-12 py-8 border-y border-white/5">
                                 <div>
                                     <p className="text-[11px] text-slate-500 uppercase tracking-[0.2em] font-bold mb-2">Platform Volume</p>
-                                    <p className="text-4xl font-bold text-white tracking-tighter">$1,248,590.42</p>
+                                    <p className="text-4xl font-bold text-white tracking-tighter">{formatPrice(1248590.42)}</p>
                                 </div>
                                 <div>
                                     <p className="text-[11px] text-slate-500 uppercase tracking-[0.2em] font-bold mb-2">Verified Pros</p>
@@ -126,7 +128,7 @@ export default function CashbackPage() {
                                             </div>
                                             <p className="text-[11px] text-slate-400 font-bold uppercase tracking-[0.2em]">Live Wallet</p>
                                         </div>
-                                        <p className="text-3xl font-black text-white tracking-tight">$452.20</p>
+                                        <p className="text-3xl font-black text-white tracking-tight">{formatPrice(452.20)}</p>
                                         <div className="flex items-center gap-1.5 mt-3">
                                             <TrendingUp className="size-4 text-green-500" />
                                             <span className="text-[11px] text-green-500 font-black tracking-widest">+12.4% MONTHLY</span>
@@ -149,17 +151,17 @@ export default function CashbackPage() {
                                 <span className="text-[11px] font-black text-slate-500 uppercase tracking-[0.3em]">Live Redemptions:</span>
                             </div>
                             {[
-                                { name: "Slayer99", rank: "Global Elite", amount: "+$42.50" },
-                                { name: "GhostWalker", rank: "Immortal", amount: "+$15.20" },
-                                { name: "ViperQueen", rank: "Diamond III", amount: "+$8.40" },
-                                { name: "Nightmare", rank: "Ascendant", amount: "+$65.00" },
-                                { name: "PixelSlayer", rank: "Radiant", amount: "+$12.30" }
+                                { name: "Slayer99", rank: "Global Elite", amount: 42.50 },
+                                { name: "GhostWalker", rank: "Immortal", amount: 15.20 },
+                                { name: "ViperQueen", rank: "Diamond III", amount: 8.40 },
+                                { name: "Nightmare", rank: "Ascendant", amount: 65.00 },
+                                { name: "PixelSlayer", rank: "Radiant", amount: 12.30 }
                             ].map((item, i) => (
                                 <div key={i} className="flex items-center gap-4 bg-white/5 px-4 py-2 rounded-lg border border-white/5">
                                     <span className="text-xs font-bold text-white">{item.name}</span>
                                     <div className="w-1 h-1 rounded-full bg-slate-700"></div>
                                     <span className="text-xs text-slate-500">{item.rank}</span>
-                                    <span className="text-xs font-bold text-[#B11226]">{item.amount}</span>
+                                    <span className="text-xs font-bold text-[#B11226]">+{formatPrice(item.amount)}</span>
                                 </div>
                             ))}
                         </div>
@@ -170,17 +172,17 @@ export default function CashbackPage() {
                                 <span className="text-[11px] font-black text-slate-500 uppercase tracking-[0.3em]">Live Redemptions:</span>
                             </div>
                             {[
-                                { name: "Slayer99", rank: "Global Elite", amount: "+$42.50" },
-                                { name: "GhostWalker", rank: "Immortal", amount: "+$15.20" },
-                                { name: "ViperQueen", rank: "Diamond III", amount: "+$8.40" },
-                                { name: "Nightmare", rank: "Ascendant", amount: "+$65.00" },
-                                { name: "PixelSlayer", rank: "Radiant", amount: "+$12.30" }
+                                { name: "Slayer99", rank: "Global Elite", amount: 42.50 },
+                                { name: "GhostWalker", rank: "Immortal", amount: 15.20 },
+                                { name: "ViperQueen", rank: "Diamond III", amount: 8.40 },
+                                { name: "Nightmare", rank: "Ascendant", amount: 65.00 },
+                                { name: "PixelSlayer", rank: "Radiant", amount: 12.30 }
                             ].map((item, i) => (
                                 <div key={"dup" + i} className="flex items-center gap-4 bg-white/5 px-4 py-2 rounded-lg border border-white/5">
                                     <span className="text-xs font-bold text-white">{item.name}</span>
                                     <div className="w-1 h-1 rounded-full bg-slate-700"></div>
                                     <span className="text-xs text-slate-500">{item.rank}</span>
-                                    <span className="text-xs font-bold text-[#B11226]">{item.amount}</span>
+                                    <span className="text-xs font-bold text-[#B11226]">+{formatPrice(item.amount)}</span>
                                 </div>
                             ))}
                         </div>
@@ -297,7 +299,7 @@ export default function CashbackPage() {
                                 <div className="pt-8 border-t border-white/5">
                                     <div className="flex justify-between text-[11px] text-slate-500 font-black uppercase mb-3 tracking-widest">
                                         <span>Threshold</span>
-                                        <span>$500</span>
+                                        <span>{formatPrice(500)}</span>
                                     </div>
                                     <div className="w-full bg-white/5 rounded-full h-1.5 overflow-hidden">
                                         <div className="bg-white/10 h-full w-0"></div>
@@ -329,7 +331,7 @@ export default function CashbackPage() {
                                 <div className="pt-8 border-t border-[#B11226]/20">
                                     <div className="flex justify-between text-[11px] text-slate-400 font-black uppercase mb-3 tracking-widest">
                                         <span>Threshold</span>
-                                        <span>$2,500</span>
+                                        <span>{formatPrice(2500)}</span>
                                     </div>
                                     <div className="w-full bg-[#B11226]/20 rounded-full h-1.5 overflow-hidden">
                                         <div className="bg-[#ffd700] h-full w-0"></div>
@@ -377,7 +379,7 @@ export default function CashbackPage() {
                                     <span className="text-[#B11226] font-black uppercase tracking-[0.3em] text-[10px]">Expansion Protocol</span>
                                 </div>
                                 <h2 className="text-5xl md:text-6xl font-black text-white mb-8 tracking-tighter">Deploy your <br /><span className="text-[#B11226]">affiliate link.</span></h2>
-                                <p className="text-slate-400 text-lg mb-12 leading-relaxed font-light">Scale your wallet balance by recruiting your network. Earn <span className="text-white font-bold">$20.00 credits</span> for every qualified active recruit.</p>
+                                <p className="text-slate-400 text-lg mb-12 leading-relaxed font-light">Scale your wallet balance by recruiting your network. Earn <span className="text-white font-bold">{formatPrice(20.00)} credits</span> for every qualified active recruit.</p>
                                 <div className="flex flex-col sm:flex-row gap-3 bg-black/60 p-2.5 rounded-2xl border border-white/10 backdrop-blur-xl">
                                     <div className="flex-1 px-6 py-4 text-slate-300 text-sm font-mono truncate items-center flex tracking-wider">
                                         cfnboost.com/ref/elite_x_ray
