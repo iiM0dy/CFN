@@ -64,7 +64,7 @@ export function ServiceList({ initialServices }: ServiceListProps) {
                             <div className="relative bg-[#0A0A0A] border border-white/[0.03] rounded-3xl overflow-hidden transition-all duration-500 group-hover:border-primary/30 group-hover:shadow-[0_20px_60px_-15px_rgba(175,18,37,0.2)]">
 
                                 {/* 1. Heavy Visual Header */}
-                                <div className="relative h-52 w-full">
+                                <div className="relative h-47 w-full">
                                     {service.image ? (
                                         <img
                                             src={service.image}
@@ -80,7 +80,7 @@ export function ServiceList({ initialServices }: ServiceListProps) {
 
                                     {/* Tactical Brackets Corner */}
                                     <div className="absolute top-6 left-6 flex flex-col gap-1 items-start opacity-40 group-hover:opacity-100 transition-opacity">
-                                        <span className="text-[8px] font-black text-white/50 uppercase tracking-[0.2em]">{service.id?.substring(0, 8)}</span>
+
                                         <div className="flex gap-1">
                                             <div className="size-1 bg-primary rounded-full animate-pulse" />
                                             <div className="size-1 bg-white/20 rounded-full" />
@@ -92,16 +92,16 @@ export function ServiceList({ initialServices }: ServiceListProps) {
                                 </div>
 
                                 {/* 2. Intelligence Body */}
-                                <div className="p-8 pb-10">
-                                    <div className="flex flex-col gap-4 mb-8">
-                                        <h3 className="text-2xl font-black text-white uppercase tracking-tighter group-hover:text-primary transition-colors leading-none">
+                                <div className="p-6 pb-8">
+                                    <div className="flex flex-col gap-3 mb-6">
+                                        <h3 className="text-xl font-black text-white uppercase tracking-tighter group-hover:text-primary transition-colors leading-none">
                                             {service.name}
                                         </h3>
                                         <div className="h-px w-10 bg-white/10 group-hover:w-full group-hover:bg-primary/30 transition-all duration-500" />
                                     </div>
 
                                     {/* Data Points with Red Indicators */}
-                                    <div className="space-y-4 mb-10">
+                                    <div className="space-y-3 mb-8">
                                         {[
                                             "Priority Launch Enabled",
                                             "Secure Auth Pipeline",
@@ -117,18 +117,18 @@ export function ServiceList({ initialServices }: ServiceListProps) {
                                     </div>
 
                                     {/* Action Row - Clean & Heavy */}
-                                    <div className="flex items-center justify-between gap-4 pt-8 border-t border-white/5">
+                                    <div className="flex items-center justify-between gap-4 pt-6 border-t border-white/5">
                                         <div className="flex flex-col">
                                             <span className="text-[8px] font-black text-slate-600 uppercase tracking-[0.4em] mb-1">Contract</span>
-                                            <span className="text-3xl font-black text-white tracking-tighter">
+                                            <span className="text-2xl font-black text-white tracking-tighter">
                                                 {formatPrice(service.displayPrice ? Number(service.displayPrice) : Number(service.basePrice))}
                                             </span>
                                         </div>
 
-                                        <div className="px-6 py-4 bg-white/5 border border-white/10 group-hover:bg-primary group-hover:border-primary rounded-xl transition-all duration-500">
+                                        <div className="px-5 py-3 bg-white/5 border border-white/10 group-hover:bg-primary group-hover:border-primary rounded-xl transition-all duration-500">
                                             <span className="text-[10px] font-black text-white uppercase tracking-widest flex items-center gap-2">
                                                 BUY
-                                                <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
+                                                <span className="material-symbols-outlined text-sm">arrow_forward</span>
                                             </span>
                                         </div>
                                     </div>
