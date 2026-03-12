@@ -55,6 +55,12 @@ export function UserNav() {
                             <DropdownMenuShortcut>⌘O</DropdownMenuShortcut>
                         </a>
                     </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                        <a href="/favorites">
+                            Favorites
+                            <DropdownMenuShortcut>⌘F</DropdownMenuShortcut>
+                        </a>
+                    </DropdownMenuItem>
                     <DropdownMenuItem>
                         Profile
                         <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>

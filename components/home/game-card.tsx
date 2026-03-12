@@ -26,8 +26,8 @@ export function GameCard({ game }: GameCardProps) {
             href={game.isActive ? game.href : '#'}
             onClick={handleClick}
             className={`group relative aspect-3/4 rounded-xl overflow-hidden border border-white/5 bg-[#161616] transition-all duration-300 ${game.isActive
-                    ? 'hover:shadow-[0_0_20px_rgba(175,18,37,0.4)] hover:-translate-y-2 hover:border-primary cursor-pointer'
-                    : 'cursor-not-allowed opacity-75'
+                ? 'hover:shadow-[0_0_20px_rgba(175,18,37,0.4)] hover:-translate-y-2 hover:border-primary cursor-pointer'
+                : 'cursor-not-allowed opacity-75'
                 }`}
         >
             {/* Coming Soon Badge */}
@@ -39,8 +39,8 @@ export function GameCard({ game }: GameCardProps) {
 
             {/* Background Image */}
             <div
-                className={`absolute inset-0 bg-cover bg-center transition-transform duration-700 ${game.isActive ? 'group-hover:scale-110' : 'grayscale'}`}
-                style={{ backgroundImage: `url('${game.bgImage}')` }}
+                className={`absolute inset-0 bg-cover transition-transform duration-1000 ${game.isActive ? 'group-hover:scale-105' : 'grayscale'}`}
+                style={{ backgroundImage: `url('${game.bgImage}')`, backgroundPosition: 'center 20%' }}
             />
 
             {/* Gradients */}

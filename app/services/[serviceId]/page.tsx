@@ -100,6 +100,24 @@ export default function ServiceDetailsPage() {
                     if (data.platforms?.length > 0) setPlatform(data.platforms[0]);
                     if (data.completionMethods?.length > 0) setCompletionMethod(data.completionMethods[0]);
 
+                    // Pre-select cheapest variants for required options
+                    const initialSelections: Record<string, any> = {};
+                    data.options?.forEach((opt: any) => {
+                        if (opt.required && opt.values && opt.values.length > 0) {
+                            const sortedValues = [...opt.values].sort((a, b) => Number(a.priceModifier) - Number(b.priceModifier));
+                            const cheapestValue = sortedValues[0];
+
+                            if (opt.type === 'select' || opt.type === 'dropdown') {
+                                initialSelections[opt.id] = cheapestValue.value;
+                            } else if (opt.type === 'checkbox' || opt.type === 'checkboxes') {
+                                initialSelections[opt.id] = [cheapestValue.value];
+                            }
+                        } else if (opt.type === 'number' || opt.type === 'range') {
+                            initialSelections[opt.id] = opt.minValue || 0;
+                        }
+                    });
+                    setSelectedOptions(initialSelections);
+
                     // Check if service is favorited
                     if (session?.user) {
                         checkFavorite();
@@ -254,11 +272,7 @@ export default function ServiceDetailsPage() {
 
     // Handle order click
     const handleOrderClick = () => {
-        if (!session) {
-            router.push('/login?callbackUrl=' + encodeURIComponent(window.location.href));
-            return;
-        }
-        // Show payment modal
+        // Show payment modal (Guest Checkout Enabled)
         setShowPaymentModal(true);
     };
 
@@ -399,11 +413,11 @@ export default function ServiceDetailsPage() {
                                 {/* Service Image Thumbnail */}
                                 {service.image && (
                                     <div className="hidden md:block shrink-0">
-                                        <div className="w-40 h-40 rounded-xl overflow-hidden border border-white/10 shadow-2xl group transition-all duration-500 hover:border-primary/50">
+                                        <div className="w-44 h-[234px] rounded-xl overflow-hidden border border-white/10 shadow-2xl relative">
                                             <img
                                                 src={service.image}
                                                 alt={service.name}
-                                                className="w-full h-full object-cover group-hover:scale-110 transition-all duration-1000 opacity-60 group-hover:opacity-100"
+                                                className="w-full h-full object-cover opacity-100"
                                             />
                                         </div>
                                     </div>
@@ -1040,8 +1054,8 @@ export default function ServiceDetailsPage() {
                                     onClick={handleOrderClick}
                                     className="w-full py-5 bg-primary hover:bg-[#8a0e1d] text-white font-black text-sm uppercase tracking-[0.2em] rounded-xl flex items-center justify-center gap-3 group transition-all shadow-xl shadow-primary/20 hover:shadow-primary/40 transform hover:-translate-y-1"
                                 >
-                                    AUTHORIZE DEPLOYMENT
-                                    <span className="material-symbols-outlined text-xl group-hover:translate-x-1 transition-transform">bolt</span>
+                                    BUY NOW
+                                    <span className="material-symbols-outlined text-xl group-hover:translate-x-1 transition-transform">shopping_cart</span>
                                 </button>
                                 <div className="flex items-center justify-center gap-2 mt-6 text-[10px] text-slate-500 font-black uppercase tracking-widest">
                                     <span className="material-symbols-outlined text-sm">lock</span> 256-bit Secure Protocol

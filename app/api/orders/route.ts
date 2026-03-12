@@ -6,7 +6,7 @@ import { NextResponse } from "next/server"
 export async function GET(request: Request) {
   try {
     const session = await auth()
-    
+
     if (!session?.user?.id) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
     }
@@ -42,16 +42,11 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
   try {
     const session = await auth()
-    
-    if (!session?.user?.id) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
-    }
-
     const data = await request.json()
 
     const order = await prisma.serviceOrder.create({
       data: {
-        userId: session.user.id,
+        userId: session?.user?.id || null,
         serviceId: data.serviceId,
         totalPrice: data.totalPrice,
         quantity: data.quantity,
@@ -62,7 +57,7 @@ export async function POST(request: Request) {
         discount: data.discount || 0,
         selectedOptions: data.selectedOptions,
         status: 'pending'
-      },
+      } as any,
       include: {
         service: {
           include: {

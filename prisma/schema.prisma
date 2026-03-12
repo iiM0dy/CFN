@@ -22,13 +22,13 @@ enum OrderStatus {
 }
 
 model User {
-  id            String    @id @default(cuid())
+  id            String         @id @default(cuid())
   name          String?
-  email         String?   @unique
+  email         String?        @unique
   emailVerified DateTime?
   image         String?
   password      String?
-  role          Role      @default(USER)
+  role          Role           @default(USER)
   accounts      Account[]
   sessions      Session[]
   orders        Order[]
@@ -104,79 +104,79 @@ model Cart {
 }
 
 model GameService {
-  id          String   @id @default(cuid())
-  name        String   @unique
-  slug        String   @unique @default("")
+  id          String    @id @default(cuid())
+  name        String    @unique
+  slug        String    @unique @default("")
   description String
   bgImage     String
   charImage   String?
   href        String
-  isActive    Boolean  @default(true)
-  isPopular   Boolean  @default(false)
+  isActive    Boolean   @default(true)
+  isPopular   Boolean   @default(false)
   services    Service[]
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 }
 
 model Service {
-  id          String   @id @default(cuid())
+  id          String      @id @default(cuid())
   name        String
   description String?
   basePrice   Decimal
   image       String?
   gameId      String
   game        GameService @relation(fields: [gameId], references: [id], onDelete: Cascade)
-  
+
   // Options for the service details page
   platforms         String[] // e.g., ["PC", "Console"]
   completionMethods String[] // e.g., ["Solo", "Duo"]
   maxQuantity       Int      @default(15) // Maximum quantity that can be ordered
-  
+
   // Dynamic service options
-  options     ServiceOption[]
-  favorites   Favorite[]
+  options       ServiceOption[]
+  favorites     Favorite[]
   serviceOrders ServiceOrder[]
-  
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 // Flexible option groups for each service (e.g., "Rank Selection", "Material Type", "Quantity")
 model ServiceOption {
-  id          String   @id @default(cuid())
-  serviceId   String
-  service     Service  @relation(fields: [serviceId], references: [id], onDelete: Cascade)
-  
-  label       String   // e.g., "Current Rank", "Material Type", "Desired Rank"
-  type        String   // e.g., "select", "range", "checkbox", "number"
-  required    Boolean  @default(true)
-  order       Int      @default(0) // Display order
-  
+  id        String  @id @default(cuid())
+  serviceId String
+  service   Service @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+
+  label    String // e.g., "Current Rank", "Material Type", "Desired Rank"
+  type     String // e.g., "select", "range", "checkbox", "number"
+  required Boolean @default(true)
+  order    Int     @default(0) // Display order
+
   // Option values (for select/checkbox types)
-  values      ServiceOptionValue[]
-  
+  values ServiceOptionValue[]
+
   // For range/number types
-  minValue    Int?
-  maxValue    Int?
-  step        Int?
-  
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  minValue Int?
+  maxValue Int?
+  step     Int?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 // Individual values for select/checkbox options
 model ServiceOptionValue {
-  id              String        @id @default(cuid())
-  optionId        String
-  option          ServiceOption @relation(fields: [optionId], references: [id], onDelete: Cascade)
-  
-  label           String        // e.g., "Iron", "Bronze", "Silver"
-  value           String        // Internal value
-  priceModifier   Decimal       @default(0) // Additional price for this option
-  order           Int           @default(0) // Display order
-  
-  createdAt       DateTime      @default(now())
-  updatedAt       DateTime      @updatedAt
+  id       String        @id @default(cuid())
+  optionId String
+  option   ServiceOption @relation(fields: [optionId], references: [id], onDelete: Cascade)
+
+  label         String // e.g., "Iron", "Bronze", "Silver"
+  value         String // Internal value
+  priceModifier Decimal @default(0) // Additional price for this option
+  order         Int     @default(0) // Display order
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model CartItem {
@@ -213,18 +213,18 @@ model OrderItem {
 }
 
 model PromoCode {
-  id          String   @id @default(cuid())
-  code        String   @unique
-  name        String   // Description/name of the promo
-  discount    Decimal  // Discount amount (percentage or fixed)
-  discountType String  // "percentage" or "fixed"
-  isActive    Boolean  @default(true)
-  usageLimit  Int?     // Max number of uses (null = unlimited)
-  usageCount  Int      @default(0)
-  expiresAt   DateTime?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  
+  id           String    @id @default(cuid())
+  code         String    @unique
+  name         String // Description/name of the promo
+  discount     Decimal // Discount amount (percentage or fixed)
+  discountType String // "percentage" or "fixed"
+  isActive     Boolean   @default(true)
+  usageLimit   Int? // Max number of uses (null = unlimited)
+  usageCount   Int       @default(0)
+  expiresAt    DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
   @@index([code])
 }
 
@@ -235,36 +235,36 @@ model Favorite {
   serviceId String
   service   Service  @relation(fields: [serviceId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
-  
+
   @@unique([userId, serviceId])
   @@index([userId])
 }
 
 model ServiceOrder {
-  id                String   @id @default(cuid())
-  userId            String
-  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  serviceId         String
-  service           Service  @relation(fields: [serviceId], references: [id])
-  
+  id        String  @id @default(cuid())
+  userId    String?
+  user      User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  serviceId String
+  service   Service @relation(fields: [serviceId], references: [id])
+
   // Order details
-  status            String   @default("pending") // pending, active, completed, cancelled
-  totalPrice        Decimal
-  quantity          Int
-  platform          String?
-  completionMethod  String?
-  completionSpeed   String?
-  promoCode         String?
-  discount          Decimal  @default(0)
-  
+  status           String  @default("pending") // pending, active, completed, cancelled
+  totalPrice       Decimal
+  quantity         Int
+  platform         String?
+  completionMethod String?
+  completionSpeed  String?
+  promoCode        String?
+  discount         Decimal @default(0)
+
   // Selected options (stored as JSON)
-  selectedOptions   Json?
-  
+  selectedOptions Json?
+
   // Timestamps
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
-  completedAt       DateTime?
-  
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  completedAt DateTime?
+
   @@index([userId])
   @@index([status])
 }

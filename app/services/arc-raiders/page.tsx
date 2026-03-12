@@ -188,8 +188,8 @@ export default function ArcRaidersBoostPage() {
                                 </div>
 
                                 <Link href="/checkout" className="w-full py-5 bg-primary hover:bg-[#8a0e1d] text-white font-black text-sm uppercase tracking-[0.2em] rounded-xl flex items-center justify-center gap-3 transition-all shadow-xl shadow-primary/20 transform hover:-translate-y-1 group">
-                                    INITIATE DEPLOYMENT
-                                    <span className="material-symbols-outlined text-xl group-hover:translate-x-1 transition-transform">bolt</span>
+                                    BUY NOW
+                                    <span className="material-symbols-outlined text-xl group-hover:translate-x-1 transition-transform">shopping_cart</span>
                                 </Link>
 
                                 <div className="flex items-center justify-center gap-2 mt-8 text-[10px] text-slate-500 font-black uppercase tracking-widest italic">

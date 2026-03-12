@@ -34,10 +34,8 @@ export default function MyOrdersPage() {
   const [filter, setFilter] = useState<'all' | 'active' | 'completed'>('all')
 
   useEffect(() => {
-    if (status === 'unauthenticated') {
-      router.push('/login?callbackUrl=/orders')
-    }
-  }, [status, router])
+    // Guest access allowed, handled in UI
+  }, [status]);
 
   useEffect(() => {
     if (session?.user) {
@@ -124,45 +122,66 @@ export default function MyOrdersPage() {
         <div className="flex gap-4 mb-8 border-b border-[#1c1c1c]">
           <button
             onClick={() => setFilter('all')}
-            className={`pb-4 px-2 text-sm font-bold uppercase tracking-wider transition-colors ${
-              filter === 'all'
-                ? 'text-primary border-b-2 border-primary'
-                : 'text-gray-500 hover:text-gray-300'
-            }`}
+            className={`pb-4 px-2 text-sm font-bold uppercase tracking-wider transition-colors ${filter === 'all'
+              ? 'text-primary border-b-2 border-primary'
+              : 'text-gray-500 hover:text-gray-300'
+              }`}
           >
             All Orders ({orders.length})
           </button>
           <button
             onClick={() => setFilter('active')}
-            className={`pb-4 px-2 text-sm font-bold uppercase tracking-wider transition-colors ${
-              filter === 'active'
-                ? 'text-primary border-b-2 border-primary'
-                : 'text-gray-500 hover:text-gray-300'
-            }`}
+            className={`pb-4 px-2 text-sm font-bold uppercase tracking-wider transition-colors ${filter === 'active'
+              ? 'text-primary border-b-2 border-primary'
+              : 'text-gray-500 hover:text-gray-300'
+              }`}
           >
             Active ({orders.filter(o => o.status === 'pending' || o.status === 'active').length})
           </button>
           <button
             onClick={() => setFilter('completed')}
-            className={`pb-4 px-2 text-sm font-bold uppercase tracking-wider transition-colors ${
-              filter === 'completed'
-                ? 'text-primary border-b-2 border-primary'
-                : 'text-gray-500 hover:text-gray-300'
-            }`}
+            className={`pb-4 px-2 text-sm font-bold uppercase tracking-wider transition-colors ${filter === 'completed'
+              ? 'text-primary border-b-2 border-primary'
+              : 'text-gray-500 hover:text-gray-300'
+              }`}
           >
             Completed ({orders.filter(o => o.status === 'completed').length})
           </button>
         </div>
 
         {/* Orders List */}
-        {filteredOrders.length === 0 ? (
-          <div className="text-center py-20">
+        {status === 'unauthenticated' ? (
+          <div className="text-center py-24 bg-[#141414] border border-dashed border-[#2a1a1c] rounded-2xl">
+            <div className="size-20 rounded-2xl bg-primary/5 flex items-center justify-center mx-auto mb-6">
+              <span className="material-symbols-outlined text-primary text-4xl">fingerprint</span>
+            </div>
+            <h3 className="text-2xl font-black text-white uppercase tracking-widest mb-4 italic">IDENTITY UNKNOWN</h3>
+            <p className="text-slate-500 text-xs font-bold uppercase tracking-widest mb-10 max-w-sm mx-auto leading-relaxed">
+              Connect your neural link to track active deployments and access historical operation data.
+            </p>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <Link
+                href="/login"
+                className="px-8 py-3 bg-primary hover:bg-[#8a0e1d] text-white text-[10px] font-black uppercase tracking-[0.3em] rounded-xl transition-all shadow-xl shadow-primary/20"
+              >
+                INITIATE AUTH
+              </Link>
+              <Link
+                href="/"
+                className="px-8 py-3 bg-white/5 hover:bg-white/10 text-slate-300 text-[10px] font-black uppercase tracking-[0.3em] rounded-xl transition-all border border-white/5"
+              >
+                RETURN TO BASE
+              </Link>
+            </div>
+          </div>
+        ) : filteredOrders.length === 0 ? (
+          <div className="text-center py-20 bg-[#141414]/50 border border-dashed border-white/5 rounded-2xl">
             <Package className="size-16 text-gray-600 mx-auto mb-4" />
             <h3 className="text-xl font-bold text-gray-400 mb-2">No orders found</h3>
-            <p className="text-gray-500 mb-6">Start browsing our services to place your first order</p>
+            <p className="text-gray-500 mb-6 uppercase tracking-widest text-[10px] font-black italic">No active deployments detected in this sector</p>
             <Link
               href="/games"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-primary hover:bg-primary-dark text-white font-bold uppercase rounded-lg transition-all"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-primary hover:bg-[#8a0e1d] text-white text-[10px] font-black uppercase tracking-widest rounded-lg transition-all"
             >
               Browse Services
               <ChevronRight className="size-4" />
@@ -223,9 +242,9 @@ export default function MyOrdersPage() {
 
                     <div className="flex items-center justify-between mt-4 pt-4 border-t border-[#2a1a1c]">
                       <span className="text-xs text-gray-500">
-                        Ordered {new Date(order.createdAt).toLocaleDateString('en-US', { 
-                          month: 'short', 
-                          day: 'numeric', 
+                        Ordered {new Date(order.createdAt).toLocaleDateString('en-US', {
+                          month: 'short',
+                          day: 'numeric',
                           year: 'numeric',
                           hour: '2-digit',
                           minute: '2-digit'

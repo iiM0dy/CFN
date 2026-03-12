@@ -15,47 +15,71 @@ export default async function GameServicesPage({ params }: { params: Promise<{ g
     const game = games[0]
 
     if (game) {
-        // Fetch services with options using raw query
+        // Fetch services with options and values using raw query
         const services = await prisma.$queryRaw<any[]>`
             SELECT s.*, 
-                   json_agg(
-                       json_build_object(
-                           'id', so.id,
-                           'label', so.label,
-                           'type', so.type,
-                           'minValue', so."minValue",
-                           'maxValue', so."maxValue"
-                       )
-                   ) FILTER (WHERE so.id IS NOT NULL) as options
+                   (
+                       SELECT json_agg(
+                           json_build_object(
+                               'id', so.id,
+                               'label', so.label,
+                               'type', so.type,
+                               'required', so.required,
+                               'minValue', so."minValue",
+                               'maxValue', so."maxValue",
+                               'values', (
+                                   SELECT json_agg(
+                                       json_build_object(
+                                           'id', sov.id,
+                                           'label', sov.label,
+                                           'value', sov.value,
+                                           'priceModifier', sov."priceModifier"
+                                       )
+                                   ) FROM "ServiceOptionValue" sov WHERE sov."optionId" = so.id
+                               )
+                           )
+                       ) FROM "ServiceOption" so WHERE so."serviceId" = s.id
+                   ) as options
             FROM "Service" s
-            LEFT JOIN "ServiceOption" so ON so."serviceId" = s.id
             WHERE s."gameId" = ${game.id}
-            GROUP BY s.id
         `
 
         // Calculate display price for each service and ensure serializability
         game.services = services.map(service => {
-            let displayPrice = Number(service.basePrice);
+            let basePrice = Number(service.basePrice);
+            let minAdditionalPrice = 0;
 
-            // For Coins service, calculate minimum purchasable amount
-            if (service.name?.toLowerCase().includes('coin') && service.options && service.options.length > 0) {
-                const coinOption = service.options.find((opt: any) => opt.type === 'number');
-                if (coinOption && coinOption.minValue) {
-                    displayPrice = (Number(service.basePrice) * coinOption.minValue) / 1000;
-                }
+            if (service.options && service.options.length > 0) {
+                service.options.forEach((opt: any) => {
+                    // For number/range options (like coins), find price for minimum amount
+                    if (opt.type === 'number' || opt.type === 'range') {
+                        if (opt.minValue && opt.minValue > 0) {
+                            // If it's a "per 1000" style price (common in coins)
+                            if (service.name?.toLowerCase().includes('coin')) {
+                                basePrice = (basePrice * opt.minValue) / 1000;
+                            } else {
+                                // Simple multiplication for other types
+                                basePrice = basePrice * opt.minValue;
+                            }
+                        }
+                    }
+                    // For selection options, if REQUIRED, add the cheapest variant price
+                    else if (opt.required && opt.values && opt.values.length > 0) {
+                        const prices = opt.values.map((v: any) => Number(v.priceModifier || 0));
+                        minAdditionalPrice += Math.min(...prices);
+                    }
+                });
             }
+
+            const finalDisplayPrice = basePrice + minAdditionalPrice;
 
             return {
                 ...service,
                 basePrice: Number(service.basePrice),
                 createdAt: service.createdAt?.toString() || null,
                 updatedAt: service.updatedAt?.toString() || null,
-                options: service.options?.map((opt: any) => ({
-                    ...opt,
-                    minValue: opt.minValue ? Number(opt.minValue) : null,
-                    maxValue: opt.maxValue ? Number(opt.maxValue) : null,
-                })) || [],
-                displayPrice: displayPrice.toFixed(2)
+                options: service.options || [],
+                displayPrice: finalDisplayPrice.toFixed(2)
             };
         });
     }
