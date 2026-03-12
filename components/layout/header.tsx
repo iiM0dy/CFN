@@ -161,7 +161,7 @@ export function Header() {
                                             Blog
                                         </Link>
                                         <Link
-                                            href="/work-with-us"
+                                            href="/become-pro"
                                             onClick={() => setMenuOpen(false)}
                                             className="block text-sm font-medium text-gray-200 hover:text-primary transition-colors"
                                         >
@@ -289,7 +289,7 @@ export function Header() {
                                         { href: '/about-us', label: 'About Us', icon: 'info' },
                                         { href: '/cashback', label: 'Cashback', icon: 'payments' },
                                         { href: '/blog', label: 'Journal', icon: 'article' },
-                                        { href: '/work-with-us', label: 'Careers', icon: 'group_add' },
+                                        { href: '/become-pro', label: 'Careers', icon: 'group_add' },
                                         { href: '/legit', label: 'Security', icon: 'verified_user' },
                                         { href: '/contact', label: 'Support', icon: 'emergency_home' }
                                     ].map((item) => (
@@ -308,7 +308,7 @@ export function Header() {
 
                             {/* Community Actions */}
                             <Link
-                                href="/contact"
+                                href="/become-pro"
                                 onClick={() => setMobileOpen(false)}
                                 className="bg-primary/5 border-l-2 border-primary p-6 rounded-r-2xl flex items-center justify-between"
                             >

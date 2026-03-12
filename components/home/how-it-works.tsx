@@ -2,111 +2,84 @@
 
 export function HowItWorks() {
     return (
-        <section className="py-24 bg-[#050505] border-b border-white/5">
-            <div className="max-w-[1440px] mx-auto px-6 lg:px-10">
-                <div className="text-center mb-14">
-                    <span className="text-[10px] font-black text-primary uppercase tracking-[0.4em]">
-                        Ironclad Security
-                    </span>
-                    <h2 className="mt-4 text-3xl md:text-4xl font-black text-white tracking-tighter uppercase">
-                        Trusted by the Community
-                    </h2>
-                </div>
-
-                {/* Logos / trust row */}
-                <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-10 items-center opacity-40 hover:opacity-100 transition-opacity text-[11px] font-semibold">
-                    <div className="flex justify-center">
-                        <div className="flex items-center gap-2 text-gray-300">
-                            <svg className="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 7h16M4 11h16M4 15h10" />
-                            </svg>
-                            <span>Encrypted gateway</span>
-                        </div>
-                    </div>
-                    <div className="flex justify-center">
-                        <div className="flex items-center gap-2 text-gray-300">
-                            <svg className="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10l1.5 9h15L21 10H3z" />
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10V7a4 4 0 118 0v3" />
-                            </svg>
-                            <span>Secure checkout</span>
-                        </div>
-                    </div>
-                    <div className="flex justify-center">
-                        <div className="flex items-center gap-2 text-gray-300">
-                            <svg className="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3l8 4v5c0 5-3 7-8 9-5-2-8-4-8-9V7l8-4z" />
-                            </svg>
-                            <span>Fraud protection</span>
-                        </div>
-                    </div>
-                    <div className="flex justify-center">
-                        <div className="flex items-center gap-2 text-gray-300">
-                            <svg className="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 15a4 4 0 014-4h10a4 4 0 110 8H7a4 4 0 01-4-4z" />
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 11a4 4 0 117.8-1" />
-                            </svg>
-                            <span>Privacy first</span>
-                        </div>
-                    </div>
-                    <div className="flex justify-center">
-                        <div className="flex items-center gap-2 text-gray-300">
-                            <svg className="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 21h8M12 3v12m0 0l-4-4m4 4l4-4" />
-                            </svg>
-                            <span>Chargeback shield</span>
-                        </div>
-                    </div>
-                    <div className="flex justify-center">
-                        <div className="flex items-center gap-2 font-black text-xs text-gray-300">
-                            <svg className="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                            SSL Secured
-                        </div>
+        <section className="py-24 bg-[#050505]">
+            <div className="relative max-w-[1440px] mx-auto px-6 lg:px-10">
+                {/* Header Section - Matched to PopularGames/Pricing */}
+                <div className="flex flex-col md:flex-row justify-between items-end gap-6 mb-16">
+                    <div className="max-w-xl">
+                        <div className="h-px w-12 bg-primary mb-5" />
+                        <h2 className="text-4xl md:text-5xl font-black text-white tracking-tighter uppercase mb-4">
+                            Operational <span className="text-primary">Sequence</span>
+                        </h2>
+                        <p className="text-slate-500 text-sm md:text-base font-medium leading-relaxed">
+                            Our battle-tested protocol ensures maximum security and elite performance for every deployment.
+                        </p>
                     </div>
                 </div>
 
-                {/* Three trust pillars */}
-                <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <div className="p-8 rounded-xl border border-white/5 bg-white/[0.02] flex items-start gap-5 hover:bg-white/[0.04] transition-colors">
-                        <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/20 text-primary text-xl">
-                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.5l7 4v6.5l-7 4-7-4v-6.5z" />
-                            </svg>
+                {/* Steps Sequence - Matched to Pricing Feature Cards style */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    {/* Step 01 */}
+                    <div className="group p-8 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-primary/20 transition-all duration-300">
+                        <div className="flex justify-between items-start mb-8">
+                            <div className="size-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
+                                <span className="material-symbols-outlined text-[24px]">search_check</span>
+                            </div>
+                            <span className="text-[10px] font-black text-slate-700 uppercase tracking-[0.2em]">P-01</span>
                         </div>
-                        <div>
-                            <h3 className="text-white font-bold uppercase text-sm mb-2 tracking-tight">Anonymity Protocol</h3>
-                            <p className="text-gray-500 text-xs leading-relaxed">
-                                Advanced routing and offline mode ensure game servers never flag account activity.
-                            </p>
-                        </div>
+                        <h3 className="text-white font-black text-lg uppercase tracking-tight mb-3">Select Mission</h3>
+                        <p className="text-slate-500 text-xs md:text-sm leading-relaxed font-medium">
+                            Browse our verified catalog of gaming services across all major competitive titles.
+                        </p>
                     </div>
-                    <div className="p-8 rounded-xl border border-white/5 bg-white/[0.02] flex items-start gap-5 hover:bg-white/[0.04] transition-colors">
-                        <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/20 text-primary text-xl">
-                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                            </svg>
+
+                    {/* Step 02 */}
+                    <div className="group p-8 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-primary/20 transition-all duration-300">
+                        <div className="flex justify-between items-start mb-8">
+                            <div className="size-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
+                                <span className="material-symbols-outlined text-[24px]">tune</span>
+                            </div>
+                            <span className="text-[10px] font-black text-slate-700 uppercase tracking-[0.2em]">P-02</span>
                         </div>
-                        <div>
-                            <h3 className="text-white font-bold uppercase text-sm mb-2 tracking-tight">Identity Protection</h3>
-                            <p className="text-gray-500 text-xs leading-relaxed">
-                                No personal data is stored on our servers or shared with boosters—ever.
-                            </p>
-                        </div>
+                        <h3 className="text-white font-black text-lg uppercase tracking-tight mb-3">Calibrate</h3>
+                        <p className="text-slate-500 text-xs md:text-sm leading-relaxed font-medium">
+                            Customize your parameters using our smart estimator for precise results and regional VPN matching.
+                        </p>
                     </div>
-                    <div className="p-8 rounded-xl border border-white/5 bg-white/[0.02] flex items-start gap-5 hover:bg-white/[0.04] transition-colors">
-                        <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/20 text-primary text-xl">
-                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2v6h6v-6c0-1.105-1.343-2-3-2z" />
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10a7 7 0 0114 0v6a2 2 0 01-2 2H7a2 2 0 01-2-2z" />
-                            </svg>
+
+                    {/* Step 03 */}
+                    <div className="group p-8 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-primary/20 transition-all duration-300">
+                        <div className="flex justify-between items-start mb-8">
+                            <div className="size-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
+                                <span className="material-symbols-outlined text-[24px]">bolt</span>
+                            </div>
+                            <span className="text-[10px] font-black text-slate-700 uppercase tracking-[0.2em]">P-03</span>
                         </div>
-                        <div>
-                            <h3 className="text-white font-bold uppercase text-sm mb-2 tracking-tight">Zero-Risk Guarantee</h3>
-                            <p className="text-gray-500 text-xs leading-relaxed">
-                                Full insurance on every order. 100% refund if agreed goals are not achieved.
-                            </p>
+                        <h3 className="text-white font-black text-lg uppercase tracking-tight mb-3">Execution</h3>
+                        <p className="text-slate-500 text-xs md:text-sm leading-relaxed font-medium">
+                            Our boosters begin mission within 15 minutes. Track your progress live in real-time.
+                        </p>
+                    </div>
+                </div>
+
+                {/* Integrated Trust Footer */}
+                <div className="mt-20 pt-10 border-t border-white/5">
+                    <div className="flex flex-wrap justify-between gap-8 opacity-40 hover:opacity-100 transition-opacity duration-500">
+                        <div className="flex items-center gap-2">
+                            <span className="material-symbols-outlined text-emerald-500 text-[18px]">verified</span>
+                            <span className="text-[9px] font-black text-white uppercase tracking-widest">SSL SECURED</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <span className="material-symbols-outlined text-emerald-500 text-[18px]">vpn_lock</span>
+                            <span className="text-[9px] font-black text-white uppercase tracking-widest">VPN PROTECTED</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <span className="material-symbols-outlined text-emerald-500 text-[18px]">shield_person</span>
+                            <span className="text-[9px] font-black text-white uppercase tracking-widest">ENCRYPTED DATA</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <span className="material-symbols-outlined text-emerald-500 text-[18px]">support_agent</span>
+                            <span className="text-[9px] font-black text-white uppercase tracking-widest">24/7 LIVE OPS</span>
                         </div>
                     </div>
                 </div>

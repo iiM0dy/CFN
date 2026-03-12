@@ -27,7 +27,7 @@ export function TestimonialsSection() {
             <div className="max-w-[1440px] mx-auto px-6 lg:px-10">
                 <div className="flex flex-col md:flex-row justify-between items-center gap-8 mb-16">
                     <h2 className="text-4xl md:text-5xl font-black text-white tracking-tighter uppercase">
-                        Feedback Matrix
+                        Feedbacks
                     </h2>
                     <div className="flex gap-3">
                         <button className="size-11 rounded-full border border-white/10 flex items-center justify-center hover:bg-white/5 transition-colors">

@@ -29,158 +29,158 @@ export function PricingSection() {
     const days = Math.max(1, Math.round((desiredRank - currentRank) / 30))
 
     return (
-        <section className="py-24 bg-[#080808] border-y border-white/5 relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-1/3 h-full bg-primary/10 blur-[120px] pointer-events-none" />
-            <div className="relative max-w-[1440px] mx-auto px-6 lg:px-10">
-                <div className="flex flex-col md:flex-row gap-16 items-center">
-                    {/* Left Content */}
-                    <div className="md:w-1/2">
-                        <div className="inline-flex items-center gap-2 px-3 py-1 mb-6 rounded-full bg-primary/10 border border-primary/25 text-primary text-[10px] font-black uppercase tracking-[0.25em]">
-                            Smart Pricing Algorithm
-                        </div>
-                        <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-white mb-6 leading-none tracking-tighter">
-                            Transparent.
-                            <br />
-                            <span className="text-primary">Instant.</span>
-                            <br />
-                            Proven.
-                        </h2>
-                        <p className="text-gray-400 text-sm md:text-base mb-8 leading-relaxed font-medium">
-                            Our dynamic pricing model accounts for current meta difficulty and regional demand, ensuring you get the best value for elite service.
-                        </p>
+        <section className="py-32 bg-[#080808] border-y border-white/5 relative overflow-hidden">
+            {/* Ambient Background Elements */}
+            <div className="absolute top-0 right-[-10%] w-[500px] h-[500px] bg-primary/10 blur-[150px] rounded-full pointer-events-none" />
+            <div className="absolute bottom-0 left-[-5%] w-[400px] h-[400px] bg-primary/5 blur-[120px] rounded-full pointer-events-none" />
 
-                        <div className="flex flex-col gap-6">
-                            {/* Feature 1 */}
-                            <div className="flex gap-4">
-                                <div className="shrink-0 size-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-primary">
-                                    <svg className="size-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 12a5 5 0 015-5V5a3 3 0 00-6 0v2a5 5 0 01-5 5v5h10v-5a5 5 0 01-4-5z" />
-                                    </svg>
-                                </div>
-                                <div>
-                                    <h4 className="text-white font-bold text-lg">Encrypted VPN Routing</h4>
-                                    <p className="text-gray-500 text-sm">
-                                        Boosters match your region and play through encrypted tunnels for maximum safety.
-                                    </p>
-                                </div>
+            <div className="relative max-w-[1440px] mx-auto px-6 lg:px-10">
+                <div className="flex flex-col lg:flex-row gap-20 items-center">
+                    {/* Left Content: Social Proof & Headlines */}
+                    <div className="lg:w-1/2 space-y-10">
+                        <div className="space-y-4">
+                            <h2 className="text-4xl md:text-6xl lg:text-7xl font-black text-white leading-[0.9] tracking-tighter uppercase">
+                                Elite Results.<br />
+                                <span className="text-primary">Zero Friction.</span>
+                            </h2>
+                            <p className="text-slate-400 text-base md:text-lg max-w-xl leading-relaxed font-medium">
+                                Join over 12,000 satisfied players who have reached their peak performance with our specialized tactical assets.
+                            </p>
+                        </div>
+
+                        {/* Trust Statistics Grid */}
+                        <div className="grid grid-cols-2 gap-8 py-8 border-y border-white/5">
+                            <div>
+                                <div className="text-3xl font-black text-white mb-1">98.4%</div>
+                                <div className="text-xs font-black text-slate-500 uppercase tracking-widest">Success Rate</div>
                             </div>
-                            {/* Feature 2 */}
-                            <div className="flex gap-4">
-                                <div className="shrink-0 size-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-primary">
+                            <div>
+                                <div className="text-3xl font-black text-white mb-1">15m</div>
+                                <div className="text-xs font-black text-slate-500 uppercase tracking-widest">Avg. Response</div>
+                            </div>
+                        </div>
+
+                        {/* Feature Cards */}
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div className="group p-6 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-primary/30 transition-all duration-500">
+                                <div className="size-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary mb-5 group-hover:scale-110 transition-transform">
                                     <svg className="size-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 19a8 8 0 107-7h-7v7z" />
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 00-2 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                                     </svg>
                                 </div>
-                                <div>
-                                    <h4 className="text-white font-bold text-lg">Live Tracking Dashboard</h4>
-                                    <p className="text-gray-500 text-sm">
-                                        Watch your LP or MMR climb in real time with our private client.
-                                    </p>
+                                <h4 className="text-white font-black text-sm uppercase tracking-wider mb-2">Encrypted VPN</h4>
+                                <p className="text-slate-500 text-xs leading-relaxed">
+                                    Full protocol protection matching your local signature.
+                                </p>
+                            </div>
+                            <div className="group p-6 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-primary/30 transition-all duration-500">
+                                <div className="size-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary mb-5 group-hover:scale-110 transition-transform">
+                                    <svg className="size-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                    </svg>
                                 </div>
+                                <h4 className="text-white font-black text-sm uppercase tracking-wider mb-2">Instant Allocation</h4>
+                                <p className="text-slate-500 text-xs leading-relaxed">
+                                    Operational deployment within minutes of acquisition.
+                                </p>
                             </div>
                         </div>
                     </div>
 
-                    {/* Calculator Widget */}
-                    <div className="md:w-1/2 w-full relative">
-                        {/* Glow effect */}
-                        <div className="absolute inset-0 bg-primary/20 blur-[100px] rounded-full" />
+                    {/* Right Content: The Ultimate Estimator */}
+                    <div className="lg:w-1/2 w-full relative">
+                        {/* Decorative background glow */}
+                        <div className="absolute -inset-4 bg-primary/10 blur-[100px] rounded-[40px] opacity-50" />
 
-                        <div className="relative bg-surface-dark border border-[#2A2A2A] rounded-2xl p-8 shadow-2xl">
-                            <div className="flex items-center justify-between mb-8 border-b border-[#2A2A2A] pb-4">
-                                <h3 className="text-xl font-bold text-white">Quick Estimate</h3>
+                        <div className="relative bg-[#0F0F0F]/80 backdrop-blur-3xl border border-white/10 rounded-3xl p-8 md:p-10 shadow-[0_32px_64px_-16px_rgba(0,0,0,0.5)]">
+                            <div className="flex items-center justify-between mb-10">
+                                <h3 className="text-xl font-black text-white uppercase tracking-tight">Quick Estimate</h3>
                             </div>
 
-                            <div className="grid grid-cols-2 gap-4 mb-6">
-                                <div>
-                                    <label className="block text-[10px] font-black text-gray-500 uppercase tracking-[0.25em] mb-2">
-                                        Target Title
-                                    </label>
-                                    <select className="w-full bg-[#0B0B0B] border border-[#333] rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary transition-colors appearance-none">
-                                        <option>Valorant</option>
-                                        <option>League of Legends</option>
-                                        <option>CS2</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label className="block text-[10px] font-black text-gray-500 uppercase tracking-[0.25em] mb-2">
-                                        Region / Cluster
-                                    </label>
-                                    <select className="w-full bg-[#0B0B0B] border border-[#333] rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary transition-colors appearance-none">
-                                        <option>North America</option>
-                                        <option>Europe West</option>
-                                        <option>Asia Pacific</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            {/* Rank Increment Slider (current + desired) */}
-                            <div className="mb-8">
-                                <div className="flex justify-between mb-3">
-                                    <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.25em]">
-                                        Rank Increment
-                                    </label>
-                                    <span className="text-xs font-bold text-primary">
-                                        {getLabel(currentRank)} → {getLabel(desiredRank)}
-                                    </span>
-                                </div>
-                                <div className="grid grid-cols-2 gap-4 mb-3 text-[11px] font-medium text-gray-400">
-                                    <div className="flex flex-col">
-                                        <span className="mb-1 text-[10px] uppercase tracking-wide text-gray-500">
-                                            Current
-                                        </span>
-                                        <input
-                                            type="range"
-                                            min="1"
-                                            max="100"
-                                            value={currentRank}
-                                            onChange={(e) => setCurrentRank(Number(e.target.value))}
-                                            className="w-full h-2 bg-[#333] rounded-lg appearance-none cursor-pointer accent-primary"
-                                        />
+                            <div className="space-y-8">
+                                {/* Parameters Selection */}
+                                <div className="grid grid-cols-2 gap-4">
+                                    <div className="space-y-2">
+                                        <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest pl-1">Target Title</label>
+                                        <div className="relative group">
+                                            <select className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-4 text-white hover:border-primary/50 transition-all outline-none appearance-none font-bold uppercase text-xs tracking-wider">
+                                                <option>Valorant</option>
+                                                <option>League of Legends</option>
+                                                <option>CS2</option>
+                                            </select>
+                                            <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-slate-500">
+                                                <svg className="size-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div className="flex flex-col">
-                                        <span className="mb-1 text-[10px] uppercase tracking-wide text-gray-500">
-                                            Desired
-                                        </span>
-                                        <input
-                                            type="range"
-                                            min="1"
-                                            max="100"
-                                            value={desiredRank}
-                                            onChange={(e) => setDesiredRank(Number(e.target.value))}
-                                            className="w-full h-2 bg-[#333] rounded-lg appearance-none cursor-pointer accent-primary"
-                                        />
+                                    <div className="space-y-2">
+                                        <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest pl-1">Region</label>
+                                        <div className="relative group">
+                                            <select className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-4 text-white hover:border-primary/50 transition-all outline-none appearance-none font-bold uppercase text-xs tracking-wider">
+                                                <option>North America</option>
+                                                <option>Europe West</option>
+                                                <option>Asia Pacific</option>
+                                            </select>
+                                            <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-slate-500">
+                                                <svg className="size-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            {/* Estimated Price */}
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-                                <div className="bg-[#0B0B0B] rounded-xl p-4 border border-white/10 flex flex-col items-center text-center">
-                                    <span className="text-[10px] font-black text-gray-500 uppercase tracking-[0.25em] mb-1">
-                                        Quote Estimate
-                                    </span>
-                                    <span className="text-3xl font-black text-white tracking-tight">${price}</span>
-                                </div>
-                                <div className="bg-[#0B0B0B] rounded-xl p-4 border border-white/10 flex flex-col items-center text-center">
-                                    <span className="text-[10px] font-black text-gray-500 uppercase tracking-[0.25em] mb-1">
-                                        Lead Time
-                                    </span>
-                                    <span className="text-sm font-bold text-white flex items-center gap-2">
-                                        <svg className="size-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                        </svg>
-                                        ~{days} Day{days > 1 ? "s" : ""}
-                                    </span>
-                                </div>
-                            </div>
+                                {/* Rank Progress Area */}
+                                <div className="bg-black/40 border border-white/5 rounded-2xl p-6 space-y-6">
+                                    <div className="flex justify-between items-end">
+                                        <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Rank Progression</span>
+                                        <div className="text-right">
+                                            <div className="text-primary font-black text-sm uppercase tracking-tighter">
+                                                {getLabel(currentRank)} → {getLabel(desiredRank)}
+                                            </div>
+                                        </div>
+                                    </div>
 
-                            <button className="w-full h-16 bg-primary hover:bg-primary-dark text-white font-black text-xs md:text-sm rounded-lg shadow-2xl shadow-primary/40 transition-all hover:scale-[1.01] active:scale-[0.99] uppercase tracking-[0.3em] flex items-center justify-center gap-3">
-                                Initialize Deployment
-                                <svg className="size-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                                </svg>
-                            </button>
+                                    <div className="space-y-4">
+                                        <div className="space-y-2">
+                                            <div className="flex justify-between text-[10px] text-slate-600 font-bold uppercase"><span>Start</span><span>{getLabel(currentRank)}</span></div>
+                                            <input
+                                                type="range" min="1" max="100" value={currentRank}
+                                                onChange={(e) => setCurrentRank(Number(e.target.value))}
+                                                className="w-full h-1.5 bg-white/10 rounded-full appearance-none cursor-pointer accent-primary"
+                                            />
+                                        </div>
+                                        <div className="space-y-2">
+                                            <div className="flex justify-between text-[10px] text-slate-600 font-bold uppercase"><span>Desired</span><span>{getLabel(desiredRank)}</span></div>
+                                            <input
+                                                type="range" min="1" max="100" value={desiredRank}
+                                                onChange={(e) => setDesiredRank(Number(e.target.value))}
+                                                className="w-full h-1.5 bg-white/10 rounded-full appearance-none cursor-pointer accent-primary"
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Results Grid */}
+                                <div className="grid grid-cols-2 gap-4">
+                                    <div className="bg-primary/5 border border-primary/20 rounded-2xl p-5 group hover:bg-primary/10 transition-all">
+                                        <span className="text-[9px] font-black text-primary uppercase tracking-[0.2em] block mb-1">Acquisition Cost</span>
+                                        <div className="text-3xl font-black text-white tracking-tighter">${price}</div>
+                                    </div>
+                                    <div className="bg-white/[0.03] border border-white/5 rounded-2xl p-5 transition-all">
+                                        <span className="text-[9px] font-black text-slate-500 uppercase tracking-[0.2em] block mb-1">Time to Target</span>
+                                        <div className="text-xl font-black text-white flex items-center gap-2">
+                                            <span className="material-symbols-outlined text-[18px] text-primary">schedule</span>
+                                            {days} Day{days > 1 ? "s" : ""}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <button className="w-full bg-primary hover:bg-[#8a0e1d] text-white py-6 rounded-2xl font-black uppercase tracking-[0.4em] transition-all hover:scale-[1.02] active:scale-[0.98] shadow-2xl shadow-primary/40 flex items-center justify-center gap-4 group">
+                                    Buy Now
+                                    <span className="material-symbols-outlined transition-transform group-hover:translate-x-1">arrow_forward</span>
+                                </button>
+
+                                <p className="text-center text-[9px] font-bold text-slate-700 uppercase tracking-widest">Secure transaction via encrypted gateway</p>
+                            </div>
                         </div>
                     </div>
                 </div>

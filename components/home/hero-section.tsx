@@ -49,7 +49,7 @@ export function HeroSection() {
                         href="/games"
                         className="group h-14 px-10 rounded-lg bg-primary hover:bg-primary-dark text-white font-black text-xs md:text-sm uppercase tracking-[0.25em] transition-all duration-300 shadow-[0_15px_30px_-5px_rgba(175,18,37,0.6)] hover:-translate-y-0.5 flex items-center gap-3"
                     >
-                        Explore Services
+                        Explore Games
                         <svg
                             className="size-5 group-hover:translate-x-1 transition-transform"
                             fill="none"
