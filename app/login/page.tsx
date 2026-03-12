@@ -10,11 +10,11 @@ import { login, register } from "@/actions/auth";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { CFNLogo } from "@/components/layout/cfnboost-logo";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function LoginPage() {
     const [isLogin, setIsLogin] = useState(true);
     const [showPassword, setShowPassword] = useState(false);
-    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const [isPending, startTransition] = useTransition();
     const router = useRouter();
 
@@ -28,6 +28,7 @@ export default function LoginPage() {
         defaultValues: {
             email: "",
             password: "",
+            confirmPassword: "",
             name: "",
         },
     });
@@ -39,7 +40,6 @@ export default function LoginPage() {
                     if (data?.error) {
                         toast.error(data.error);
                     } else {
-                        // toast.success("Logged in successfully!");
                         router.push("/");
                     }
                 });
@@ -58,265 +58,153 @@ export default function LoginPage() {
     };
 
     return (
-        <div className="bg-[#080808] text-white min-h-screen flex items-center justify-center p-4 relative overflow-hidden font-sans">
-            {/* Ambient Red Glow Background */}
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(175,18,37,0.15)_0%,rgba(11,11,11,0)_70%)] pointer-events-none z-0" />
-            {/* Decorative geometric elements */}
-            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2" />
-            <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[100px] translate-y-1/2 -translate-x-1/2" />
+        <main className="bg-[#050505] text-white min-h-screen flex items-center justify-center p-6 relative overflow-hidden font-sans">
+            {/* Minimal Ambient Background */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/5 blur-[120px] rounded-full pointer-events-none" />
 
-            {/* Main Container */}
-            <div className="relative z-10 w-full max-w-[1100px] h-auto min-h-[650px] bg-[#131313] border border-[#2A2A2A] rounded-2xl shadow-2xl flex flex-col md:flex-row overflow-hidden">
-                {/* Left Pane: Visuals */}
-                <div className="relative hidden md:flex w-full md:w-5/12 flex-col justify-between p-10 overflow-hidden">
-                    {/* Background Image with Overlay */}
-                    <div className="absolute inset-0 z-0">
-                        <img
-                            alt="Dark competitive esports arena with neon lights"
-                            className="w-full h-full object-cover opacity-60"
-                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuBbLAEJDGoYJ7B22Hplhi_tWISXJIpMQZWXF2ycTy6K4gGGNSCObQ21vVc4_Kcql68-rr5VY0Nq9dGn8XJk1Cd6EbXrdnO6h6el3a1kIgGLFvEaricE7kVaThiumvflzNLGWO8L5IjuhoyCl_0QiWGgRR4Wgw4_dXucY0RTRAYlbKpVQ9G6G5ccSl0ppRQuleGy2skrdII4uzl5JkBqJd97JVxw7uuE--Rs71EnqJawJp_HLB_7pvOmxAHr5LToqo6gC58yiuuWBo7F"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-b from-[#131313]/40 via-[#131313]/60 to-[#131313]" />
-                        <div className="absolute inset-0 bg-primary/10 mix-blend-overlay" />
-                    </div>
-                    {/* Content on top of image */}
-                    <div className="relative z-10">
-                        <div className="flex items-center gap-4 mb-8">
-                            <CFNLogo className="size-10" />
-                            <span className="font-black text-2xl tracking-tight uppercase">
-                                <span className="text-primary">CFN</span>
-                                <span className="text-white">BOOST</span>
-                            </span>
-                        </div>
-                    </div>
-                    <div className="relative z-10 mt-auto">
-                        <h1 className="text-4xl font-bold leading-tight mb-4 text-glow">
-                            Dominate <br />
-                            <span className="text-primary">The Ladder.</span>
-                        </h1>
-                        <p className="text-gray-400 text-sm leading-relaxed max-w-xs mb-8">
-                            Join the premier marketplace for elite boosting services. Secure, fast, and strictly confidential.
-                        </p>
-                        {/* Testimonial / Social Proof */}
-                        <div className="flex items-center gap-4 p-4 bg-black/40 backdrop-blur-md rounded-xl border border-white/5">
-                            <div className="flex -space-x-2">
-                                <img alt="Avatar user 1" className="inline-block h-8 w-8 rounded-full ring-2 ring-black object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB4rm781PhbAGRAoH9JT57GS6n4kymzvy0yBGi_8fOMSxJ3LGANgsE2inf9mXip59KskRVXc3wyQdhb5Kv4lyRIJFhp38V7MGWLZa1EM1O8JRjIKFykp4YP1rntqiYiEXhXFiwf97vEGSNkKp_F4jvcEmAkIFyAx-oXnzdtqEIHkaOSvX7vwGYH6oxuYY2SGAY87TX2RR3jWJL7aEmx0QAEBO6cXXwr8Xyrza3kWhTHntHh7Z1gxQu9RDFAQfMav93mFTFvgKX_6cqj" />
-                                <img alt="Avatar user 2" className="inline-block h-8 w-8 rounded-full ring-2 ring-black object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDNFlOdvBvEC634X7RJiy8n-tkwD4p2jlPeK0cuLzG8qBuQwPbjt6GF2b6bsAKGw1Wo3RUZGfBIdKOmzyNiMA6O-dKvuRDo3rweh7lncI_bYAT8GzHcKuNWORfJopRRhGt4K8-PkAz_WBCH2IzrxnHUfsWJ8Pe8ZjqK26YITqWvGdDa7-EmqLpsYgPxETNfgVq3ayPNrQaOlHbHb_tzNjCTddk1QCKJV0B2tr3YJIOYNysUvy0SXpU8JrnxFmEhlYwcVqzMxH5xV2m3" />
-                                <img alt="Avatar user 3" className="inline-block h-8 w-8 rounded-full ring-2 ring-black object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD3fwJyOBfSg2xAgX9zlWI5iYQ7aljZ8iMhyRfvgOi7GN-SJVdxKnmvuV8BiZx1BrUSoh8iGcA89I9VKkE6DUnO5CGDQXYXxByDezL4Fw4b0KB-V2CjUFtcEQI-Mr4QI7Gfk5dK6JHJOiKsMEongwQYyNC2JNsfKB1RK4FytkvDLOya67vC_6gzSV5IYptkKejnjiDHVMDe1UJ2Qq08R20K9-z62zKkS6zc8qV1e6AAAtM1TIG8cTDp2JVh1GeTPx3NM07sl5pTDhM1" />
-                            </div>
-                            <div className="flex flex-col">
-                                <div className="flex text-yellow-500 text-[10px]">
-                                    <span className="material-symbols-outlined text-[14px]">star</span>
-                                    <span className="material-symbols-outlined text-[14px]">star</span>
-                                    <span className="material-symbols-outlined text-[14px]">star</span>
-                                    <span className="material-symbols-outlined text-[14px]">star</span>
-                                    <span className="material-symbols-outlined text-[14px]">star</span>
-                                </div>
-                                <span className="text-xs text-gray-300 font-medium">10k+ Boosts Completed</span>
-                            </div>
-                        </div>
-                    </div>
+            {/* Simplified Auth Card */}
+            <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="relative z-10 w-full max-w-md"
+            >
+                {/* Logo & Header */}
+                <div className="flex flex-col items-center mb-10 text-center">
+                    <Link href="/" className="inline-block mb-6 group">
+                        <CFNLogo className="size-14 text-primary group-hover:scale-110 transition-transform duration-500" />
+                    </Link>
+                    <h1 className="text-3xl font-black text-white tracking-tighter uppercase mb-2 leading-none">
+                        {isLogin ? 'Access Portal' : 'Join the Elite'}
+                    </h1>
+                    <p className="text-slate-500 text-sm font-medium">
+                        {isLogin ? 'Enter your credentials to proceed.' : 'Initialize your professional account.'}
+                    </p>
                 </div>
 
-                {/* Right Pane: Login Form */}
-                <div className="w-full md:w-7/12 bg-[#131313] flex flex-col p-8 md:p-12 lg:p-16 justify-center">
-                    {/* Mobile Header Logo */}
-                    <div className="md:hidden flex items-center justify-center gap-3 mb-8 text-white">
-                        <CFNLogo className="size-8" />
-                        <span className="font-black text-xl tracking-tight uppercase">
-                            <span className="text-primary">CFN</span>
-                            <span className="text-white">BOOST</span>
-                        </span>
-                    </div>
-
-                    {/* Tab Switcher */}
-                    <div className="flex w-full mb-10 bg-[#1E1E1E] p-1 rounded-lg">
+                {/* Main Form Container */}
+                <div className="bg-[#0A0A0A] border border-white/5 rounded-[32px] p-8 shadow-2xl">
+                    {/* Auth Switcher */}
+                    <div className="flex p-1 bg-white/[0.03] border border-white/5 rounded-2xl mb-8">
                         <button
                             onClick={() => { setIsLogin(true); reset(); }}
-                            className={`flex-1 py-2.5 text-sm font-bold rounded-md transition-all ${isLogin ? 'bg-[#131313] text-white shadow-sm border border-[#2A2A2A]/50' : 'text-gray-400 hover:text-white'}`}
+                            className={`flex-1 py-3 text-[10px] font-black uppercase tracking-[0.2em] rounded-xl transition-all ${isLogin ? 'bg-primary text-white shadow-xl shadow-primary/20' : 'text-slate-500 hover:text-white'}`}
                         >
                             Login
                         </button>
                         <button
                             onClick={() => { setIsLogin(false); reset(); }}
-                            className={`flex-1 py-2.5 text-sm font-bold rounded-md transition-all ${!isLogin ? 'bg-[#131313] text-white shadow-sm border border-[#2A2A2A]/50' : 'text-gray-400 hover:text-white'}`}
+                            className={`flex-1 py-3 text-[10px] font-black uppercase tracking-[0.2em] rounded-xl transition-all ${!isLogin ? 'bg-primary text-white shadow-xl shadow-primary/20' : 'text-slate-500 hover:text-white'}`}
                         >
                             Register
                         </button>
                     </div>
 
-                    <div className="mb-8">
-                        <h2 className="text-3xl font-bold text-white mb-2">{isLogin ? 'Welcome Back' : 'Create Account'}</h2>
-                        <p className="text-gray-400 text-sm">{isLogin ? 'Enter your credentials to access your dashboard.' : 'Sign up to start your boosting journey.'}</p>
-                    </div>
-
-                    {/* Form */}
-                    <form className="flex flex-col gap-5" onSubmit={handleSubmit(onSubmit)}>
-                        {/* Name Field (Register Only) */}
-                        {!isLogin && (
-                            <div className="space-y-1.5">
-                                <label className="text-xs font-semibold text-gray-300 uppercase tracking-wider ml-1" htmlFor="name">Full Name</label>
-                                <div className="relative group">
-                                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                        <span className="material-symbols-outlined text-gray-500 group-focus-within:text-primary transition-colors text-[20px]">person</span>
-                                    </div>
+                    <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
+                        <AnimatePresence mode="wait">
+                            {!isLogin && (
+                                <motion.div
+                                    initial={{ opacity: 0, height: 0 }}
+                                    animate={{ opacity: 1, height: 'auto' }}
+                                    exit={{ opacity: 0, height: 0 }}
+                                    className="space-y-1.5 overflow-hidden"
+                                >
+                                    <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest pl-1">Full Name</label>
                                     <input
                                         {...registerField("name")}
-                                        className="block w-full pl-10 pr-3 py-3 bg-[#1E1E1E] border border-[#2A2A2A] rounded-lg text-white placeholder-gray-600 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all sm:text-sm"
-                                        id="name"
-                                        placeholder="John Doe"
+                                        className="w-full bg-white/[0.03] border border-white/5 rounded-2xl px-6 py-4 text-white focus:border-primary transition-all outline-none font-bold text-sm"
+                                        placeholder="John Wick"
                                         type="text"
                                     />
-                                </div>
-                                {errors.name && (
-                                    <p className="text-xs text-red-500 mt-1">{errors.name.message as string}</p>
-                                )}
-                            </div>
-                        )}
-
-                        {/* Email Field */}
-                        <div className="space-y-1.5">
-                            <label className="text-xs font-semibold text-gray-300 uppercase tracking-wider ml-1" htmlFor="email">Email Address</label>
-                            <div className="relative group">
-                                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                    <span className="material-symbols-outlined text-gray-500 group-focus-within:text-primary transition-colors text-[20px]">mail</span>
-                                </div>
-                                <input
-                                    {...registerField("email")}
-                                    className="block w-full pl-10 pr-3 py-3 bg-[#1E1E1E] border border-[#2A2A2A] rounded-lg text-white placeholder-gray-600 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all sm:text-sm"
-                                    id="email"
-                                    placeholder="name@example.com"
-                                    type="email"
-                                />
-                            </div>
-                            {errors.email && (
-                                <p className="text-xs text-red-500 mt-1">{errors.email.message as string}</p>
+                                    {errors.name && <p className="text-[10px] text-primary font-black uppercase tracking-widest pl-1">{errors.name.message as string}</p>}
+                                </motion.div>
                             )}
+                        </AnimatePresence>
+
+                        <div className="space-y-1.5">
+                            <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest pl-1">Email Address</label>
+                            <input
+                                {...registerField("email")}
+                                className="w-full bg-white/[0.03] border border-white/5 rounded-2xl px-6 py-4 text-white focus:border-primary transition-all outline-none font-bold text-sm"
+                                placeholder="name@email.com"
+                                type="email"
+                            />
+                            {errors.email && <p className="text-[10px] text-primary font-black uppercase tracking-widest pl-1">{errors.email.message as string}</p>}
                         </div>
 
-                        {/* Password Field */}
                         <div className="space-y-1.5">
-                            <div className="flex justify-between items-center ml-1">
-                                <label className="text-xs font-semibold text-gray-300 uppercase tracking-wider" htmlFor="password">Password</label>
+                            <div className="flex justify-between items-center px-1">
+                                <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Password</label>
+                                {isLogin && <Link href="#" className="text-[10px] font-black text-primary uppercase tracking-widest hover:text-white transition-colors">Forgot?</Link>}
                             </div>
                             <div className="relative group">
-                                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                    <span className="material-symbols-outlined text-gray-500 group-focus-within:text-primary transition-colors text-[20px]">lock</span>
-                                </div>
                                 <input
                                     {...registerField("password")}
-                                    className="block w-full pl-10 pr-10 py-3 bg-[#1E1E1E] border border-[#2A2A2A] rounded-lg text-white placeholder-gray-600 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all sm:text-sm"
-                                    id="password"
+                                    className="w-full bg-white/[0.03] border border-white/5 rounded-2xl px-6 py-4 pr-14 text-white focus:border-primary transition-all outline-none font-bold text-sm"
                                     placeholder="••••••••"
                                     type={showPassword ? "text" : "password"}
                                 />
                                 <button
-                                    className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500 hover:text-white transition-colors"
                                     type="button"
                                     onClick={() => setShowPassword(!showPassword)}
+                                    className="absolute right-5 top-1/2 -translate-y-1/2 text-slate-500 hover:text-white transition-colors"
                                 >
-                                    <span className="material-symbols-outlined text-[20px]">
-                                        {showPassword ? "visibility" : "visibility_off"}
-                                    </span>
+                                    <span className="material-symbols-outlined text-lg">{showPassword ? "visibility" : "visibility_off"}</span>
                                 </button>
                             </div>
-                            {errors.password && (
-                                <p className="text-xs text-red-500 mt-1">{errors.password.message as string}</p>
-                            )}
+                            {errors.password && <p className="text-[10px] text-primary font-black uppercase tracking-widest pl-1">{errors.password.message as string}</p>}
                         </div>
 
-                        {/* Confirm Password Field (Register Only) */}
-                        {/* {!isLogin && (
-                            <div className="space-y-1.5">
-                                <div className="flex justify-between items-center ml-1">
-                                    <label className="text-xs font-semibold text-gray-300 uppercase tracking-wider" htmlFor="confirm-password">Confirm Password</label>
-                                </div>
-                                <div className="relative group">
-                                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                        <span className="material-symbols-outlined text-gray-500 group-focus-within:text-primary transition-colors text-[20px]">lock_reset</span>
-                                    </div>
-                                    <input 
-                                        className="block w-full pl-10 pr-10 py-3 bg-[#1E1E1E] border border-[#2A2A2A] rounded-lg text-white placeholder-gray-600 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all sm:text-sm" 
-                                        id="confirm-password" 
-                                        placeholder="••••••••" 
-                                        type={showConfirmPassword ? "text" : "password"} 
+                        <AnimatePresence>
+                            {!isLogin && (
+                                <motion.div
+                                    initial={{ opacity: 0, height: 0 }}
+                                    animate={{ opacity: 1, height: 'auto' }}
+                                    exit={{ opacity: 0, height: 0 }}
+                                    className="space-y-1.5 overflow-hidden"
+                                >
+                                    <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest pl-1">Confirm Password</label>
+                                    <input
+                                        {...registerField("confirmPassword")}
+                                        className="w-full bg-white/[0.03] border border-white/5 rounded-2xl px-6 py-4 text-white focus:border-primary transition-all outline-none font-bold text-sm"
+                                        placeholder="••••••••"
+                                        type="password"
                                     />
-                                    <button 
-                                        className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500 hover:text-white transition-colors" 
-                                        type="button"
-                                        onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                                    >
-                                        <span className="material-symbols-outlined text-[20px]">
-                                            {showConfirmPassword ? "visibility" : "visibility_off"}
-                                        </span>
-                                    </button>
-                                </div>
-                            </div>
-                        )} */}
+                                    {errors.confirmPassword && <p className="text-[10px] text-primary font-black uppercase tracking-widest pl-1">{errors.confirmPassword.message as string}</p>}
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
 
-                        {/* Remember Me & Forgot Password (Login Only) */}
-                        {isLogin && (
-                            <div className="flex items-center justify-between mt-1">
-                                <div className="flex items-center">
-                                    <input className="h-4 w-4 rounded border-[#2A2A2A] bg-[#1E1E1E] text-primary focus:ring-offset-[#131313] focus:ring-primary" id="remember-me" name="remember-me" type="checkbox" />
-                                    <label className="ml-2 block text-sm text-gray-400 select-none whitespace-nowrap" htmlFor="remember-me">Remember me</label>
-                                </div>
-                                <div className="text-sm">
-                                    <a className="font-medium text-primary hover:text-red-400 transition-colors whitespace-nowrap" href="#">Forgot password?</a>
-                                </div>
-                            </div>
-                        )}
-
-                        {/* Terms of Service Checkbox (Register Only) */}
-                        {!isLogin && (
-                            <div className="flex items-center mt-1">
-                                <input className="h-4 w-4 rounded border-[#2A2A2A] bg-[#1E1E1E] text-primary focus:ring-offset-[#131313] focus:ring-primary" id="terms" name="terms" type="checkbox" />
-                                <label className="ml-2 block text-sm text-gray-400 select-none" htmlFor="terms">
-                                    I agree to the <a href="#" className="text-primary hover:text-red-400">Terms of Service</a>
-                                </label>
-                            </div>
-                        )}
-
-                        {/* Submit Button */}
                         <button
                             disabled={isPending}
-                            className="mt-4 w-full flex justify-center py-3.5 px-4 border border-transparent rounded-lg shadow-sm text-sm font-bold text-white bg-primary hover:bg-[#7d0b19] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-[#131313] focus:ring-primary transition-all duration-200 shadow-[0_0_15px_rgba(175,18,37,0.5)] hover:shadow-[0_0_25px_rgba(175,18,37,0.7)] disabled:opacity-50 disabled:cursor-not-allowed"
-                            type="submit"
+                            className="w-full py-5 mt-4 bg-primary hover:bg-[#8a0e1d] text-white font-black uppercase tracking-[0.3em] rounded-2xl transition-all hover:scale-[1.02] active:scale-[0.98] shadow-2xl shadow-primary/20 flex items-center justify-center gap-3 group"
                         >
-                            {isPending ? "Loading..." : (isLogin ? 'Sign In' : 'Create Account')}
+                            {isPending ? (
+                                <span className="size-5 border-2 border-white/20 border-t-white rounded-full animate-spin" />
+                            ) : (
+                                <>
+                                    {isLogin ? 'Sign In' : 'Create Account'}
+                                    <span className="material-symbols-outlined text-sm transition-transform group-hover:translate-x-1">arrow_forward</span>
+                                </>
+                            )}
                         </button>
                     </form>
 
-                    {/* Divider */}
-                    <div className="relative mt-8">
-                        <div className="absolute inset-0 flex items-center">
-                            <div className="w-full border-t border-[#2A2A2A]" />
+                    <div className="mt-8 flex flex-col items-center gap-2 opacity-30">
+                        <div className="flex items-center gap-2">
+                            <span className="material-symbols-outlined text-[12px]">verified_user</span>
+                            <span className="text-[8px] font-black uppercase tracking-[0.2em] text-white">Encrypted Pipeline</span>
                         </div>
-                        <div className="relative flex justify-center text-sm">
-                            <span className="px-2 bg-[#131313] text-gray-500">Or continue with</span>
-                        </div>
-                    </div>
-
-                    {/* Social Login */}
-                    <div className="mt-8 grid grid-cols-3 gap-3">
-                        <a className="flex justify-center items-center py-2.5 px-4 border border-[#2A2A2A] rounded-lg bg-[#1E1E1E] hover:bg-[#252525] hover:border-gray-600 transition-all group" href="#">
-                            <img alt="Google" className="h-5 w-5 opacity-70 group-hover:opacity-100 transition-opacity" src="/assets/cfnboost-official-logo.png" />
-                        </a>
-                        <a className="flex justify-center items-center py-2.5 px-4 border border-[#2A2A2A] rounded-lg bg-[#1E1E1E] hover:bg-[#5865F2] hover:border-[#5865F2] hover:text-white transition-all group" href="#">
-                            <img alt="Discord" className="h-5 w-5 opacity-70 group-hover:opacity-100 transition-opacity" src="/assets/cfnboost-official-logo.png" />
-                        </a>
-                        <a className="flex justify-center items-center py-2.5 px-4 border border-[#2A2A2A] rounded-lg bg-[#1E1E1E] hover:bg-[#171a21] hover:border-gray-500 transition-all group" href="#">
-                            <img alt="Steam" className="h-5 w-5 opacity-70 group-hover:opacity-100 transition-opacity" src="/assets/cfnboost-official-logo.png" />
-                        </a>
-                    </div>
-
-                    {/* Secure Badge */}
-                    <div className="mt-8 flex justify-center items-center gap-1.5 text-xs text-gray-600 opacity-60 w-full text-center">
-                        <span className="material-symbols-outlined text-[14px]">lock</span>
-                        <span>Secure SSL Encryption</span>
                     </div>
                 </div>
-            </div>
-        </div>
+
+                {/* Bottom Link */}
+                <div className="mt-8 text-center">
+                    <Link href="/" className="text-[10px] font-black text-slate-500 uppercase tracking-widest hover:text-primary transition-colors flex items-center justify-center gap-2">
+                        <span className="material-symbols-outlined text-[16px]">west</span>
+                        Return to Headquarters
+                    </Link>
+                </div>
+            </motion.div>
+        </main>
     );
 }

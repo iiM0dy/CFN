@@ -1,6 +1,6 @@
 "use server";
 
-import { RegisterSchema } from "@/schemas";
+import { LoginSchema, RegisterSchema } from "@/schemas";
 import { z } from "zod";
 import bcrypt from "bcryptjs";
 import { prisma } from "@/lib/prisma";
@@ -39,10 +39,14 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
 };
 
 
-export const login = async (values: any) => {
+export const login = async (values: z.infer<typeof LoginSchema>) => {
+    const validatedFields = LoginSchema.safeParse(values);
 
-    const { email, password } = values;
+    if (!validatedFields.success) {
+        return { error: "Invalid fields!" };
+    }
 
+    const { email, password } = validatedFields.data;
 
     try {
         await signIn("credentials", {

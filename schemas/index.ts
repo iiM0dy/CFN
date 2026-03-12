@@ -16,7 +16,18 @@ export const RegisterSchema = z.object({
     password: z.string().min(6, {
         message: "Minimum 6 characters required",
     }),
+    confirmPassword: z.string().min(1, {
+        message: "Confirm password is required",
+    }),
     name: z.string().min(1, {
         message: "Name is required",
     }),
+}).superRefine(({ confirmPassword, password }, ctx) => {
+    if (confirmPassword !== password) {
+        ctx.addIssue({
+            code: "custom",
+            message: "The passwords did not match",
+            path: ["confirmPassword"],
+        });
+    }
 });
