@@ -201,7 +201,7 @@ export default function LoginPage() {
                 <div className="mt-8 text-center">
                     <Link href="/" className="text-[10px] font-black text-slate-500 uppercase tracking-widest hover:text-primary transition-colors flex items-center justify-center gap-2">
                         <span className="material-symbols-outlined text-[16px]">west</span>
-                        Return to Headquarters
+                        Return to Homepage
                     </Link>
                 </div>
             </motion.div>
