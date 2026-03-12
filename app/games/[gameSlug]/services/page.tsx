@@ -77,7 +77,7 @@ export default async function GameServicesPage({ params }: { params: Promise<{ g
                 </div>
 
                 {/* Cinematic Hero Section */}
-                <section className="relative mb-20 rounded-2xl overflow-hidden w-full border border-white/5">
+                <section className="relative mb-12 rounded-2xl overflow-hidden w-full border border-white/5">
                     <div className="relative flex min-h-[500px] flex-col items-center justify-center p-12 text-center bg-cover bg-center group"
                         style={{ backgroundImage: `linear-gradient(to bottom, rgba(11, 11, 11, 0.6), rgba(11, 11, 11, 0.98)), url('${game.bgImage}')` }}>
 

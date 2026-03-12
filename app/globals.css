@@ -149,11 +149,11 @@ body {
 .hero-title {
   line-height: 0.9 !important;
   letter-spacing: -0.05em !important;
-  font-family: var(--font-space-grotesk), sans-serif;
+  font-family: var(--font-cairo), sans-serif;
 }
 
 .hero-gradient-text {
-  background: linear-gradient(135deg, #fff 40%, var(--primary) 100%) !important;
+  background: linear-gradient(135deg, #FFFFFF 0%, #FFFFFF 25%, #FF2B49 65%, #AF1225 100%) !important;
   -webkit-background-clip: text !important;
   background-clip: text !important;
   color: transparent !important;

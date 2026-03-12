@@ -107,7 +107,6 @@ export function ServicePage({ game, tagline, description, stats, services }: Ser
                                     </div>
                                     <div className="flex flex-col items-end">
                                         <span className="text-2xl font-black text-white tracking-tighter font-cairo">{service.priceLabel}</span>
-                                        <span className="text-[9px] font-black text-slate-600 uppercase tracking-widest">Base Allocation</span>
                                     </div>
                                 </div>
 
