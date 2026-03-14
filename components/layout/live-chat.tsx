@@ -23,8 +23,20 @@ export function LiveChat() {
     const [messages, setMessages] = useState<Message[]>([])
 
     const scrollRef = useRef<HTMLDivElement>(null)
+    const audioRef = useRef<HTMLAudioElement | null>(null)
 
-    // Resume session if exists
+    useEffect(() => {
+        audioRef.current = new Audio("https://assets.mixkit.co/active_storage/sfx/2354/2354-preview.mp3")
+    }, [])
+
+    const playNotification = () => {
+        if (audioRef.current) {
+            audioRef.current.currentTime = 0
+            audioRef.current.play().catch(() => { })
+        }
+    }
+
+    // Initialize or resume session
     const initSession = async () => {
         try {
             const res = await fetch("/api/chat/session", {
@@ -38,8 +50,9 @@ export function LiveChat() {
             })
             const data = await res.json()
             setChatSession(data)
-            setMessages(data.messages || [])
-            if (data.messages?.length > 0) {
+            const initialMessages = data.messages || []
+            setMessages(initialMessages)
+            if (initialMessages.length > 0) {
                 setChatState("chat")
             }
         } catch (err) {
@@ -61,14 +74,22 @@ export function LiveChat() {
                 try {
                     const res = await fetch(`/api/chat/session/${chatSession.id}`)
                     const data = await res.json()
-                    setMessages(data.messages || [])
+                    const newMessages = data.messages || []
+
+                    if (newMessages.length > messages.length) {
+                        const lastMsg = newMessages[newMessages.length - 1]
+                        if (lastMsg.isAdmin) {
+                            playNotification()
+                        }
+                        setMessages(newMessages)
+                    }
                 } catch (err) {
                     console.error("Poll Error:", err)
                 }
             }, 3000)
         }
         return () => clearInterval(interval)
-    }, [isOpen, chatSession?.id, chatState])
+    }, [isOpen, chatSession?.id, chatState, messages.length])
 
     useEffect(() => {
         if (scrollRef.current) {
@@ -221,8 +242,8 @@ export function LiveChat() {
                                                     <div className={`max-w-[85%] ${!msg.isAdmin ? 'items-end' : 'items-start'} flex flex-col gap-2`}>
                                                         <div
                                                             className={`p-4 rounded-3xl text-[13px] font-medium leading-relaxed ${!msg.isAdmin
-                                                                    ? "bg-linear-to-br from-primary to-primary-dark text-white rounded-tr-none shadow-lg shadow-primary/20"
-                                                                    : "bg-white/5 text-slate-200 border border-white/10 rounded-tl-none"
+                                                                ? "bg-linear-to-br from-primary to-primary-dark text-white rounded-tr-none shadow-lg shadow-primary/20"
+                                                                : "bg-white/5 text-slate-200 border border-white/10 rounded-tl-none"
                                                                 }`}
                                                         >
                                                             {msg.text}

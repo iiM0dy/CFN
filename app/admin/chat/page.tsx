@@ -29,12 +29,49 @@ export default function AdminChatPage() {
     const [reply, setReply] = useState("")
     const [isLoading, setIsLoading] = useState(true)
     const scrollRef = useRef<HTMLDivElement>(null)
+    const audioRef = useRef<HTMLAudioElement | null>(null)
+
+    useEffect(() => {
+        audioRef.current = new Audio("https://assets.mixkit.co/active_storage/sfx/2354/2354-preview.mp3")
+    }, [])
+
+    const playNotification = () => {
+        if (audioRef.current) {
+            audioRef.current.currentTime = 0
+            audioRef.current.play().catch(() => { })
+        }
+    }
 
     // Fetch all sessions
     const fetchSessions = async () => {
         try {
             const res = await fetch("/api/chat/sessions")
             const data = await res.json()
+
+            // Check for new messages from users in any session
+            const hasNewUserMessage = data.some((s: ChatSession) => {
+                const existing = sessions.find(es => es.id === s.id)
+                if (!existing) return s.messages.some(m => !m.isAdmin)
+                return s.messages.length > existing.messages.length && s.messages[0] && !s.messages[0].isAdmin
+            })
+
+            // Note: In sessions list API we only take(1) message, so we check that one
+            const currentTotalMessages = sessions.reduce((acc, s) => acc + (s.messages[0] ? 1 : 0), 0)
+            const newTotalMessages = data.reduce((acc: number, s: ChatSession) => acc + (s.messages[0] ? 1 : 0), 0)
+
+            if (newTotalMessages > currentTotalMessages || hasNewUserMessage) {
+                // Check if the most recent message in any session is from a user and it's new
+                data.forEach((s: ChatSession) => {
+                    const oldS = sessions.find(os => os.id === s.id)
+                    const latestMsg = s.messages[0]
+                    if (latestMsg && !latestMsg.isAdmin) {
+                        if (!oldS || (oldS.messages[0]?.id !== latestMsg.id)) {
+                            playNotification()
+                        }
+                    }
+                })
+            }
+
             setSessions(data)
 
             // If we have a selected session, update its messages

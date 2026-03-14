@@ -11,6 +11,7 @@ export default auth((req) => {
     const isApiAuthRoute = nextUrl.pathname.startsWith('/api/auth')
     const isPublicRoute = nextUrl.pathname === '/' || nextUrl.pathname.startsWith('/services') || nextUrl.pathname.startsWith('/games')
 
+    // @ts-ignore
     console.log(`Middleware: ${nextUrl.pathname} | LoggedIn: ${isLoggedIn} | Role: ${req.auth?.user?.role}`)
 
     // Admin Route Protection
