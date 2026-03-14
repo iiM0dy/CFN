@@ -173,6 +173,7 @@ model ServiceOptionValue {
   label         String // e.g., "Iron", "Bronze", "Silver"
   value         String // Internal value
   priceModifier Decimal @default(0) // Additional price for this option
+  isDefault     Boolean @default(false)
   order         Int     @default(0) // Display order
 
   createdAt DateTime @default(now())
@@ -267,4 +268,47 @@ model ServiceOrder {
 
   @@index([userId])
   @@index([status])
+}
+
+model BlogPost {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  excerpt     String?
+  content     String   @db.Text
+  image       String?
+  category    String?
+  author      String?
+  publishedAt DateTime @default(now())
+
+  isActive Boolean @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([slug])
+  @@index([isActive])
+}
+
+model ChatSession {
+  id        String        @id @default(cuid())
+  userId    String?
+  userEmail String?
+  userName  String?
+  status    String        @default("active") // active, closed
+  messages  ChatMessage[]
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+
+  @@index([status])
+}
+
+model ChatMessage {
+  id        String      @id @default(cuid())
+  sessionId String
+  session   ChatSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  text      String      @db.Text
+  sender    String
+  isAdmin   Boolean     @default(false)
+  createdAt DateTime    @default(now())
 }

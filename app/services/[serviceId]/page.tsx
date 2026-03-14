@@ -10,12 +10,14 @@ import {
     Gamepad2, ArrowRight, CheckCircle2, Rocket, TrendingUp, Heart
 } from "lucide-react";
 import { useCurrency } from "@/context/currency-context";
+import { motion } from "framer-motion";
 
 interface ServiceOptionValue {
     id: string;
     label: string;
     value: string;
     priceModifier: number;
+    isDefault: boolean;
     order: number;
 }
 
@@ -122,20 +124,52 @@ export default function ServiceDetailsPage() {
                     });
                     setMinPrice(bPrice + minAddPrice);
 
-                    // Pre-select cheapest variants for required options
+                    // Set initial selections based on isDefault, cheapest for required, or first option
                     const initialSelections: Record<string, any> = {};
                     data.options?.forEach((opt: any) => {
-                        if (opt.required && opt.values && opt.values.length > 0) {
-                            const sortedValues = [...opt.values].sort((a, b) => Number(a.priceModifier) - Number(b.priceModifier));
-                            const cheapestValue = sortedValues[0];
+                        const sortedValues = [...(opt.values || [])].sort((a: any, b: any) => Number(a.order) - Number(b.order));
+                        const defaultValues = sortedValues.filter((v: any) => v.isDefault).map((v: any) => v.value);
 
-                            if (opt.type === 'select' || opt.type === 'dropdown') {
-                                initialSelections[opt.id] = cheapestValue.value;
-                            } else if (opt.type === 'checkbox' || opt.type === 'checkboxes') {
-                                initialSelections[opt.id] = [cheapestValue.value];
+                        if (opt.type === 'range') {
+                            const isWorkshop = data.name === "Workshop Leveling";
+                            let desiredValue = opt.maxValue || opt.minValue || 0;
+
+                            if (isWorkshop) {
+                                if (opt.label === "Level range (Scrappy)") desiredValue = 2;
+                                else if (opt.label === "Level range (Specific bench)") desiredValue = 1;
                             }
-                        } else if (opt.type === 'number' || opt.type === 'range') {
+
+                            initialSelections[opt.id] = {
+                                current: Number(opt.minValue || 0),
+                                desired: Number(desiredValue)
+                            };
+                        } else if (opt.type === 'number') {
                             initialSelections[opt.id] = opt.minValue || 0;
+                        } else if (defaultValues.length > 0) {
+                            // Respect isDefault if present
+                            if (opt.type === 'select' || opt.type === 'dropdown') {
+                                initialSelections[opt.id] = defaultValues[0];
+                            } else if (opt.type === 'checkbox' || opt.type === 'checkboxes') {
+                                initialSelections[opt.id] = defaultValues;
+                            }
+                        } else if (sortedValues.length > 0) {
+                            // Fallback: For select/dropdown or if it's the "Stages" option, pick the first one
+                            if (opt.type === 'select' || opt.type === 'dropdown' || opt.label === 'Stages' || opt.label === 'Boosting options') {
+                                const firstValue = sortedValues[0].value;
+                                if (opt.type === 'checkbox' || opt.type === 'checkboxes') {
+                                    initialSelections[opt.id] = [firstValue];
+                                } else {
+                                    initialSelections[opt.id] = firstValue;
+                                }
+                            } else if (opt.required) {
+                                // Fallback for other required options: cheapest
+                                const cheapestValue = [...opt.values].sort((a: any, b: any) => Number(a.priceModifier) - Number(b.priceModifier))[0];
+                                if (opt.type === 'checkbox' || opt.type === 'checkboxes') {
+                                    initialSelections[opt.id] = [cheapestValue.value];
+                                } else {
+                                    initialSelections[opt.id] = cheapestValue.value;
+                                }
+                            }
                         }
                     });
                     setSelectedOptions(initialSelections);
@@ -201,6 +235,19 @@ export default function ServiceDetailsPage() {
         }
     };
 
+    const isOptionVisible = (option: ServiceOption) => {
+        if (service?.name === "Workshop Leveling") {
+            const whatToLevelOption = service.options?.find(o => o.label === "What should we level up?");
+            const whatToLevelValue = whatToLevelOption ? selectedOptions[whatToLevelOption.id] : null;
+
+            if (option.label === "Level range (Scrappy)") return whatToLevelValue === "scrappy";
+            if (option.label === "Level range (Specific bench)") return whatToLevelValue === "specific_bench";
+            if (option.label === "Bench") return whatToLevelValue === "specific_bench";
+            if (option.label === "Multiple choice (0 to max)" || option.label === "Options") return whatToLevelValue === "zero_to_max";
+        }
+        return true;
+    };
+
     // Calculate total price
     const calculateTotalPrice = () => {
         let price = 0;
@@ -222,15 +269,34 @@ export default function ServiceDetailsPage() {
 
             // Add price modifiers from selected options
             service?.options?.forEach(option => {
+                const isVisible = isOptionVisible(option);
+                if (!isVisible) return;
+
                 const selected = selectedOptions[option.id];
-                if (selected) {
+                if (selected !== undefined && selected !== null) {
                     if (Array.isArray(selected)) {
                         // Multiple selections (checkbox)
                         selected.forEach(val => {
                             const optionValue = option.values.find(v => v.value === val);
                             if (optionValue) price += Number(optionValue.priceModifier);
                         });
-                    } else if (option.type !== 'number' && option.type !== 'range') {
+                    } else if (option.type === 'range') {
+                        // Range selection (current to desired)
+                        const current = Number(selected.current ?? option.minValue ?? 0);
+                        const desired = Number(selected.desired ?? option.maxValue ?? 100);
+                        const levels = Math.max(0, desired - current);
+
+                        const pricePerLevelValue = option.values.find(v => v.value === 'price_per_level');
+                        let pricePerLevel = 0;
+                        if (pricePerLevelValue) {
+                            pricePerLevel = Number(pricePerLevelValue.priceModifier);
+                        } else if (service?.name === "Workshop Leveling") {
+                            if (option.label.includes("Scrappy")) pricePerLevel = 3.0;
+                            else if (option.label.includes("Specific bench")) pricePerLevel = 3.0;
+                        }
+
+                        price += levels * pricePerLevel;
+                    } else if (option.type !== 'number') {
                         // Single selection
                         const optionValue = option.values.find(v => v.value === selected);
                         if (optionValue) price += Number(optionValue.priceModifier);
@@ -531,283 +597,419 @@ export default function ServiceDetailsPage() {
                             )}
 
                             {/* Dynamic Options from Database */}
-                            {service.options?.sort((a, b) => a.order - b.order).map((option, index) => (
-                                <section key={option.id}>
-                                    <h3 className="text-lg font-bold text-white uppercase tracking-wide mb-4 flex items-center gap-2">
-                                        <span className="w-1 h-5 bg-primary rounded-full"></span>
-                                        {index + (service.platforms?.length > 0 ? 2 : 1)}. {option.label}
-                                    </h3>
+                            {(() => {
+                                const filteredOptions = service.options?.sort((a, b) => a.order - b.order).filter(isOptionVisible) || [];
+                                return filteredOptions.map((option, index) => (
+                                    <section key={option.id}>
+                                        <h3 className="text-lg font-bold text-white uppercase tracking-wide mb-4 flex items-center gap-2">
+                                            <span className="w-1 h-5 bg-primary rounded-full"></span>
+                                            {index + (service.platforms?.length > 0 ? 2 : 1)}. {option.label}
+                                        </h3>
 
-                                    {/* Select Type */}
-                                    {option.type === 'select' && (
-                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                            {option.values.sort((a, b) => a.order - b.order).map((value) => (
-                                                <label key={value.id} className="cursor-pointer relative">
-                                                    <input
-                                                        type="radio"
-                                                        name={option.id}
-                                                        value={value.value}
-                                                        checked={selectedOptions[option.id] === value.value}
-                                                        onChange={(e) => setSelectedOptions({
-                                                            ...selectedOptions,
-                                                            [option.id]: e.target.value
-                                                        })}
-                                                        className="peer sr-only"
-                                                        required={option.required}
-                                                    />
-                                                    <div className="p-5 rounded-xl border border-[#2a1a1c] bg-[#141414] hover:bg-[#1c1c1c] transition-all h-full flex flex-col justify-between peer-checked:border-primary peer-checked:bg-primary/10">
-                                                        <div className="flex justify-between items-start mb-2">
-                                                            <h4 className="font-bold text-white text-base">{value.label}</h4>
-                                                            {value.priceModifier > 0 ? (
-                                                                <span className="text-xs bg-primary/10 text-primary border border-primary/20 px-2 py-1 rounded">
-                                                                    +{formatPrice(value.priceModifier)}
-                                                                </span>
-                                                            ) : (
-                                                                <span className="text-xs bg-gray-800 text-gray-400 px-2 py-1 rounded">Free</span>
-                                                            )}
+                                        {/* Select Type */}
+                                        {option.type === 'select' && (
+                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                                {option.values.sort((a, b) => a.order - b.order).map((value) => (
+                                                    <label key={value.id} className="cursor-pointer relative">
+                                                        <input
+                                                            type="radio"
+                                                            name={option.id}
+                                                            value={value.value}
+                                                            checked={selectedOptions[option.id] === value.value}
+                                                            onChange={(e) => setSelectedOptions({
+                                                                ...selectedOptions,
+                                                                [option.id]: e.target.value
+                                                            })}
+                                                            className="peer sr-only"
+                                                            required={option.required}
+                                                        />
+                                                        <div className="p-5 rounded-xl border border-[#2a1a1c] bg-[#141414] hover:bg-[#1c1c1c] transition-all h-full flex flex-col justify-between peer-checked:border-primary peer-checked:bg-primary/10">
+                                                            <div className="flex justify-between items-start mb-2">
+                                                                <h4 className="font-bold text-white text-base">{value.label}</h4>
+                                                                {value.priceModifier > 0 ? (
+                                                                    <span className="text-xs bg-primary/10 text-primary border border-primary/20 px-2 py-1 rounded">
+                                                                        +{formatPrice(value.priceModifier)}
+                                                                    </span>
+                                                                ) : (
+                                                                    <span className="text-xs bg-gray-800 text-gray-400 px-2 py-1 rounded">Free</span>
+                                                                )}
+                                                            </div>
+                                                        </div>
+                                                    </label>
+                                                ))}
+                                            </div>
+                                        )}
+
+                                        {/* Checkboxes Type - Inline checkbox list */}
+                                        {option.type === 'checkboxes' && (
+                                            <div className="grid grid-cols-1 gap-3">
+                                                {option.values.sort((a, b) => a.order - b.order).map((value) => (
+                                                    <label
+                                                        key={value.id}
+                                                        className="flex items-center justify-between p-4 rounded-xl border border-[#2a1a1c] bg-[#141414] hover:bg-[#1c1c1c] cursor-pointer transition-all has-checked:border-primary has-checked:bg-primary/10"
+                                                    >
+                                                        <div className="flex items-center gap-3">
+                                                            <input
+                                                                type="checkbox"
+                                                                value={value.value}
+                                                                checked={(selectedOptions[option.id] || []).includes(value.value)}
+                                                                onChange={(e) => {
+                                                                    const current = selectedOptions[option.id] || [];
+                                                                    setSelectedOptions({
+                                                                        ...selectedOptions,
+                                                                        [option.id]: e.target.checked
+                                                                            ? [...current, value.value]
+                                                                            : current.filter((v: string) => v !== value.value)
+                                                                    });
+                                                                }}
+                                                                className="w-5 h-5 rounded border-[#2a1a1c] bg-[#0B0B0B] text-primary focus:ring-primary focus:ring-offset-0"
+                                                            />
+                                                            <span className="text-sm text-gray-300 font-medium">{value.label}</span>
+                                                        </div>
+                                                        {value.priceModifier > 0 && (
+                                                            <span className="text-sm font-bold text-primary">+{formatPrice(value.priceModifier)}</span>
+                                                        )}
+                                                    </label>
+                                                ))}
+                                            </div>
+                                        )}
+
+                                        {/* Dropdown Type - Single-select Dropdown */}
+                                        {option.type === 'dropdown' && (
+                                            <div className="relative dropdown-container">
+                                                <button
+                                                    type="button"
+                                                    onClick={() => {
+                                                        const dropdown = document.getElementById(`dropdown-${option.id}`);
+                                                        if (dropdown) {
+                                                            dropdown.classList.toggle('hidden');
+                                                        }
+                                                    }}
+                                                    className="w-full bg-[#1c1c1c] border border-[#2a1a1c] rounded-lg p-4 flex items-center justify-between text-gray-300 hover:border-primary/50 transition-colors"
+                                                >
+                                                    <span className="font-medium">
+                                                        {selectedOptions[option.id]
+                                                            ? option.values.find(v => v.value === selectedOptions[option.id])?.label
+                                                            : `Choose ${option.label.toLowerCase()}...`}
+                                                    </span>
+                                                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                                    </svg>
+                                                </button>
+
+                                                {/* Dropdown Menu */}
+                                                <div
+                                                    id={`dropdown-${option.id}`}
+                                                    className="hidden absolute z-10 w-full mt-2 bg-[#1c1c1c] border border-[#2a1a1c] rounded-lg shadow-2xl max-h-64 overflow-y-auto"
+                                                >
+                                                    <div className="p-2">
+                                                        {option.values.sort((a, b) => a.order - b.order).map((value) => (
+                                                            <button
+                                                                key={value.id}
+                                                                type="button"
+                                                                onClick={() => {
+                                                                    setSelectedOptions({
+                                                                        ...selectedOptions,
+                                                                        [option.id]: value.value
+                                                                    });
+                                                                    const dropdown = document.getElementById(`dropdown-${option.id}`);
+                                                                    if (dropdown) {
+                                                                        dropdown.classList.add('hidden');
+                                                                    }
+                                                                }}
+                                                                className={`w-full flex items-center justify-between p-3 rounded-lg hover:bg-[#252525] cursor-pointer transition-colors text-left ${selectedOptions[option.id] === value.value ? 'bg-primary/10 border border-primary/20' : ''
+                                                                    }`}
+                                                            >
+                                                                <span className="text-sm text-gray-300 font-medium">{value.label}</span>
+                                                                {value.priceModifier > 0 && (
+                                                                    <span className="text-sm font-bold text-primary">+{formatPrice(value.priceModifier)}</span>
+                                                                )}
+                                                            </button>
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        )}
+
+                                        {/* Checkbox Type - Multi-select Dropdown */}
+                                        {option.type === 'checkbox' && (
+                                            <div className="relative dropdown-container">
+                                                {/* Dropdown Button */}
+                                                <button
+                                                    type="button"
+                                                    onClick={() => {
+                                                        const dropdown = document.getElementById(`dropdown-${option.id}`);
+                                                        if (dropdown) {
+                                                            dropdown.classList.toggle('hidden');
+                                                        }
+                                                    }}
+                                                    className="w-full bg-[#1c1c1c] border border-[#2a1a1c] rounded-lg p-4 flex items-center justify-between text-gray-300 hover:border-primary/50 transition-colors"
+                                                >
+                                                    <span className="font-medium">
+                                                        {(selectedOptions[option.id] || []).length > 0
+                                                            ? `${(selectedOptions[option.id] || []).length} ${option.label.toLowerCase()} selected`
+                                                            : `Choose ${option.label.toLowerCase()}...`}
+                                                    </span>
+                                                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                                    </svg>
+                                                </button>
+
+                                                {/* Dropdown Menu */}
+                                                <div
+                                                    id={`dropdown-${option.id}`}
+                                                    className="hidden absolute z-10 w-full mt-2 bg-[#1c1c1c] border border-[#2a1a1c] rounded-lg shadow-2xl max-h-64 overflow-y-auto"
+                                                >
+                                                    <div className="p-2">
+                                                        {option.values.sort((a, b) => a.order - b.order).map((value) => (
+                                                            <label
+                                                                key={value.id}
+                                                                className="flex items-center justify-between p-3 rounded-lg hover:bg-[#252525] cursor-pointer transition-colors"
+                                                            >
+                                                                <div className="flex items-center gap-3">
+                                                                    <input
+                                                                        type="checkbox"
+                                                                        value={value.value}
+                                                                        checked={(selectedOptions[option.id] || []).includes(value.value)}
+                                                                        onChange={(e) => {
+                                                                            const current = selectedOptions[option.id] || [];
+                                                                            setSelectedOptions({
+                                                                                ...selectedOptions,
+                                                                                [option.id]: e.target.checked
+                                                                                    ? [...current, value.value]
+                                                                                    : current.filter((v: string) => v !== value.value)
+                                                                            });
+                                                                        }}
+                                                                        className="w-5 h-5 rounded border-[#2a1a1c] bg-[#141414] text-primary focus:ring-primary focus:ring-offset-0"
+                                                                    />
+                                                                    <span className="text-sm text-gray-300 font-medium">{value.label}</span>
+                                                                </div>
+                                                                {value.priceModifier > 0 && (
+                                                                    <span className="text-sm font-bold text-primary">+{formatPrice(value.priceModifier)}</span>
+                                                                )}
+                                                            </label>
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        )}
+
+                                        {/* Range Type */}
+                                        {option.type === 'range' && (
+                                            <div className="space-y-8 p-6 rounded-2xl bg-white/2 border border-white/5">
+                                                <div className="flex items-center gap-4">
+                                                    <div className="flex-1">
+                                                        <label className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 mb-3 block">Current Level</label>
+                                                        <div className="bg-[#0B0B0B] border border-white/10 rounded-xl p-3 focus-within:border-primary/50 transition-colors">
+                                                            <input
+                                                                type="number"
+                                                                min={option.minValue || 0}
+                                                                max={(selectedOptions[option.id]?.desired ?? option.maxValue ?? 100) - 1}
+                                                                value={selectedOptions[option.id]?.current ?? option.minValue ?? 0}
+                                                                onChange={(e) => {
+                                                                    const rawVal = Number(e.target.value);
+                                                                    const min = option.minValue || 0;
+                                                                    const max = option.maxValue || 100;
+                                                                    const boundedDesired = selectedOptions[option.id]?.desired ?? max;
+
+                                                                    // Global clamp then relation clamp
+                                                                    let val = Math.max(min, Math.min(rawVal, max));
+                                                                    val = Math.min(val, boundedDesired - 1);
+
+                                                                    setSelectedOptions({
+                                                                        ...selectedOptions,
+                                                                        [option.id]: { ...selectedOptions[option.id], current: val }
+                                                                    });
+                                                                }}
+                                                                className="bg-transparent border-none text-white font-bold w-full focus:outline-none text-center"
+                                                            />
                                                         </div>
                                                     </div>
-                                                </label>
-                                            ))}
-                                        </div>
-                                    )}
-
-                                    {/* Checkboxes Type - Inline checkbox list */}
-                                    {option.type === 'checkboxes' && (
-                                        <div className="grid grid-cols-1 gap-3">
-                                            {option.values.sort((a, b) => a.order - b.order).map((value) => (
-                                                <label
-                                                    key={value.id}
-                                                    className="flex items-center justify-between p-4 rounded-xl border border-[#2a1a1c] bg-[#141414] hover:bg-[#1c1c1c] cursor-pointer transition-all has-checked:border-primary has-checked:bg-primary/10"
-                                                >
-                                                    <div className="flex items-center gap-3">
-                                                        <input
-                                                            type="checkbox"
-                                                            value={value.value}
-                                                            checked={(selectedOptions[option.id] || []).includes(value.value)}
-                                                            onChange={(e) => {
-                                                                const current = selectedOptions[option.id] || [];
-                                                                setSelectedOptions({
-                                                                    ...selectedOptions,
-                                                                    [option.id]: e.target.checked
-                                                                        ? [...current, value.value]
-                                                                        : current.filter((v: string) => v !== value.value)
-                                                                });
-                                                            }}
-                                                            className="w-5 h-5 rounded border-[#2a1a1c] bg-[#0B0B0B] text-primary focus:ring-primary focus:ring-offset-0"
-                                                        />
-                                                        <span className="text-sm text-gray-300 font-medium">{value.label}</span>
+                                                    <div className="pt-8 shrink-0">
+                                                        <span className="text-white/20 font-black">-</span>
                                                     </div>
-                                                    {value.priceModifier > 0 && (
-                                                        <span className="text-sm font-bold text-primary">+{formatPrice(value.priceModifier)}</span>
-                                                    )}
-                                                </label>
-                                            ))}
-                                        </div>
-                                    )}
+                                                    <div className="flex-1">
+                                                        <label className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 mb-3 block">Desired Level</label>
+                                                        <div className="bg-[#0B0B0B] border border-white/10 rounded-xl p-3 focus-within:border-primary/50 transition-colors">
+                                                            <input
+                                                                type="number"
+                                                                min={(selectedOptions[option.id]?.current ?? option.minValue ?? 0) + 1}
+                                                                max={option.maxValue || 100}
+                                                                value={selectedOptions[option.id]?.desired ?? option.maxValue ?? 100}
+                                                                onChange={(e) => {
+                                                                    const rawVal = Number(e.target.value);
+                                                                    const min = option.minValue || 0;
+                                                                    const max = option.maxValue || 100;
+                                                                    const boundedCurrent = selectedOptions[option.id]?.current ?? min;
 
-                                    {/* Dropdown Type - Single-select Dropdown */}
-                                    {option.type === 'dropdown' && (
-                                        <div className="relative dropdown-container">
-                                            <button
-                                                type="button"
-                                                onClick={() => {
-                                                    const dropdown = document.getElementById(`dropdown-${option.id}`);
-                                                    if (dropdown) {
-                                                        dropdown.classList.toggle('hidden');
-                                                    }
-                                                }}
-                                                className="w-full bg-[#1c1c1c] border border-[#2a1a1c] rounded-lg p-4 flex items-center justify-between text-gray-300 hover:border-primary/50 transition-colors"
-                                            >
-                                                <span className="font-medium">
-                                                    {selectedOptions[option.id]
-                                                        ? option.values.find(v => v.value === selectedOptions[option.id])?.label
-                                                        : `Choose ${option.label.toLowerCase()}...`}
-                                                </span>
-                                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                                                </svg>
-                                            </button>
+                                                                    // Global clamp then relation clamp
+                                                                    let val = Math.max(min, Math.min(rawVal, max));
+                                                                    val = Math.max(val, boundedCurrent + 1);
 
-                                            {/* Dropdown Menu */}
-                                            <div
-                                                id={`dropdown-${option.id}`}
-                                                className="hidden absolute z-10 w-full mt-2 bg-[#1c1c1c] border border-[#2a1a1c] rounded-lg shadow-2xl max-h-64 overflow-y-auto"
-                                            >
-                                                <div className="p-2">
-                                                    {option.values.sort((a, b) => a.order - b.order).map((value) => (
-                                                        <button
-                                                            key={value.id}
-                                                            type="button"
-                                                            onClick={() => {
+                                                                    setSelectedOptions({
+                                                                        ...selectedOptions,
+                                                                        [option.id]: { ...selectedOptions[option.id], desired: val }
+                                                                    });
+                                                                }}
+                                                                className="bg-transparent border-none text-white font-bold w-full focus:outline-none text-center"
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div className="relative pt-6 px-2">
+                                                    <div className="h-1.5 bg-white/5 rounded-full relative group">
+                                                        {/* Native Range Inputs for Draggability (Invisible but functional) */}
+                                                        <input
+                                                            type="range"
+                                                            min={option.minValue || 0}
+                                                            max={option.maxValue || 100}
+                                                            value={selectedOptions[option.id]?.current ?? option.minValue ?? 0}
+                                                            onChange={(e) => {
+                                                                const val = Math.min(Number(e.target.value), (selectedOptions[option.id]?.desired ?? option.maxValue ?? 100) - 1);
                                                                 setSelectedOptions({
                                                                     ...selectedOptions,
-                                                                    [option.id]: value.value
+                                                                    [option.id]: { ...selectedOptions[option.id], current: val }
                                                                 });
-                                                                const dropdown = document.getElementById(`dropdown-${option.id}`);
-                                                                if (dropdown) {
-                                                                    dropdown.classList.add('hidden');
-                                                                }
                                                             }}
-                                                            className={`w-full flex items-center justify-between p-3 rounded-lg hover:bg-[#252525] cursor-pointer transition-colors text-left ${selectedOptions[option.id] === value.value ? 'bg-primary/10 border border-primary/20' : ''
-                                                                }`}
-                                                        >
-                                                            <span className="text-sm text-gray-300 font-medium">{value.label}</span>
-                                                            {value.priceModifier > 0 && (
-                                                                <span className="text-sm font-bold text-primary">+{formatPrice(value.priceModifier)}</span>
-                                                            )}
-                                                        </button>
-                                                    ))}
+                                                            className="absolute inset-x-0 -top-1 w-full h-4 bg-transparent appearance-none pointer-events-none cursor-pointer z-40 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:size-4 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-transparent [&::-webkit-slider-thumb]:border-none [&::-webkit-slider-thumb]:pointer-events-auto [&::-moz-range-thumb]:pointer-events-auto"
+                                                        />
+                                                        <input
+                                                            type="range"
+                                                            min={option.minValue || 0}
+                                                            max={option.maxValue || 100}
+                                                            value={selectedOptions[option.id]?.desired ?? option.maxValue ?? 100}
+                                                            onChange={(e) => {
+                                                                const val = Math.max(Number(e.target.value), (selectedOptions[option.id]?.current ?? option.minValue ?? 0) + 1);
+                                                                setSelectedOptions({
+                                                                    ...selectedOptions,
+                                                                    [option.id]: { ...selectedOptions[option.id], desired: val }
+                                                                });
+                                                            }}
+                                                            className="absolute inset-x-0 -top-1 w-full h-4 bg-transparent appearance-none pointer-events-none cursor-pointer z-30 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:size-4 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-transparent [&::-webkit-slider-thumb]:border-none [&::-webkit-slider-thumb]:pointer-events-auto [&::-moz-range-thumb]:pointer-events-auto"
+                                                        />
+
+                                                        {/* Custom Visual Track and Knobs (Stay synced with state) */}
+                                                        <div
+                                                            className="absolute h-full bg-primary rounded-full transition-all duration-300 pointer-events-none"
+                                                            style={{
+                                                                left: `${(((selectedOptions[option.id]?.current ?? option.minValue ?? 0) - (option.minValue || 0)) / ((option.maxValue || 100) - (option.minValue || 0))) * 100}%`,
+                                                                right: `${100 - (((selectedOptions[option.id]?.desired ?? option.maxValue ?? 100) - (option.minValue || 0)) / ((option.maxValue || 100) - (option.minValue || 0))) * 100}%`
+                                                            }}
+                                                        />
+
+                                                        {/* Current Level Knob */}
+                                                        <div
+                                                            className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 size-4 bg-white rounded-full border-2 border-primary shadow-[0_0_10px_rgba(175,18,37,0.4)] pointer-events-none z-10 transition-all duration-300"
+                                                            style={{
+                                                                left: `${(((selectedOptions[option.id]?.current ?? option.minValue ?? 0) - (option.minValue || 0)) / ((option.maxValue || 100) - (option.minValue || 0))) * 100}%`
+                                                            }}
+                                                        />
+
+                                                        {/* Desired Level Knob */}
+                                                        <div
+                                                            className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 size-4 bg-white rounded-full border-2 border-primary shadow-[0_0_10px_rgba(175,18,37,0.4)] pointer-events-none z-10 transition-all duration-300"
+                                                            style={{
+                                                                left: `${(((selectedOptions[option.id]?.desired ?? option.maxValue ?? 100) - (option.minValue || 0)) / ((option.maxValue || 100) - (option.minValue || 0))) * 100}%`
+                                                            }}
+                                                        />
+                                                    </div>
+
+                                                    {/* Scale */}
+                                                    <div className="flex justify-between mt-6 relative h-4 mx-2">
+                                                        {(() => {
+                                                            const min = option.minValue || 0;
+                                                            const max = option.maxValue || 100;
+                                                            const range = max - min;
+                                                            const marks = [];
+
+                                                            if (range <= 10) {
+                                                                // For small ranges, show every integer mark
+                                                                for (let i = min; i <= max; i++) {
+                                                                    marks.push(i);
+                                                                }
+                                                            } else {
+                                                                // For large ranges, show 5 evenly spaced marks
+                                                                for (let i = 0; i <= 4; i++) {
+                                                                    marks.push(Math.round(min + (range * i) / 4));
+                                                                }
+                                                            }
+
+                                                            return marks.map((level, idx) => {
+                                                                const isActive = level >= (selectedOptions[option.id]?.current ?? min) && level <= (selectedOptions[option.id]?.desired ?? max);
+                                                                return (
+                                                                    <div
+                                                                        key={idx}
+                                                                        className="absolute -translate-x-1/2 flex flex-col items-center gap-1"
+                                                                        style={{ left: `${((level - min) / range) * 100}%` }}
+                                                                    >
+                                                                        <span className={`text-[10px] font-black tracking-tighter transition-colors ${isActive ? 'text-primary' : 'text-slate-600'}`}>
+                                                                            {level}
+                                                                        </span>
+                                                                    </div>
+                                                                );
+                                                            });
+                                                        })()}
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    )}
+                                        )}
 
-                                    {/* Checkbox Type - Multi-select Dropdown */}
-                                    {option.type === 'checkbox' && (
-                                        <div className="relative dropdown-container">
-                                            {/* Dropdown Button */}
-                                            <button
-                                                type="button"
-                                                onClick={() => {
-                                                    const dropdown = document.getElementById(`dropdown-${option.id}`);
-                                                    if (dropdown) {
-                                                        dropdown.classList.toggle('hidden');
-                                                    }
-                                                }}
-                                                className="w-full bg-[#1c1c1c] border border-[#2a1a1c] rounded-lg p-4 flex items-center justify-between text-gray-300 hover:border-primary/50 transition-colors"
-                                            >
-                                                <span className="font-medium">
-                                                    {(selectedOptions[option.id] || []).length > 0
-                                                        ? `${(selectedOptions[option.id] || []).length} ${option.label.toLowerCase()} selected`
-                                                        : `Choose ${option.label.toLowerCase()}...`}
-                                                </span>
-                                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                                                </svg>
-                                            </button>
+                                        {/* Number Type - Input with Range Slider */}
+                                        {option.type === 'number' && (
+                                            <div className="space-y-4">
+                                                {/* Number Input */}
+                                                <div>
+                                                    <label className="text-sm text-gray-400 font-medium mb-2 block">{option.label}</label>
+                                                    <input
+                                                        type="number"
+                                                        min={option.minValue || 0}
+                                                        max={option.maxValue || 999999999}
+                                                        step={option.step || 1}
+                                                        value={selectedOptions[option.id] || option.minValue || 0}
+                                                        onChange={(e) => setSelectedOptions({
+                                                            ...selectedOptions,
+                                                            [option.id]: Number(e.target.value)
+                                                        })}
+                                                        className="w-full bg-[#1c1c1c] border border-[#2a1a1c] rounded-lg px-4 py-3 text-white text-lg font-bold focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary transition-colors"
+                                                    />
+                                                </div>
 
-                                            {/* Dropdown Menu */}
-                                            <div
-                                                id={`dropdown-${option.id}`}
-                                                className="hidden absolute z-10 w-full mt-2 bg-[#1c1c1c] border border-[#2a1a1c] rounded-lg shadow-2xl max-h-64 overflow-y-auto"
-                                            >
-                                                <div className="p-2">
-                                                    {option.values.sort((a, b) => a.order - b.order).map((value) => (
-                                                        <label
-                                                            key={value.id}
-                                                            className="flex items-center justify-between p-3 rounded-lg hover:bg-[#252525] cursor-pointer transition-colors"
-                                                        >
-                                                            <div className="flex items-center gap-3">
-                                                                <input
-                                                                    type="checkbox"
-                                                                    value={value.value}
-                                                                    checked={(selectedOptions[option.id] || []).includes(value.value)}
-                                                                    onChange={(e) => {
-                                                                        const current = selectedOptions[option.id] || [];
-                                                                        setSelectedOptions({
-                                                                            ...selectedOptions,
-                                                                            [option.id]: e.target.checked
-                                                                                ? [...current, value.value]
-                                                                                : current.filter((v: string) => v !== value.value)
-                                                                        });
-                                                                    }}
-                                                                    className="w-5 h-5 rounded border-[#2a1a1c] bg-[#141414] text-primary focus:ring-primary focus:ring-offset-0"
-                                                                />
-                                                                <span className="text-sm text-gray-300 font-medium">{value.label}</span>
-                                                            </div>
-                                                            {value.priceModifier > 0 && (
-                                                                <span className="text-sm font-bold text-primary">+{formatPrice(value.priceModifier)}</span>
-                                                            )}
-                                                        </label>
-                                                    ))}
+                                                {/* Range Slider */}
+                                                <div className="p-4 rounded-lg bg-[#1c1c1c] border border-[#2a1a1c]">
+                                                    <input
+                                                        type="range"
+                                                        min={option.minValue || 0}
+                                                        max={option.maxValue || 100}
+                                                        step={option.step || 1}
+                                                        value={selectedOptions[option.id] || option.minValue || 0}
+                                                        onChange={(e) => setSelectedOptions({
+                                                            ...selectedOptions,
+                                                            [option.id]: Number(e.target.value)
+                                                        })}
+                                                        className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer"
+                                                    />
+                                                    <div className="flex justify-between mt-3 text-[10px] text-gray-500 font-bold">
+                                                        <span>{(option.minValue || 0) >= 1000 ? `${((option.minValue || 0) / 1000).toFixed(0)}K` : option.minValue}</span>
+                                                        <span>{((option.minValue || 0) + ((option.maxValue || 0) - (option.minValue || 0)) * 0.2) >= 1000000 ? `${(((option.minValue || 0) + ((option.maxValue || 0) - (option.minValue || 0)) * 0.2) / 1000000).toFixed(2)}M` : `${(((option.minValue || 0) + ((option.maxValue || 0) - (option.minValue || 0)) * 0.2) / 1000).toFixed(0)}K`}</span>
+                                                        <span>{((option.minValue || 0) + ((option.maxValue || 0) - (option.minValue || 0)) * 0.4) >= 1000000 ? `${(((option.minValue || 0) + ((option.maxValue || 0) - (option.minValue || 0)) * 0.4) / 1000000).toFixed(2)}M` : `${(((option.minValue || 0) + ((option.maxValue || 0) - (option.minValue || 0)) * 0.4) / 1000).toFixed(0)}K`}</span>
+                                                        <span>{((option.minValue || 0) + ((option.maxValue || 0) - (option.minValue || 0)) * 0.6) >= 1000000 ? `${(((option.minValue || 0) + ((option.maxValue || 0) - (option.minValue || 0)) * 0.6) / 1000000).toFixed(2)}M` : `${(((option.minValue || 0) + ((option.maxValue || 0) - (option.minValue || 0)) * 0.6) / 1000).toFixed(0)}K`}</span>
+                                                        <span>{((option.minValue || 0) + ((option.maxValue || 0) - (option.minValue || 0)) * 0.8) >= 1000000 ? `${(((option.minValue || 0) + ((option.maxValue || 0) - (option.minValue || 0)) * 0.8) / 1000000).toFixed(2)}M` : `${(((option.minValue || 0) + ((option.maxValue || 0) - (option.minValue || 0)) * 0.8) / 1000).toFixed(0)}K`}</span>
+                                                        <span>{(option.maxValue || 0) >= 1000000 ? `${((option.maxValue || 0) / 1000000).toFixed(0)}M` : `${((option.maxValue || 0) / 1000).toFixed(0)}K`}</span>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    )}
-
-                                    {/* Range Type */}
-                                    {option.type === 'range' && (
-                                        <div className="p-4 rounded-lg bg-[#1c1c1c] border border-[#2a1a1c]">
-                                            <div className="flex justify-between items-end mb-6">
-                                                <label className="text-xs text-gray-400 font-bold uppercase tracking-tight">{option.label}</label>
-                                                <div className="text-2xl font-bold text-primary">
-                                                    {selectedOptions[option.id] || option.minValue || 0}
-                                                </div>
-                                            </div>
-                                            <input
-                                                type="range"
-                                                min={option.minValue || 0}
-                                                max={option.maxValue || 100}
-                                                step={option.step || 1}
-                                                value={selectedOptions[option.id] || option.minValue || 0}
-                                                onChange={(e) => setSelectedOptions({
-                                                    ...selectedOptions,
-                                                    [option.id]: Number(e.target.value)
-                                                })}
-                                                className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer"
-                                            />
-                                            <div className="flex justify-between mt-3 text-[10px] text-gray-500">
-                                                <span>{option.minValue}</span>
-                                                <span>{option.maxValue}</span>
-                                            </div>
-                                        </div>
-                                    )}
-
-                                    {/* Number Type - Input with Range Slider */}
-                                    {option.type === 'number' && (
-                                        <div className="space-y-4">
-                                            {/* Number Input */}
-                                            <div>
-                                                <label className="text-sm text-gray-400 font-medium mb-2 block">{option.label}</label>
-                                                <input
-                                                    type="number"
-                                                    min={option.minValue || 0}
-                                                    max={option.maxValue || 999999999}
-                                                    step={option.step || 1}
-                                                    value={selectedOptions[option.id] || option.minValue || 0}
-                                                    onChange={(e) => setSelectedOptions({
-                                                        ...selectedOptions,
-                                                        [option.id]: Number(e.target.value)
-                                                    })}
-                                                    className="w-full bg-[#1c1c1c] border border-[#2a1a1c] rounded-lg px-4 py-3 text-white text-lg font-bold focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary transition-colors"
-                                                />
-                                            </div>
-
-                                            {/* Range Slider */}
-                                            <div className="p-4 rounded-lg bg-[#1c1c1c] border border-[#2a1a1c]">
-                                                <input
-                                                    type="range"
-                                                    min={option.minValue || 0}
-                                                    max={option.maxValue || 100}
-                                                    step={option.step || 1}
-                                                    value={selectedOptions[option.id] || option.minValue || 0}
-                                                    onChange={(e) => setSelectedOptions({
-                                                        ...selectedOptions,
-                                                        [option.id]: Number(e.target.value)
-                                                    })}
-                                                    className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer"
-                                                />
-                                                <div className="flex justify-between mt-3 text-[10px] text-gray-500 font-bold">
-                                                    <span>{(option.minValue || 0) >= 1000 ? `${((option.minValue || 0) / 1000).toFixed(0)}K` : option.minValue}</span>
-                                                    <span>{((option.minValue || 0) + ((option.maxValue || 0) - (option.minValue || 0)) * 0.2) >= 1000000 ? `${(((option.minValue || 0) + ((option.maxValue || 0) - (option.minValue || 0)) * 0.2) / 1000000).toFixed(2)}M` : `${(((option.minValue || 0) + ((option.maxValue || 0) - (option.minValue || 0)) * 0.2) / 1000).toFixed(0)}K`}</span>
-                                                    <span>{((option.minValue || 0) + ((option.maxValue || 0) - (option.minValue || 0)) * 0.4) >= 1000000 ? `${(((option.minValue || 0) + ((option.maxValue || 0) - (option.minValue || 0)) * 0.4) / 1000000).toFixed(2)}M` : `${(((option.minValue || 0) + ((option.maxValue || 0) - (option.minValue || 0)) * 0.4) / 1000).toFixed(0)}K`}</span>
-                                                    <span>{((option.minValue || 0) + ((option.maxValue || 0) - (option.minValue || 0)) * 0.6) >= 1000000 ? `${(((option.minValue || 0) + ((option.maxValue || 0) - (option.minValue || 0)) * 0.6) / 1000000).toFixed(2)}M` : `${(((option.minValue || 0) + ((option.maxValue || 0) - (option.minValue || 0)) * 0.6) / 1000).toFixed(0)}K`}</span>
-                                                    <span>{((option.minValue || 0) + ((option.maxValue || 0) - (option.minValue || 0)) * 0.8) >= 1000000 ? `${(((option.minValue || 0) + ((option.maxValue || 0) - (option.minValue || 0)) * 0.8) / 1000000).toFixed(2)}M` : `${(((option.minValue || 0) + ((option.maxValue || 0) - (option.minValue || 0)) * 0.8) / 1000).toFixed(0)}K`}</span>
-                                                    <span>{(option.maxValue || 0) >= 1000000 ? `${((option.maxValue || 0) / 1000000).toFixed(0)}M` : `${((option.maxValue || 0) / 1000).toFixed(0)}K`}</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    )}
-                                </section>
-                            ))}
+                                        )}
+                                    </section>
+                                ));
+                            })()}
 
                             {/* Completion Method */}
                             {service.completionMethods && service.completionMethods.length > 0 && (
                                 <section>
                                     <h3 className="text-lg font-black text-white uppercase tracking-widest mb-6 flex items-center gap-3 font-cairo">
                                         <span className="w-1 h-6 bg-primary rounded-full"></span>
-                                        {(service.options?.length || 0) + (service.platforms?.length > 0 ? 2 : 1)}. Deployment Method
+                                        {(service.options?.filter(isOptionVisible).length || 0) + (service.platforms?.length > 0 ? 2 : 1)}. Deployment Method
                                     </h3>
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                         {service.completionMethods.map((method) => (
@@ -843,7 +1045,7 @@ export default function ServiceDetailsPage() {
                             <section>
                                 <h3 className="text-lg font-bold text-white uppercase tracking-wide mb-4 flex items-center gap-2">
                                     <span className="w-1 h-5 bg-primary rounded-full"></span>
-                                    {(service.options?.length || 0) + (service.platforms?.length > 0 ? 2 : 1) + (service.completionMethods?.length > 0 ? 1 : 0)}. Completion Speed <span className="text-sm text-gray-500 font-normal normal-case">(Optional)</span>
+                                    {(service.options?.filter(isOptionVisible).length || 0) + (service.platforms?.length > 0 ? 2 : 1) + (service.completionMethods?.length > 0 ? 1 : 0)}. Completion Speed <span className="text-sm text-gray-500 font-normal normal-case">(Optional)</span>
                                 </h3>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     {/* Express */}
@@ -1054,7 +1256,31 @@ export default function ServiceDetailsPage() {
                                     )}
                                     <div className="flex justify-between items-center text-[10px]">
                                         <span className="text-slate-500 font-bold uppercase tracking-widest italic">Resource Units</span>
-                                        <span className="text-white font-black uppercase tracking-tight">{quantity}</span>
+                                        <span className="text-white font-black uppercase tracking-tight">
+                                            {(() => {
+                                                // If Workshop Leveling, show level count as resource units
+                                                if (service?.name === "Workshop Leveling") {
+                                                    const whatToLevelOption = service.options?.find(o => o.label === "What should we level up?");
+                                                    const mode = whatToLevelOption ? selectedOptions[whatToLevelOption.id] : null;
+
+                                                    if (mode === "scrappy" || mode === "specific_bench") {
+                                                        const rangeOpt = service.options?.find(o =>
+                                                            o.label?.toLowerCase().includes("level range") &&
+                                                            isOptionVisible(o)
+                                                        );
+                                                        if (rangeOpt) {
+                                                            const range = selectedOptions[rangeOpt.id];
+                                                            if (range && typeof range === 'object') {
+                                                                const current = Number(range.current ?? rangeOpt.minValue ?? 0);
+                                                                const desired = Number(range.desired ?? rangeOpt.maxValue ?? 0);
+                                                                return Math.max(0, desired - current);
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                                return quantity;
+                                            })()}
+                                        </span>
                                     </div>
                                     {completionMethod && (
                                         <div className="flex justify-between items-center text-[10px]">

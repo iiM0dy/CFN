@@ -1,4 +1,7 @@
-import { auth } from "@/auth"
+import NextAuth from "next-auth"
+import authConfig from "./auth.config"
+
+const { auth } = NextAuth(authConfig)
 
 // @ts-ignore
 export default auth((req) => {
@@ -7,6 +10,8 @@ export default auth((req) => {
     const isAuthRoute = nextUrl.pathname.startsWith('/login')
     const isApiAuthRoute = nextUrl.pathname.startsWith('/api/auth')
     const isPublicRoute = nextUrl.pathname === '/' || nextUrl.pathname.startsWith('/services') || nextUrl.pathname.startsWith('/games')
+
+    console.log(`Middleware: ${nextUrl.pathname} | LoggedIn: ${isLoggedIn} | Role: ${req.auth?.user?.role}`)
 
     // Admin Route Protection
     if (nextUrl.pathname.startsWith('/admin')) {

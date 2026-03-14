@@ -62,6 +62,8 @@ export const metadata: Metadata = {
   },
 };
 
+import { LiveChat } from "@/components/layout/live-chat";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -79,6 +81,7 @@ export default function RootLayout({
         <Providers attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
           <Header />
           {children}
+          <LiveChat />
         </Providers>
       </body>
     </html>

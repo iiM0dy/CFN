@@ -1,0 +1,54 @@
+[
+  {
+    "id": "cmmpsdd5l0008rxu7rulby0pp",
+    "serviceId": "cmmpsdcdd0001rxu70vgbsx6v",
+    "label": "Level range (Scrappy)",
+    "type": "range",
+    "required": false,
+    "order": 2,
+    "minValue": 1,
+    "maxValue": 5,
+    "step": 1,
+    "createdAt": "2026-03-14T03:48:48.730Z",
+    "updatedAt": "2026-03-14T03:48:48.730Z",
+    "values": [
+      {
+        "id": "cmmptik870001eak42472j7np",
+        "optionId": "cmmpsdd5l0008rxu7rulby0pp",
+        "label": "Price Per Level",
+        "value": "price_per_level",
+        "priceModifier": "1",
+        "isDefault": false,
+        "order": 0,
+        "createdAt": "2026-03-14T04:20:50.791Z",
+        "updatedAt": "2026-03-14T04:20:50.791Z"
+      }
+    ]
+  },
+  {
+    "id": "cmmpsddf9000arxu7j6axmeuv",
+    "serviceId": "cmmpsdcdd0001rxu70vgbsx6v",
+    "label": "Level range (Specific bench)",
+    "type": "range",
+    "required": false,
+    "order": 3,
+    "minValue": 0,
+    "maxValue": 3,
+    "step": 1,
+    "createdAt": "2026-03-14T03:48:49.077Z",
+    "updatedAt": "2026-03-14T03:48:49.077Z",
+    "values": [
+      {
+        "id": "cmmptikie0003eak4oq0zlja8",
+        "optionId": "cmmpsddf9000arxu7j6axmeuv",
+        "label": "Price Per Level",
+        "value": "price_per_level",
+        "priceModifier": "3",
+        "isDefault": false,
+        "order": 0,
+        "createdAt": "2026-03-14T04:20:51.158Z",
+        "updatedAt": "2026-03-14T04:20:51.158Z"
+      }
+    ]
+  }
+]

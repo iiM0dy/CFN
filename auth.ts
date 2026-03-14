@@ -1,19 +1,18 @@
+
 import NextAuth from "next-auth"
-import Google from "next-auth/providers/google"
-import Facebook from "next-auth/providers/facebook"
-import Discord from "next-auth/providers/discord"
+import { PrismaAdapter } from "@auth/prisma-adapter"
+import { prisma } from "@/lib/prisma"
+import authConfig from "./auth.config"
 import Credentials from "next-auth/providers/credentials"
 import { LoginSchema } from "@/schemas"
 import bcrypt from "bcryptjs"
-import { PrismaAdapter } from "@auth/prisma-adapter"
-import { prisma } from "@/lib/prisma"
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   adapter: PrismaAdapter(prisma),
+  session: { strategy: "jwt" },
+  ...authConfig,
   providers: [
-    Google,
-    Facebook,
-    Discord,
+    ...authConfig.providers,
     Credentials({
       async authorize(credentials) {
         const validatedFields = LoginSchema.safeParse(credentials);
@@ -39,10 +38,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       }
     })
   ],
-  pages: {
-    signIn: "/login",
-  },
-  session: { strategy: "jwt" },
   callbacks: {
     async session({ session, token }) {
       if (token.sub && session.user) {

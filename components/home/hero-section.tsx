@@ -1,11 +1,36 @@
 "use client"
 
+import { useState, useEffect } from "react"
 import Link from "next/link"
 import Image from "next/image"
+import { motion } from "framer-motion"
 
 const heroImageUrl = "https://lh3.googleusercontent.com/aida-public/AB6AXuBRzeCjVHT9QvU5iuFnIQdzeOs-av89S_1lB5yoTaFyrc-EtsGzCvraXEA5GoRpwJAw-wLDTo1o05u_zG2Utbxxk10WUVXHJJze9XLxJkHOMM-YZhlQrlBPueceYHXeADva3CtmZ7iox5jx8C0D-hId2cucNZAO9py1RWkZ9pmA0QVlUvV8fB-kFjn6TKOgZQFA41xJsGQCeBytXOy77-TS0h5dzfkmCtWmbsW1SSB8DSdbylPqeTtdcDHHd87jCZvcMR9jtqPpu4NA"
 
 export function HeroSection() {
+    const [expertsCount, setExpertsCount] = useState(412)
+
+    useEffect(() => {
+        // Calculate a stable random number based on 15-minute intervals
+        const calculateExperts = () => {
+            const now = new Date().getTime()
+            const fifteenMinutes = 15 * 60 * 1000
+            const seed = Math.floor(now / fifteenMinutes)
+
+            // Simple deterministic "random" function based on the seed
+            const x = Math.sin(seed) * 10000
+            const randomValue = 400 + Math.floor((x - Math.floor(x)) * 201)
+
+            setExpertsCount(randomValue)
+        }
+
+        calculateExperts()
+
+        // Refresh every minute to check if we crossed a 15-min boundary
+        const interval = setInterval(calculateExperts, 60000)
+        return () => clearInterval(interval)
+    }, [])
+
     return (
         <header className="relative w-full min-h-[750px] flex items-center justify-center overflow-visible border-b border-white/5 bg-[#050505]">
             {/* Layered Backgrounds */}
@@ -60,7 +85,7 @@ export function HeroSection() {
                         </svg>
                     </Link>
                     <Link
-                        href="/services/valorant"
+                        href="/become-pro"
                         className="h-14 px-10 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-white font-black text-xs md:text-sm uppercase tracking-[0.25em] transition-all duration-300 backdrop-blur-md flex items-center justify-center"
                     >
                         Become a PRO
@@ -70,14 +95,14 @@ export function HeroSection() {
                 {/* Dashboard-style Live Stats */}
                 <div className="w-full max-w-5xl translate-y-10">
                     <div className="grid grid-cols-2 lg:grid-cols-4 gap-px bg-white/5 border border-white/5 rounded-2xl overflow-hidden bg-[#050505]/80 backdrop-blur-xl">
-                        <div className="p-6 bg-[#050505]/80 hover:bg-white/[0.02] transition-colors group flex flex-col items-center text-center gap-2">
+                        <div className="p-6 bg-[#050505]/80 hover:bg-white/2 transition-colors group flex flex-col items-center text-center gap-2">
                             <p className="text-[10px] font-bold text-gray-500 uppercase tracking-[0.3em] group-hover:text-primary transition-colors">
                                 Global Orders
                             </p>
                             <span className="text-2xl font-black text-white tracking-tighter">52,109</span>
                             <span className="text-[10px] text-emerald-500 font-bold">+12%</span>
                         </div>
-                        <div className="p-6 bg-[#050505]/80 hover:bg-white/[0.02] transition-colors group flex flex-col items-center text-center gap-2">
+                        <div className="p-6 bg-[#050505]/80 hover:bg-white/2 transition-colors group flex flex-col items-center text-center gap-2">
                             <p className="text-[10px] font-bold text-gray-500 uppercase tracking-[0.3em] group-hover:text-primary transition-colors">
                                 Success Rate
                             </p>
@@ -89,14 +114,21 @@ export function HeroSection() {
                                 Verified
                             </span>
                         </div>
-                        <div className="p-6 bg-[#050505]/80 hover:bg-white/[0.02] transition-colors group flex flex-col items-center text-center gap-2">
+                        <div className="p-6 bg-[#050505]/80 hover:bg-white/2 transition-colors group flex flex-col items-center text-center gap-2">
                             <p className="text-[10px] font-bold text-gray-500 uppercase tracking-[0.3em] group-hover:text-primary transition-colors">
                                 Elite Experts
                             </p>
-                            <span className="text-2xl font-black text-white tracking-tighter">412</span>
+                            <motion.span
+                                key={expertsCount}
+                                initial={{ opacity: 0, y: 5 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                className="text-2xl font-black text-white tracking-tighter"
+                            >
+                                {expertsCount}
+                            </motion.span>
                             <span className="text-[10px] text-primary font-bold">LIVE</span>
                         </div>
-                        <div className="p-6 bg-[#050505]/80 hover:bg-white/[0.02] transition-colors group flex flex-col items-center text-center gap-2">
+                        <div className="p-6 bg-[#050505]/80 hover:bg-white/2 transition-colors group flex flex-col items-center text-center gap-2">
                             <p className="text-[10px] font-bold text-gray-500 uppercase tracking-[0.3em] group-hover:text-primary transition-colors">
                                 Avg. Start Time
                             </p>

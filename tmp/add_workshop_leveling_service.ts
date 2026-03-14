@@ -1,0 +1,120 @@
+import { PrismaClient } from "@prisma/client"
+
+const prisma = new PrismaClient()
+
+async function main() {
+    // 1. Get ARC Raiders game ID
+    const game = await prisma.game.findFirst({
+        where: { slug: "arc-raiders" }
+    })
+
+    if (!game) {
+        console.error("Game 'arc-raiders' not found")
+        return
+    }
+
+    // 2. Create the Workshop Leveling Service
+    const service = await prisma.service.create({
+        data: {
+            name: "Workshop Leveling",
+            description: "Enhance your Workshop capabilities by leveling up your benches and Scrappy. From basic scrap processing to advanced gear manufacturing, we help you master all aspects of the Workshop.",
+            basePrice: 0.99,
+            gameId: game.id,
+            platforms: ["PC", "PlayStation", "Xbox"],
+            completionMethods: ["Self-play (in-raid trade)", "Piloted"],
+            maxQuantity: 1,
+            options: {
+                create: [
+                    {
+                        label: "What should we level up?",
+                        type: "select",
+                        required: true,
+                        order: 1,
+                        values: {
+                            create: [
+                                { label: "Scrappy", value: "scrappy", priceModifier: 0, order: 1, isDefault: true },
+                                { label: "Specific bench (custom range)", value: "specific_bench", priceModifier: 0, order: 2 },
+                                { label: "0 to max level (multiple choice)", value: "zero_to_max", priceModifier: 0, order: 3 }
+                            ]
+                        }
+                    },
+                    {
+                        label: "Level range (Scrappy)",
+                        type: "range",
+                        required: false,
+                        order: 2,
+                        minValue: 1,
+                        maxValue: 5,
+                        step: 1
+                    },
+                    {
+                        label: "Level range (Specific bench)",
+                        type: "range",
+                        required: false,
+                        order: 3,
+                        minValue: 0,
+                        maxValue: 3,
+                        step: 1
+                    },
+                    {
+                        label: "Bench",
+                        type: "select",
+                        required: false,
+                        order: 4,
+                        values: {
+                            create: [
+                                { label: "Gunsmith", value: "gunsmith", order: 1, isDefault: true },
+                                { label: "Gear Bench", value: "gear_bench", order: 2 },
+                                { label: "Medical Lab", value: "medical_lab", order: 3 },
+                                { label: "Explosives Station", value: "explosives_station", order: 4 },
+                                { label: "Utility Station", value: "utility_station", order: 5 },
+                                { label: "Refiner", value: "refiner", order: 6 }
+                            ]
+                        }
+                    },
+                    {
+                        label: "Multiple choice (0 to max)",
+                        type: "checkboxes",
+                        required: false,
+                        order: 5,
+                        values: {
+                            create: [
+                                { label: "Scrappy", value: "scrappy_max", priceModifier: 13.00, order: 1 },
+                                { label: "Gunsmith", value: "gunsmith_max", priceModifier: 14.00, order: 2 },
+                                { label: "Gear Bench", value: "gear_bench_max", priceModifier: 14.00, order: 3 },
+                                { label: "Medical Lab", value: "medical_lab_max", priceModifier: 14.00, order: 4 },
+                                { label: "Explosives Station", value: "explosives_station_max", priceModifier: 14.00, order: 5 },
+                                { label: "Utility Station", value: "utility_station_max", priceModifier: 14.00, order: 6 },
+                                { label: "Refiner", value: "refiner_max", priceModifier: 14.00, order: 7 }
+                            ]
+                        }
+                    },
+                    {
+                        label: "Select completion speed",
+                        type: "select",
+                        required: true,
+                        order: 6,
+                        values: {
+                            create: [
+                                { label: "Normal", value: "normal", priceModifier: 0, order: 1, isDefault: true },
+                                { label: "Express", value: "express", priceModifier: 0.20, order: 2 },
+                                { label: "Super Express", value: "super_express", priceModifier: 0.40, order: 3 }
+                            ]
+                        }
+                    }
+                ]
+            }
+        }
+    })
+
+    console.log(`Success! Workshop Leveling service created with ID: ${service.id}`)
+}
+
+main()
+    .catch(e => {
+        console.error(e)
+        process.exit(1)
+    })
+    .finally(async () => {
+        await prisma.$disconnect()
+    })

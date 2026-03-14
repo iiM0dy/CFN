@@ -17,13 +17,18 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { signIn, signOut, useSession } from "next-auth/react"
+import Link from "next/link"
 import { User } from "lucide-react"
 
 export function UserNav() {
     const { data: session } = useSession()
 
     if (!session) {
-        return <Button variant="outline" onClick={() => signIn()}>Login</Button>
+        return (
+            <Button variant="outline" asChild>
+                <Link href="/login">Login</Link>
+            </Button>
+        )
     }
 
     return (
@@ -71,9 +76,11 @@ export function UserNav() {
                     </DropdownMenuItem>
                     {/* @ts-ignore */}
                     {session.user?.role === "ADMIN" && (
-                        <DropdownMenuItem>
-                            Admin Panel
-                            <DropdownMenuShortcut>⌘A</DropdownMenuShortcut>
+                        <DropdownMenuItem asChild>
+                            <a href="/admin/chat">
+                                Support Terminal
+                                <DropdownMenuShortcut>⌘A</DropdownMenuShortcut>
+                            </a>
                         </DropdownMenuItem>
                     )}
                 </DropdownMenuGroup>

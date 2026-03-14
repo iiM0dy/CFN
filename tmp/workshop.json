@@ -1,0 +1,159 @@
+{
+  "name": "Workshop Leveling",
+  "basePrice": "0.99",
+  "options": [
+    {
+      "label": "What should we level up?",
+      "type": "select",
+      "minValue": null,
+      "maxValue": null,
+      "values": [
+        {
+          "label": "Scrappy",
+          "value": "scrappy",
+          "priceModifier": "0"
+        },
+        {
+          "label": "Specific bench (custom range)",
+          "value": "specific_bench",
+          "priceModifier": "0"
+        },
+        {
+          "label": "0 to max level (multiple choice)",
+          "value": "zero_to_max",
+          "priceModifier": "0"
+        }
+      ]
+    },
+    {
+      "label": "Level range (Scrappy)",
+      "type": "range",
+      "minValue": 1,
+      "maxValue": 5,
+      "values": [
+        {
+          "label": "Price Per Level",
+          "value": "price_per_level",
+          "priceModifier": "1"
+        }
+      ]
+    },
+    {
+      "label": "Level range (Specific bench)",
+      "type": "range",
+      "minValue": 0,
+      "maxValue": 3,
+      "values": [
+        {
+          "label": "Price Per Level",
+          "value": "price_per_level",
+          "priceModifier": "3"
+        }
+      ]
+    },
+    {
+      "label": "Bench",
+      "type": "select",
+      "minValue": null,
+      "maxValue": null,
+      "values": [
+        {
+          "label": "Gunsmith",
+          "value": "gunsmith",
+          "priceModifier": "0"
+        },
+        {
+          "label": "Gear Bench",
+          "value": "gear_bench",
+          "priceModifier": "0"
+        },
+        {
+          "label": "Medical Lab",
+          "value": "medical_lab",
+          "priceModifier": "0"
+        },
+        {
+          "label": "Explosives Station",
+          "value": "explosives_station",
+          "priceModifier": "0"
+        },
+        {
+          "label": "Utility Station",
+          "value": "utility_station",
+          "priceModifier": "0"
+        },
+        {
+          "label": "Refiner",
+          "value": "refiner",
+          "priceModifier": "0"
+        }
+      ]
+    },
+    {
+      "label": "Multiple choice (0 to max)",
+      "type": "checkboxes",
+      "minValue": null,
+      "maxValue": null,
+      "values": [
+        {
+          "label": "Scrappy",
+          "value": "scrappy_max",
+          "priceModifier": "13"
+        },
+        {
+          "label": "Gunsmith",
+          "value": "gunsmith_max",
+          "priceModifier": "14"
+        },
+        {
+          "label": "Gear Bench",
+          "value": "gear_bench_max",
+          "priceModifier": "14"
+        },
+        {
+          "label": "Medical Lab",
+          "value": "medical_lab_max",
+          "priceModifier": "14"
+        },
+        {
+          "label": "Explosives Station",
+          "value": "explosives_station_max",
+          "priceModifier": "14"
+        },
+        {
+          "label": "Utility Station",
+          "value": "utility_station_max",
+          "priceModifier": "14"
+        },
+        {
+          "label": "Refiner",
+          "value": "refiner_max",
+          "priceModifier": "14"
+        }
+      ]
+    },
+    {
+      "label": "Select completion speed",
+      "type": "select",
+      "minValue": null,
+      "maxValue": null,
+      "values": [
+        {
+          "label": "Normal",
+          "value": "normal",
+          "priceModifier": "0"
+        },
+        {
+          "label": "Express",
+          "value": "express",
+          "priceModifier": "0.2"
+        },
+        {
+          "label": "Super Express",
+          "value": "super_express",
+          "priceModifier": "0.4"
+        }
+      ]
+    }
+  ]
+}
