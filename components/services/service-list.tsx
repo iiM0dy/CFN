@@ -61,34 +61,19 @@ export function ServiceList({ initialServices }: ServiceListProps) {
                         className="group"
                     >
                         <Link href={`/services/${service.id}`} className="block">
-                            <div className="relative bg-[#0A0A0A] border border-white/[0.03] rounded-3xl overflow-hidden transition-all duration-500 group-hover:border-primary/30 group-hover:shadow-[0_20px_60px_-15px_rgba(175,18,37,0.2)]">
+                            <div className="relative bg-[#0A0A0A] border border-white/[0.03] rounded-3xl overflow-hidden transition-all duration-500 group-hover:border-primary/30">
 
-                                {/* 1. Heavy Visual Header */}
-                                <div className="relative h-47 w-full">
+                                {/* Thumbnail */}
+                                <div className="relative h-[188px] w-full overflow-hidden border-b border-white/5">
                                     {service.image ? (
                                         <img
                                             src={service.image}
                                             alt={service.name}
-                                            className="w-full h-full object-cover grayscale-[0.5] group-hover:grayscale-0 transition-all duration-700"
+                                            className="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:scale-105 group-hover:opacity-100 transition-all duration-500 pointer-events-none"
                                         />
                                     ) : (
-                                        <div className="w-full h-full bg-[#111111]" />
+                                        <div className="absolute inset-0 bg-[#111111]" />
                                     )}
-
-                                    {/* HUD Elements */}
-                                    <div className="absolute inset-0 bg-linear-to-t from-[#0A0A0A] via-transparent to-black/20" />
-
-                                    {/* Tactical Brackets Corner */}
-                                    <div className="absolute top-6 left-6 flex flex-col gap-1 items-start opacity-40 group-hover:opacity-100 transition-opacity">
-
-                                        <div className="flex gap-1">
-                                            <div className="size-1 bg-primary rounded-full animate-pulse" />
-                                            <div className="size-1 bg-white/20 rounded-full" />
-                                            <div className="size-1 bg-white/20 rounded-full" />
-                                        </div>
-                                    </div>
-
-                                    {/* Solid Discount Tag */}
                                 </div>
 
                                 {/* 2. Intelligence Body */}
