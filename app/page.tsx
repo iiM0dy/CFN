@@ -12,17 +12,17 @@ const FILTERS = ["All", "WoW", "Valorant", "League of Legends", "CS2", "Fortnite
 
 const GAMES = [
   { name: "World of Warcraft", tag: "Raid • Leveling", icon: Swords, bg: "https://i.postimg.cc/YCzk2Rg7/Refine-the-image-make-the-logo-inspired-shape-much-larger-and-more-integrated-into-the-background.png", href: "/games/wow/services" },
+  { name: "ARC Raiders", tag: "Materials • Loot", icon: Star, bg: "https://i.postimg.cc/YCzk2Rg7/Refine-the-image-make-the-logo-inspired-shape-much-larger-and-more-integrated-into-the-background.png", href: "/games/arc-raiders/services" },
   { name: "Valorant", tag: "Rank • Coaching", icon: Target, bg: "https://i.postimg.cc/YCzk2Rg7/Refine-the-image-make-the-logo-inspired-shape-much-larger-and-more-integrated-into-the-background.png", href: "/games/valorant/services" },
   { name: "League of Legends", tag: "Rank • Duo Queue", icon: Trophy, bg: "https://i.postimg.cc/YCzk2Rg7/Refine-the-image-make-the-logo-inspired-shape-much-larger-and-more-integrated-into-the-background.png", href: "/games/lol/services" },
-  { name: "CS2", tag: "Premier • Faceit", icon: Crosshair, bg: "https://i.postimg.cc/YCzk2Rg7/Refine-the-image-make-the-logo-inspired-shape-much-larger-and-more-integrated-into-the-background.png", href: "/games/cs2/services" },
-  { name: "Fortnite", tag: "Arena • Coaching", icon: CloudLightning, bg: "https://i.postimg.cc/YCzk2Rg7/Refine-the-image-make-the-logo-inspired-shape-much-larger-and-more-integrated-into-the-background.png", href: "#" },
-  { name: "Elden Ring", tag: "Runes • Carry", icon: Flame, bg: "https://i.postimg.cc/YCzk2Rg7/Refine-the-image-make-the-logo-inspired-shape-much-larger-and-more-integrated-into-the-background.png", href: "#" },
-  { name: "Destiny 2", tag: "Raids • Exotics", icon: Shield, bg: "https://i.postimg.cc/YCzk2Rg7/Refine-the-image-make-the-logo-inspired-shape-much-larger-and-more-integrated-into-the-background.png", href: "#" },
-  { name: "Apex Legends", tag: "Rank • Badges", icon: Gamepad2, bg: "https://i.postimg.cc/YCzk2Rg7/Refine-the-image-make-the-logo-inspired-shape-much-larger-and-more-integrated-into-the-background.png", href: "#" },
-  { name: "Overwatch 2", tag: "Rank • Coaching", icon: Aperture, bg: "https://i.postimg.cc/YCzk2Rg7/Refine-the-image-make-the-logo-inspired-shape-much-larger-and-more-integrated-into-the-background.png", href: "#" },
-  { name: "Call of Duty", tag: "MWIII • Warzone", icon: Bomb, bg: "https://i.postimg.cc/YCzk2Rg7/Refine-the-image-make-the-logo-inspired-shape-much-larger-and-more-integrated-into-the-background.png", href: "#" },
+  { name: "Path Of Exile", tag: "Currency • Items", icon: Crosshair, bg: "https://i.postimg.cc/YCzk2Rg7/Refine-the-image-make-the-logo-inspired-shape-much-larger-and-more-integrated-into-the-background.png", href: "/games/poe/services" },
+  { name: "Path Of Exile 2", tag: "Currency • Items", icon: CloudLightning, bg: "https://i.postimg.cc/YCzk2Rg7/Refine-the-image-make-the-logo-inspired-shape-much-larger-and-more-integrated-into-the-background.png", href: "#" },
+  { name: "Throne And Liberty", tag: "Currency • Items", icon: Flame, bg: "https://i.postimg.cc/YCzk2Rg7/Refine-the-image-make-the-logo-inspired-shape-much-larger-and-more-integrated-into-the-background.png", href: "#" },
   { name: "Diablo IV", tag: "Power • Gold", icon: Sword, bg: "https://i.postimg.cc/YCzk2Rg7/Refine-the-image-make-the-logo-inspired-shape-much-larger-and-more-integrated-into-the-background.png", href: "#" },
-  { name: "ARC Raiders", tag: "Materials • Loot", icon: Star, bg: "https://i.postimg.cc/YCzk2Rg7/Refine-the-image-make-the-logo-inspired-shape-much-larger-and-more-integrated-into-the-background.png", href: "/games/arc-raiders/services" },
+  { name: "Marvel Rivals", tag: "Currency • Items", icon: Shield, bg: "https://i.postimg.cc/YCzk2Rg7/Refine-the-image-make-the-logo-inspired-shape-much-larger-and-more-integrated-into-the-background.png", href: "#" },
+  { name: "Overwatch", tag: "Rank • Coaching", icon: Gamepad2, bg: "https://i.postimg.cc/YCzk2Rg7/Refine-the-image-make-the-logo-inspired-shape-much-larger-and-more-integrated-into-the-background.png", href: "#" },
+  { name: "Destiny 2", tag: "Rank • Coaching", icon: Aperture, bg: "https://i.postimg.cc/YCzk2Rg7/Refine-the-image-make-the-logo-inspired-shape-much-larger-and-more-integrated-into-the-background.png", href: "#" },
+  { name: "Call of Duty", tag: "MWIII • Warzone", icon: Bomb, bg: "https://i.postimg.cc/YCzk2Rg7/Refine-the-image-make-the-logo-inspired-shape-much-larger-and-more-integrated-into-the-background.png", href: "#" },
 ]
 
 const FEATURED = [
@@ -164,17 +164,17 @@ export default async function Home() {
                       {/* Content Section */}
                       <div className="p-5 flex flex-col flex-1 bg-[#0A0A0A]">
                         <div className="text-[11px] font-bold uppercase tracking-widest text-slate-500 mb-1.5">
-                            {fs.game.name}
+                          {fs.game.name}
                         </div>
                         <div className="text-sm font-bold leading-snug text-white line-clamp-2 min-h-[40px] mb-4">
                           {fs.name}
                         </div>
-                        
+
                         <div className="mt-auto flex flex-col">
-                            <span className="text-[10px] uppercase font-bold tracking-widest text-[#888] mb-0.5">Starting at</span>
-                            <div className="text-xl font-black text-white">
-                              ${Number(fs.basePrice).toFixed(2)}
-                            </div>
+                          <span className="text-[10px] uppercase font-bold tracking-widest text-[#888] mb-0.5">Starting at</span>
+                          <div className="text-xl font-black text-white">
+                            ${Number(fs.basePrice).toFixed(2)}
+                          </div>
                         </div>
 
                         <button className="mt-4 w-full rounded-md bg-primary py-2.5 text-[11px] font-black uppercase tracking-widest text-white transition-colors hover:bg-primary/90">
@@ -200,17 +200,17 @@ export default async function Home() {
                       {/* Content Section */}
                       <div className="p-5 flex flex-col flex-1 bg-[#0A0A0A]">
                         <div className="text-[11px] font-bold uppercase tracking-widest text-slate-500 mb-1.5">
-                            {f.game}
+                          {f.game}
                         </div>
                         <div className="text-sm font-bold leading-snug text-white line-clamp-2 min-h-[40px] mb-4">
                           {f.title}
                         </div>
-                        
+
                         <div className="mt-auto flex flex-col">
-                            <span className="text-[10px] uppercase font-bold tracking-widest text-[#888] mb-0.5">Starting at</span>
-                            <div className="text-xl font-black text-white">
-                              {f.price}
-                            </div>
+                          <span className="text-[10px] uppercase font-bold tracking-widest text-[#888] mb-0.5">Starting at</span>
+                          <div className="text-xl font-black text-white">
+                            {f.price}
+                          </div>
                         </div>
 
                         <button className="mt-4 w-full rounded-md bg-primary py-2.5 text-[11px] font-black uppercase tracking-widest text-white transition-colors hover:bg-primary/90">
