@@ -152,7 +152,7 @@ export function HeroSection() {
                         {/* CTAs */}
                         <motion.div variants={fadeUp} className="flex flex-col sm:flex-row gap-4">
                             <Link
-                                href="/games"
+                                href="/#games"
                                 className="group h-14 px-10 rounded-lg bg-primary hover:bg-primary-dark text-white font-black text-xs md:text-sm uppercase tracking-[0.25em] transition-all duration-300 shadow-[0_15px_30px_-5px_rgba(175,18,37,0.6)] hover:-translate-y-0.5 flex items-center gap-3 justify-center w-full sm:w-auto"
                             >
                                 Explore Games
@@ -243,7 +243,7 @@ export function HeroSection() {
                                             {activeCard.tagline}
                                         </p>
                                         <Link
-                                            href={`/games/${activeCard.slug}/services`}
+                                            href={`/${activeCard.slug}/services`}
                                             className="group inline-flex items-center gap-2 bg-white/10 hover:bg-primary border border-white/20 hover:border-primary rounded-xl px-5 py-3 backdrop-blur-md transition-all duration-300"
                                         >
                                             <span className="text-[11px] font-black text-white uppercase tracking-widest">View Services</span>

@@ -42,7 +42,7 @@ export default function ServicesPage() {
                                 our operatives deliver results where others fail.
                             </p>
                             <div className="flex flex-wrap items-center justify-center gap-4 mt-10">
-                                <Link href="/games" className="px-8 py-4 bg-primary hover:bg-[#8a0e1d] text-white font-black text-sm uppercase tracking-[0.2em] rounded-lg shadow-lg shadow-primary/20 transition-all transform hover:scale-105 flex items-center gap-2">
+                                <Link href="/#games" className="px-8 py-4 bg-primary hover:bg-[#8a0e1d] text-white font-black text-sm uppercase tracking-[0.2em] rounded-lg shadow-lg shadow-primary/20 transition-all transform hover:scale-105 flex items-center gap-2">
                                     DEPLOY NOW <span className="material-symbols-outlined text-sm">rocket_launch</span>
                                 </Link>
                                 <button className="px-8 py-4 bg-[#161616] border border-white/5 hover:border-primary/50 text-white font-black text-sm uppercase tracking-[0.2em] rounded-lg transition-all flex items-center gap-2 group">
@@ -66,16 +66,16 @@ export default function ServicesPage() {
                             </h2>
                             <p className="text-slate-500 text-[10px] font-bold uppercase tracking-widest mt-1">Select your specialized deployment objective</p>
                         </div>
-                        <Link href="/games" className="text-primary hover:text-white transition-colors flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] border-b border-primary/0 hover:border-primary pb-1">
+                        <Link href="/#games" className="text-primary hover:text-white transition-colors flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] border-b border-primary/0 hover:border-primary pb-1">
                             VIEW ALL OPERATIONS <span className="material-symbols-outlined text-sm">arrow_right_alt</span>
                         </Link>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                         {[
-                            { icon: "trending_up", title: "Rank Augmentation", desc: "Surgical execution to your desired competitive tier. Fast, anonymous, and elite.", color: "primary", img: "https://lh3.googleusercontent.com/aida-public/AB6AXuDmQh4mUTJOso3jp3HHWlk9GzilRw62um_g1y7l2vVAWLEZLdCje5SniTT-3YYutaOksEi_dOyJkw5hEGiMbFt-eS76cIbcI5MANQIwg-fawl_nkQAtxNn4msSIc8QdxQ7BTepf8920VHNfJvc3T_Vm3PiCkeyrRW-QGUBkzjJVEplIIy19Ky5wCslcTaMVPg__Sbt6PkT7S3jzvl-kRZztdksKeBCJucsP_YxQbz48F2C9GAHK7zpg-K3vnbHjN_DzfOm0T8QdOEt2", href: "/games" },
-                            { icon: "verified", title: "Tier Placements", desc: "Secure a dominant season start. 100% win-rate guarantee on calibration matches.", color: "blue", img: "https://lh3.googleusercontent.com/aida-public/AB6AXuCBNUdDuQau5JUZJkwKLtOzvls3Jry8Qq4w5CW5aN7cq8wMUJm7dM43dP90vhjP3C_PRsx_2wie-kpbxVt74U6CMYdmm2Yxgl7h6LPrgybYE35skJaEq6tqWKDtspjhNaWOjmuIuHBgEd-2s3PHs2RoMFJzApZYrK0yr4Gxrd4cjCYYt8IX90matMb0iZdJB_GrEvUDpFaEhZNGIDLS6fakyRTgM3mPvwEcRDphfEB3OuMhw057MLtMQfXtjbdF3645dfc2YXAr0UyX", href: "/games" },
-                            { icon: "school", title: "Field Coaching", desc: "1-on-1 strategic insight from top-tier operatives. Mastering macro and mechanics.", color: "green", img: "https://lh3.googleusercontent.com/aida-public/AB6AXuCbVRAw9NnkVp6N26aqSVPJoKnpbTrrkR8PJekZ5hzvW1M0NnB4St-ZZAO-emJJFAZgcnPZPx3nAVlsObUt8pW30hzHtLlbH6ef0zPF4sZEVoC9Vu-IblngFj8k544hZ_PcSLxfrJUNiKMp7Xrvb8NLjLB_dESbJRPcPsUbWGYM3FjwwO7jsKGOOA5yDi_DlkDC1_RHL5WfOmqM4x9BfKv7Z191p3lM_zXFBB1JbCMsG9sRsEHsMZmfhU1RjcaY990wYWOybQQiIzGn", href: "/games" },
+                            { icon: "trending_up", title: "Rank Augmentation", desc: "Surgical execution to your desired competitive tier. Fast, anonymous, and elite.", color: "primary", img: "https://lh3.googleusercontent.com/aida-public/AB6AXuDmQh4mUTJOso3jp3HHWlk9GzilRw62um_g1y7l2vVAWLEZLdCje5SniTT-3YYutaOksEi_dOyJkw5hEGiMbFt-eS76cIbcI5MANQIwg-fawl_nkQAtxNn4msSIc8QdxQ7BTepf8920VHNfJvc3T_Vm3PiCkeyrRW-QGUBkzjJVEplIIy19Ky5wCslcTaMVPg__Sbt6PkT7S3jzvl-kRZztdksKeBCJucsP_YxQbz48F2C9GAHK7zpg-K3vnbHjN_DzfOm0T8QdOEt2", href: "/#games" },
+                            { icon: "verified", title: "Tier Placements", desc: "Secure a dominant season start. 100% win-rate guarantee on calibration matches.", color: "blue", img: "https://lh3.googleusercontent.com/aida-public/AB6AXuCBNUdDuQau5JUZJkwKLtOzvls3Jry8Qq4w5CW5aN7cq8wMUJm7dM43dP90vhjP3C_PRsx_2wie-kpbxVt74U6CMYdmm2Yxgl7h6LPrgybYE35skJaEq6tqWKDtspjhNaWOjmuIuHBgEd-2s3PHs2RoMFJzApZYrK0yr4Gxrd4cjCYYt8IX90matMb0iZdJB_GrEvUDpFaEhZNGIDLS6fakyRTgM3mPvwEcRDphfEB3OuMhw057MLtMQfXtjbdF3645dfc2YXAr0UyX", href: "/#games" },
+                            { icon: "school", title: "Field Coaching", desc: "1-on-1 strategic insight from top-tier operatives. Mastering macro and mechanics.", color: "green", img: "https://lh3.googleusercontent.com/aida-public/AB6AXuCbVRAw9NnkVp6N26aqSVPJoKnpbTrrkR8PJekZ5hzvW1M0NnB4St-ZZAO-emJJFAZgcnPZPx3nAVlsObUt8pW30hzHtLlbH6ef0zPF4sZEVoC9Vu-IblngFj8k544hZ_PcSLxfrJUNiKMp7Xrvb8NLjLB_dESbJRPcPsUbWGYM3FjwwO7jsKGOOA5yDi_DlkDC1_RHL5WfOmqM4x9BfKv7Z191p3lM_zXFBB1JbCMsG9sRsEHsMZmfhU1RjcaY990wYWOybQQiIzGn", href: "/#games" },
                         ].map((s) => (
                             <Link key={s.title} href={s.href} className="group relative aspect-video md:aspect-4/3 rounded-xl overflow-hidden border border-white/5 bg-[#161616] transition-all duration-300 hover:shadow-[0_0_30px_rgba(175,18,37,0.3)] hover:-translate-y-2 hover:border-primary">
                                 <div className="absolute inset-0 bg-linear-to-t from-[#0B0B0B] via-[#0B0B0B]/40 to-transparent z-10" />

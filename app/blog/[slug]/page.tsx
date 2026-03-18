@@ -173,7 +173,7 @@ export default async function BlogPostPage({ params }: Props) {
                                 </p>
                             </div>
                             <Link
-                                href="/games"
+                                href="/#games"
                                 className="group relative h-20 px-16 rounded-2xl bg-primary flex items-center justify-center overflow-hidden hover:scale-105 transition-all duration-500 shadow-[0_20px_50px_-10px_rgba(175,18,37,0.5)] active:scale-95"
                             >
                                 <span className="relative z-10 text-xs font-black uppercase tracking-[0.4em] text-white flex items-center gap-4">

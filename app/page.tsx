@@ -11,11 +11,11 @@ import { prisma } from "@/lib/prisma"
 const FILTERS = ["All", "WoW", "Valorant", "League of Legends", "CS2", "Fortnite", "Elden Ring", "Destiny 2"]
 
 const GAMES = [
-  { name: "World of Warcraft", tag: "Raid • Leveling", icon: Swords, bg: "https://i.postimg.cc/YCzk2Rg7/Refine-the-image-make-the-logo-inspired-shape-much-larger-and-more-integrated-into-the-background.png", href: "/games/wow/services" },
-  { name: "ARC Raiders", tag: "Materials • Loot", icon: Star, bg: "https://i.postimg.cc/YCzk2Rg7/Refine-the-image-make-the-logo-inspired-shape-much-larger-and-more-integrated-into-the-background.png", href: "/games/arc-raiders/services" },
-  { name: "Valorant", tag: "Rank • Coaching", icon: Target, bg: "https://i.postimg.cc/YCzk2Rg7/Refine-the-image-make-the-logo-inspired-shape-much-larger-and-more-integrated-into-the-background.png", href: "/games/valorant/services" },
-  { name: "League of Legends", tag: "Rank • Duo Queue", icon: Trophy, bg: "https://i.postimg.cc/YCzk2Rg7/Refine-the-image-make-the-logo-inspired-shape-much-larger-and-more-integrated-into-the-background.png", href: "/games/lol/services" },
-  { name: "Path Of Exile", tag: "Currency • Items", icon: Crosshair, bg: "https://i.postimg.cc/YCzk2Rg7/Refine-the-image-make-the-logo-inspired-shape-much-larger-and-more-integrated-into-the-background.png", href: "/games/poe/services" },
+  { name: "World of Warcraft", tag: "Raid • Leveling", icon: Swords, bg: "https://i.postimg.cc/YCzk2Rg7/Refine-the-image-make-the-logo-inspired-shape-much-larger-and-more-integrated-into-the-background.png", href: "/wow/services" },
+  { name: "ARC Raiders", tag: "Materials • Loot", icon: Star, bg: "https://i.postimg.cc/YCzk2Rg7/Refine-the-image-make-the-logo-inspired-shape-much-larger-and-more-integrated-into-the-background.png", href: "/arc-raiders/services" },
+  { name: "Valorant", tag: "Rank • Coaching", icon: Target, bg: "https://i.postimg.cc/YCzk2Rg7/Refine-the-image-make-the-logo-inspired-shape-much-larger-and-more-integrated-into-the-background.png", href: "/valorant/services" },
+  { name: "League of Legends", tag: "Rank • Duo Queue", icon: Trophy, bg: "https://i.postimg.cc/YCzk2Rg7/Refine-the-image-make-the-logo-inspired-shape-much-larger-and-more-integrated-into-the-background.png", href: "/lol/services" },
+  { name: "Path Of Exile", tag: "Currency • Items", icon: Crosshair, bg: "https://i.postimg.cc/YCzk2Rg7/Refine-the-image-make-the-logo-inspired-shape-much-larger-and-more-integrated-into-the-background.png", href: "/poe/services" },
   { name: "Path Of Exile 2", tag: "Currency • Items", icon: CloudLightning, bg: "https://i.postimg.cc/YCzk2Rg7/Refine-the-image-make-the-logo-inspired-shape-much-larger-and-more-integrated-into-the-background.png", href: "#" },
   { name: "Throne And Liberty", tag: "Currency • Items", icon: Flame, bg: "https://i.postimg.cc/YCzk2Rg7/Refine-the-image-make-the-logo-inspired-shape-much-larger-and-more-integrated-into-the-background.png", href: "#" },
   { name: "Diablo IV", tag: "Power • Gold", icon: Sword, bg: "https://i.postimg.cc/YCzk2Rg7/Refine-the-image-make-the-logo-inspired-shape-much-larger-and-more-integrated-into-the-background.png", href: "#" },
@@ -50,7 +50,7 @@ export default async function Home() {
         <HeroSection />
 
         {/* ── GAMES GRID ── */}
-        <section className="bg-[#050505] py-10">
+        <section id="games" className="bg-[#050505] py-10">
           <div className="max-w-[1440px] mx-auto px-6 lg:px-10">
 
             {/* header */}
@@ -61,9 +61,6 @@ export default async function Home() {
                   Choose from <span className="text-primary">100+ Games</span>
                 </h2>
               </div>
-              <Link href="/games" className="text-sm font-bold text-primary hover:text-[#FF2B49] uppercase tracking-widest transition-colors">
-                Browse all →
-              </Link>
             </div>
 
             {/* filter tabs */}
@@ -130,9 +127,6 @@ export default async function Home() {
                   Featured <span className="text-primary">Services</span>
                 </h2>
               </div>
-              <Link href="/games" className="text-sm font-bold text-primary hover:text-[#FF2B49] uppercase tracking-widest transition-colors">
-                View all →
-              </Link>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">

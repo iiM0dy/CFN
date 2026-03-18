@@ -14,7 +14,7 @@ export function Header() {
 
     // Hide main header on admin routes
     if (pathname?.startsWith("/admin")) {
-        return null;
+        return null
     }
 
     const [mobileOpen, setMobileOpen] = useState(false)
@@ -269,10 +269,10 @@ export function Header() {
                                 </div>
                                 <div className="grid grid-cols-1 gap-3">
                                     {[
-                                        { href: '/games/valorant/services', label: 'Valorant' },
-                                        { href: '/games/lol/services', label: 'League of Legends' },
-                                        { href: '/games/wow/services', label: 'World of Warcraft' },
-                                        { href: '/games/throne-and-liberty/services', label: 'Throne and Liberty' }
+                                        { href: '/valorant/services', label: 'Valorant' },
+                                        { href: '/lol/services', label: 'League of Legends' },
+                                        { href: '/wow/services', label: 'World of Warcraft' },
+                                        { href: '/throne-and-liberty/services', label: 'Throne and Liberty' }
                                     ].map((game) => (
                                         <Link
                                             key={game.href}
@@ -284,13 +284,7 @@ export function Header() {
                                             <span className="material-symbols-outlined text-primary text-sm">east</span>
                                         </Link>
                                     ))}
-                                    <Link
-                                        href="/games"
-                                        onClick={() => setMobileOpen(false)}
-                                        className="flex items-center justify-center p-4 bg-primary/10 border border-primary/20 rounded-2xl text-primary text-[10px] font-black uppercase tracking-[0.3em]"
-                                    >
-                                        View All Games
-                                    </Link>
+
                                 </div>
                             </div>
 

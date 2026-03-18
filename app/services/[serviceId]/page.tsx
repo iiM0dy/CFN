@@ -331,9 +331,7 @@ export default function ServiceDetailsPage() {
         <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-slate-600 mb-8">
           <Link href="/" className="hover:text-primary transition-colors">Home</Link>
           <span className="text-slate-700">/</span>
-          <Link href="/games" className="hover:text-primary transition-colors">Games</Link>
-          <span className="text-slate-700">/</span>
-          <Link href={`/games/${service.game.slug}/services`} className="hover:text-primary transition-colors">{service.game.name}</Link>
+          <Link href={`/${service.game.slug}/services`} className="hover:text-primary transition-colors">{service.game.name}</Link>
           <span className="text-slate-700">/</span>
           <span className="text-slate-400">{service.name}</span>
         </div>

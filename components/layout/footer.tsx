@@ -3,11 +3,11 @@ import { CFNLogo } from "@/components/layout/cfnboost-logo"
 
 const footerLinks = {
     services: [
-        { label: "Valorant Boosting", href: "/games/valorant/services" },
-        { label: "LoL Boosting", href: "/games/lol/services" },
-        { label: "WoW Powerleveling", href: "/games/wow/services" },
-        { label: "Throne & Liberty", href: "/games/throne-and-liberty/services" },
-        { label: "View All Games", href: "/games" },
+        { label: "Valorant Boosting", href: "/valorant/services" },
+        { label: "LoL Boosting", href: "/lol/services" },
+        { label: "WoW Powerleveling", href: "/wow/services" },
+        { label: "Throne & Liberty", href: "/throne-and-liberty/services" },
+        { label: "View All Games", href: "/#games" },
     ],
     support: [
         { label: "Help Center", href: "/contact" },

@@ -206,16 +206,6 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                     ))}
                   </div>
                 )}
-
-                <div className="mt-4 pt-4">
-                  <Link
-                    href="/games"
-                    onClick={onClose}
-                    className="flex items-center justify-center gap-2 p-4 bg-white/5 border border-white/5 rounded-xl text-primary text-[10px] font-black uppercase tracking-[0.3em] hover:bg-primary/10 transition-all"
-                  >
-                    View All Games
-                  </Link>
-                </div>
               </div>
             </div>
 

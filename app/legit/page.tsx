@@ -266,8 +266,8 @@ export default function LegitPage() {
                     <h2 className="text-4xl md:text-5xl font-bold uppercase mb-6">Ready to boost with confidence?</h2>
                     <p className="text-slate-400 mb-10 text-lg">Join 50,000+ satisfied gamers who trust <span className="font-bold font-cairo"><span className="text-primary">CFN</span><span className="text-white">boost</span></span> for their competitive edge.</p>
                     <div className="flex flex-wrap justify-center gap-4">
-                        <Link href="/games" className="bg-primary hover:bg-primary/90 text-white font-bold py-5 px-10 rounded-lg transition-all shadow-[0_0_20px_rgba(175,18,37,0.4)] transform hover:scale-105">
-                            START YOUR ORDER
+                        <Link href="/#games" className="bg-primary hover:bg-primary/90 text-white font-bold py-5 px-10 rounded-lg transition-all shadow-[0_0_20px_rgba(175,18,37,0.4)] transform hover:scale-105">
+                            START YOUR JOURNEY
                         </Link>
                         <Link href="/contact" className="bg-transparent border border-white/20 hover:border-white/40 text-white font-bold py-5 px-10 rounded-lg transition-all flex items-center gap-2 group">
                             <span className="material-symbols-outlined group-hover:text-primary transition-colors">headset_mic</span>

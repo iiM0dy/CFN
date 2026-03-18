@@ -180,7 +180,7 @@ export default function MyOrdersPage() {
             <h3 className="text-xl font-bold text-gray-400 mb-2">No orders found</h3>
             <p className="text-gray-500 mb-6 uppercase tracking-widest text-[10px] font-black">No active deployments detected in this sector</p>
             <Link
-              href="/games"
+              href="/#games"
               className="inline-flex items-center gap-2 px-6 py-3 bg-primary hover:bg-[#8a0e1d] text-white text-[10px] font-black uppercase tracking-widest rounded-lg transition-all"
             >
               Browse Services

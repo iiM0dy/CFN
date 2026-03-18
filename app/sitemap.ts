@@ -10,7 +10,7 @@ const STATIC_PAGES = [
     '/legit',
     '/faq',
     '/wall-of-fame',
-    '/games'
+    '/services'
 ]
 
 const BLOG_SLUGS = [

@@ -151,7 +151,7 @@ export default function FAQPage() {
                     <div className="grid grid-cols-2 md:grid-cols-3 gap-12 text-sm">
                         <div className="flex flex-col gap-3">
                             <h4 className="font-bold text-white">Platform</h4>
-                            <Link className="text-[#b89da1] hover:text-primary transition-colors" href="/games">Browse Games</Link>
+                            <Link className="text-[#b89da1] hover:text-primary transition-colors" href="/#games">Browse Games</Link>
                             <a className="text-[#b89da1] hover:text-primary transition-colors" href="#">Become a Booster</a>
                             <a className="text-[#b89da1] hover:text-primary transition-colors" href="#">Pricing</a>
                         </div>

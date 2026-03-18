@@ -119,7 +119,7 @@ export default function FavoritesPage() {
                         <span className="material-symbols-outlined text-7xl text-slate-800 mb-8 block">favorite</span>
                         <h3 className="text-3xl font-black text-white uppercase tracking-widest mb-2">COLLECTION EMPTY</h3>
                         <p className="text-slate-600 text-[10px] uppercase tracking-[0.5em] font-black mb-12">You haven't saved any services to your favorites yet</p>
-                        <Link href="/games" className="px-8 py-3 bg-[#161616] border border-white/5 text-primary text-[10px] font-black uppercase tracking-[0.3em] rounded-lg hover:border-primary/50 hover:bg-primary/5 transition-all">
+                        <Link href="/#games" className="px-8 py-3 bg-[#161616] border border-white/5 text-primary text-[10px] font-black uppercase tracking-[0.3em] rounded-lg hover:border-primary/50 hover:bg-primary/5 transition-all">
                             BROWSE SERVICES
                         </Link>
                     </div>
