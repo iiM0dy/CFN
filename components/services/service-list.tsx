@@ -58,10 +58,10 @@ export function ServiceList({ initialServices }: ServiceListProps) {
                         initial={{ opacity: 0 }}
                         whileInView={{ opacity: 1 }}
                         viewport={{ once: true }}
-                        className="group"
+                        className="group h-full"
                     >
-                        <Link href={`/services/${service.id}`} className="block">
-                            <div className="relative bg-[#0A0A0A] border border-white/[0.03] rounded-3xl overflow-hidden transition-all duration-500 group-hover:border-primary/30">
+                        <Link href={`/services/${encodeURIComponent(service.name.toLowerCase().replace(/[^a-z0-9]+/g, '-'))}`} className="block h-full">
+                            <div className="relative h-full flex flex-col bg-[#0A0A0A] border border-white/[0.03] rounded-3xl overflow-hidden transition-all duration-500 group-hover:border-primary/30">
 
                                 {/* Thumbnail */}
                                 <div className="relative h-[188px] w-full overflow-hidden border-b border-white/5">

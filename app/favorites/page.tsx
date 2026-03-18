@@ -12,6 +12,7 @@ interface Favorite {
     service: {
         id: string;
         name: string;
+        slug?: string;
         image?: string;
         displayPrice: string;
         game: {
@@ -127,7 +128,7 @@ export default function FavoritesPage() {
                         {favorites.map((fav) => (
                             <Link
                                 key={fav.id}
-                                href={`/services/${fav.serviceId}`}
+                                href={`/services/${fav.service.slug || fav.serviceId}`}
                                 className="group relative aspect-3/4 rounded-2xl overflow-hidden border border-white/5 bg-[#111111] transition-all duration-500 hover:shadow-[0_0_50px_rgba(175,18,37,0.25)] hover:-translate-y-3 hover:border-primary/40 block"
                             >
                                 {/* Background Image */}

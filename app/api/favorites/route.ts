@@ -88,7 +88,16 @@ export async function GET() {
       };
     });
 
-    return NextResponse.json(favorites)
+    // Add slug to the services in the response
+    const favoritesWithSlug = favorites.map(fav => ({
+      ...fav,
+      service: {
+        ...fav.service,
+        slug: encodeURIComponent(fav.service.name.toLowerCase().replace(/[^a-z0-9]+/g, '-'))
+      }
+    }))
+
+    return NextResponse.json(favoritesWithSlug)
   } catch (error) {
     console.error("Error fetching favorites:", error)
     return NextResponse.json({ error: "Failed to fetch favorites" }, { status: 500 })

@@ -143,7 +143,7 @@ export default async function Home() {
 
                   return (
                     <Link
-                      href={`/games/${fs.game.slug}/services/${fs.id}`}
+                      href={`/services/${encodeURIComponent(fs.name.toLowerCase().replace(/[^a-z0-9]+/g, '-'))}`}
                       key={fs.id}
                       className="group flex flex-col overflow-hidden rounded-[20px] bg-[#0A0A0A] border border-white/5 hover:border-white/10 transition-all duration-300"
                     >
@@ -225,37 +225,11 @@ export default async function Home() {
           </div>
         </section>
 
-        {/* ── STATS ── */}
-        <section className="bg-[#050505] border-y border-white/5 py-12">
-          <div className="max-w-[1440px] mx-auto px-6 lg:px-10">
-            <div className="flex flex-wrap md:flex-nowrap items-center justify-center md:justify-between gap-10 md:gap-0">
-
-              {[
-                { value: "52,109", label: "Global Orders" },
-                { value: "99.8%",  label: "Success Rate"  },
-                { value: "500+",   label: "Elite Experts" },
-                { value: "14 min", label: "Avg. Delivery" },
-              ].map((stat, i, arr) => (
-                <div key={stat.label} className="flex items-center gap-10 md:gap-0 flex-1 justify-center">
-                  <div className="flex flex-col items-center gap-2 text-center">
-                    <span className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-600">{stat.label}</span>
-                    <span className="text-5xl md:text-6xl font-black text-white tracking-tighter leading-none">{stat.value}</span>
-                    <div className="w-6 h-[2px] bg-primary mx-auto" />
-                  </div>
-                  {i < arr.length - 1 && (
-                    <div className="hidden md:block w-px h-16 bg-white/5 ml-10" />
-                  )}
-                </div>
-              ))}
-
-            </div>
-          </div>
-        </section>
-
-        {/* ── OPERATIONAL SEQUENCE (unchanged) ── */}
+        {/* ── OPERATIONAL SEQUENCE ── */}
         <HowItWorks />
 
-        {/* ── TESTIMONIALS (unchanged) ── */}
+
+        {/* ── TESTIMONIALS ── */}
         <TestimonialsSection />
 
       </main>
