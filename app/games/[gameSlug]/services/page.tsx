@@ -2,6 +2,7 @@ import { prisma } from "@/lib/prisma"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 import { ServiceList } from "@/components/services/service-list"
+import { Footer } from "@/components/layout/footer"
 
 
 export default async function GameServicesPage({ params }: { params: Promise<{ gameSlug: string }> }) {
@@ -100,28 +101,6 @@ export default async function GameServicesPage({ params }: { params: Promise<{ g
                     <span className="text-white">{game.name}</span>
                 </div>
 
-                {/* Cinematic Hero Section */}
-                <section className="relative mb-12 rounded-2xl overflow-hidden w-full border border-white/5">
-                    <div className="relative flex min-h-[500px] flex-col items-center justify-center p-12 text-center bg-cover bg-center group"
-                        style={{ backgroundImage: `linear-gradient(to bottom, rgba(11, 11, 11, 0.6), rgba(11, 11, 11, 0.98)), url('${game.bgImage}')` }}>
-
-                        <div className="z-10 max-w-4xl relative">
-                            <h1 className="text-6xl md:text-8xl font-black tracking-tight text-white mb-8 uppercase leading-[0.8] font-cairo">
-                                <span className="block opacity-50 text-4xl md:text-5xl mb-2">{game.name}</span>
-                                <span className="text-primary italic">SERVICES</span>
-                            </h1>
-                            <p className="text-lg md:text-xl text-slate-300 font-medium max-w-2xl mx-auto leading-relaxed italic opacity-80">
-                                {game.description || `Secure your legacy in ${game.name}. Elite-tier progression and 
-                                professional coaching services tailored for future champions.`}
-                            </p>
-                        </div>
-
-                        {/* Subtle Glows - Balanced */}
-                        <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-[150px]"></div>
-                        <div className="absolute top-0 right-1/4 w-96 h-96 bg-primary/5 rounded-full blur-[150px]"></div>
-                    </div>
-                </section>
-
                 <ServiceList initialServices={game.services} />
 
                 {/* Performance Analytics Row */}
@@ -146,6 +125,7 @@ export default async function GameServicesPage({ params }: { params: Promise<{ g
                     </div>
                 </section>
             </main>
+            <Footer />
         </div>
     )
 }

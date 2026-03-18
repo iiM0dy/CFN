@@ -29,24 +29,6 @@ export default async function GamesPage() {
                     <span className="text-white">Games</span>
                 </div>
 
-                {/* Cinematic Hero Section */}
-                <section className="relative mb-12 rounded-xl overflow-hidden w-full shadow-[0_0_50px_-10px_rgba(175,18,37,0.3)]">
-                    <div className="relative flex min-h-[500px] flex-col items-center justify-center p-8 text-center bg-cover bg-center"
-                        style={{ backgroundImage: `linear-gradient(to bottom, rgba(11, 11, 11, 0.7), rgba(11, 11, 11, 0.95)), url('https://lh3.googleusercontent.com/aida-public/AB6AXuCwy7WyGmG3fseRw8CRbOv9Gg0GFzlSVuiHky7YhOhccQyRMNWYkv6eVynrUoyk2R9b_acVsPPcN__JBEs0PkIN85Cq6uiotQg5i2XE1S7UQ0UD78h9jpn5z-wbbDJczEmMJh0IUeIkcwg8FYDcnlkK_B80MU3pjrKs4MiaMQCmxUbh_Rs5NIfMQfBHAzacnWVjaruiZczTox9rhcRbpeMXXZAAlXOVgzhII8GvndG4aRV-sxwuEkSzwm3hStWhTlF3r4OhHDzf-NiC')` }}>
-                        <div className="z-10 max-w-4xl">
-                            <h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter text-white mb-6 uppercase font-cairo">
-                                THE <span className="text-primary">EMPIRE</span> DIRECTORY
-                            </h1>
-                            <p className="text-lg md:text-xl text-slate-300 font-light max-w-2xl mx-auto leading-relaxed">
-                                Deploy elite gaming solutions across the world's most competitive titles.
-                                Secure, verified, and professional rank progression services for serious players.
-                            </p>
-                        </div>
-                        {/* Dramatic Glows */}
-                        <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-primary/10 rounded-full blur-[140px]"></div>
-                        <div className="absolute -top-24 -right-24 w-96 h-96 bg-primary/10 rounded-full blur-[140px]"></div>
-                    </div>
-                </section>
 
                 <GameGrid initialGames={serializedGames} categories={categories} />
 
