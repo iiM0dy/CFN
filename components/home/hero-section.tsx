@@ -235,51 +235,6 @@ export function HeroSection() {
                     </div>
                 </div>
 
-                {/* BOTTOM: Simple Live Stats */}
-                <motion.div
-                    initial={{ opacity: 0, y: 16 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: 0.6, ease: "easeOut" }}
-                    className="w-full pt-8 mt-4 border-t border-white/10"
-                >
-                    <div className="flex flex-wrap items-center justify-between gap-6 w-full">
-                        <div className="flex flex-col gap-1">
-                            <span className="text-2xl sm:text-3xl lg:text-4xl font-black text-white tracking-tighter leading-none">52,109</span>
-                            <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest whitespace-nowrap">Global Orders</span>
-                        </div>
-                        
-                        <div className="w-px h-8 bg-white/10 hidden sm:block" />
-                        
-                        <div className="flex flex-col gap-1">
-                            <span className="text-2xl sm:text-3xl lg:text-4xl font-black text-white tracking-tighter leading-none">99.8%</span>
-                            <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest whitespace-nowrap">Success Rate</span>
-                        </div>
-                        
-                        <div className="w-px h-8 bg-white/10 hidden sm:block" />
-                        
-                        <div className="flex flex-col gap-1">
-                            <div className="flex items-center gap-2">
-                                <motion.span
-                                    key={expertsCount}
-                                    initial={{ opacity: 0, y: -5 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    className="text-2xl sm:text-3xl lg:text-4xl font-black text-white tracking-tighter leading-none"
-                                >
-                                    {expertsCount}
-                                </motion.span>
-                                <span className="px-1.5 py-0.5 rounded text-[8px] font-black text-primary bg-primary/10 border border-primary/20 uppercase tracking-widest">Live</span>
-                            </div>
-                            <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest whitespace-nowrap">Elite Experts</span>
-                        </div>
-                        
-                        <div className="w-px h-8 bg-white/10 hidden sm:block" />
-                        
-                        <div className="flex flex-col gap-1">
-                            <span className="text-2xl sm:text-3xl lg:text-4xl font-black text-white tracking-tighter leading-none">14m</span>
-                            <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest whitespace-nowrap">Avg. Start Time</span>
-                        </div>
-                    </div>
-                </motion.div>
 
             </div>
         </header>
