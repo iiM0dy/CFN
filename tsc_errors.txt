@@ -1,0 +1,30 @@
+.next/dev/types/validator.ts(315,31): error TS2344: Type 'typeof import("E:/work/airwicks/app/api/admin/orders/[id]/status/route")' does not satisfy the constraint 'RouteHandlerConfig<"/api/admin/orders/[id]/status">'.
+  Types of property 'PATCH' are incompatible.
+    Type '(req: Request, { params }: { params: { id: string; }; }) => Promise<NextResponse<unknown>>' is not assignable to type '(request: NextRequest, context: { params: Promise<{ id: string; }>; }) => void | Response | Promise<void | Response>'.
+      Types of parameters '__1' and 'context' are incompatible.
+        Type '{ params: Promise<{ id: string; }>; }' is not assignable to type '{ params: { id: string; }; }'.
+          Types of property 'params' are incompatible.
+            Property 'id' is missing in type 'Promise<{ id: string; }>' but required in type '{ id: string; }'.
+.next/dev/types/validator.ts(324,31): error TS2344: Type 'typeof import("E:/work/airwicks/app/api/admin/services/[id]/route")' does not satisfy the constraint 'RouteHandlerConfig<"/api/admin/services/[id]">'.
+  Types of property 'PATCH' are incompatible.
+    Type '(req: Request, { params }: { params: { id: string; }; }) => Promise<NextResponse<unknown>>' is not assignable to type '(request: NextRequest, context: { params: Promise<{ id: string; }>; }) => void | Response | Promise<void | Response>'.
+      Types of parameters '__1' and 'context' are incompatible.
+        Type '{ params: Promise<{ id: string; }>; }' is not assignable to type '{ params: { id: string; }; }'.
+          Types of property 'params' are incompatible.
+            Property 'id' is missing in type 'Promise<{ id: string; }>' but required in type '{ id: string; }'.
+.next/dev/types/validator.ts(333,31): error TS2344: Type 'typeof import("E:/work/airwicks/app/api/admin/users/[id]/route")' does not satisfy the constraint 'RouteHandlerConfig<"/api/admin/users/[id]">'.
+  Types of property 'PATCH' are incompatible.
+    Type '(req: Request, { params }: { params: { id: string; }; }) => Promise<NextResponse<unknown>>' is not assignable to type '(request: NextRequest, context: { params: Promise<{ id: string; }>; }) => void | Response | Promise<void | Response>'.
+      Types of parameters '__1' and 'context' are incompatible.
+        Type '{ params: Promise<{ id: string; }>; }' is not assignable to type '{ params: { id: string; }; }'.
+          Types of property 'params' are incompatible.
+            Property 'id' is missing in type 'Promise<{ id: string; }>' but required in type '{ id: string; }'.
+app/admin/orders/page.tsx(22,25): error TS2322: Type '({ user: { id: string; name: string | null; email: string | null; emailVerified: Date | null; image: string | null; password: string | null; role: Role; createdAt: Date; updatedAt: Date; } | null; service: { ...; } & { ...; }; } & { ...; })[]' is not assignable to type 'Order[]'.
+  Type '{ user: { id: string; name: string | null; email: string | null; emailVerified: Date | null; image: string | null; password: string | null; role: Role; createdAt: Date; updatedAt: Date; } | null; service: { ...; } & { ...; }; } & { ...; }' is not assignable to type 'Order'.
+    Types of property 'createdAt' are incompatible.
+      Type 'Date' is not assignable to type 'string'.
+app/admin/users/page.tsx(17,24): error TS2322: Type '({ _count: { serviceOrders: number; }; } & { id: string; name: string | null; email: string | null; emailVerified: Date | null; image: string | null; password: string | null; role: Role; createdAt: Date; updatedAt: Date; })[]' is not assignable to type 'User[]'.
+  Type '{ _count: { serviceOrders: number; }; } & { id: string; name: string | null; email: string | null; emailVerified: Date | null; image: string | null; password: string | null; role: Role; createdAt: Date; updatedAt: Date; }' is not assignable to type 'User'.
+    Types of property 'createdAt' are incompatible.
+      Type 'Date' is not assignable to type 'string'.
+lib/stripe.ts(8,5): error TS2322: Type '"2024-06-20"' is not assignable to type '"2026-02-25.clover"'.

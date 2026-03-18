@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import { useCurrency } from "@/context/currency-context";
 import { motion } from "framer-motion";
+import { toast } from "sonner";
 
 interface ServiceOptionValue {
     id: string;
@@ -66,6 +67,12 @@ export default function ServiceDetailsPage() {
     const [quantity, setQuantity] = useState(1); // Default to 1
     const [selectedOptions, setSelectedOptions] = useState<Record<string, any>>({});
     const [activeTab, setActiveTab] = useState("description");
+
+    // Deployment fields
+    const [email, setEmail] = useState(session?.user?.email || "");
+    const [discord, setDiscord] = useState("");
+    const [orderNotes, setOrderNotes] = useState("");
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     // Promo code state
     const [promoCodeData, setPromoCodeData] = useState<any>(null);
@@ -367,44 +374,59 @@ export default function ServiceDetailsPage() {
     // Handle payment method selection and purchase
     const handlePurchase = async () => {
         if (!selectedPaymentMethod) {
-            alert('Please select a payment method');
+            toast.error('Please select an authorization protocol');
             return;
         }
 
-        try {
-            // Create order in database
-            const orderData = {
-                serviceId: service?.id,
-                totalPrice: calculateTotalPrice(),
-                quantity,
-                platform,
-                completionMethod,
-                completionSpeed,
-                promoCode: promoCodeData ? promoCode : null,
-                discount: promoCodeData ? (promoCodeData.discountType === 'percentage'
-                    ? (Number(calculateTotalPrice()) * promoCodeData.discount / 100)
-                    : promoCodeData.discount) : 0,
-                selectedOptions
-            };
+        if (selectedPaymentMethod !== 'stripe') {
+            toast.error(`${selectedPaymentMethod.toUpperCase()} protocol is currently offline. Please use Stripe/Visa for immediate deployment.`);
+            return;
+        }
 
-            const res = await fetch('/api/orders', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(orderData)
+        if (!email) {
+            toast.error("Contact email is required for the briefing sequence.");
+            return;
+        }
+
+        setIsSubmitting(true);
+        try {
+            const res = await fetch("/api/checkout/session", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    items: [{
+                        id: service?.id || 'unknown',
+                        name: service?.name || 'Service',
+                        description: `${service?.name} - ${platform || 'Standard'} | ${completionMethod || 'Direct'}`,
+                        price: calculateTotalPrice() / quantity,
+                        image: service?.image || null,
+                        quantity: quantity
+                    }],
+                    customerEmail: email,
+                    metadata: {
+                        discord,
+                        orderNotes,
+                        selectedOptions: JSON.stringify(selectedOptions),
+                        platform: platform || 'Standard',
+                        completionMethod: completionMethod || 'Direct',
+                        userId: session?.user?.id || "guest"
+                    },
+                    successUrl: `${window.location.origin}/checkout/success`,
+                    cancelUrl: `${window.location.origin}${window.location.pathname}`,
+                })
             });
 
-            if (res.ok) {
-                const order = await res.json();
-                // Process payment (to be implemented with actual payment gateway)
-                alert(`Order created successfully! Order ID: ${order.id.slice(0, 8)}\nPayment via ${selectedPaymentMethod} will be processed.`);
-                setShowPaymentModal(false);
-                router.push('/orders');
+            const data = await res.json();
+            if (data.url) {
+                window.location.href = data.url;
             } else {
-                alert('Failed to create order. Please try again.');
+                throw new Error(data.error || "Failed to create checkout session");
             }
         } catch (error) {
-            console.error('Error creating order:', error);
-            alert('An error occurred. Please try again.');
+            console.error('Error initiating checkout:', error);
+            toast.error('Failed to initiate transmission sequence.');
+        } finally {
+            setIsSubmitting(false);
         }
     };
 
@@ -1339,95 +1361,157 @@ export default function ServiceDetailsPage() {
                 </div>
             </main>
 
-            {/* Payment Method Modal */}
             {showPaymentModal && (
-                <div className="fixed inset-0 bg-black/90 backdrop-blur-md z-100 flex items-center justify-center p-4">
-                    <div className="bg-[#0B0B0B] border border-white/5 rounded-2xl p-8 max-w-md w-full shadow-[0_0_50px_rgba(0,0,0,1)] relative overflow-hidden">
-                        <div className="absolute top-0 right-0 w-32 h-32 bg-primary/10 blur-[60px] rounded-full pointer-events-none"></div>
+                <div className="fixed inset-0 z-100 flex items-center justify-center p-4">
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        onClick={() => {
+                            setShowPaymentModal(false);
+                            setSelectedPaymentMethod(null);
+                        }}
+                        className="absolute inset-0 bg-black/80 backdrop-blur-xl"
+                    />
 
-                        {/* Close button */}
-                        <button
-                            onClick={() => {
-                                setShowPaymentModal(false);
-                                setSelectedPaymentMethod(null);
-                            }}
-                            className="absolute top-6 right-6 text-slate-500 hover:text-white transition-colors"
-                        >
-                            <span className="material-symbols-outlined">close</span>
-                        </button>
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.98, y: 10 }}
+                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                        className="bg-[#0A0A0A] border border-white/10 rounded-3xl w-full max-w-lg shadow-2xl relative overflow-hidden z-100 flex flex-col max-h-[90vh]"
+                    >
+                        <div className="p-8 md:p-10 overflow-y-auto custom-scrollbar">
+                            {/* Simple Header */}
+                            <div className="flex items-center justify-between mb-8">
+                                <div>
+                                    <h2 className="text-3xl font-bold text-white tracking-tight">Checkout</h2>
+                                    <p className="text-sm text-slate-500 mt-1">Review your service details</p>
+                                </div>
+                                <button
+                                    onClick={() => {
+                                        setShowPaymentModal(false);
+                                        setSelectedPaymentMethod(null);
+                                    }}
+                                    className="p-2 rounded-lg hover:bg-white/5 text-slate-400 hover:text-white transition-colors"
+                                >
+                                    <span className="material-symbols-outlined">close</span>
+                                </button>
+                            </div>
 
-                        <h2 className="text-2xl font-black text-white uppercase tracking-widest mb-2 font-cairo">DEPLOYMENT GATEWAY</h2>
-                        <p className="text-[11px] text-slate-500 font-bold uppercase tracking-widest mb-8 italic">Choose your secure financial protocol</p>
-
-                        {/* Payment Methods */}
-                        <div className="space-y-4 mb-10">
-                            {/* PayPal */}
-                            <label className="cursor-pointer block group">
-                                <input
-                                    type="radio"
-                                    name="paymentMethod"
-                                    value="paypal"
-                                    checked={selectedPaymentMethod === 'paypal'}
-                                    onChange={(e) => setSelectedPaymentMethod(e.target.value)}
-                                    className="peer sr-only"
-                                />
-                                <div className="flex items-center gap-4 p-5 rounded-2xl border-2 border-white/5 bg-white/5 hover:border-primary/50 transition-all peer-checked:border-primary peer-checked:bg-primary/5">
-                                    <div className="size-14 rounded-xl bg-[#0070ba] flex items-center justify-center shadow-lg">
-                                        <svg className="w-8 h-8" viewBox="0 0 24 24" fill="white">
-                                            <path d="M20.067 8.478c.492.88.556 2.014.3 3.327-.74 3.806-3.276 5.12-6.514 5.12h-.5a.805.805 0 00-.794.68l-.04.22-.63 3.993-.028.15a.805.805 0 01-.794.68H7.72a.483.483 0 01-.477-.558L8.926 13.7a.805.805 0 01.794-.68h2.344c4.323 0 7.255-2.203 8.003-6.542z" />
-                                            <path d="M6.124 3.65A.805.805 0 016.916 3h6.553c1.587 0 2.726.33 3.49 1.053.732.692 1.131 1.728 1.218 3.13-1.084 4.83-4.504 7.29-9.616 7.29H6.916a.805.805 0 00-.794.68l-.952 6.035a.483.483 0 01-.477.558H2.175a.483.483 0 01-.477-.558z" opacity=".7" />
-                                        </svg>
-                                    </div>
-                                    <div className="flex-1">
-                                        <h3 className="font-black text-white text-sm uppercase tracking-tight">PAYPAL SECURE</h3>
-                                        <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest italic">Instant Verification</p>
-                                    </div>
-                                    <div className="size-6 rounded-full border-2 border-slate-700 flex items-center justify-center peer-checked:border-primary transition-colors">
-                                        <div className="size-3 bg-primary rounded-full opacity-0 peer-checked:opacity-100 transition-opacity"></div>
+                            <div className="space-y-6">
+                                {/* Order Summary */}
+                                <div className="bg-white/5 rounded-xl p-5 border border-white/5">
+                                    <div className="flex justify-between items-start">
+                                        <div>
+                                            <h3 className="font-bold text-white">{service?.name}</h3>
+                                            <p className="text-xs text-slate-400 mt-1">{platform} • {completionMethod}</p>
+                                        </div>
+                                        <div className="text-lg font-bold text-white text-right">
+                                            {formatPrice(calculateTotalPrice())}
+                                        </div>
                                     </div>
                                 </div>
-                            </label>
 
-                            {/* Crypto */}
-                            <label className="cursor-pointer block group">
-                                <input
-                                    type="radio"
-                                    name="paymentMethod"
-                                    value="crypto"
-                                    checked={selectedPaymentMethod === 'crypto'}
-                                    onChange={(e) => setSelectedPaymentMethod(e.target.value)}
-                                    className="peer sr-only"
-                                />
-                                <div className="flex items-center gap-4 p-5 rounded-2xl border-2 border-white/5 bg-white/5 hover:border-primary/50 transition-all peer-checked:border-primary peer-checked:bg-primary/5">
-                                    <div className="size-14 rounded-xl bg-linear-to-br from-orange-500 to-yellow-600 flex items-center justify-center shadow-lg">
-                                        <span className="material-symbols-outlined text-white text-3xl">currency_bitcoin</span>
+                                {/* Customer Info */}
+                                <div className="space-y-4">
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <div className="space-y-2">
+                                            <label className="text-[11px] font-bold text-slate-400 uppercase tracking-wider ml-1">Email Address</label>
+                                            <input
+                                                type="email"
+                                                value={email}
+                                                onChange={(e) => setEmail(e.target.value)}
+                                                placeholder="your@email.com"
+                                                className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:border-primary/50 focus:bg-white/8 transition-all outline-none"
+                                            />
+                                        </div>
+                                        <div className="space-y-2">
+                                            <label className="text-[11px] font-bold text-slate-400 uppercase tracking-wider ml-1">Discord Tag</label>
+                                            <input
+                                                type="text"
+                                                value={discord}
+                                                onChange={(e) => setDiscord(e.target.value)}
+                                                placeholder="Username#0000"
+                                                className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:border-primary/50 focus:bg-white/8 transition-all outline-none"
+                                            />
+                                        </div>
                                     </div>
-                                    <div className="flex-1">
-                                        <h3 className="font-black text-white text-sm uppercase tracking-tight">CRYPTO ANONYMOUS</h3>
-                                        <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest italic">BTC / ETH / USDT / LTC</p>
-                                    </div>
-                                    <div className="size-6 rounded-full border-2 border-slate-700 flex items-center justify-center peer-checked:border-primary transition-colors">
-                                        <div className="size-3 bg-primary rounded-full opacity-0 peer-checked:opacity-100 transition-opacity"></div>
+
+                                    <div className="space-y-2">
+                                        <label className="text-[11px] font-bold text-slate-400 uppercase tracking-wider ml-1">Order Notes (Optional)</label>
+                                        <textarea
+                                            value={orderNotes}
+                                            onChange={(e) => setOrderNotes(e.target.value)}
+                                            placeholder="Tell us any specific requirements..."
+                                            rows={2}
+                                            className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:border-primary/50 focus:bg-white/8 transition-all outline-none resize-none"
+                                        />
                                     </div>
                                 </div>
-                            </label>
-                        </div>
 
-                        {/* Buy Button */}
-                        <button
-                            onClick={handlePurchase}
-                            disabled={!selectedPaymentMethod}
-                            className="w-full py-5 bg-primary hover:bg-[#8a0e1d] text-white font-black text-sm uppercase tracking-[0.2em] rounded-xl flex items-center justify-center gap-3 transition-all shadow-xl shadow-primary/20 disabled:opacity-50 disabled:cursor-not-allowed mb-6"
-                        >
-                            CONFIRM DEPLOYMENT - {formatPrice(calculateTotalPrice())}
-                        </button>
+                                {/* Payment Methods */}
+                                <div className="space-y-4 pt-2">
+                                    <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider ml-1">Select Payment Method</label>
+                                    <div className="space-y-3">
+                                        <button
+                                            onClick={() => setSelectedPaymentMethod('stripe')}
+                                            className={`w-full flex items-center justify-between p-4 rounded-xl border transition-all ${selectedPaymentMethod === 'stripe'
+                                                ? 'bg-primary/10 border-primary text-white'
+                                                : 'bg-white/5 border-white/10 text-slate-400 hover:border-white/20'
+                                                }`}
+                                        >
+                                            <div className="flex items-center gap-3">
+                                                <span className="material-symbols-outlined">credit_card</span>
+                                                <span className="text-sm font-bold">Credit / Debit Card</span>
+                                            </div>
+                                            {selectedPaymentMethod === 'stripe' && (
+                                                <div className="size-5 bg-primary rounded-full flex items-center justify-center">
+                                                    <span className="material-symbols-outlined text-[14px] text-white">check</span>
+                                                </div>
+                                            )}
+                                        </button>
 
-                        {/* Security Notice */}
-                        <div className="flex items-center justify-center gap-2 pt-6 border-t border-white/5 text-[10px] text-slate-600 font-black uppercase tracking-widest">
-                            <span className="material-symbols-outlined text-sm text-primary">verified</span>
-                            End-to-End Encrypted Financial Protocol
+                                        <div className="grid grid-cols-2 gap-3">
+                                            <div className="flex items-center gap-2 p-3 rounded-xl border border-white/5 bg-white/2 opacity-40 cursor-not-allowed">
+                                                <span className="material-symbols-outlined text-xs">payments</span>
+                                                <span className="text-[11px] font-bold text-white">PayPal</span>
+                                                <span className="text-[8px] border border-white/20 px-1 rounded uppercase ml-auto">Soon</span>
+                                            </div>
+                                            <div className="flex items-center gap-2 p-3 rounded-xl border border-white/5 bg-white/2 opacity-40 cursor-not-allowed">
+                                                <span className="material-symbols-outlined text-xs">currency_bitcoin</span>
+                                                <span className="text-[11px] font-bold text-white">Crypto</span>
+                                                <span className="text-[8px] border border-white/20 px-1 rounded uppercase ml-auto">Soon</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Action Button */}
+                            <div className="pt-4">
+                                <button
+                                    onClick={handlePurchase}
+                                    disabled={!selectedPaymentMethod || isSubmitting}
+                                    className="w-full py-4 bg-primary hover:bg-[#8a0e1d] disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold rounded-xl transition-all shadow-lg shadow-primary/20 flex items-center justify-center gap-2"
+                                >
+                                    {isSubmitting ? (
+                                        <>
+                                            <div className="size-4 border-2 border-white/20 border-t-white rounded-full animate-spin" />
+                                            <span>Processing...</span>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <span>Pay Now</span>
+                                            <span className="material-symbols-outlined text-xl">arrow_forward</span>
+                                        </>
+                                    )}
+                                </button>
+                                <p className="text-center text-[10px] text-slate-500 mt-4 flex items-center justify-center gap-1.5 uppercase tracking-widest">
+                                    <span className="material-symbols-outlined text-[12px]">lock</span>
+                                    Secure SSL Encrypted Payment
+                                </p>
+                            </div>
                         </div>
-                    </div>
+                    </motion.div>
                 </div>
             )}
         </div>

@@ -63,6 +63,7 @@ export const metadata: Metadata = {
 };
 
 import { LiveChat } from "@/components/layout/live-chat";
+import AnnouncementBar from "@/components/layout/AnnouncementBar";
 
 export default function RootLayout({
   children,
@@ -79,6 +80,7 @@ export default function RootLayout({
         suppressHydrationWarning
       >
         <Providers attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
+          <AnnouncementBar />
           <Header />
           {children}
           <LiveChat />

@@ -11,6 +11,12 @@ import { motion, AnimatePresence } from "framer-motion"
 
 export function Header() {
     const pathname = usePathname()
+
+    // Hide main header on admin routes
+    if (pathname?.startsWith("/admin")) {
+        return null;
+    }
+
     const [mobileOpen, setMobileOpen] = useState(false)
     const [searchOpen, setSearchOpen] = useState(false)
     const [menuOpen, setMenuOpen] = useState(false)

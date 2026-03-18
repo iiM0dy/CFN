@@ -132,6 +132,8 @@ model Service {
   completionMethods String[] // e.g., ["Solo", "Duo"]
   maxQuantity       Int      @default(15) // Maximum quantity that can be ordered
 
+  isFeatured        Boolean  @default(false)
+
   // Dynamic service options
   options       ServiceOption[]
   favorites     Favorite[]
@@ -311,4 +313,12 @@ model ChatMessage {
   sender    String
   isAdmin   Boolean     @default(false)
   createdAt DateTime    @default(now())
+}
+
+model Announcement {
+  id        String   @id @default(cuid())
+  message   String
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

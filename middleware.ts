@@ -15,10 +15,10 @@ export default auth((req) => {
     console.log(`Middleware: ${nextUrl.pathname} | LoggedIn: ${isLoggedIn} | Role: ${req.auth?.user?.role}`)
 
     // Admin Route Protection
-    if (nextUrl.pathname.startsWith('/admin')) {
+    if (nextUrl.pathname.startsWith('/admin') && nextUrl.pathname !== '/admin/login') {
         // @ts-ignore
         if (req.auth?.user?.role !== 'ADMIN') {
-            return Response.redirect(new URL('/', nextUrl))
+            return Response.redirect(new URL('/admin/login', nextUrl))
         }
     }
 
