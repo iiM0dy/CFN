@@ -3,16 +3,15 @@
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import Image from "next/image"
-import { motion, Variants } from "framer-motion"
-import { Target, Swords, Trophy, Crosshair } from "lucide-react"
+import { motion, AnimatePresence, Variants } from "framer-motion"
 
 const heroImageUrl = "https://i.postimg.cc/YCzk2Rg7/Refine-the-image-make-the-logo-inspired-shape-much-larger-and-more-integrated-into-the-background.png"
 
 const HERO_GAME_CARDS = [
-    { image: "/assets/val-char-bg.png", label: "Valorant", sub: "Rank Boost" },
-    { image: "/assets/wow-char-bg.png", label: "WoW", sub: "Powerleveling" },
-    { image: "/assets/lol-char-bg.png", label: "LoL", sub: "Duo Queue" },
-    { image: "/assets/arc-char-bg.png", label: "ARC Raiders", sub: "Materials" },
+    { image: "/assets/val-char-bg.png", label: "Valorant", sub: "Rank Boost", slug: "valorant", tagline: "Dominate every ranked match" },
+    { image: "/assets/wow-char-bg.png", label: "WoW", sub: "Powerleveling", slug: "wow", tagline: "Conquer Azeroth effortlessly" },
+    { image: "/assets/lol-char-bg.png", label: "LoL", sub: "Duo Queue", slug: "lol", tagline: "Climb the ladder together" },
+    { image: "/assets/arc-char-bg.png", label: "ARC Raiders", sub: "Materials", slug: "arc-raiders", tagline: "Stockpile rare resources" },
 ]
 
 // stagger variants
@@ -26,21 +25,12 @@ const fadeUp: Variants = {
     show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
 }
 
-const cardVariants: Variants = {
-    hidden: { opacity: 0, y: 16 },
-    show: (i: number) => ({
-        opacity: 1,
-        y: 0,
-        transition: { duration: 0.45, ease: "easeOut", delay: 0.3 + i * 0.08 },
-    }),
-}
-
 export function HeroSection() {
     const [expertsCount, setExpertsCount] = useState(412)
     const [activeIndex, setActiveIndex] = useState(0)
+    const [direction, setDirection] = useState(1) // 1 = forward, -1 = backward
 
     useEffect(() => {
-        // ... (experts loop)
         const calculateExperts = () => {
             const now = new Date().getTime()
             const fifteenMinutes = 15 * 60 * 1000
@@ -52,26 +42,62 @@ export function HeroSection() {
         calculateExperts()
         const expInterval = setInterval(calculateExperts, 60000)
 
-        // auto-cycle cards every 3 seconds
-        const cardInterval = setInterval(() => {
+        // Auto-cycle panels
+        const panelInterval = setInterval(() => {
+            setDirection(1)
             setActiveIndex((prev) => (prev + 1) % HERO_GAME_CARDS.length)
-        }, 3000)
+        }, 5000)
 
         return () => {
             clearInterval(expInterval)
-            clearInterval(cardInterval)
+            clearInterval(panelInterval)
         }
     }, [])
+
+    const goTo = (index: number) => {
+        setDirection(index > activeIndex ? 1 : -1)
+        setActiveIndex(index)
+    }
+
+    const activeCard = HERO_GAME_CARDS[activeIndex]
+
+    // Panel slide variants
+    const panelVariants = {
+        enter: (dir: number) => ({
+            x: dir > 0 ? "100%" : "-100%",
+            opacity: 0,
+            scale: 1.05,
+        }),
+        center: {
+            x: 0,
+            opacity: 1,
+            scale: 1,
+            transition: { duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] },
+        },
+        exit: (dir: number) => ({
+            x: dir > 0 ? "-30%" : "30%",
+            opacity: 0,
+            scale: 0.95,
+            transition: { duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] },
+        }),
+    }
+
+    // Text animation variants
+    const textSlide = {
+        enter: { opacity: 0, y: 30 },
+        center: { opacity: 1, y: 0, transition: { duration: 0.5, delay: 0.3 } },
+        exit: { opacity: 0, y: -20, transition: { duration: 0.3 } },
+    }
 
     return (
         <header className="relative w-full min-h-[680px] flex items-center overflow-hidden border-b border-white/5 bg-[#050505]">
 
             {/* ── Backgrounds ── */}
             <div className="absolute inset-0 z-0 overflow-hidden">
-                <div className="absolute inset-0 z-20 bg-gradient-to-t from-[#050505] via-[#050505]/60 to-transparent" />
-                <div className="absolute inset-0 z-20 bg-gradient-to-r from-[#050505] via-[#050505]/70 to-transparent" />
+                <div className="absolute inset-0 z-20 bg-linear-to-t from-[#050505] via-[#050505]/60 to-transparent" />
+                <div className="absolute inset-0 z-20 bg-linear-to-r from-[#050505] via-[#050505]/70 to-transparent" />
                 <div className="absolute inset-0 z-10 bg-[radial-gradient(circle_at_30%_50%,rgba(175,18,37,0.18)_0%,transparent_60%)]" />
-                <div className="absolute inset-0 z-10 opacity-40 mix-blend-overlay bg-[linear-gradient(0deg,rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:40px_40px]" />
+                <div className="absolute inset-0 z-10 opacity-40 mix-blend-overlay bg-[linear-gradient(0deg,rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-size-[40px_40px]" />
                 <div className="absolute inset-0 z-10 opacity-40 mix-blend-overlay">
                     <Image
                         src={heroImageUrl}
@@ -86,10 +112,9 @@ export function HeroSection() {
             {/* ── Content ── */}
             <div className="relative z-30 w-full max-w-[1440px] mx-auto px-6 lg:px-10 py-16 lg:py-20 flex flex-col justify-center h-full">
 
-                {/* TOP: Text & Cards */}
-                <div className="flex flex-col lg:flex-row items-center justify-between gap-12 w-full mb-16 lg:mb-20">
+                <div className="flex flex-col lg:flex-row items-center justify-between gap-10 w-full">
 
-                    {/* LEFT: staggered text + CTAs */}
+                    {/* LEFT: Text + CTAs */}
                     <motion.div
                         className="flex-1 max-w-2xl w-full"
                         variants={containerVariants}
@@ -144,97 +169,142 @@ export function HeroSection() {
                         </motion.div>
                     </motion.div>
 
-                    {/* RIGHT: 3D Auto-Rotating Stacked Carousel */}
-                    <div className="hidden lg:flex relative w-[400px] h-[400px] shrink-0 items-center justify-center perspective-[1000px]">
-                        {HERO_GAME_CARDS.map((c, i) => {
-                            // Calculate position relative to active index
-                            const total = HERO_GAME_CARDS.length;
-                            // This math creates a continuous visual loop
-                            let offset = (i - activeIndex) % total;
-                            if (offset < 0) offset += total;
-                            
-                            // Define visual states based on the offset
-                            const isFront = offset === 0;
-                            const isSecond = offset === 1;
-                            const isThird = offset === 2;
-                            // Fourth item visually goes to the back
-                            
-                            // Map offsets to Framer Motion animate values
-                            let scale = 1;
-                            let y = 0;
-                            let z = 0;
-                            let rotateX = 0;
-                            let opacity = 1;
-                            let zIndex = 0;
+                    {/* RIGHT: Full-Bleed Sliding Panel */}
+                    <div className="hidden lg:block relative w-[440px] h-[520px] shrink-0 rounded-2xl overflow-hidden">
+                        {/* Panel Image — AnimatePresence for slide transitions */}
+                        <AnimatePresence initial={false} custom={direction} mode="popLayout">
+                            <motion.div
+                                key={activeIndex}
+                                custom={direction}
+                                variants={panelVariants}
+                                initial="enter"
+                                animate="center"
+                                exit="exit"
+                                className="absolute inset-0"
+                            >
+                                <Image
+                                    src={activeCard.image}
+                                    alt={activeCard.label}
+                                    fill
+                                    sizes="440px"
+                                    className="object-cover object-top"
+                                    priority
+                                />
 
-                            if (isFront) {
-                                scale = 1; y = 0; z = 0; rotateX = 0; opacity = 1; zIndex = 40;
-                            } else if (isSecond) {
-                                scale = 0.85; y = -40; z = -100; rotateX = 10; opacity = 0.7; zIndex = 30;
-                            } else if (isThird) {
-                                scale = 0.7; y = -70; z = -200; rotateX = 20; opacity = 0.3; zIndex = 20;
-                            } else {
-                                // hide the last one as it cycles back to the bottom
-                                scale = 0.5; y = 20; z = -300; rotateX = -10; opacity = 0; zIndex = 10;
-                            }
+                                {/* Overlays */}
+                                <div className="absolute inset-0 bg-linear-to-t from-[#050505] via-[#050505]/30 to-transparent" />
+                                <div className="absolute inset-0 bg-linear-to-l from-transparent via-transparent to-[#050505]/40" />
+                            </motion.div>
+                        </AnimatePresence>
 
-                            return (
-                                <motion.div
-                                    key={c.label}
-                                    initial={false}
-                                    animate={{ 
-                                        scale, 
-                                        y, 
-                                        z, 
-                                        rotateX,
-                                        opacity,
-                                        zIndex
-                                    }}
-                                    transition={{ duration: 0.6, ease: [0.32, 0.72, 0, 1] }} // smooth, snappy spring-like transition
-                                    className="absolute w-[260px] h-[340px] cursor-pointer"
-                                    onClick={() => setActiveIndex(i)}
-                                >
-                                    <div className={`relative w-full h-full rounded-[24px] overflow-hidden border border-white/10 bg-[#0a0a0a] shadow-[0_30px_50px_-10px_rgba(0,0,0,0.8)] transition-all duration-300 ${isFront ? 'hover:border-primary/50 hover:shadow-[0_0_40px_rgba(175,18,37,0.3)]' : ''}`}>
-                                        
-                                        {c.image && (
-                                            <Image 
-                                                src={c.image} 
-                                                alt={c.label} 
-                                                fill 
-                                                sizes="260px"
-                                                className={`object-cover object-top transition-all duration-700 ${isFront ? 'opacity-90 scale-100' : 'opacity-40 scale-110 grayscale-50'}`} 
-                                            />
-                                        )}
-                                        
-                                        {/* Overlay gradient */}
-                                        <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-[#050505] via-[#050505]/60 to-transparent z-0" />
-                                        
-                                        {/* Dynamic accent ring on front card only */}
-                                        <div className={`absolute inset-0 rounded-[24px] pointer-events-none transition-all duration-700 ${isFront ? 'ring-2 ring-inset ring-primary/20' : 'ring-0 ring-transparent'}`} />
+                        {/* Border & glow */}
+                        <div className="absolute inset-0 rounded-2xl border border-white/10 pointer-events-none z-10" />
+                        <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-primary/10 pointer-events-none z-10" />
 
-                                        {/* Top Badge */}
-                                        <div className="absolute top-4 left-4 bg-black/50 backdrop-blur-md rounded border border-white/10 px-2.5 py-1 z-10">
-                                            <span className="text-[10px] font-black text-white uppercase tracking-wider">{c.sub}</span>
-                                        </div>
+                        {/* Panel Content Overlay — stays on top */}
+                        <div className="absolute inset-0 z-20 flex flex-col justify-between p-6">
+                            {/* Top: Service badge */}
+                            <div className="flex items-center justify-between">
+                                <AnimatePresence mode="wait">
+                                    <motion.div
+                                        key={activeIndex}
+                                        variants={textSlide}
+                                        initial="enter"
+                                        animate="center"
+                                        exit="exit"
+                                        className="bg-primary/90 backdrop-blur-sm rounded-lg px-3 py-1.5 border border-primary/50"
+                                    >
+                                        <span className="text-[10px] font-black text-white uppercase tracking-widest">{activeCard.sub}</span>
+                                    </motion.div>
+                                </AnimatePresence>
 
-                                        {/* Bottom Details */}
-                                        <div className="absolute inset-x-0 bottom-0 p-6 flex items-end justify-between z-10">
-                                            <span className="font-cairo text-3xl font-black text-white uppercase tracking-tighter leading-none drop-shadow-md">{c.label}</span>
-                                            
-                                            {/* Action icon for active card */}
-                                            <div className={`flex items-center justify-center w-10 h-10 rounded-full bg-primary text-white transition-all duration-300 ${isFront ? 'opacity-100 translate-y-0 translate-x-0' : 'opacity-0 translate-y-4 translate-x-4'}`}>
-                                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                                                </svg>
-                                            </div>
-                                        </div>
+                                {/* Card counter */}
+                                <div className="bg-black/40 backdrop-blur-md rounded-lg px-3 py-1.5 border border-white/10">
+                                    <span className="text-[10px] font-black text-white/60 uppercase tracking-widest">
+                                        {String(activeIndex + 1).padStart(2, '0')} / {String(HERO_GAME_CARDS.length).padStart(2, '0')}
+                                    </span>
+                                </div>
+                            </div>
+
+                            {/* Bottom: Game info + CTA */}
+                            <div>
+                                <AnimatePresence mode="wait">
+                                    <motion.div
+                                        key={activeIndex}
+                                        variants={textSlide}
+                                        initial="enter"
+                                        animate="center"
+                                        exit="exit"
+                                    >
+                                        <h3 className="font-cairo text-4xl font-black text-white uppercase tracking-tighter leading-none mb-2 drop-shadow-[0_2px_20px_rgba(0,0,0,0.5)]">
+                                            {activeCard.label}
+                                        </h3>
+                                        <p className="text-sm text-white/60 font-medium mb-5 italic">
+                                            {activeCard.tagline}
+                                        </p>
+                                        <Link
+                                            href={`/games/${activeCard.slug}/services`}
+                                            className="group inline-flex items-center gap-2 bg-white/10 hover:bg-primary border border-white/20 hover:border-primary rounded-xl px-5 py-3 backdrop-blur-md transition-all duration-300"
+                                        >
+                                            <span className="text-[11px] font-black text-white uppercase tracking-widest">View Services</span>
+                                            <svg className="w-4 h-4 text-white group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                                            </svg>
+                                        </Link>
+                                    </motion.div>
+                                </AnimatePresence>
+
+                                {/* Navigation dots + arrows */}
+                                <div className="flex items-center justify-between mt-6">
+                                    <div className="flex gap-2">
+                                        {HERO_GAME_CARDS.map((_, i) => (
+                                            <button
+                                                key={i}
+                                                onClick={() => goTo(i)}
+                                                className="relative h-1.5 rounded-full overflow-hidden transition-all duration-300"
+                                                style={{ width: i === activeIndex ? 32 : 12 }}
+                                            >
+                                                <div className={`absolute inset-0 rounded-full transition-colors duration-300 ${
+                                                    i === activeIndex ? 'bg-primary' : 'bg-white/20'
+                                                }`} />
+                                                {/* Progress fill for active dot */}
+                                                {i === activeIndex && (
+                                                    <motion.div
+                                                        className="absolute inset-y-0 left-0 bg-white/40 rounded-full"
+                                                        initial={{ width: "0%" }}
+                                                        animate={{ width: "100%" }}
+                                                        transition={{ duration: 5, ease: "linear" }}
+                                                        key={`progress-${activeIndex}`}
+                                                    />
+                                                )}
+                                            </button>
+                                        ))}
                                     </div>
-                                </motion.div>
-                            )
-                        })}
+
+                                    {/* Arrow controls */}
+                                    <div className="flex gap-2">
+                                        <button
+                                            onClick={() => goTo((activeIndex - 1 + HERO_GAME_CARDS.length) % HERO_GAME_CARDS.length)}
+                                            className="w-8 h-8 rounded-lg bg-white/10 hover:bg-white/20 border border-white/10 flex items-center justify-center text-white transition-all backdrop-blur-sm"
+                                        >
+                                            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                                            </svg>
+                                        </button>
+                                        <button
+                                            onClick={() => goTo((activeIndex + 1) % HERO_GAME_CARDS.length)}
+                                            className="w-8 h-8 rounded-lg bg-white/10 hover:bg-white/20 border border-white/10 flex items-center justify-center text-white transition-all backdrop-blur-sm"
+                                        >
+                                            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-
 
             </div>
         </header>
