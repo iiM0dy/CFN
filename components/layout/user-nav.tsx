@@ -33,70 +33,69 @@ export function UserNav() {
 
     if (!session) {
         return (
-            <Button variant="outline" asChild>
-                <Link href="/login">Login</Link>
-            </Button>
+            <Link 
+                href="/login" 
+                className="px-5 py-2.5 bg-primary hover:bg-[#8a0e1d] rounded-2xl text-[10px] font-black text-white transition-all uppercase tracking-widest shadow-lg shadow-primary/20"
+            >
+                Log in
+            </Link>
         )
     }
 
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="relative h-8 w-8 rounded-full">
-                    <Avatar className="h-8 w-8">
+                <Button variant="ghost" className="relative h-9 w-9 rounded-2xl bg-white/5 border border-white/5 hover:bg-white/10 hover:border-white/10 transition-all cursor-pointer">
+                    <Avatar className="h-9 w-9 rounded-2xl">
                         <AvatarImage src={session.user?.image ?? ""} alt={session.user?.email ?? ""} />
-                        <AvatarFallback>
+                        <AvatarFallback className="bg-transparent text-slate-300">
                             <User className="h-4 w-4" />
                         </AvatarFallback>
                     </Avatar>
                 </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-56" align="end" sideOffset={8}>
-                <DropdownMenuLabel className="font-normal">
+            <DropdownMenuContent className="w-56 bg-[#0D0D0D] border-white/10 text-slate-300 rounded-2xl p-2 shadow-2xl" align="end" sideOffset={8}>
+                <DropdownMenuLabel className="font-normal px-2 py-3">
                     <div className="flex flex-col space-y-1">
-                        <p className="text-sm font-medium leading-none">{session.user?.email}</p>
-                        <p className="text-xs leading-none text-muted-foreground">
-                            {session.user?.email}
-                        </p>
+                        <p className="text-xs font-bold leading-none text-white truncate">{session.user?.email}</p>
                     </div>
                 </DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuGroup>
-                    <DropdownMenuItem asChild>
-                        <a href="/orders">
+                <DropdownMenuSeparator className="bg-white/5 mx-2" />
+                <DropdownMenuGroup className="p-1 space-y-1">
+                    <DropdownMenuItem asChild className="rounded-xl focus:bg-white/5 focus:text-white cursor-pointer transition-colors px-3 py-2.5 text-xs font-medium">
+                        <Link href="/orders">
                             My Orders
-                            <DropdownMenuShortcut>⌘O</DropdownMenuShortcut>
-                        </a>
+                        </Link>
                     </DropdownMenuItem>
-                    <DropdownMenuItem asChild>
-                        <a href="/favorites">
+                    <DropdownMenuItem asChild className="rounded-xl focus:bg-white/5 focus:text-white cursor-pointer transition-colors px-3 py-2.5 text-xs font-medium">
+                        <Link href="/favorites">
                             Favorites
-                            <DropdownMenuShortcut>⌘F</DropdownMenuShortcut>
-                        </a>
+                        </Link>
                     </DropdownMenuItem>
-                    <DropdownMenuItem>
+                    <DropdownMenuItem className="rounded-xl focus:bg-white/5 focus:text-white cursor-pointer transition-colors px-3 py-2.5 text-xs font-medium">
                         Profile
-                        <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
                     </DropdownMenuItem>
-                    <DropdownMenuItem>
+                    <DropdownMenuItem className="rounded-xl focus:bg-white/5 focus:text-white cursor-pointer transition-colors px-3 py-2.5 text-xs font-medium">
                         History
-                        <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
                     </DropdownMenuItem>
                     {/* @ts-ignore */}
                     {session.user?.role === "ADMIN" && (
-                        <DropdownMenuItem asChild>
-                            <a href="/admin/chat">
+                        <DropdownMenuItem asChild className="rounded-xl focus:bg-white/5 focus:text-white cursor-pointer transition-colors px-3 py-2.5 text-xs font-medium">
+                            <Link href="/admin/chat">
                                 Support Terminal
-                                <DropdownMenuShortcut>⌘A</DropdownMenuShortcut>
-                            </a>
+                            </Link>
                         </DropdownMenuItem>
                     )}
                 </DropdownMenuGroup>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={() => signOut()}>
-                    Log out
-                    <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
-                </DropdownMenuItem>
+                <DropdownMenuSeparator className="bg-white/5 mx-2" />
+                <div className="p-1">
+                    <DropdownMenuItem 
+                        onClick={() => signOut()} 
+                        className="rounded-xl focus:bg-primary/20 focus:text-primary cursor-pointer transition-colors px-3 py-2.5 text-xs font-bold text-red-400/80"
+                    >
+                        Log out
+                    </DropdownMenuItem>
+                </div>
             </DropdownMenuContent>
         </DropdownMenu>
     )

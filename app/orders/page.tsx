@@ -103,46 +103,46 @@ export default function MyOrdersPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#0B0B0B] text-white font-[family-name:var(--font-space-grotesk)]">
-      <main className="flex-grow w-full px-6 py-8 max-w-7xl mx-auto">
+    <div className="min-h-screen bg-[#080808] text-white font-[family-name:var(--font-space-grotesk)]">
+      <main className="flex-grow w-full px-6 lg:px-10 py-8 max-w-[1440px] mx-auto">
         {/* Breadcrumbs */}
-        <div className="flex items-center gap-2 text-sm text-gray-500 mb-8">
+        <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-slate-500 mb-8">
           <Link href="/" className="hover:text-primary transition-colors">Home</Link>
           <ChevronRight className="size-3" />
-          <span className="text-gray-300">My Orders</span>
+          <span className="text-white">My Orders</span>
         </div>
 
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-4xl md:text-5xl font-bold text-white uppercase tracking-tight mb-2">My Orders</h1>
-          <p className="text-gray-400">Track and manage your service orders</p>
+          <h1 className="text-4xl md:text-5xl font-black text-white uppercase tracking-tighter mb-2">My Orders</h1>
+          <p className="text-slate-500 text-xs font-bold uppercase tracking-widest">Track and manage your service orders</p>
         </div>
 
         {/* Filter Tabs */}
-        <div className="flex gap-4 mb-8 border-b border-[#1c1c1c]">
+        <div className="flex gap-6 mb-10 border-b border-white/5">
           <button
             onClick={() => setFilter('all')}
-            className={`pb-4 px-2 text-sm font-bold uppercase tracking-wider transition-colors ${filter === 'all'
-              ? 'text-primary border-b-2 border-primary'
-              : 'text-gray-500 hover:text-gray-300'
+            className={`pb-4 text-[10px] font-black uppercase tracking-widest transition-all ${filter === 'all'
+              ? 'text-primary border-b-2 border-primary -mb-px'
+              : 'text-slate-600 hover:text-white'
               }`}
           >
             All Orders ({orders.length})
           </button>
           <button
             onClick={() => setFilter('active')}
-            className={`pb-4 px-2 text-sm font-bold uppercase tracking-wider transition-colors ${filter === 'active'
-              ? 'text-primary border-b-2 border-primary'
-              : 'text-gray-500 hover:text-gray-300'
+            className={`pb-4 text-[10px] font-black uppercase tracking-widest transition-all ${filter === 'active'
+              ? 'text-primary border-b-2 border-primary -mb-px'
+              : 'text-slate-600 hover:text-white'
               }`}
           >
             Active ({orders.filter(o => o.status === 'pending' || o.status === 'active').length})
           </button>
           <button
             onClick={() => setFilter('completed')}
-            className={`pb-4 px-2 text-sm font-bold uppercase tracking-wider transition-colors ${filter === 'completed'
-              ? 'text-primary border-b-2 border-primary'
-              : 'text-gray-500 hover:text-gray-300'
+            className={`pb-4 text-[10px] font-black uppercase tracking-widest transition-all ${filter === 'completed'
+              ? 'text-primary border-b-2 border-primary -mb-px'
+              : 'text-slate-600 hover:text-white'
               }`}
           >
             Completed ({orders.filter(o => o.status === 'completed').length})
@@ -151,8 +151,8 @@ export default function MyOrdersPage() {
 
         {/* Orders List */}
         {status === 'unauthenticated' ? (
-          <div className="text-center py-24 bg-[#141414] border border-dashed border-[#2a1a1c] rounded-2xl">
-            <div className="size-20 rounded-2xl bg-primary/5 flex items-center justify-center mx-auto mb-6">
+          <div className="text-center py-24 bg-[#0D0D0D] border border-dashed border-white/10 rounded-[2.5rem] shadow-2xl">
+            <div className="size-20 rounded-2xl bg-primary/5 flex items-center justify-center mx-auto mb-6 border border-primary/10">
               <span className="material-symbols-outlined text-primary text-4xl">fingerprint</span>
             </div>
             <h3 className="text-2xl font-black text-white uppercase tracking-widest mb-4">IDENTITY UNKNOWN</h3>
@@ -162,100 +162,102 @@ export default function MyOrdersPage() {
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link
                 href="/login"
-                className="px-8 py-3 bg-primary hover:bg-[#8a0e1d] text-white text-[10px] font-black uppercase tracking-[0.3em] rounded-xl transition-all shadow-xl shadow-primary/20"
+                className="px-8 py-4 bg-primary hover:bg-[#8a0e1d] text-white text-[10px] font-black uppercase tracking-[0.3em] rounded-2xl transition-all shadow-xl shadow-primary/20"
               >
                 INITIATE AUTH
               </Link>
               <Link
                 href="/"
-                className="px-8 py-3 bg-white/5 hover:bg-white/10 text-slate-300 text-[10px] font-black uppercase tracking-[0.3em] rounded-xl transition-all border border-white/5"
+                className="px-8 py-4 bg-white/5 hover:bg-white/10 text-white text-[10px] font-black uppercase tracking-[0.3em] rounded-2xl transition-all border border-white/5"
               >
                 RETURN TO BASE
               </Link>
             </div>
           </div>
         ) : filteredOrders.length === 0 ? (
-          <div className="text-center py-20 bg-[#141414]/50 border border-dashed border-white/5 rounded-2xl">
-            <Package className="size-16 text-gray-600 mx-auto mb-4" />
-            <h3 className="text-xl font-bold text-gray-400 mb-2">No orders found</h3>
-            <p className="text-gray-500 mb-6 uppercase tracking-widest text-[10px] font-black">No active deployments detected in this sector</p>
+          <div className="text-center py-32 bg-[#0D0D0D] border border-dashed border-white/10 rounded-[2.5rem] shadow-2xl">
+            <Package className="size-16 text-slate-700 mx-auto mb-4" />
+            <h3 className="text-xl font-black text-white mb-2 uppercase tracking-tighter">No orders found</h3>
+            <p className="text-slate-500 mb-8 uppercase tracking-widest text-[10px] font-bold">No active deployments detected in this sector</p>
             <Link
               href="/#games"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-primary hover:bg-[#8a0e1d] text-white text-[10px] font-black uppercase tracking-widest rounded-lg transition-all"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-primary hover:bg-[#8a0e1d] text-white text-[10px] font-black uppercase tracking-[0.2em] rounded-xl transition-all shadow-lg shadow-primary/20"
             >
               Browse Services
               <ChevronRight className="size-4" />
             </Link>
           </div>
         ) : (
-          <div className="space-y-4">
+          <div className="space-y-6">
             {filteredOrders.map((order) => (
               <div
                 key={order.id}
-                className="bg-[#141414] border border-[#1c1c1c] rounded-xl p-6 hover:border-primary/50 transition-all"
+                className="bg-[#0D0D0D] border border-white/5 rounded-3xl p-6 sm:p-8 hover:border-primary/30 transition-all shadow-2xl relative overflow-hidden group"
               >
-                <div className="flex flex-col md:flex-row gap-6">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 blur-[50px] opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+                <div className="flex flex-col md:flex-row gap-8 relative z-10">
                   {/* Service Image */}
                   {order.service.image && (
-                    <div className="w-24 h-24 rounded-lg overflow-hidden border border-[#2a1a1c] shrink-0">
+                    <div className="w-24 h-24 sm:w-32 sm:h-32 rounded-2xl overflow-hidden border border-white/5 shrink-0 bg-[#080808]">
                       <img
                         src={order.service.image}
                         alt={order.service.name}
-                        className="w-full h-full object-cover"
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                       />
                     </div>
                   )}
 
                   {/* Order Details */}
                   <div className="flex-1">
-                    <div className="flex items-start justify-between mb-3">
+                    <div className="flex flex-col sm:flex-row sm:items-start justify-between mb-6 gap-4">
                       <div>
-                        <h3 className="text-xl font-bold text-white mb-1">{order.service.name}</h3>
-                        <p className="text-sm text-gray-400">{order.service.game.name}</p>
+                        <h3 className="text-xl sm:text-2xl font-black text-white mb-1 uppercase tracking-tighter">{order.service.name}</h3>
+                        <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">{order.service.game.name}</p>
                       </div>
-                      <div className={`flex items-center gap-2 px-3 py-1.5 rounded-lg border text-xs font-bold uppercase ${getStatusColor(order.status)}`}>
+                      <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-lg border text-[9px] font-black uppercase tracking-widest self-start ${getStatusColor(order.status)}`}>
                         {getStatusIcon(order.status)}
                         {order.status}
                       </div>
                     </div>
 
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
-                      <div>
-                        <span className="text-gray-500 block mb-1">Order ID</span>
-                        <span className="text-white font-mono">#{order.id.slice(0, 8)}</span>
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-sm mb-6">
+                      <div className="bg-white/5 p-4 rounded-2xl border border-white/5">
+                        <span className="text-slate-500 block mb-2 text-[9px] font-black uppercase tracking-widest">Order ID</span>
+                        <span className="text-white font-mono text-xs font-bold">#{order.id.slice(0, 8).toUpperCase()}</span>
                       </div>
-                      <div>
-                        <span className="text-gray-500 block mb-1">Quantity</span>
-                        <span className="text-white">{order.quantity}x</span>
+                      <div className="bg-white/5 p-4 rounded-2xl border border-white/5">
+                        <span className="text-slate-500 block mb-2 text-[9px] font-black uppercase tracking-widest">Quantity</span>
+                        <span className="text-white font-black text-xs">{order.quantity}x</span>
                       </div>
                       {order.platform && (
-                        <div>
-                          <span className="text-gray-500 block mb-1">Platform</span>
-                          <span className="text-white">{order.platform}</span>
+                        <div className="bg-white/5 p-4 rounded-2xl border border-white/5">
+                          <span className="text-slate-500 block mb-2 text-[9px] font-black uppercase tracking-widest">Platform</span>
+                          <span className="text-white font-black text-xs uppercase">{order.platform}</span>
                         </div>
                       )}
-                      <div>
-                        <span className="text-gray-500 block mb-1">Total</span>
-                        <span className="text-primary font-bold text-lg">${Number(order.totalPrice).toFixed(2)}</span>
+                      <div className="bg-primary/5 p-4 rounded-2xl border border-primary/20">
+                        <span className="text-primary/70 block mb-2 text-[9px] font-black uppercase tracking-widest">Total</span>
+                        <span className="text-primary font-black text-lg leading-none">${Number(order.totalPrice).toFixed(2)}</span>
                       </div>
                     </div>
 
-                    <div className="flex items-center justify-between mt-4 pt-4 border-t border-[#2a1a1c]">
-                      <span className="text-xs text-gray-500">
-                        Ordered {new Date(order.createdAt).toLocaleDateString('en-US', {
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between mt-auto pt-6 border-t border-white/5 gap-4">
+                      <div className="flex items-center gap-2 text-[10px] font-bold text-slate-500 uppercase tracking-widest">
+                        <Clock className="size-3" />
+                        <span>Ordered {new Date(order.createdAt).toLocaleDateString('en-US', {
                           month: 'short',
                           day: 'numeric',
                           year: 'numeric',
                           hour: '2-digit',
                           minute: '2-digit'
-                        })}
-                      </span>
+                        })}</span>
+                      </div>
                       <Link
-                        href={`/services/${order.service.game.slug}`}
-                        className="text-sm text-primary hover:text-primary-dark font-bold uppercase flex items-center gap-1"
+                        href={`/services/${encodeURIComponent(order.service.name.toLowerCase().replace(/[^a-z0-9]+/g, '-'))}`}
+                        className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-white/5 hover:bg-primary border border-white/5 hover:border-primary text-[10px] text-white font-black uppercase tracking-[0.2em] rounded-xl transition-all shadow-lg hover:shadow-primary/20 group/btn"
                       >
                         View Service
-                        <ChevronRight className="size-4" />
+                        <ChevronRight className="size-3 group-hover/btn:translate-x-1 transition-transform" />
                       </Link>
                     </div>
                   </div>
