@@ -246,10 +246,14 @@ export default function ServiceDetailsPage() {
     finally { setIsValidatingPromo(false); }
   };
 
-  const handleOrderClick = () => {
+  const handleOrderClick = async () => {
     setAuthError("");
     if (status === "unauthenticated") {
-      setAuthError("Please enter your email and press Submit to proceed to checkout.");
+      if (!email || !/^\S+@\S+\.\S+$/.test(email)) {
+        setAuthError("Please enter a valid email address to proceed.");
+        return;
+      }
+      await handleGuestLogin();
       return;
     }
     setShowPaymentModal(true);
@@ -274,7 +278,7 @@ export default function ServiceDetailsPage() {
           setAuthError("Login failed: " + loginRes.error);
         }
       } else {
-        window.location.reload();
+        setShowPaymentModal(true);
       }
     } catch (e) {
       console.error("Auto login exception", e);
@@ -306,7 +310,9 @@ export default function ServiceDetailsPage() {
         })
       });
       const data = await res.json();
-      if (data.url) window.location.href = data.url;
+      if (data.url) {
+        window.location.href = data.url;
+      }
       else throw new Error(data.error || "Failed to create checkout session");
     } catch (e: any) { setCheckoutError(e.message || 'Failed to initiate checkout.'); }
     finally { setIsSubmitting(false); }
@@ -800,14 +806,14 @@ export default function ServiceDetailsPage() {
 
                 {/* Promo code */}
                 <div className="mb-6">
-                  <label className="text-[14px] text-slate-500 font-bold uppercase tracking-[0.2em] mb-2 block">Promo Code</label>
+                  <label className="text-[12px] text-slate-500 font-bold uppercase tracking-[0.2em] mb-2 block">Promo Code</label>
                   <div className="flex gap-2">
                     <input type="text" value={promoCode}
                       onChange={e => { setPromoCode(e.target.value.toUpperCase()); setPromoCodeError(""); setPromoCodeData(null); }}
                       placeholder="ENTER CODE..."
-                      className="flex-1 bg-[#050505] border border-white/5 rounded-lg px-3 py-2.5 text-white text-xs font-bold uppercase tracking-widest placeholder:text-slate-700 focus:border-primary/40 focus:outline-none transition-all" />
+                      className="flex-1 bg-[#050505] border border-white/5 rounded-lg px-3 py-2.5 text-white text-[12px] font-bold uppercase tracking-widest placeholder:text-slate-700 focus:border-primary/40 focus:outline-none transition-all" />
                     <button type="button" onClick={validatePromoCode} disabled={!promoCode.trim() || isValidatingPromo}
-                      className="px-4 py-2.5 bg-[#1a1a1a] hover:bg-primary text-white text-[14px] font-black uppercase tracking-widest rounded-lg transition-all disabled:opacity-40 border border-white/5">
+                      className="px-4 py-2.5 bg-[#1a1a1a] hover:bg-primary text-white text-[12px] font-black uppercase tracking-widest rounded-lg transition-all disabled:opacity-40 border border-white/5">
                       {isValidatingPromo ? '...' : 'Apply'}
                     </button>
                   </div>
@@ -837,8 +843,8 @@ export default function ServiceDetailsPage() {
                     completionSpeed && { label: 'Speed', value: completionSpeed === 'express' ? 'Express +20%' : 'Super Express +40%', highlight: true },
                   ].filter(Boolean).map((row: any) => (
                     <div key={row.label} className="flex justify-between items-center">
-                      <span className="text-[14px] font-bold text-slate-500 uppercase tracking-widest">{row.label}</span>
-                      <span className={`text-[14px] font-black uppercase tracking-tight text-right ${row.highlight ? 'text-primary' : 'text-white'}`}>{row.value}</span>
+                      <span className="text-[12px] font-bold text-slate-500 uppercase tracking-widest">{row.label}</span>
+                      <span className={`text-[12px] font-black uppercase tracking-tight text-right ${row.highlight ? 'text-primary' : 'text-white'}`}>{row.value}</span>
                     </div>
                   ))}
                 </div>
@@ -846,7 +852,7 @@ export default function ServiceDetailsPage() {
                 {/* Total */}
                 <div className="flex items-center justify-between mb-6">
                   <div>
-                    <div className="text-[14px] font-bold text-slate-500 uppercase tracking-[0.2em]">Total Price</div>
+                    <div className="text-[12px] font-bold text-slate-500 uppercase tracking-[0.2em]">Total Price</div>
                     <div className="text-[11px] text-slate-700 mt-0.5 font-bold uppercase tracking-widest">Secure transaction</div>
                   </div>
                   <span className="text-4xl font-black text-white tracking-tighter font-cairo">{formatPrice(calculateTotalPrice())}</span>
@@ -854,30 +860,20 @@ export default function ServiceDetailsPage() {
 
                 {status === "unauthenticated" && (
                   <div className="mb-4 space-y-2 p-4 rounded-xl border border-white/10 bg-[#111]">
-                    <label className="text-[14px] text-slate-400 font-bold uppercase tracking-[0.2em] block">
+                    <label className="text-[12px] text-slate-400 font-bold uppercase tracking-[0.2em] block">
                       Enter Email to Checkout
                     </label>
-                    <div className="flex gap-2">
+                    <div className="flex flex-col gap-2">
                       <input
                         type="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         placeholder="your@email.com"
-                        className="flex-1 bg-[#050505] border border-white/5 rounded-lg px-3 py-2.5 text-white text-xs font-bold tracking-widest placeholder:text-slate-700 focus:border-primary/40 focus:outline-none transition-all"
+                        className="w-full bg-[#050505] border border-white/5 rounded-lg px-4 py-3 text-white text-[12px] font-bold tracking-widest placeholder:text-slate-700 focus:border-primary/40 focus:outline-none transition-all"
                       />
-                      <button
-                        onClick={handleGuestLogin}
-                        disabled={!email || isSubmitting}
-                        className="px-4 py-2.5 bg-[#1a1a1a] hover:bg-primary text-white text-[14px] font-black uppercase tracking-widest rounded-lg transition-all disabled:opacity-40 border border-white/5"
-                      >
-                        {isSubmitting ? '...' : 'Submit'}
-                      </button>
                     </div>
-                    <p className="text-[11px] text-slate-600 font-black uppercase tracking-widest">
-                      Submit your email to seamlessly create your account and track your order.
-                    </p>
                     {authError && (
-                      <div className="bg-primary/10 border border-primary/20 rounded-md p-2 flex items-center gap-2">
+                      <div className="bg-primary/10 border border-primary/20 rounded-md p-3 flex items-center gap-2">
                         <span className="material-symbols-outlined text-primary text-xs">error</span>
                         <p className="text-primary text-[11px] font-black uppercase tracking-widest">{authError}</p>
                       </div>
@@ -885,8 +881,12 @@ export default function ServiceDetailsPage() {
                   </div>
                 )}
 
-                <button onClick={handleOrderClick} className="w-full py-4 bg-primary hover:bg-[#8a0e1d] text-white font-bold text-sm uppercase tracking-widest rounded-xl transition-colors flex items-center justify-center gap-2">
-                  Proceed to Checkout
+                <button
+                  onClick={handleOrderClick}
+                  disabled={isSubmitting || (status === "unauthenticated" && !email)}
+                  className="w-full py-4 bg-primary hover:bg-[#8a0e1d] disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold text-sm uppercase tracking-widest rounded-xl transition-colors flex items-center justify-center gap-2"
+                >
+                  {isSubmitting ? "Initiating..." : "Proceed to Checkout"}
                   <span className="material-symbols-outlined text-lg">arrow_forward</span>
                 </button>
 
@@ -935,12 +935,30 @@ export default function ServiceDetailsPage() {
               </div>
 
               <div className="space-y-5">
+                {/* Guest Indicator */}
+                {(status === "unauthenticated" || (session?.user as any)?.hasPassword === false) && (
+                  <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="bg-emerald-500/5 border border-emerald-500/20 rounded-2xl p-4 flex items-center gap-4">
+                    <div className="size-10 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-500 shrink-0">
+                      <span className="material-symbols-outlined text-2xl">person_add</span>
+                    </div>
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <p className="text-[12px] font-black text-emerald-500 uppercase tracking-widest leading-none">Guest Checkout Active</p>
+                        <span className="size-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                      </div>
+                      <p className="text-[11px] text-slate-500 font-bold uppercase tracking-widest mt-1.5 line-clamp-1">
+                        Creating guest account for: <span className="text-slate-300">{email || session?.user?.email}</span>
+                      </p>
+                    </div>
+                  </motion.div>
+                )}
+
                 {/* order summary */}
                 <div className="bg-[#050505] rounded-xl p-5 border border-white/5">
                   <div className="flex justify-between items-start">
                     <div>
                       <h3 className="font-bold text-white">{service?.name}</h3>
-                      <p className="text-xs text-slate-400 mt-1">{platform} • {completionMethod}</p>
+                      <p className="text-[14px] text-slate-400 mt-1">{platform} • {completionMethod}</p>
                     </div>
                     <div className="text-xl font-black text-white">{formatPrice(calculateTotalPrice())}</div>
                   </div>
