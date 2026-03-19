@@ -11,7 +11,7 @@ const footerLinks = {
     ],
     support: [
         { label: "Help Center", href: "/contact" },
-        { label: "Track Order", href: "/dashboard" },
+        { label: "Track Order", href: "/track-order" },
         { label: "Live Chat", href: "/contact" },
         { label: "Reviews", href: "/wall-of-fame" },
         { label: "FAQ", href: "/faq" },
@@ -36,7 +36,7 @@ export function Footer() {
                             <div className="text-primary">
                                 <CFNLogo className="size-6" />
                             </div>
-                            <span className="text-xl font-black tracking-tight uppercase font-cairo">
+                            <span className="text-xl font-black tracking-tight uppercase font-[family-name:var(--font-brand)]">
                                 <span className="text-primary">CFN</span>
                                 <span className="text-white">BOOST</span>
                             </span>
@@ -100,7 +100,7 @@ export function Footer() {
                 <div className="pt-8 border-t border-[#1A1A1A] flex flex-col md:flex-row justify-between items-center gap-4">
                     <p className="text-gray-600 text-xs">
                         © 2024{" "}
-                        <span className="font-black tracking-wide font-cairo">
+                        <span className="font-black tracking-wide font-[family-name:var(--font-brand)]">
                             <span className="text-primary">CFN</span>
                             <span className="text-white">BOOST</span>
                         </span>

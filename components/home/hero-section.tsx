@@ -121,13 +121,6 @@ export function HeroSection() {
                         initial="hidden"
                         animate="show"
                     >
-                        {/* badge */}
-                        <motion.span
-                            variants={fadeUp}
-                            className="inline-block mb-4 rounded border border-primary/50 bg-primary/10 px-3 py-1 text-[11px] font-black uppercase tracking-widest text-[#FF2B49]"
-                        >
-                            Elite Gaming Services
-                        </motion.span>
 
                         {/* heading */}
                         <motion.h1

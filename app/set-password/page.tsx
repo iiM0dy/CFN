@@ -2,61 +2,71 @@
 
 import Link from "next/link";
 import { useState, useTransition } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
-import { LoginSchema, RegisterSchema } from "@/schemas";
-import { login, register } from "@/actions/auth";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { CFNLogo } from "@/components/layout/cfnboost-logo";
 import { motion, AnimatePresence } from "framer-motion";
+import { useSession } from "next-auth/react";
 
-export default function LoginPage() {
-    const [isLogin, setIsLogin] = useState(true);
+export default function SetPasswordPage() {
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
     const [isPending, startTransition] = useTransition();
     const [authError, setAuthError] = useState("");
     const [authSuccess, setAuthSuccess] = useState("");
+    
     const router = useRouter();
+    const { data: session, status, update } = useSession();
 
-    const {
-        register: registerField,
-        handleSubmit,
-        formState: { errors },
-        reset,
-    } = useForm<any>({
-        resolver: zodResolver(isLogin ? LoginSchema : RegisterSchema),
-        defaultValues: {
-            email: "",
-            password: "",
-            confirmPassword: "",
-        },
-    });
+    // Redirect logic
+    if (status === "unauthenticated") {
+        typeof window !== "undefined" && router.push("/login");
+        return null;
+    }
+    
+    // @ts-ignore
+    if (session?.user?.hasPassword) {
+        typeof window !== "undefined" && router.push("/");
+        return null;
+    }
 
-    const onSubmit = (values: any) => {
+    const onSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
         setAuthError("");
         setAuthSuccess("");
+
+        if (password.length < 6) {
+            setAuthError("Password must be at least 6 characters.");
+            return;
+        }
+
+        if (password !== confirmPassword) {
+            setAuthError("Passwords do not match.");
+            return;
+        }
+
         startTransition(async () => {
-            if (isLogin) {
-                const data = await login(values);
-                if (data?.error) {
-                    setAuthError(data.error);
+            try {
+                const res = await fetch("/api/auth/set-password", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ password })
+                });
+
+                const data = await res.json();
+                
+                if (!res.ok) {
+                    setAuthError(data.error || "Failed to set password.");
                 } else {
-                    // NextAuth's signIn server action often leaves the client session cache stale on soft navigation.
-                    // To guarantee the header (and other components) reflect the new session instantly,
-                    // we perform a hard refresh redirect to the home page.
-                    window.location.href = "/";
+                    setAuthSuccess("Password set successfully! Redirecting...");
+                    await update({ hasPassword: true });
+                    setTimeout(() => {
+                        window.location.href = "/";
+                    }, 1500);
                 }
-            } else {
-                const data = await register(values);
-                if (data.error) {
-                    setAuthError(data.error);
-                } else {
-                    setAuthSuccess(data.success || "Account created successfully.");
-                    setIsLogin(true);
-                    reset();
-                }
+            } catch (err) {
+                setAuthError("An unexpected error occurred.");
             }
         });
     };
@@ -78,31 +88,15 @@ export default function LoginPage() {
                         <CFNLogo className="size-14 text-primary group-hover:scale-110 transition-transform duration-500" />
                     </Link>
                     <h1 className="text-3xl font-black text-white tracking-tighter uppercase mb-2 leading-none">
-                        {isLogin ? 'Welcome Back' : 'Create Account'}
+                        Secure Account
                     </h1>
                     <p className="text-slate-500 text-sm font-medium">
-                        {isLogin ? 'Sign in to access your account.' : 'Join us to get started.'}
+                        Create a password to access your account anytime.
                     </p>
                 </div>
 
                 {/* Main Form Container */}
                 <div className="bg-[#0A0A0A] border border-white/5 rounded-[32px] p-8 shadow-2xl">
-                    {/* Auth Switcher */}
-                    <div className="flex p-1 bg-white/[0.03] border border-white/5 rounded-2xl mb-6">
-                        <button
-                            onClick={() => { setIsLogin(true); reset(); setAuthError(""); setAuthSuccess(""); }}
-                            className={`flex-1 py-3 text-[10px] font-black uppercase tracking-[0.2em] rounded-xl transition-all ${isLogin ? 'bg-primary text-white shadow-xl shadow-primary/20' : 'text-slate-500 hover:text-white'}`}
-                        >
-                            Login
-                        </button>
-                        <button
-                            onClick={() => { setIsLogin(false); reset(); setAuthError(""); setAuthSuccess(""); }}
-                            className={`flex-1 py-3 text-[10px] font-black uppercase tracking-[0.2em] rounded-xl transition-all ${!isLogin ? 'bg-primary text-white shadow-xl shadow-primary/20' : 'text-slate-500 hover:text-white'}`}
-                        >
-                            Register
-                        </button>
-                    </div>
-
                     <AnimatePresence>
                         {authError && (
                             <motion.div
@@ -128,27 +122,24 @@ export default function LoginPage() {
                         )}
                     </AnimatePresence>
 
-                    <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
-
+                    <form className="space-y-5" onSubmit={onSubmit}>
                         <div className="space-y-1.5">
-                            <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest pl-1">Email Address</label>
+                            <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest px-1">Email</label>
                             <input
-                                {...registerField("email")}
-                                className="w-full bg-white/[0.03] border border-white/5 rounded-2xl px-6 py-4 text-white focus:border-primary transition-all outline-none font-bold text-sm"
-                                placeholder="name@email.com"
+                                disabled
+                                value={session?.user?.email || "Loading..."}
+                                className="w-full bg-white/[0.01] border border-white/5 rounded-2xl px-6 py-4 text-slate-500 outline-none font-bold text-sm cursor-not-allowed"
                                 type="email"
                             />
-                            {errors.email && <p className="text-[10px] text-primary font-black uppercase tracking-widest pl-1">{errors.email.message as string}</p>}
                         </div>
 
                         <div className="space-y-1.5">
-                            <div className="flex justify-between items-center px-1">
-                                <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Password</label>
-                                {isLogin && <Link href="#" className="text-[10px] font-black text-primary uppercase tracking-widest hover:text-white transition-colors">Forgot?</Link>}
-                            </div>
+                            <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest pl-1">New Password</label>
                             <div className="relative group">
                                 <input
-                                    {...registerField("password")}
+                                    value={password}
+                                    onChange={e => setPassword(e.target.value)}
+                                    required
                                     className="w-full bg-white/[0.03] border border-white/5 rounded-2xl px-6 py-4 pr-14 text-white focus:border-primary transition-all outline-none font-bold text-sm"
                                     placeholder="••••••••"
                                     type={showPassword ? "text" : "password"}
@@ -161,39 +152,31 @@ export default function LoginPage() {
                                     <span className="material-symbols-outlined text-lg">{showPassword ? "visibility" : "visibility_off"}</span>
                                 </button>
                             </div>
-                            {errors.password && <p className="text-[10px] text-primary font-black uppercase tracking-widest pl-1">{errors.password.message as string}</p>}
                         </div>
 
-                        <AnimatePresence>
-                            {!isLogin && (
-                                <motion.div
-                                    initial={{ opacity: 0, height: 0 }}
-                                    animate={{ opacity: 1, height: 'auto' }}
-                                    exit={{ opacity: 0, height: 0 }}
-                                    className="space-y-1.5 overflow-hidden"
-                                >
-                                    <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest pl-1">Confirm Password</label>
-                                    <input
-                                        {...registerField("confirmPassword")}
-                                        className="w-full bg-white/[0.03] border border-white/5 rounded-2xl px-6 py-4 text-white focus:border-primary transition-all outline-none font-bold text-sm"
-                                        placeholder="••••••••"
-                                        type="password"
-                                    />
-                                    {errors.confirmPassword && <p className="text-[10px] text-primary font-black uppercase tracking-widest pl-1">{errors.confirmPassword.message as string}</p>}
-                                </motion.div>
-                            )}
-                        </AnimatePresence>
+                        <div className="space-y-1.5">
+                            <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest pl-1">Confirm Password</label>
+                            <input
+                                value={confirmPassword}
+                                onChange={e => setConfirmPassword(e.target.value)}
+                                required
+                                className="w-full bg-white/[0.03] border border-white/5 rounded-2xl px-6 py-4 text-white focus:border-primary transition-all outline-none font-bold text-sm"
+                                placeholder="••••••••"
+                                type="password"
+                            />
+                        </div>
 
                         <button
                             disabled={isPending}
+                            type="submit"
                             className="w-full py-5 mt-4 bg-primary hover:bg-[#8a0e1d] text-white font-black uppercase tracking-[0.3em] rounded-2xl transition-all hover:scale-[1.02] active:scale-[0.98] shadow-2xl shadow-primary/20 flex items-center justify-center gap-3 group"
                         >
                             {isPending ? (
                                 <span className="size-5 border-2 border-white/20 border-t-white rounded-full animate-spin" />
                             ) : (
                                 <>
-                                    {isLogin ? 'Sign In' : 'Create Account'}
-                                    <span className="material-symbols-outlined text-sm transition-transform group-hover:translate-x-1">arrow_forward</span>
+                                    Save Password
+                                    <span className="material-symbols-outlined text-sm transition-transform group-hover:translate-x-1">save</span>
                                 </>
                             )}
                         </button>

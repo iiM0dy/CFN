@@ -19,9 +19,6 @@ export const RegisterSchema = z.object({
     confirmPassword: z.string().min(1, {
         message: "Confirm password is required",
     }),
-    name: z.string().min(1, {
-        message: "Name is required",
-    }),
 }).superRefine(({ confirmPassword, password }, ctx) => {
     if (confirmPassword !== password) {
         ctx.addIssue({

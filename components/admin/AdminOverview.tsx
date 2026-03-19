@@ -160,10 +160,10 @@ export default function AdminOverview({ stats, recentOrders, analytics }: AdminO
                                         <td className="px-8 py-5">
                                             <div className="flex items-center gap-3">
                                                 <div className="size-8 rounded-xl bg-linear-to-br from-primary/20 to-transparent flex items-center justify-center text-[10px] font-black text-primary border border-primary/20">
-                                                    {(order.user?.name || "U")[0]}
+                                                    {(order.user?.email || "U")[0].toUpperCase()}
                                                 </div>
                                                 <div>
-                                                    <p className="text-xs font-bold text-white leading-none">{order.user?.name || "Anonymous User"}</p>
+                                                    <p className="text-xs font-bold text-white leading-none">{order.user?.email || "Anonymous User"}</p>
                                                     <p className="text-[9px] text-slate-600 font-medium mt-1 truncate max-w-[120px]">{order.user?.email || "No Email"}</p>
                                                 </div>
                                             </div>

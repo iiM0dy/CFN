@@ -53,6 +53,7 @@ export async function POST(request: Request) {
         platform: data.platform,
         completionMethod: data.completionMethod,
         completionSpeed: data.completionSpeed,
+        orderNotes: data.orderNotes || null,
         promoCode: data.promoCode,
         discount: data.discount || 0,
         selectedOptions: data.selectedOptions,

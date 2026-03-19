@@ -30,7 +30,6 @@ interface ChatSession {
     createdAt: string;
     updatedAt: string;
     user: {
-        name: string | null;
         email: string | null;
         image: string | null;
     };
@@ -162,7 +161,7 @@ export default function AdminChatPage() {
                             >
                                 <div className="relative">
                                     <div className="size-12 rounded-2xl bg-slate-800 flex items-center justify-center text-white font-black uppercase text-sm border border-white/10 group-hover:border-primary/30 transition-all">
-                                        {(session.user?.name || "A")[0]}
+                                        {(session.user?.email || "A")[0].toUpperCase()}
                                     </div>
                                     <div className="absolute -bottom-1 -right-1 size-4 bg-[#0D0D0D] rounded-full flex items-center justify-center border border-white/10 p-0.5">
                                         <div className={`size-full rounded-full ${session.status === 'active' ? 'bg-emerald-500' : 'bg-slate-500'}`} />
@@ -170,7 +169,7 @@ export default function AdminChatPage() {
                                 </div>
                                 <div className="flex-1 min-w-0">
                                     <div className="flex justify-between items-start mb-1">
-                                        <p className="text-xs font-black text-white truncate uppercase tracking-tight">{session.user?.name || "Anonymous"}</p>
+                                        <p className="text-xs font-black text-white truncate uppercase tracking-tight">{session.user?.email || "Anonymous"}</p>
                                         <p className="text-[8px] font-bold text-slate-500">{format(new Date(session.updatedAt), "HH:mm")}</p>
                                     </div>
                                     <p className="text-[10px] text-slate-500 truncate font-medium italic">
@@ -194,7 +193,7 @@ export default function AdminChatPage() {
                                     <User className="size-5" />
                                 </div>
                                 <div>
-                                    <h3 className="text-xs font-black text-white uppercase tracking-wider italic">{selectedSession.user?.name || "Anonymous Customer"}</h3>
+                                    <h3 className="text-xs font-black text-white uppercase tracking-wider italic">{selectedSession.user?.email || "Anonymous Customer"}</h3>
                                     <div className="flex items-center gap-2">
                                         <div className="size-1.5 rounded-full bg-emerald-500 animate-pulse" />
                                         <p className="text-[9px] text-slate-500 font-bold uppercase tracking-widest">{selectedSession.user?.email || "No email provided"}</p>

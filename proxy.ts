@@ -9,7 +9,7 @@ export default auth((req) => {
     const { nextUrl } = req
     const isAuthRoute = nextUrl.pathname.startsWith('/login')
     const isApiAuthRoute = nextUrl.pathname.startsWith('/api/auth')
-    const isPublicRoute = nextUrl.pathname === '/' || nextUrl.pathname.startsWith('/services') || nextUrl.pathname.startsWith('/games')
+    const isPublicRoute = nextUrl.pathname === '/' || nextUrl.pathname.startsWith('/services') || nextUrl.pathname.startsWith('/games') || nextUrl.pathname.startsWith('/track-order')
 
     // @ts-ignore
     console.log(`Middleware: ${nextUrl.pathname} | LoggedIn: ${isLoggedIn} | Role: ${req.auth?.user?.role}`)
@@ -22,8 +22,8 @@ export default auth((req) => {
         }
     }
 
-    // Checkout Protection
-    if (nextUrl.pathname.startsWith('/checkout') && !isLoggedIn) {
+    // Checkout Protection (Allow guest checkout success, but protect regular checkout if we ever add a standard cart checkout page)
+    if (nextUrl.pathname === '/checkout' && !isLoggedIn) {
         let callbackUrl = nextUrl.pathname;
         if (nextUrl.search) {
             callbackUrl += nextUrl.search;

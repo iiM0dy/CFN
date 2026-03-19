@@ -247,6 +247,7 @@ model ServiceOrder {
   id        String  @id @default(cuid())
   userId    String?
   user      User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  guestEmail String? // For guest checkout tracking
   serviceId String
   service   Service @relation(fields: [serviceId], references: [id])
 
@@ -257,6 +258,7 @@ model ServiceOrder {
   platform         String?
   completionMethod String?
   completionSpeed  String?
+  orderNotes       String? @db.Text
   promoCode        String?
   discount         Decimal @default(0)
 

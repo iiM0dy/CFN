@@ -14,7 +14,7 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
         return { error: "Invalid fields!" };
     }
 
-    const { email, password, name } = validatedFields.data;
+    const { email, password } = validatedFields.data;
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const existingUser = await prisma.user.findUnique({
@@ -29,7 +29,6 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
 
     await prisma.user.create({
         data: {
-            name,
             email,
             password: hashedPassword,
         },
@@ -52,8 +51,9 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
         await signIn("credentials", {
             email,
             password,
-            redirectTo: "/",
+            redirect: false,
         })
+        return { success: true };
     } catch (error) {
         if (error instanceof AuthError) {
             switch (error.type) {

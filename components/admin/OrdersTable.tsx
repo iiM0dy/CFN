@@ -29,6 +29,7 @@ interface Order {
     platform: string | null;
     completionMethod: string | null;
     completionSpeed: string | null;
+    orderNotes?: string | null;
     promoCode: string | null;
     discount: any;
     selectedOptions: any;
@@ -61,7 +62,7 @@ export default function OrdersTable({ initialOrders }: OrdersTableProps) {
             const searchStr = searchTerm.toLowerCase();
             return (
                 order.id.toLowerCase().includes(searchStr) ||
-                (order.user?.name?.toLowerCase() || "").includes(searchStr) ||
+                (order.user?.email?.toLowerCase() || "").includes(searchStr) ||
                 (order.user?.email?.toLowerCase() || "").includes(searchStr) ||
                 order.service.name.toLowerCase().includes(searchStr)
             );
@@ -113,7 +114,7 @@ export default function OrdersTable({ initialOrders }: OrdersTableProps) {
             o.id,
             o.service.name,
             o.service.game.name,
-            o.user?.name || "Anonymous",
+            o.user?.email || "Anonymous",
             o.user?.email || "N/A",
             o.status,
             o.totalPrice,
@@ -216,26 +217,26 @@ export default function OrdersTable({ initialOrders }: OrdersTableProps) {
                                     <TableCell className="px-8 py-6">
                                         <div className="flex items-center gap-3">
                                             <div className="size-8 rounded-lg bg-white/5 border border-white/5 flex items-center justify-center text-[10px] font-black text-slate-400">
-                                                {(order.user?.name || "A")[0]}
+                                                {(order.user?.email || "A")[0].toUpperCase()}
                                             </div>
                                             <div>
-                                                <p className="text-xs font-bold text-slate-200">{order.user?.name || "Anonymous"}</p>
+                                                <p className="text-xs font-bold text-slate-200">{order.user?.email || "Anonymous"}</p>
                                                 <p className="text-[9px] font-mono text-slate-600 italic">{order.user?.email || "N/A"}</p>
                                             </div>
                                         </div>
                                     </TableCell>
                                     <TableCell className="px-8 py-6">
                                         <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-lg border text-[9px] font-black uppercase tracking-widest ${order.status === "paid" || order.status === "completed"
-                                                ? "bg-emerald-500/5 text-emerald-500 border-emerald-500/20"
-                                                : order.status === "cancelled"
-                                                    ? "bg-red-500/5 text-red-500 border-red-500/20"
-                                                    : "bg-amber-500/5 text-amber-500 border-amber-500/20"
+                                            ? "bg-emerald-500/5 text-emerald-500 border-emerald-500/20"
+                                            : order.status === "cancelled"
+                                                ? "bg-red-500/5 text-red-500 border-red-500/20"
+                                                : "bg-amber-500/5 text-amber-500 border-amber-500/20"
                                             }`}>
                                             <div className={`size-1.5 rounded-full ${order.status === "paid" || order.status === "completed"
-                                                    ? "bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]"
-                                                    : order.status === "cancelled"
-                                                        ? "bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.5)]"
-                                                        : "bg-amber-500 shadow-[0_0_8px_rgba(245,158,11,0.5)]"
+                                                ? "bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]"
+                                                : order.status === "cancelled"
+                                                    ? "bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.5)]"
+                                                    : "bg-amber-500 shadow-[0_0_8px_rgba(245,158,11,0.5)]"
                                                 }`} />
                                             {order.status === "paid" ? "Confirmed" : order.status === "completed" ? "Completed" : order.status === "cancelled" ? "Cancelled" : "Pending"}
                                         </div>
@@ -344,8 +345,8 @@ export default function OrdersTable({ initialOrders }: OrdersTableProps) {
                                 </h4>
                                 <div className="flex items-center justify-between">
                                     <div className={`px-4 py-2 rounded-xl border font-black text-xs uppercase tracking-widest ${selectedOrder.status === 'completed' ? 'bg-emerald-500/10 text-emerald-500 border-emerald-500/20' :
-                                            selectedOrder.status === 'cancelled' ? 'bg-red-500/10 text-red-500 border-red-500/20' :
-                                                'bg-amber-500/10 text-amber-500 border-amber-500/20'
+                                        selectedOrder.status === 'cancelled' ? 'bg-red-500/10 text-red-500 border-red-500/20' :
+                                            'bg-amber-500/10 text-amber-500 border-amber-500/20'
                                         }`}>
                                         {selectedOrder.status}
                                     </div>
@@ -361,11 +362,10 @@ export default function OrdersTable({ initialOrders }: OrdersTableProps) {
                                     <p className="text-[9px] font-black text-slate-500 uppercase tracking-widest mb-2 italic">Customer</p>
                                     <div className="flex items-center gap-3">
                                         <div className="size-8 rounded-lg bg-primary/20 flex items-center justify-center text-primary font-black uppercase text-[10px]">
-                                            {(selectedOrder.user?.name || "A")[0]}
+                                            {(selectedOrder.user?.email || "A")[0].toUpperCase()}
                                         </div>
                                         <div>
-                                            <p className="text-xs font-black text-white leading-none">{selectedOrder.user?.name || "Anonymous"}</p>
-                                            <p className="text-[9px] text-slate-600 mt-1">{selectedOrder.user?.email}</p>
+                                            <p className="text-xs font-black text-white leading-none">{selectedOrder.user?.email || "Anonymous"}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -417,6 +417,17 @@ export default function OrdersTable({ initialOrders }: OrdersTableProps) {
                                             )}
                                         </div>
                                     </div>
+
+                                    {selectedOrder.orderNotes && selectedOrder.orderNotes.trim().length > 0 && (
+                                        <div className="pt-6 border-t border-white/5">
+                                            <p className="text-[9px] font-black text-slate-500 uppercase tracking-widest mb-3 italic">Order Notes</p>
+                                            <div className="bg-black/40 rounded-2xl p-4 border border-white/5">
+                                                <p className="text-[12px] text-slate-200 leading-relaxed whitespace-pre-wrap">
+                                                    {selectedOrder.orderNotes}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                         </div>

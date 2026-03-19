@@ -8,9 +8,11 @@ import { SearchModal } from "@/components/layout/search-modal"
 import { CurrencySwitcher } from "@/components/layout/currency-switcher"
 import { useRef, useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
+import { useSession } from "next-auth/react"
 
 export function Header() {
     const pathname = usePathname()
+    const { data: session } = useSession()
 
     // Hide main header on admin routes
     if (pathname?.startsWith("/admin")) {
@@ -37,8 +39,19 @@ export function Header() {
         return () => { document.body.style.overflow = '' }
     }, [mobileOpen])
 
+    // @ts-ignore - hasPassword is a custom property attached in auth.ts
+    const demandsPassword = session?.user && session?.user?.hasPassword === false;
+
     return (
         <>
+            {demandsPassword && (
+                <div className="bg-primary/20 border-b border-primary/30 p-2.5 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 text-xs z-[101] relative backdrop-blur-md">
+                    <span className="text-white font-bold tracking-wide text-center">Create a password to access your account features</span>
+                    <Link href="/set-password" className="px-4 py-1.5 bg-primary text-white font-black rounded hover:bg-primary/90 transition-all uppercase tracking-widest text-[10px] shadow-lg shadow-primary/20 shrink-0">
+                        Create new password
+                    </Link>
+                </div>
+            )}
             <nav
                 className="sticky top-0 z-[100] border-b border-[#2A2A2A] bg-[#080808]/90 backdrop-blur-md"
                 suppressHydrationWarning
@@ -50,7 +63,7 @@ export function Header() {
                             <div className="text-primary group-hover:text-white transition-colors duration-300">
                                 <CFNLogo className="size-8" />
                             </div>
-                            <span className="text-xl font-black tracking-tight uppercase font-cairo">
+                            <span className="text-xl font-black tracking-tight uppercase font-[family-name:var(--font-brand)]">
                                 <span className="text-primary">CFN</span>
                                 <span className="text-white">BOOST</span>
                             </span>

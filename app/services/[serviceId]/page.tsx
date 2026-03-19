@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { notFound } from "next/navigation";
-import { useSession } from "next-auth/react";
+import { useSession, signIn } from "next-auth/react";
 import { Computer, Gamepad2, Rocket, Zap } from "lucide-react";
 import { useCurrency } from "@/context/currency-context";
 import { motion } from "framer-motion";
@@ -32,7 +32,7 @@ interface Service {
 export default function ServiceDetailsPage() {
   const { serviceId } = useParams();
   const router = useRouter();
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const { formatPrice } = useCurrency();
 
   const [service, setService] = useState<Service | null>(null);
@@ -56,6 +56,8 @@ export default function ServiceDetailsPage() {
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<string | null>(null);
   const [isFavorite, setIsFavorite] = useState(false);
   const [favoriteLoading, setFavoriteLoading] = useState(false);
+  const [authError, setAuthError] = useState("");
+  const [checkoutError, setCheckoutError] = useState("");
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -244,13 +246,51 @@ export default function ServiceDetailsPage() {
     finally { setIsValidatingPromo(false); }
   };
 
-  const handleOrderClick = () => setShowPaymentModal(true);
+  const handleOrderClick = () => {
+      setAuthError("");
+      if (status === "unauthenticated") {
+          setAuthError("Please enter your email and press Submit to proceed to checkout.");
+          return;
+      }
+      setShowPaymentModal(true);
+  };
+
+  const handleGuestLogin = async () => {
+    setAuthError("");
+    if (!email) {
+      setAuthError("Please enter your email to continue.");
+      return;
+    }
+    setIsSubmitting(true);
+    try {
+        const loginRes = await signIn("guest_email_login", {
+            email,
+            redirect: false
+        });
+        if (loginRes?.error) {
+            if (loginRes.error.toLowerCase().includes("configuration") || loginRes.error.toLowerCase().includes("credentialssignin") || loginRes.error.includes("account")) {
+                 setAuthError("This email already has an account. Please log in normally.");
+            } else {
+                 setAuthError("Login failed: " + loginRes.error);
+            }
+        } else {
+            window.location.reload(); 
+        }
+    } catch (e) {
+        console.error("Auto login exception", e);
+        setAuthError("An error occurred during sign in.");
+    } finally {
+        setIsSubmitting(false);
+    }
+  };
 
   const handlePurchase = async () => {
-    if (!selectedPaymentMethod) { toast.error('Please select a payment method'); return; }
-    if (selectedPaymentMethod !== 'stripe') { toast.error(`${selectedPaymentMethod.toUpperCase()} is currently unavailable.`); return; }
-    if (!email) { toast.error("Contact email is required."); return; }
+    setCheckoutError("");
+    if (!selectedPaymentMethod) { setCheckoutError('Please select a payment method'); return; }
+    if (selectedPaymentMethod !== 'stripe') { setCheckoutError(`${selectedPaymentMethod.toUpperCase()} is currently unavailable.`); return; }
+    if (!email) { setCheckoutError("Session email is missing. Please refresh."); return; }
     setIsSubmitting(true);
+
     try {
       const res = await fetch("/api/checkout/session", {
         method: "POST", headers: { "Content-Type": "application/json" },
@@ -258,14 +298,14 @@ export default function ServiceDetailsPage() {
           items: [{ id: service?.id || 'unknown', name: service?.name || 'Service', description: `${service?.name} - ${platform || 'Standard'} | ${completionMethod || 'Direct'}`, price: calculateTotalPrice() / quantity, image: service?.image || null, quantity }],
           customerEmail: email,
           metadata: { discord, orderNotes, selectedOptions: JSON.stringify(selectedOptions), platform: platform || 'Standard', completionMethod: completionMethod || 'Direct', userId: session?.user?.id || "guest" },
-          successUrl: `${window.location.origin}/checkout/success`,
+          successUrl: `${window.location.origin}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
           cancelUrl: `${window.location.origin}${window.location.pathname}`,
         })
       });
       const data = await res.json();
       if (data.url) window.location.href = data.url;
       else throw new Error(data.error || "Failed to create checkout session");
-    } catch { toast.error('Failed to initiate checkout.'); }
+    } catch (e: any) { setCheckoutError(e.message || 'Failed to initiate checkout.'); }
     finally { setIsSubmitting(false); }
   };
 
@@ -807,6 +847,39 @@ export default function ServiceDetailsPage() {
                   <span className="text-4xl font-black text-white tracking-tighter font-cairo">{formatPrice(calculateTotalPrice())}</span>
                 </div>
 
+                {status === "unauthenticated" && (
+                  <div className="mb-4 space-y-2 p-4 rounded-xl border border-white/10 bg-[#111]">
+                    <label className="text-[10px] text-slate-400 font-bold uppercase tracking-[0.2em] block">
+                      Enter Email to Checkout
+                    </label>
+                    <div className="flex gap-2">
+                      <input 
+                        type="email" 
+                        value={email} 
+                        onChange={(e) => setEmail(e.target.value)} 
+                        placeholder="your@email.com"
+                        className="flex-1 bg-[#050505] border border-white/5 rounded-lg px-3 py-2.5 text-white text-xs font-bold tracking-widest placeholder:text-slate-700 focus:border-primary/40 focus:outline-none transition-all"
+                      />
+                      <button 
+                        onClick={handleGuestLogin}
+                        disabled={!email || isSubmitting}
+                        className="px-4 py-2.5 bg-[#1a1a1a] hover:bg-primary text-white text-[10px] font-black uppercase tracking-widest rounded-lg transition-all disabled:opacity-40 border border-white/5"
+                      >
+                        {isSubmitting ? '...' : 'Submit'}
+                      </button>
+                    </div>
+                    <p className="text-[9px] text-slate-600 font-medium">
+                      Submit your email to seamlessly create your account and track your order.
+                    </p>
+                    {authError && (
+                      <div className="bg-primary/10 border border-primary/20 rounded-md p-2 flex items-center gap-2">
+                        <span className="material-symbols-outlined text-primary text-xs">error</span>
+                        <p className="text-primary text-[10px] font-black uppercase tracking-widest">{authError}</p>
+                      </div>
+                    )}
+                  </div>
+                )}
+
                 <button onClick={handleOrderClick} className="w-full py-4 bg-primary hover:bg-[#8a0e1d] text-white font-bold text-sm uppercase tracking-widest rounded-xl transition-colors flex items-center justify-center gap-2">
                   Proceed to Checkout
                   <span className="material-symbols-outlined text-lg">arrow_forward</span>
@@ -869,18 +942,6 @@ export default function ServiceDetailsPage() {
                 </div>
 
                 {/* customer info */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                  {[
-                    { label: 'Email Address', value: email, setter: setEmail, type: 'email', placeholder: 'your@email.com' },
-                    { label: 'Discord Tag', value: discord, setter: setDiscord, type: 'text', placeholder: 'Username#0000' },
-                  ].map(field => (
-                    <div key={field.label} className="space-y-1.5">
-                      <label className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">{field.label}</label>
-                      <input type={field.type} value={field.value} onChange={e => field.setter(e.target.value)} placeholder={field.placeholder}
-                        className="w-full bg-[#050505] border border-white/5 rounded-xl px-4 py-3 text-sm text-white focus:border-primary/50 transition-all outline-none hover:border-white/10" />
-                    </div>
-                  ))}
-                </div>
                 <div className="space-y-1.5">
                   <label className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Order Notes (Optional)</label>
                   <textarea value={orderNotes} onChange={e => setOrderNotes(e.target.value)} placeholder="Any specific requirements..." rows={2}
@@ -905,17 +966,21 @@ export default function ServiceDetailsPage() {
                       Credit / Debit Card
                     </div>
                   </button>
-                  <div className="grid grid-cols-2 gap-3">
+                  <div className="space-y-3">
                     {[{ icon: 'payments', label: 'PayPal' }, { icon: 'currency_bitcoin', label: 'Crypto' }].map(m => (
-                      <div key={m.label} className="flex items-center gap-3 p-4 rounded-xl border border-white/5 bg-[#0a0a0a] opacity-40 cursor-not-allowed">
+                      <div key={m.label} className="w-full relative flex items-center gap-4 p-4 rounded-xl border border-white/5 bg-[#0a0a0a] transition-colors duration-200 cursor-not-allowed overflow-hidden text-sm font-bold text-slate-400 opacity-60">
                         <div className="relative flex items-center justify-center shrink-0">
                           <div className="size-5 rounded-full border-2 border-slate-700 flex items-center justify-center">
                             <div className="size-2.5 rounded-full bg-primary transform scale-0" />
                           </div>
                         </div>
-                        <span className="material-symbols-outlined text-slate-400">{m.icon}</span>
-                        <span className="text-sm font-bold text-slate-400">{m.label}</span>
-                        <span className="text-[8px] border border-white/20 px-1.5 py-0.5 rounded uppercase ml-auto text-slate-500">Soon</span>
+                        <div className="flex items-center gap-3">
+                            <span className="material-symbols-outlined">{m.icon}</span>
+                            {m.label}
+                        </div>
+                        <div className="ml-auto flex shrink-0">
+                            <span className="text-[9px] border border-white/20 px-2 py-0.5 rounded text-white bg-white/5 uppercase font-black tracking-widest">Soon</span>
+                        </div>
                       </div>
                     ))}
                   </div>
@@ -924,6 +989,12 @@ export default function ServiceDetailsPage() {
 
               {/* pay button */}
               <div className="pt-5 mt-2">
+                {checkoutError && (
+                  <div className="mb-4 bg-primary/10 border border-primary/20 text-primary text-xs font-bold p-3 rounded-lg flex items-center gap-2 uppercase tracking-widest">
+                    <span className="material-symbols-outlined text-sm">error</span>
+                    {checkoutError}
+                  </div>
+                )}
                 <button onClick={handlePurchase} disabled={!selectedPaymentMethod || isSubmitting}
                   className="w-full py-4 bg-primary hover:bg-[#8a0e1d] disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold rounded-xl transition-all shadow-lg shadow-primary/20 flex items-center justify-center gap-2">
                   {isSubmitting ? (

@@ -15,7 +15,6 @@ import { useState } from "react";
 
 interface User {
     id: string;
-    name: string | null;
     email: string | null;
     role: string;
     createdAt: any;
@@ -118,10 +117,10 @@ export default function UsersTable({ initialUsers }: UsersTableProps) {
                                 <TableCell className="px-8 py-6">
                                     <div className="flex items-center gap-4">
                                         <div className="size-10 rounded-xl bg-linear-to-br from-slate-800 to-slate-900 flex items-center justify-center border border-white/5 text-xs font-black text-white uppercase group-hover:border-indigo-500/30 transition-all">
-                                            {user.name ? user.name[0] : user.email ? user.email[0] : "?"}
+                                            {user.email ? user.email[0].toUpperCase() : "?"}
                                         </div>
                                         <div>
-                                            <p className="text-xs font-black text-white uppercase tracking-tight">{user.name || "Anonymous"}</p>
+                                            <p className="text-xs font-black text-white uppercase tracking-tight">{user.email || "No Email"}</p>
                                             <p className="text-[10px] text-slate-500 font-bold tracking-tight flex items-center gap-1 opacity-70">
                                                 <Mail className="size-3" />
                                                 {user.email}
@@ -206,10 +205,10 @@ export default function UsersTable({ initialUsers }: UsersTableProps) {
                             <div className="bg-white/5 rounded-3xl p-6 border border-white/5">
                                 <div className="flex items-center gap-4 mb-6">
                                     <div className="size-16 rounded-2xl bg-indigo-500/20 flex items-center justify-center text-indigo-500 text-2xl font-black border border-indigo-500/20">
-                                        {selectedUser.name ? selectedUser.name[0] : "?"}
+                                        {selectedUser.email ? selectedUser.email[0].toUpperCase() : "?"}
                                     </div>
                                     <div>
-                                        <h3 className="text-xl font-black text-white uppercase leading-none">{selectedUser.name || "Anonymous"}</h3>
+                                        <h3 className="text-xl font-black text-white uppercase leading-none">{selectedUser.email || "No Email"}</h3>
                                         <p className="text-slate-500 text-sm mt-1">{selectedUser.email}</p>
                                     </div>
                                 </div>

@@ -45,7 +45,7 @@ export function LiveChat() {
                 body: JSON.stringify({
                     userId: session?.user?.id,
                     userEmail: session?.user?.email,
-                    userName: session?.user?.name
+                    userName: session?.user?.email
                 })
             })
             const data = await res.json()
@@ -112,7 +112,7 @@ export function LiveChat() {
                 body: JSON.stringify({
                     sessionId: chatSession.id,
                     text: textToSend,
-                    sender: session?.user?.name || "Guest",
+                    sender: session?.user?.email || "Guest",
                     isAdmin: false
                 })
             })

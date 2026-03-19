@@ -33,11 +33,13 @@ export async function POST(req: Request) {
         const serviceOrder = await prisma.serviceOrder.create({
             data: {
                 userId: session?.user?.id || null,
+                guestEmail: customerEmail || session?.user?.email || null,
                 serviceId: items[0].id, // For now assuming 1 service per order as per previous logic
                 totalPrice: totalAmount,
                 quantity: items[0].quantity || 1,
                 platform: metadata?.platform || "Standard",
                 completionMethod: metadata?.completionMethod || "Direct",
+                orderNotes: metadata?.orderNotes || null,
                 selectedOptions: metadata?.selectedOptions ? JSON.parse(metadata.selectedOptions) : null,
                 status: "pending",
             }

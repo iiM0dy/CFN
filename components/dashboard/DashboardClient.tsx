@@ -92,10 +92,10 @@ export default function DashboardClient({ user, orders, stats }: DashboardClient
                 <div className="p-6 border-t border-white/5">
                     <div className="flex items-center gap-3 p-3 rounded-xl bg-white/[0.02] border border-white/5 mb-4">
                         <div className="size-9 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center text-primary font-bold overflow-hidden uppercase text-sm">
-                            {user?.image ? <img src={user.image} className="w-full h-full object-cover" /> : user?.name?.[0] || 'U'}
+                            {user?.image ? <img src={user.image} className="w-full h-full object-cover" /> : user?.email?.[0]?.toUpperCase() || 'U'}
                         </div>
                         <div className="flex-1 overflow-hidden">
-                            <p className="text-sm font-semibold truncate">{user?.name || 'User'}</p>
+                            <p className="text-sm font-semibold truncate">{user?.email || 'User'}</p>
                             <p className="text-[11px] text-slate-500 truncate">{user?.email}</p>
                         </div>
                     </div>
@@ -114,7 +114,7 @@ export default function DashboardClient({ user, orders, stats }: DashboardClient
                 <div className="max-w-6xl mx-auto p-6 md:p-12 lg:p-16">
                     {/* Header */}
                     <header className="mb-12">
-                        <h1 className="text-3xl font-bold text-white tracking-tight mb-2">Welcome, {user?.name?.split(' ')[0] || 'Member'}</h1>
+                        <h1 className="text-3xl font-bold text-white tracking-tight mb-2">Welcome, {user?.email?.split('@')[0] || 'Member'}</h1>
                         <p className="text-slate-500 text-sm">Here is what&apos;s happening with your account today.</p>
                     </header>
 

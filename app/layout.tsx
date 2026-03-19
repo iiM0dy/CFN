@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Space_Grotesk, Cairo } from "next/font/google";
+import { Space_Grotesk, Cairo, Orbitron } from "next/font/google";
 import { Providers } from "@/components/providers";
 import { Header } from "@/components/layout/header";
 import "./globals.css";
@@ -18,6 +18,12 @@ const cairo = Cairo({
   display: "swap",
 });
 
+const orbitron = Orbitron({
+  variable: "--font-brand",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800", "900"],
+  display: "swap",
+});
 
 
 export const viewport: Viewport = {
@@ -27,7 +33,7 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.cfnboost.com"),
-  title: "CFNboost",
+  title: "CFNBoost",
   description: "The world's most advanced marketplace for competitive gaming services. Elevate your potential today with CFNboost.",
   icons: {
     icon: "/assets/cfnboost-official-logo.png",
@@ -71,7 +77,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${spaceGrotesk.variable} ${cairo.variable} dark`} suppressHydrationWarning>
+    <html lang="en" className={`${spaceGrotesk.variable} ${cairo.variable} ${orbitron.variable} dark`} suppressHydrationWarning>
       <head>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
       </head>
