@@ -146,7 +146,7 @@ export function HeroSection() {
                         <motion.div variants={fadeUp} className="flex flex-col sm:flex-row gap-4">
                             <Link
                                 href="/#games"
-                                className="group h-14 px-10 rounded-lg bg-primary hover:bg-primary-dark text-white font-black text-xs md:text-sm uppercase tracking-[0.25em] transition-all duration-300 shadow-[0_15px_30px_-5px_rgba(175,18,37,0.6)] hover:-translate-y-0.5 flex items-center gap-3 justify-center w-full sm:w-auto"
+                                className="group h-14 px-10 rounded-lg bg-primary hover:bg-primary-dark text-white font-black text-[14px] uppercase tracking-[0.25em] transition-all duration-300 shadow-[0_15px_30px_-5px_rgba(175,18,37,0.6)] hover:-translate-y-0.5 flex items-center gap-3 justify-center w-full sm:w-auto"
                             >
                                 Explore Games
                                 <svg className="size-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -155,7 +155,7 @@ export function HeroSection() {
                             </Link>
                             <Link
                                 href="/become-pro"
-                                className="h-14 px-10 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-white font-black text-xs md:text-sm uppercase tracking-[0.25em] transition-all duration-300 backdrop-blur-md flex items-center justify-center w-full sm:w-auto"
+                                className="h-14 px-10 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-white font-black text-[14px] uppercase tracking-[0.25em] transition-all duration-300 backdrop-blur-md flex items-center justify-center w-full sm:w-auto"
                             >
                                 Become a PRO
                             </Link>
@@ -207,13 +207,13 @@ export function HeroSection() {
                                         exit="exit"
                                         className="bg-primary/90 backdrop-blur-sm rounded-lg px-3 py-1.5 border border-primary/50"
                                     >
-                                        <span className="text-[10px] font-black text-white uppercase tracking-widest">{activeCard.sub}</span>
+                                        <span className="text-[14px] font-black text-white uppercase tracking-widest">{activeCard.sub}</span>
                                     </motion.div>
                                 </AnimatePresence>
 
                                 {/* Card counter */}
                                 <div className="bg-black/40 backdrop-blur-md rounded-lg px-3 py-1.5 border border-white/10">
-                                    <span className="text-[10px] font-black text-white/60 uppercase tracking-widest">
+                                    <span className="text-[14px] font-black text-white/60 uppercase tracking-widest">
                                         {String(activeIndex + 1).padStart(2, '0')} / {String(HERO_GAME_CARDS.length).padStart(2, '0')}
                                     </span>
                                 </div>
@@ -239,7 +239,7 @@ export function HeroSection() {
                                             href={`/${activeCard.slug}/services`}
                                             className="group inline-flex items-center gap-2 bg-white/10 hover:bg-primary border border-white/20 hover:border-primary rounded-xl px-5 py-3 backdrop-blur-md transition-all duration-300"
                                         >
-                                            <span className="text-[11px] font-black text-white uppercase tracking-widest">View Services</span>
+                                            <span className="text-[14px] font-black text-white uppercase tracking-widest">View Services</span>
                                             <svg className="w-4 h-4 text-white group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                                             </svg>

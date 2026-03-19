@@ -34,7 +34,7 @@ export function ServiceList({ initialServices }: ServiceListProps) {
                         <span className="h-12 w-2 bg-primary rounded-full shadow-[0_0_20px_rgba(175,18,37,0.5)]"></span>
                         Available <span className="text-primary">Services</span>
                     </h2>
-                    <p className="text-[11px] font-black text-slate-500 uppercase tracking-[0.4em] ml-6">Selection ready for initiation</p>
+                    <p className="text-[14px] font-black text-slate-500 uppercase tracking-[0.4em] ml-6">Selection ready for initiation</p>
                 </div>
 
                 <div className="relative group min-w-[320px]">
@@ -94,7 +94,7 @@ export function ServiceList({ initialServices }: ServiceListProps) {
                                         ].map((text, i) => (
                                             <div key={i} className="flex items-center gap-3">
                                                 <div className="size-1.5 bg-primary rotate-45" />
-                                                <span className="text-[10px] font-black text-slate-500 uppercase tracking-[0.15em] group-hover:text-slate-300 transition-colors whitespace-nowrap overflow-hidden text-ellipsis">
+                                                <span className="text-[14px] font-black text-slate-500 uppercase tracking-[0.15em] group-hover:text-slate-300 transition-colors whitespace-nowrap overflow-hidden text-ellipsis">
                                                     {text}
                                                 </span>
                                             </div>
@@ -104,14 +104,14 @@ export function ServiceList({ initialServices }: ServiceListProps) {
                                     {/* Action Row - Clean & Heavy */}
                                     <div className="flex items-center justify-between gap-4 pt-6 border-t border-white/5">
                                         <div className="flex flex-col">
-                                            <span className="text-[8px] font-black text-slate-600 uppercase tracking-[0.4em] mb-1">Contract</span>
+                                            <span className="text-[14px] font-black text-slate-600 uppercase tracking-[0.4em] mb-1">Contract</span>
                                             <span className="text-2xl font-black text-white tracking-tighter">
                                                 {formatPrice(service.displayPrice ? Number(service.displayPrice) : Number(service.basePrice))}
                                             </span>
                                         </div>
 
-                                        <div className="px-5 py-3 bg-white/5 border border-white/10 group-hover:bg-primary group-hover:border-primary rounded-xl transition-all duration-500">
-                                            <span className="text-[10px] font-black text-white uppercase tracking-widest flex items-center gap-2">
+                                        <div className="px-5 py-3 bg-white/5 border border-white/10 group-hover:bg-primary group-hover:border-primary rounded-xl transition-all duration-300">
+                                            <span className="text-[14px] font-black text-white uppercase tracking-widest flex items-center gap-2">
                                                 BUY
                                                 <span className="material-symbols-outlined text-sm">arrow_forward</span>
                                             </span>
@@ -135,8 +135,8 @@ export function ServiceList({ initialServices }: ServiceListProps) {
                             <span className="material-symbols-outlined text-slate-700 group-hover:text-primary text-4xl transition-colors">add</span>
                         </div>
                         <h3 className="text-2xl font-black text-white uppercase tracking-tighter mb-4 italic">Custom <span className="text-primary NOT-italic">Request</span></h3>
-                        <p className="text-slate-600 text-[10px] font-black uppercase tracking-[0.2em] mb-10 max-w-[200px]">Don't see what you need? Tell us what you're looking for and we'll make it happen.</p>
-                        <div className="w-full py-4 border border-white/10 rounded-xl text-[9px] font-black text-slate-500 uppercase tracking-[0.3em] group-hover:bg-white/5 group-hover:text-white transition-all">Get in Touch</div>
+                        <p className="text-slate-600 text-[14px] font-black uppercase tracking-[0.2em] mb-10 max-w-[200px]">Don't see what you need? Tell us what you're looking for and we'll make it happen.</p>
+                        <div className="w-full py-4 border border-white/10 rounded-xl text-[14px] font-black text-slate-500 uppercase tracking-[0.3em] group-hover:bg-white/5 group-hover:text-white transition-all">Get in Touch</div>
                     </div>
                 </Link>
             </div>

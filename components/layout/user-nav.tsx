@@ -35,7 +35,7 @@ export function UserNav() {
         return (
             <Link 
                 href="/login" 
-                className="px-5 py-2.5 bg-primary hover:bg-[#8a0e1d] rounded-2xl text-[10px] font-black text-white transition-all uppercase tracking-widest shadow-lg shadow-primary/20"
+                className="px-5 py-2.5 bg-primary hover:bg-[#8a0e1d] rounded-2xl text-[14px] font-black text-white transition-all uppercase tracking-widest shadow-lg shadow-primary/20"
             >
                 Log in
             </Link>
@@ -57,30 +57,30 @@ export function UserNav() {
             <DropdownMenuContent className="w-56 bg-[#0D0D0D] border-white/10 text-slate-300 rounded-2xl p-2 shadow-2xl" align="end" sideOffset={8}>
                 <DropdownMenuLabel className="font-normal px-2 py-3">
                     <div className="flex flex-col space-y-1">
-                        <p className="text-xs font-bold leading-none text-white truncate">{session.user?.email}</p>
+                        <p className="text-[14px] font-bold leading-none text-white truncate">{session.user?.email}</p>
                     </div>
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator className="bg-white/5 mx-2" />
                 <DropdownMenuGroup className="p-1 space-y-1">
-                    <DropdownMenuItem asChild className="rounded-xl focus:bg-white/5 focus:text-white cursor-pointer transition-colors px-3 py-2.5 text-xs font-medium">
+                    <DropdownMenuItem asChild className="rounded-xl focus:bg-white/5 focus:text-white cursor-pointer transition-colors px-3 py-2.5 text-[14px] font-medium">
                         <Link href="/orders">
                             My Orders
                         </Link>
                     </DropdownMenuItem>
-                    <DropdownMenuItem asChild className="rounded-xl focus:bg-white/5 focus:text-white cursor-pointer transition-colors px-3 py-2.5 text-xs font-medium">
+                    <DropdownMenuItem asChild className="rounded-xl focus:bg-white/5 focus:text-white cursor-pointer transition-colors px-3 py-2.5 text-[14px] font-medium">
                         <Link href="/favorites">
                             Favorites
                         </Link>
                     </DropdownMenuItem>
-                    <DropdownMenuItem className="rounded-xl focus:bg-white/5 focus:text-white cursor-pointer transition-colors px-3 py-2.5 text-xs font-medium">
+                    <DropdownMenuItem className="rounded-xl focus:bg-white/5 focus:text-white cursor-pointer transition-colors px-3 py-2.5 text-[14px] font-medium">
                         Profile
                     </DropdownMenuItem>
-                    <DropdownMenuItem className="rounded-xl focus:bg-white/5 focus:text-white cursor-pointer transition-colors px-3 py-2.5 text-xs font-medium">
+                    <DropdownMenuItem className="rounded-xl focus:bg-white/5 focus:text-white cursor-pointer transition-colors px-3 py-2.5 text-[14px] font-medium">
                         History
                     </DropdownMenuItem>
                     {/* @ts-ignore */}
                     {session.user?.role === "ADMIN" && (
-                        <DropdownMenuItem asChild className="rounded-xl focus:bg-white/5 focus:text-white cursor-pointer transition-colors px-3 py-2.5 text-xs font-medium">
+                        <DropdownMenuItem asChild className="rounded-xl focus:bg-white/5 focus:text-white cursor-pointer transition-colors px-3 py-2.5 text-[14px] font-medium">
                             <Link href="/admin/chat">
                                 Support Terminal
                             </Link>
@@ -91,7 +91,7 @@ export function UserNav() {
                 <div className="p-1">
                     <DropdownMenuItem 
                         onClick={() => signOut()} 
-                        className="rounded-xl focus:bg-primary/20 focus:text-primary cursor-pointer transition-colors px-3 py-2.5 text-xs font-bold text-red-400/80"
+                        className="rounded-xl focus:bg-primary/20 focus:text-primary cursor-pointer transition-colors px-3 py-2.5 text-[14px] font-bold text-red-400/80"
                     >
                         Log out
                     </DropdownMenuItem>

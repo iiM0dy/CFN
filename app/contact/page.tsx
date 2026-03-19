@@ -31,7 +31,7 @@ export default function ContactPage() {
                                 <span className="material-symbols-outlined">mail</span>
                             </div>
                             <div>
-                                <p className="text-xs uppercase tracking-widest text-slate-500 font-bold">Email Us</p>
+                                <p className="text-[14px] uppercase tracking-widest text-slate-500 font-bold">Email Us</p>
                                 <p className="text-lg font-medium">support@cfnboost.com</p>
                             </div>
                         </Link>
@@ -41,14 +41,14 @@ export default function ContactPage() {
                                 <span className="material-symbols-outlined">bolt</span>
                             </div>
                             <div>
-                                <p className="text-xs uppercase tracking-widest text-slate-500 font-bold">Average Response</p>
+                                <p className="text-[14px] uppercase tracking-widest text-slate-500 font-bold">Average Response</p>
                                 <p className="text-lg font-medium">&lt; 15 Minutes</p>
                             </div>
                         </div>
                     </div>
 
                     <div className="flex flex-col gap-4">
-                        <p className="text-slate-500 font-bold text-xs uppercase tracking-widest">Connect With Us</p>
+                        <p className="text-slate-500 font-bold text-[14px] uppercase tracking-widest">Connect With Us</p>
                         <div className="flex gap-4">
                             {[
                                 { icon: 'forum', href: '#' },

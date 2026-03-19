@@ -45,15 +45,15 @@ export function Header() {
     return (
         <>
             {demandsPassword && (
-                <div className="bg-primary/20 border-b border-primary/30 p-2.5 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 text-xs z-[101] relative backdrop-blur-md">
+                <div className="bg-primary/20 border-b border-primary/30 p-2.5 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 text-[14px] z-101 relative backdrop-blur-md">
                     <span className="text-white font-bold tracking-wide text-center">Create a password to access your account features</span>
-                    <Link href="/set-password" className="px-4 py-1.5 bg-primary text-white font-black rounded hover:bg-primary/90 transition-all uppercase tracking-widest text-[10px] shadow-lg shadow-primary/20 shrink-0">
+                    <Link href="/set-password" className="px-4 py-1.5 bg-primary text-white font-black rounded hover:bg-primary/90 transition-all uppercase tracking-widest text-[14px] shadow-lg shadow-primary/20 shrink-0">
                         Create new password
                     </Link>
                 </div>
             )}
             <nav
-                className="sticky top-0 z-[100] border-b border-[#2A2A2A] bg-[#080808]/90 backdrop-blur-md"
+                className="sticky top-0 z-100 border-b border-[#2A2A2A] bg-[#080808]/90 backdrop-blur-md"
                 suppressHydrationWarning
             >
                 <div className="max-w-[1440px] mx-auto px-6 lg:px-10 h-20 flex items-center justify-between">
@@ -63,7 +63,7 @@ export function Header() {
                             <div className="text-primary group-hover:text-white transition-colors duration-300">
                                 <CFNLogo className="size-8" />
                             </div>
-                            <span className="text-xl font-black tracking-tight uppercase font-[family-name:var(--font-brand)]">
+                            <span className="text-xl font-black tracking-tight uppercase font-(family-name:--font-brand)">
                                 <span className="text-primary">CFN</span>
                                 <span className="text-white">BOOST</span>
                             </span>
@@ -201,14 +201,14 @@ export function Header() {
                                         <Link
                                             href="/legit"
                                             onClick={() => setMenuOpen(false)}
-                                            className="px-3 py-1.5 rounded-full bg-[#1A1A1A] text-xs font-semibold text-gray-200 hover:bg-[#252525] hover:text-white transition-colors"
+                                            className="px-3 py-1.5 rounded-full bg-[#1A1A1A] text-[14px] font-semibold text-gray-200 hover:bg-[#252525] hover:text-white transition-colors"
                                         >
                                             Trust &amp; Safety
                                         </Link>
                                         <Link
                                             href="/contact"
                                             onClick={() => setMenuOpen(false)}
-                                            className="px-3 py-1.5 rounded-full bg-primary text-xs font-semibold text-black hover:bg-primary-dark transition-colors"
+                                            className="px-3 py-1.5 rounded-full bg-primary text-[14px] font-semibold text-black hover:bg-primary-dark transition-colors"
                                         >
                                             Contact us
                                         </Link>
@@ -240,7 +240,7 @@ export function Header() {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        className="fixed inset-0 top-20 z-[90] md:hidden bg-[#080808] overflow-y-auto flex flex-col"
+                        className="fixed inset-0 top-20 z-90 md:hidden bg-[#080808] overflow-y-auto flex flex-col"
                         suppressHydrationWarning
                     >
                         <div className="flex flex-col p-6 pb-24 gap-8 w-full" suppressHydrationWarning>
@@ -255,7 +255,7 @@ export function Header() {
                                     className="flex items-center justify-center gap-3 py-4 bg-[#1A1A1A] rounded-2xl border border-white/5 text-slate-300 active:bg-primary/20 transition-all"
                                 >
                                     <span className="material-symbols-outlined text-lg">search</span>
-                                    <span className="text-xs font-black uppercase tracking-widest">Search</span>
+                                    <span className="text-[14px] font-black uppercase tracking-widest">Search</span>
                                 </button>
                                 <Link
                                     href="/favorites"
@@ -263,13 +263,13 @@ export function Header() {
                                     className="flex items-center justify-center gap-3 py-4 bg-[#1A1A1A] rounded-2xl border border-white/5 text-slate-300 active:bg-primary/20 transition-all"
                                 >
                                     <span className="material-symbols-outlined text-lg">favorite</span>
-                                    <span className="text-xs font-black uppercase tracking-widest">Saved</span>
+                                    <span className="text-[14px] font-black uppercase tracking-widest">Saved</span>
                                 </Link>
                             </div>
 
                             {/* Currency Selection - Mobile */}
                             <div className="bg-[#1A1A1A] p-5 rounded-2xl border border-white/5 flex items-center justify-between">
-                                <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest pl-1">Global Currency</span>
+                                <span className="text-[14px] font-black text-slate-500 uppercase tracking-widest pl-1">Global Currency</span>
                                 <CurrencySwitcher />
                             </div>
 
@@ -277,7 +277,7 @@ export function Header() {
                             <div>
                                 <div className="flex items-center gap-3 mb-6">
                                     <span className="h-px bg-primary/30 grow"></span>
-                                    <span className="text-[10px] font-black text-primary uppercase tracking-[0.3em]">Operational Sectors</span>
+                                    <span className="text-[14px] font-black text-primary uppercase tracking-[0.3em]">Operational Sectors</span>
                                     <span className="h-px bg-primary/30 grow"></span>
                                 </div>
                                 <div className="grid grid-cols-1 gap-3">
@@ -305,7 +305,7 @@ export function Header() {
                             <div>
                                 <div className="flex items-center gap-3 mb-6">
                                     <span className="h-px bg-white/10 grow"></span>
-                                    <span className="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em]">Command Center</span>
+                                    <span className="text-[14px] font-black text-slate-500 uppercase tracking-[0.3em]">Command Center</span>
                                     <span className="h-px bg-white/10 grow"></span>
                                 </div>
                                 <div className="grid grid-cols-2 gap-4">
@@ -324,7 +324,7 @@ export function Header() {
                                             className="flex flex-col items-center gap-3 p-6 bg-[#111111] border border-white/5 rounded-2xl"
                                         >
                                             <span className="material-symbols-outlined text-primary/70">{item.icon}</span>
-                                            <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest">{item.label}</span>
+                                            <span className="text-[14px] font-black text-slate-400 uppercase tracking-widest">{item.label}</span>
                                         </Link>
                                     ))}
                                 </div>
@@ -337,8 +337,8 @@ export function Header() {
                                 className="bg-primary/5 border-l-2 border-primary p-6 rounded-r-2xl flex items-center justify-between"
                             >
                                 <div>
-                                    <h4 className="text-white text-xs font-black uppercase tracking-widest mb-1">Become a Booster</h4>
-                                    <p className="text-slate-500 text-[10px] font-bold uppercase tracking-wider">Join our elite field experts</p>
+                                    <h4 className="text-white text-[14px] font-black uppercase tracking-widest mb-1">Become a Booster</h4>
+                                    <p className="text-slate-500 text-[14px] font-bold uppercase tracking-wider">Join our elite field experts</p>
                                 </div>
                                 <span className="material-symbols-outlined text-primary">bolt</span>
                             </Link>

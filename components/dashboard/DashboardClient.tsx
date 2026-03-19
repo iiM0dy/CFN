@@ -80,7 +80,7 @@ export default function DashboardClient({ user, orders, stats }: DashboardClient
                             onClick={() => setActiveTab(item.id)}
                             className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all ${activeTab === item.id
                                     ? 'bg-white/5 text-white border border-white/5'
-                                    : 'text-slate-500 hover:text-slate-300 hover:bg-white/[0.02]'
+                                    : 'text-slate-500 hover:text-slate-300 hover:bg-white/2'
                                 }`}
                         >
                             <item.icon className="size-4" />
@@ -90,18 +90,18 @@ export default function DashboardClient({ user, orders, stats }: DashboardClient
                 </nav>
 
                 <div className="p-6 border-t border-white/5">
-                    <div className="flex items-center gap-3 p-3 rounded-xl bg-white/[0.02] border border-white/5 mb-4">
+                    <div className="flex items-center gap-3 p-3 rounded-xl bg-white/2 border border-white/5 mb-4">
                         <div className="size-9 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center text-primary font-bold overflow-hidden uppercase text-sm">
                             {user?.image ? <img src={user.image} className="w-full h-full object-cover" /> : user?.email?.[0]?.toUpperCase() || 'U'}
                         </div>
                         <div className="flex-1 overflow-hidden">
                             <p className="text-sm font-semibold truncate">{user?.email || 'User'}</p>
-                            <p className="text-[11px] text-slate-500 truncate">{user?.email}</p>
+                            <p className="text-[14px] text-slate-500 truncate">{user?.email}</p>
                         </div>
                     </div>
                     <button
                         onClick={() => signOut()}
-                        className="w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-xs font-semibold text-slate-500 hover:text-primary hover:bg-primary/5 transition-all"
+                        className="w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-[14px] font-semibold text-slate-500 hover:text-primary hover:bg-primary/5 transition-all"
                     >
                         <LogOut className="size-4" />
                         Sign Out
@@ -127,7 +127,7 @@ export default function DashboardClient({ user, orders, stats }: DashboardClient
                         ].map((stat) => (
                             <div key={stat.label} className="p-6 rounded-2xl bg-[#0A0A0A] border border-white/5">
                                 <div className="flex items-center justify-between mb-4">
-                                    <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">{stat.label}</span>
+                                    <span className="text-[14px] font-semibold text-slate-500 uppercase tracking-wider">{stat.label}</span>
                                     <stat.icon className="size-4 text-slate-600" />
                                 </div>
                                 <h3 className="text-2xl font-bold text-white">{stat.value}</h3>
@@ -143,7 +143,7 @@ export default function DashboardClient({ user, orders, stats }: DashboardClient
                                 <section>
                                     <div className="flex items-center justify-between mb-6">
                                         <h2 className="text-lg font-bold text-white">Current Order</h2>
-                                        <div className="flex items-center gap-2 text-xs text-slate-500">
+                                        <div className="flex items-center gap-2 text-[14px] text-slate-500">
                                             <div className="size-2 rounded-full bg-emerald-500 animate-pulse" />
                                             Live Tracking
                                         </div>
@@ -152,7 +152,7 @@ export default function DashboardClient({ user, orders, stats }: DashboardClient
                                     <div className="p-8 rounded-3xl bg-[#0F0F0F] border border-white/5">
                                         <div className="flex flex-col md:flex-row justify-between gap-6 mb-8">
                                             <div>
-                                                <div className={`px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider border mb-3 inline-block ${getStatusColor(trackingOrder.status)}`}>
+                                                <div className={`px-2.5 py-1 rounded-full text-[14px] font-bold uppercase tracking-wider border mb-3 inline-block ${getStatusColor(trackingOrder.status)}`}>
                                                     {trackingOrder.status}
                                                 </div>
                                                 <h3 className="text-2xl font-bold text-white mb-1">{trackingOrder.name}</h3>
@@ -161,14 +161,14 @@ export default function DashboardClient({ user, orders, stats }: DashboardClient
                                                 </p>
                                             </div>
                                             <div className="text-left md:text-right">
-                                                <p className="text-xs font-medium text-slate-500 mb-1">Estimated Completion</p>
+                                                <p className="text-[14px] font-medium text-slate-500 mb-1">Estimated Completion</p>
                                                 <p className="text-sm font-bold text-white">4 - 6 Hours</p>
                                             </div>
                                         </div>
 
                                         {/* Simple Progress */}
                                         <div className="space-y-3">
-                                            <div className="flex justify-between items-center text-xs">
+                                            <div className="flex justify-between items-center text-[14px]">
                                                 <span className="font-semibold text-slate-400">Task Completion</span>
                                                 <span className="font-bold text-primary">
                                                     {trackingOrder.status === 'completed' ? '100' : '45'}%
@@ -186,7 +186,7 @@ export default function DashboardClient({ user, orders, stats }: DashboardClient
                                         <div className="grid grid-cols-4 gap-2 mt-10 pt-8 border-t border-white/5">
                                             {['Payment', 'Process', 'In Work', 'Delivery'].map((step, i) => (
                                                 <div key={step} className="text-center">
-                                                    <div className={`text-[10px] font-bold uppercase tracking-widest ${(trackingOrder.status === 'completed' || i <= 1) ? 'text-white' : 'text-slate-600'
+                                                    <div className={`text-[14px] font-bold uppercase tracking-widest ${(trackingOrder.status === 'completed' || i <= 1) ? 'text-white' : 'text-slate-600'
                                                         }`}>{step}</div>
                                                     <div className={`w-full h-1 mt-3 rounded-full ${(trackingOrder.status === 'completed' || i <= 1) ? 'bg-primary' : 'bg-white/5'
                                                         }`} />
@@ -196,11 +196,11 @@ export default function DashboardClient({ user, orders, stats }: DashboardClient
                                     </div>
                                 </section>
                             ) : (
-                                <div className="p-12 rounded-3xl border border-dashed border-white/10 flex flex-col items-center justify-center text-center bg-white/[0.01]">
+                                <div className="p-12 rounded-3xl border border-dashed border-white/10 flex flex-col items-center justify-center text-center bg-white/1">
                                     <ShoppingBag className="size-10 text-slate-800 mb-4" />
                                     <h3 className="text-base font-bold text-white mb-1">No Active Orders</h3>
-                                    <p className="text-slate-500 text-xs mb-6">When you place an order, it will appear here for tracking.</p>
-                                    <Link href="/services" className="px-6 py-2.5 bg-white text-black rounded-xl text-xs font-bold hover:bg-slate-200 transition-all">
+                                    <p className="text-slate-500 text-[14px] mb-6">When you place an order, it will appear here for tracking.</p>
+                                    <Link href="/services" className="px-6 py-2.5 bg-white text-black rounded-xl text-[14px] font-bold hover:bg-slate-200 transition-all">
                                         View Services
                                     </Link>
                                 </div>
@@ -213,22 +213,22 @@ export default function DashboardClient({ user, orders, stats }: DashboardClient
                                     <div className="overflow-x-auto">
                                         <table className="w-full text-left text-sm">
                                             <thead>
-                                                <tr className="border-b border-white/5 bg-white/[0.01]">
-                                                    <th className="px-6 py-4 text-[11px] font-bold text-slate-500 uppercase tracking-wider">Order</th>
-                                                    <th className="px-6 py-4 text-[11px] font-bold text-slate-500 uppercase tracking-wider">Amount</th>
-                                                    <th className="px-6 py-4 text-[11px] font-bold text-slate-500 uppercase tracking-wider text-right">Status</th>
+                                                <tr className="border-b border-white/5 bg-white/1">
+                                                    <th className="px-6 py-4 text-[14px] font-bold text-slate-500 uppercase tracking-wider">Order</th>
+                                                    <th className="px-6 py-4 text-[14px] font-bold text-slate-500 uppercase tracking-wider">Amount</th>
+                                                    <th className="px-6 py-4 text-[14px] font-bold text-slate-500 uppercase tracking-wider text-right">Status</th>
                                                 </tr>
                                             </thead>
                                             <tbody className="divide-y divide-white/5">
                                                 {orders.slice(0, 5).map((order) => (
-                                                    <tr key={order.id} className="hover:bg-white/[0.01] transition-colors">
+                                                    <tr key={order.id} className="hover:bg-white/1 transition-colors">
                                                         <td className="px-6 py-4">
                                                             <p className="font-semibold text-white truncate max-w-[200px]">{order.name}</p>
-                                                            <p className="text-[11px] text-slate-500 mt-0.5">{new Date(order.createdAt).toLocaleDateString()}</p>
+                                                            <p className="text-[14px] text-slate-500 mt-0.5">{new Date(order.createdAt).toLocaleDateString()}</p>
                                                         </td>
                                                         <td className="px-6 py-4 font-bold text-white">{formatPrice(order.price)}</td>
                                                         <td className="px-6 py-4 text-right">
-                                                            <span className={`px-2 py-0.5 rounded-md text-[10px] font-bold uppercase border ${getStatusColor(order.status)}`}>
+                                                            <span className={`px-2 py-0.5 rounded-md text-[14px] font-bold uppercase border ${getStatusColor(order.status)}`}>
                                                                 {order.status}
                                                             </span>
                                                         </td>
@@ -245,12 +245,12 @@ export default function DashboardClient({ user, orders, stats }: DashboardClient
                         <div className="space-y-6">
                             {/* Wallet Info */}
                             <div className="p-8 rounded-3xl bg-primary text-white">
-                                <p className="text-[11px] font-bold uppercase tracking-widest opacity-70 mb-1">Wallet Credits</p>
+                                <p className="text-[14px] font-bold uppercase tracking-widest opacity-70 mb-1">Wallet Credits</p>
                                 <h4 className="text-3xl font-bold mb-6">{formatPrice(0.00)}</h4>
-                                <button className="w-full py-3 bg-black text-white rounded-xl text-xs font-bold hover:bg-zinc-900 transition-all mb-2">
+                                <button className="w-full py-3 bg-black text-white rounded-xl text-[14px] font-bold hover:bg-zinc-900 transition-all mb-2">
                                     Deposit Funds
                                 </button>
-                                <button className="w-full py-2.5 text-white/70 hover:text-white text-xs font-semibold flex items-center justify-center gap-2">
+                                <button className="w-full py-2.5 text-white/70 hover:text-white text-[14px] font-semibold flex items-center justify-center gap-2">
                                     Transaction History <ChevronRight className="size-3" />
                                 </button>
                             </div>
@@ -269,8 +269,8 @@ export default function DashboardClient({ user, orders, stats }: DashboardClient
                                         <div key={i} className="flex gap-3">
                                             <div className="size-1.5 rounded-full bg-primary mt-1.5 shrink-0" />
                                             <div>
-                                                <p className="text-[12px] font-medium text-slate-300 leading-snug">{item.text}</p>
-                                                <p className="text-[10px] text-slate-600 mt-0.5 font-bold uppercase tracking-wider">{item.time}</p>
+                                                <p className="text-[14px] font-medium text-slate-300 leading-snug">{item.text}</p>
+                                                <p className="text-[14px] text-slate-600 mt-0.5 font-bold uppercase tracking-wider">{item.time}</p>
                                             </div>
                                         </div>
                                     ))}
@@ -278,10 +278,10 @@ export default function DashboardClient({ user, orders, stats }: DashboardClient
                             </div>
 
                             {/* Help */}
-                            <div className="p-6 rounded-3xl border border-white/5 bg-white/[0.01]">
+                            <div className="p-6 rounded-3xl border border-white/5 bg-white/1">
                                 <h4 className="text-sm font-bold text-white mb-2">Support Center</h4>
-                                <p className="text-xs text-slate-500 mb-5 leading-relaxed">Need help with an order? Our agents are available 24/7.</p>
-                                <button className="w-full py-3 bg-white/5 hover:bg-white/10 border border-white/10 text-white rounded-xl text-xs font-bold transition-all">
+                                <p className="text-[14px] text-slate-500 mb-5 leading-relaxed">Need help with an order? Our agents are available 24/7.</p>
+                                <button className="w-full py-3 bg-white/5 hover:bg-white/10 border border-white/10 text-white rounded-xl text-[14px] font-bold transition-all">
                                     Open Ticket
                                 </button>
                             </div>

@@ -75,12 +75,12 @@ export function TestimonialsSection() {
 
                             <div className="flex items-center gap-4 border-t border-white/10 pt-6 mt-2">
                                 <div
-                                    className="size-12 rounded-full bg-primary/20 border border-primary/40 bg-cover bg-center flex-shrink-0"
+                                    className="size-12 rounded-full bg-primary/20 border border-primary/40 bg-cover bg-center shrink-0"
                                     style={{ backgroundImage: `url('${t.avatar}')` }}
                                 />
                                 <div>
                                     <h5 className="text-white font-bold text-sm uppercase tracking-tight">{t.author}</h5>
-                                    <span className="text-[11px] text-gray-500 font-medium uppercase tracking-widest">
+                                    <span className="text-[14px] text-gray-500 font-medium uppercase tracking-widest">
                                         {t.tag}
                                     </span>
                                 </div>

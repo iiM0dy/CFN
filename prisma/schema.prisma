@@ -34,6 +34,7 @@ model User {
   orders        Order[]
   cart          Cart?
   favorites     Favorite[]
+  gameFavorites GameFavorite[]
   serviceOrders ServiceOrder[]
 
   createdAt DateTime @default(now())
@@ -114,6 +115,7 @@ model GameService {
   isActive    Boolean   @default(true)
   isPopular   Boolean   @default(false)
   services    Service[]
+  favorites   GameFavorite[]
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
 }
@@ -240,6 +242,18 @@ model Favorite {
   createdAt DateTime @default(now())
 
   @@unique([userId, serviceId])
+  @@index([userId])
+}
+
+model GameFavorite {
+  id        String      @id @default(cuid())
+  userId    String
+  user      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  gameId    String
+  game      GameService @relation(fields: [gameId], references: [id], onDelete: Cascade)
+  createdAt DateTime    @default(now())
+
+  @@unique([userId, gameId])
   @@index([userId])
 }
 

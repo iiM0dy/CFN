@@ -76,9 +76,9 @@ export function CheckoutSuccessContent() {
 
                 {orderId && (
                     <div className="bg-white/5 border border-white/10 rounded-xl p-4 mb-6 inline-block">
-                        <p className="text-xs text-slate-400 uppercase tracking-widest font-bold mb-1">Your Order ID</p>
+                        <p className="text-[12px] text-slate-400 uppercase tracking-widest font-bold mb-1">Your Order ID</p>
                         <p className="text-xl font-mono text-white select-all">{orderId}</p>
-                        <p className="text-[10px] text-slate-500 mt-2">Save this ID to track your order</p>
+                        <p className="text-[12px] text-slate-500 mt-2">Save this ID to track your order</p>
                     </div>
                 )}
 
@@ -88,7 +88,7 @@ export function CheckoutSuccessContent() {
 
                 {/* What's Next Section */}
                 <div className="bg-white/5 border border-white/5 rounded-3xl p-6 mb-12 text-left space-y-4">
-                    <h3 className="text-xs font-bold text-white uppercase tracking-widest flex items-center gap-2 mb-2">
+                    <h3 className="text-[12px] font-bold text-white uppercase tracking-widest flex items-center gap-2 mb-2">
                         <span className="h-px w-4 bg-primary"></span>
                         What happens next?
                     </h3>
@@ -98,8 +98,8 @@ export function CheckoutSuccessContent() {
                             <span className="material-symbols-outlined text-sm text-slate-400">mail</span>
                         </div>
                         <div>
-                            <p className="text-xs font-bold text-white mb-0.5 uppercase tracking-wide">Check your Email</p>
-                            <p className="text-[11px] text-slate-500 font-medium">We've sent your order details and instructions to your inbox.</p>
+                            <p className="text-[12px] font-bold text-white mb-0.5 uppercase tracking-wide">Check your Email</p>
+                            <p className="text-[12px] text-slate-500 font-medium">We've sent your order details and instructions to your inbox.</p>
                         </div>
                     </div>
                 </div>
@@ -107,20 +107,20 @@ export function CheckoutSuccessContent() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <Link
                         href={orderId ? `/track-order/${orderId}${email ? `?email=${encodeURIComponent(email)}` : ''}` : "/track-order"}
-                        className="flex items-center justify-center gap-2 py-5 bg-primary text-white font-bold rounded-2xl hover:bg-[#8a0e1d] transition-all uppercase tracking-widest text-[11px] shadow-lg shadow-primary/20"
+                        className="flex items-center justify-center gap-2 py-5 bg-primary text-white font-bold rounded-2xl hover:bg-[#8a0e1d] transition-all uppercase tracking-widest text-[12px] shadow-lg shadow-primary/20"
                     >
                         <span>Track Order</span>
                         <span className="material-symbols-outlined text-sm">trending_up</span>
                     </Link>
                     <Link
                         href="/"
-                        className="flex items-center justify-center gap-2 py-5 bg-white/5 text-slate-300 font-bold rounded-2xl hover:bg-white/10 transition-all uppercase tracking-widest text-[11px] border border-white/5"
+                        className="flex items-center justify-center gap-2 py-5 bg-white/5 text-slate-300 font-bold rounded-2xl hover:bg-white/10 transition-all uppercase tracking-widest text-[12px] border border-white/5"
                     >
                         <span>Back to Store</span>
                     </Link>
                 </div>
 
-                <p className="mt-10 text-[10px] text-slate-600 font-bold uppercase tracking-[0.2em]">
+                <p className="mt-10 text-[12px] text-slate-600 font-bold uppercase tracking-[0.2em]">
                     Thank you for choosing <span className="text-primary font-black">CFN</span><span className="text-white font-black">BOOST</span>
                 </p>
             </motion.div>

@@ -99,7 +99,7 @@ export default function ServicesTable({ initialServices }: ServicesTableProps) {
                     </div>
                     <div>
                         <h2 className="text-lg font-black text-white uppercase italic tracking-tight">Manage Services</h2>
-                        <p className="text-slate-500 text-[10px] font-bold uppercase tracking-widest">Active services: {services.length}</p>
+                        <p className="text-slate-500 text-[14px] font-bold uppercase tracking-widest">Active services: {services.length}</p>
                     </div>
                 </div>
 
@@ -110,12 +110,12 @@ export default function ServicesTable({ initialServices }: ServicesTableProps) {
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
                             placeholder="Find service..."
-                            className="bg-white/5 border border-white/5 rounded-2xl pl-12 pr-6 py-3 text-xs text-white focus:border-emerald-500/50 outline-none w-full md:w-80 transition-all font-medium placeholder:text-slate-800"
+                            className="bg-white/5 border border-white/5 rounded-2xl pl-12 pr-6 py-3 text-[14px] text-white focus:border-emerald-500/50 outline-none w-full md:w-80 transition-all font-medium placeholder:text-slate-800"
                         />
                     </div>
                     <button
                         onClick={() => toast.info("Function coming soon", { description: "Add Service functionality is being prepared." })}
-                        className="flex items-center gap-2 px-5 py-3 bg-emerald-600 hover:bg-emerald-700 rounded-2xl text-[10px] font-black text-white transition-all uppercase tracking-[0.2em] shadow-lg shadow-emerald-500/20 cursor-pointer"
+                        className="flex items-center gap-2 px-5 py-3 bg-emerald-600 hover:bg-emerald-700 rounded-2xl text-[14px] font-black text-white transition-all uppercase tracking-[0.2em] shadow-lg shadow-emerald-500/20 cursor-pointer"
                     >
                         <Plus className="size-4" />
                         New Service
@@ -128,11 +128,11 @@ export default function ServicesTable({ initialServices }: ServicesTableProps) {
                 <Table>
                     <TableHeader className="bg-white/2 border-b border-white/5">
                         <TableRow className="hover:bg-transparent border-none">
-                            <TableHead className="px-8 h-12 text-[9px] font-black text-slate-500 uppercase tracking-[0.2em]">Service Name</TableHead>
-                            <TableHead className="px-8 h-12 text-[9px] font-black text-slate-500 uppercase tracking-[0.2em]">Game</TableHead>
-                            <TableHead className="px-8 h-12 text-[9px] font-black text-slate-500 uppercase tracking-[0.2em]">Price</TableHead>
-                            <TableHead className="px-8 h-12 text-[9px] font-black text-slate-500 uppercase tracking-[0.2em]">Status</TableHead>
-                            <TableHead className="px-8 h-12 text-[9px] font-black text-slate-500 uppercase tracking-[0.2em] text-right">Actions</TableHead>
+                            <TableHead className="px-8 h-12 text-[14px] font-black text-slate-500 uppercase tracking-[0.2em]">Service Name</TableHead>
+                            <TableHead className="px-8 h-12 text-[14px] font-black text-slate-500 uppercase tracking-[0.2em]">Game</TableHead>
+                            <TableHead className="px-8 h-12 text-[14px] font-black text-slate-500 uppercase tracking-[0.2em]">Price</TableHead>
+                            <TableHead className="px-8 h-12 text-[14px] font-black text-slate-500 uppercase tracking-[0.2em]">Status</TableHead>
+                            <TableHead className="px-8 h-12 text-[14px] font-black text-slate-500 uppercase tracking-[0.2em] text-right">Actions</TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -140,35 +140,35 @@ export default function ServicesTable({ initialServices }: ServicesTableProps) {
                             <TableRow key={service.id} className="hover:bg-white/1 border-b border-white/5 transition-colors group">
                                 <TableCell className="px-8 py-6">
                                     <div className="flex items-center gap-4">
-                                        <div className="size-10 rounded-xl bg-linear-to-br from-slate-800 to-slate-900 flex items-center justify-center border border-white/5 text-[10px] font-black text-emerald-500 group-hover:border-emerald-500/30 transition-all uppercase">
+                                        <div className="size-10 rounded-xl bg-linear-to-br from-slate-800 to-slate-900 flex items-center justify-center border border-white/5 text-[14px] font-black text-emerald-500 group-hover:border-emerald-500/30 transition-all uppercase">
                                             {service.name[0]}{service.name[1]}
                                         </div>
                                         <div>
-                                            <p className="text-xs font-black text-white uppercase tracking-tight flex items-center gap-2">
+                                            <p className="text-[14px] font-black text-white uppercase tracking-tight flex items-center gap-2">
                                                 {service.name}
                                                 {service.isFeatured && <Star className="size-3 text-yellow-500 fill-yellow-500" />}
                                             </p>
-                                            <p className="text-[10px] text-slate-600 font-bold uppercase tracking-tighter mt-0.5">ID: {service.id.slice(0, 8).toUpperCase()}</p>
+                                            <p className="text-[14px] text-slate-600 font-bold uppercase tracking-tighter mt-0.5">ID: {service.id.slice(0, 8).toUpperCase()}</p>
                                         </div>
                                     </div>
                                 </TableCell>
                                 <TableCell className="px-8 py-6">
                                     <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/5 border border-white/5 w-fit">
                                         <Gamepad2 className="size-3 text-slate-400" />
-                                        <span className="text-[10px] font-black text-slate-300 uppercase tracking-tight">{service.game.name}</span>
+                                        <span className="text-[14px] font-black text-slate-300 uppercase tracking-tight">{service.game.name}</span>
                                     </div>
                                 </TableCell>
                                 <TableCell className="px-8 py-6">
                                     <div className="flex flex-col gap-0.5">
-                                        <p className="text-sm font-black text-white tracking-tighter">${Number(service.basePrice).toFixed(2)}</p>
-                                        <p className="text-[10px] text-slate-600 font-bold uppercase tracking-widest italic flex items-center gap-1">
+                                        <p className="text-[14px] font-black text-white tracking-tighter">${Number(service.basePrice).toFixed(2)}</p>
+                                        <p className="text-[14px] text-slate-600 font-bold uppercase tracking-widest italic flex items-center gap-1">
                                             <Tag className="size-2.5" />
                                             Base Price
                                         </p>
                                     </div>
                                 </TableCell>
                                 <TableCell className="px-8 py-6">
-                                    <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg border border-emerald-500/20 bg-emerald-500/5 text-emerald-500 text-[9px] font-black uppercase tracking-widest">
+                                    <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg border border-emerald-500/20 bg-emerald-500/5 text-emerald-500 text-[14px] font-black uppercase tracking-widest">
                                         <div className="size-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]" />
                                         Active
                                     </div>
@@ -212,7 +212,7 @@ export default function ServicesTable({ initialServices }: ServicesTableProps) {
                             <div className="h-6 w-1 bg-emerald-500 rounded-full" />
                             <SheetTitle className="text-xl font-black uppercase italic tracking-tighter text-white">Edit Service</SheetTitle>
                         </div>
-                        <SheetDescription className="text-slate-500 text-xs font-bold uppercase tracking-widest">
+                        <SheetDescription className="text-slate-500 text-[14px] font-bold uppercase tracking-widest">
                             Update details for {editingService?.name}
                         </SheetDescription>
                     </SheetHeader>
@@ -221,29 +221,29 @@ export default function ServicesTable({ initialServices }: ServicesTableProps) {
                         <form onSubmit={handleUpdateService} className="space-y-6">
                             <div className="space-y-4">
                                 <div className="space-y-1.5">
-                                    <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest pl-1">Service Name</label>
+                                    <label className="text-[14px] font-black text-slate-500 uppercase tracking-widest pl-1">Service Name</label>
                                     <input
                                         value={editingService.name}
                                         onChange={(e) => setEditingService({ ...editingService, name: e.target.value })}
-                                        className="w-full bg-white/5 border border-white/5 rounded-2xl px-6 py-4 text-sm text-white focus:border-emerald-500 transition-all outline-none font-bold"
+                                        className="w-full bg-white/5 border border-white/5 rounded-2xl px-6 py-4 text-[14px] text-white focus:border-emerald-500 transition-all outline-none font-bold"
                                     />
                                 </div>
                                 <div className="space-y-1.5">
-                                    <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest pl-1">Base Price ($)</label>
+                                    <label className="text-[14px] font-black text-slate-500 uppercase tracking-widest pl-1">Base Price ($)</label>
                                     <input
                                         type="number"
                                         step="0.01"
                                         value={editingService.basePrice}
                                         onChange={(e) => setEditingService({ ...editingService, basePrice: e.target.value })}
-                                        className="w-full bg-white/5 border border-white/5 rounded-2xl px-6 py-4 text-sm text-white focus:border-emerald-500 transition-all outline-none font-bold"
+                                        className="w-full bg-white/5 border border-white/5 rounded-2xl px-6 py-4 text-[14px] text-white focus:border-emerald-500 transition-all outline-none font-bold"
                                     />
                                 </div>
                                 <div className="space-y-1.5">
-                                    <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest pl-1">Description</label>
+                                    <label className="text-[14px] font-black text-slate-500 uppercase tracking-widest pl-1">Description</label>
                                     <textarea
                                         value={editingService.description || ""}
                                         onChange={(e) => setEditingService({ ...editingService, description: e.target.value })}
-                                        className="w-full h-32 bg-white/5 border border-white/5 rounded-2xl px-6 py-4 text-sm text-white focus:border-emerald-500 transition-all outline-none font-bold resize-none"
+                                        className="w-full h-32 bg-white/5 border border-white/5 rounded-2xl px-6 py-4 text-[14px] text-white focus:border-emerald-500 transition-all outline-none font-bold resize-none"
                                     />
                                 </div>
                                 
@@ -255,8 +255,8 @@ export default function ServicesTable({ initialServices }: ServicesTableProps) {
                                         className="size-4 rounded border-white/10 bg-white/5 text-emerald-500 focus:ring-emerald-500 focus:ring-offset-0"
                                     />
                                     <div className="flex flex-col">
-                                        <span className="text-xs font-black text-white uppercase tracking-tight">Featured Service</span>
-                                        <span className="text-[10px] text-slate-500 font-bold">Display this service prominently on the homepage.</span>
+                                        <span className="text-[14px] font-black text-white uppercase tracking-tight">Featured Service</span>
+                                        <span className="text-[14px] text-slate-500 font-bold">Display this service prominently on the homepage.</span>
                                     </div>
                                 </label>
                             </div>
@@ -265,7 +265,7 @@ export default function ServicesTable({ initialServices }: ServicesTableProps) {
                                 <button
                                     type="submit"
                                     disabled={isProcessing === editingService.id}
-                                    className="w-full h-14 bg-emerald-600 hover:bg-emerald-700 rounded-2xl flex items-center justify-center text-white font-black text-xs uppercase tracking-widest transition-all shadow-lg shadow-emerald-500/20 disabled:opacity-50 cursor-pointer gap-2"
+                                    className="w-full h-14 bg-emerald-600 hover:bg-emerald-700 rounded-2xl flex items-center justify-center text-white font-black text-[14px] uppercase tracking-widest transition-all shadow-lg shadow-emerald-500/20 disabled:opacity-50 cursor-pointer gap-2"
                                 >
                                     {isProcessing === editingService.id ? <Loader2 className="size-5 animate-spin" /> : <Save className="size-5" />}
                                     Save Changes
@@ -273,7 +273,7 @@ export default function ServicesTable({ initialServices }: ServicesTableProps) {
                                 <button
                                     type="button"
                                     onClick={() => setEditingService(null)}
-                                    className="w-full h-12 bg-white/5 border border-white/5 text-slate-400 font-bold text-[10px] uppercase tracking-widest hover:text-white transition-all cursor-pointer flex items-center justify-center gap-2"
+                                    className="w-full h-12 bg-white/5 border border-white/5 text-slate-400 font-bold text-[14px] uppercase tracking-widest hover:text-white transition-all cursor-pointer flex items-center justify-center gap-2"
                                 >
                                     <X className="size-4" />
                                     Cancel

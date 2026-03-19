@@ -5,14 +5,14 @@ import { CFNLogo } from "@/components/layout/cfnboost-logo";
 
 export default function StoryPage() {
     return (
-        <div className="relative flex min-h-screen w-full flex-col bg-[#211113] text-slate-100 font-[family-name:var(--font-space-grotesk)] antialiased overflow-x-hidden">
+        <div className="relative flex min-h-screen w-full flex-col bg-[#211113] text-slate-100 font-(family-name:--font-space-grotesk) antialiased overflow-x-hidden">
 
-            <main className="flex-grow">
+            <main className="grow">
                 {/* Hero Section */}
                 <section className="relative flex min-h-[60vh] flex-col items-center justify-center overflow-hidden bg-cover bg-center px-4 py-20 text-center" style={{ backgroundImage: `linear-gradient(to bottom, rgba(33, 17, 19, 0.8) 0%, rgba(33, 17, 19, 1) 100%), url("https://lh3.googleusercontent.com/aida-public/AB6AXuCefbb89b0YPZiUdgTAQ46VgQiymnnkpQDKN2Jh8Bty9-7oGs1ALk3ktAAUADKcJs0s4DN1MWPCRBRh5KZeKsu5HePfajizNUT1orjuv72VPzYsY0tx81jFF0KRd_aE4qk_1cYTROwh3YXXrR0BZc6-t2T9708m_CCqFk7Z5dz_AOlPYp7voF8yf5Rew1UTGpgBoj3jyWxL9WnH-OO7cCgnDrWCX6ABRyOOFSmeVKb-os7XlU73s_7fg9JGVu4fja6FznZ8Rj9C8Vc0")` }}>
                     <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(175,18,37,0.15)_0%,transparent_70%)]" />
                     <div className="relative z-10 max-w-4xl space-y-6">
-                        <div className="inline-flex items-center gap-2 rounded-full border border-[#533c3f] bg-[#261c1d]/80 px-3 py-1 text-xs font-medium text-primary backdrop-blur-sm">
+                        <div className="inline-flex items-center gap-2 rounded-full border border-[#533c3f] bg-[#261c1d]/80 px-3 py-1 text-[14px] font-medium text-primary backdrop-blur-sm">
                             <span className="relative flex h-2 w-2">
                                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" />
                                 <span className="relative inline-flex rounded-full h-2 w-2 bg-primary" />
@@ -20,7 +20,7 @@ export default function StoryPage() {
                             ELITE GAMING SERVICES
                         </div>
                         <h1 className="text-5xl font-bold leading-tight tracking-tight text-white md:text-7xl lg:text-8xl">
-                            FORGED IN THE <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-slate-500">SHADOWS.</span><br />
+                            FORGED IN THE <span className="text-transparent bg-clip-text bg-linear-to-r from-white to-slate-500">SHADOWS.</span><br />
                             BUILT FOR THE <span className="text-primary">ELITE.</span>
                         </h1>
                         <p className="mx-auto max-w-2xl text-lg text-slate-300 md:text-xl font-light">
@@ -41,7 +41,7 @@ export default function StoryPage() {
                             ].map((s) => (
                                 <div key={s.label} className="text-center md:text-left">
                                     <p className="text-3xl font-bold text-white md:text-4xl">{s.value}</p>
-                                    <p className="mt-1 text-sm font-medium text-slate-400 uppercase tracking-widest">{s.label}</p>
+                                    <p className="mt-1 text-[14px] font-medium text-slate-400 uppercase tracking-widest">{s.label}</p>
                                 </div>
                             ))}
                         </div>
@@ -83,7 +83,7 @@ export default function StoryPage() {
                 <section className="border-t border-[#38292b] bg-[#181112] py-24 px-6">
                     <div className="mx-auto max-w-7xl">
                         <div className="mb-16 text-center">
-                            <span className="mb-2 block text-sm font-bold uppercase tracking-widest text-primary">The Architects</span>
+                            <span className="mb-2 block text-[14px] font-bold uppercase tracking-widest text-primary">The Architects</span>
                             <h2 className="text-3xl font-bold text-white md:text-5xl">MEET THE LEADERSHIP</h2>
                             <p className="mx-auto mt-4 max-w-2xl text-slate-400">Veterans of the industry. Former pro-players. Cybersecurity experts. We are the team behind the curtain.</p>
                         </div>
@@ -100,7 +100,7 @@ export default function StoryPage() {
                                     </div>
                                     <h3 className="text-xl font-bold text-white">{t.name}</h3>
                                     <p className="text-sm font-medium text-primary">{t.role}</p>
-                                    <p className="mt-2 text-center text-sm text-slate-400">{t.desc}</p>
+                                    <p className="mt-2 text-center text-[14px] text-slate-400">{t.desc}</p>
                                 </div>
                             ))}
                         </div>
@@ -110,7 +110,7 @@ export default function StoryPage() {
                 {/* CTA Section */}
                 <section className="relative overflow-hidden py-20 px-6">
                     <div className="absolute inset-0 bg-primary/5" />
-                    <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary to-transparent opacity-50" />
+                    <div className="absolute bottom-0 left-0 right-0 h-px bg-linear-to-r from-transparent via-primary to-transparent opacity-50" />
                     <div className="relative z-10 mx-auto max-w-4xl text-center">
                         <h2 className="text-4xl font-bold text-white md:text-5xl">READY TO ASCEND?</h2>
                         <p className="mx-auto mt-6 max-w-xl text-lg text-slate-300">Join the elite ranks today. Secure, fast, and professional boosting is just one click away.</p>
@@ -134,11 +134,11 @@ export default function StoryPage() {
                                     <span className="text-white">BOOST</span>
                                 </span>
                             </div>
-                            <p className="max-w-xs text-sm leading-relaxed">The premier marketplace for competitive gaming services. Secure, anonymous, and elite.</p>
+                            <p className="max-w-xs text-[14px] leading-relaxed">The premier marketplace for competitive gaming services. Secure, anonymous, and elite.</p>
                         </div>
                         <div>
                             <h4 className="mb-4 font-bold text-white">Platform</h4>
-                            <ul className="space-y-2 text-sm">
+                            <ul className="space-y-2 text-[14px]">
                                 <li><Link className="hover:text-primary transition-colors" href="/services">Boosting</Link></li>
                                 <li><a className="hover:text-primary transition-colors" href="#">Coaching</a></li>
                                 <li><a className="hover:text-primary transition-colors" href="#">Accounts</a></li>
@@ -147,7 +147,7 @@ export default function StoryPage() {
                         </div>
                         <div>
                             <h4 className="mb-4 font-bold text-white">Company</h4>
-                            <ul className="space-y-2 text-sm">
+                            <ul className="space-y-2 text-[14px]">
                                 <li><span className="text-primary font-medium">About Us</span></li>
                                 <li><a className="hover:text-primary transition-colors" href="#">Careers</a></li>
                                 <li><a className="hover:text-primary transition-colors" href="#">Legal</a></li>
@@ -155,7 +155,7 @@ export default function StoryPage() {
                             </ul>
                         </div>
                     </div>
-                    <div className="mt-16 border-t border-[#38292b] pt-8 text-center text-xs text-slate-500">
+                    <div className="mt-16 border-t border-[#38292b] pt-8 text-center text-[14px] text-slate-500">
                         <span className="font-cairo font-black tracking-wide">© 2024 CFNBOOST Gaming Services. All rights reserved.</span>
                     </div>
                 </div>

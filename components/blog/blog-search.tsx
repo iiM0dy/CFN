@@ -35,7 +35,7 @@ export function BlogSearch({ posts }: { posts: any[] }) {
                         placeholder="Search posts..."
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
-                        className="w-full bg-white/5 border border-white/10 rounded-xl py-3.5 pl-12 pr-4 text-xs font-black uppercase tracking-widest focus:outline-hidden focus:border-primary/50 focus:bg-white/10 transition-all placeholder:text-slate-600"
+                        className="w-full bg-white/5 border border-white/10 rounded-xl py-3.5 pl-12 pr-4 text-[14px] font-black uppercase tracking-widest focus:outline-hidden focus:border-primary/50 focus:bg-white/10 transition-all placeholder:text-slate-600"
                     />
                     {searchQuery && (
                         <button
@@ -54,7 +54,7 @@ export function BlogSearch({ posts }: { posts: any[] }) {
                             <button
                                 key={game}
                                 onClick={() => setSelectedGame(game)}
-                                className={`px-5 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all border shrink-0 ${selectedGame === game
+                                className={`px-5 py-2.5 rounded-xl text-[14px] font-black uppercase tracking-widest transition-all border shrink-0 ${selectedGame === game
                                     ? "bg-primary border-primary text-white shadow-[0_10px_20px_-5px_rgba(175,18,37,0.4)]"
                                     : "bg-white/5 border-white/5 text-slate-500 hover:border-white/10 hover:text-white"
                                     }`}
@@ -82,7 +82,7 @@ export function BlogSearch({ posts }: { posts: any[] }) {
                                     className="object-cover w-full h-full grayscale-[0.5] group-hover:grayscale-0 transition-all duration-700"
                                 />
                                 <div className="absolute top-4 left-4">
-                                    <span className="px-2.5 py-1 rounded bg-[#0A0A0A]/80 backdrop-blur-md border border-white/10 text-[9px] font-black uppercase tracking-widest">
+                                    <span className="px-2.5 py-1 rounded bg-[#0A0A0A]/80 backdrop-blur-md border border-white/10 text-[14px] font-black uppercase tracking-widest">
                                         {post.category}
                                     </span>
                                 </div>
@@ -92,11 +92,11 @@ export function BlogSearch({ posts }: { posts: any[] }) {
                                 <h3 className="text-xl font-black uppercase tracking-tight mb-4 group-hover:text-primary transition-all duration-300 line-clamp-2">
                                     {post.title}
                                 </h3>
-                                <p className="text-slate-500 text-xs font-medium leading-relaxed mb-6 line-clamp-2">
+                                <p className="text-slate-500 text-[14px] font-medium leading-relaxed mb-6 line-clamp-2">
                                     {post.excerpt}
                                 </p>
                                 <div className="mt-auto pt-6 border-t border-white/5 flex items-center justify-between">
-                                    <span className="text-[9px] font-black text-slate-600 uppercase tracking-widest">{post.author}</span>
+                                    <span className="text-[14px] font-black text-slate-600 uppercase tracking-widest">{post.author}</span>
                                     <span className="material-symbols-outlined text-sm text-slate-600 group-hover:text-primary transition-colors">arrow_outward</span>
                                 </div>
                             </div>
@@ -105,7 +105,7 @@ export function BlogSearch({ posts }: { posts: any[] }) {
                 ) : (
                     <div className="col-span-full py-20 text-center border border-dashed border-white/10 rounded-3xl bg-white/5">
                         <span className="material-symbols-outlined text-4xl text-slate-700 mb-4 block">sentiment_dissatisfied</span>
-                        <p className="text-slate-500 text-xs font-black uppercase tracking-[0.2em]">No posts found matching your filters</p>
+                        <p className="text-slate-500 text-[14px] font-black uppercase tracking-[0.2em]">No posts found matching your filters</p>
                     </div>
                 )}
             </div>

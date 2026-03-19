@@ -39,7 +39,7 @@ function AccordionItem({ q, a, defaultOpen = false }: { q: string; a: string; de
                 <svg className={`w-6 h-6 text-[#b89da1] transition-transform duration-300 ${open ? 'rotate-180 text-primary' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
             </button>
             {open && (
-                <div className="px-6 pb-6 pt-0 text-[#b89da1] leading-relaxed border-t border-[#533c3f]/50 pt-4">
+                <div className="px-6 pb-6 text-[#b89da1] text-[14px] leading-relaxed border-t border-[#533c3f]/50 pt-4">
                     {a}
                 </div>
             )}
@@ -51,22 +51,22 @@ export default function FAQPage() {
     const [activeCategory, setActiveCategory] = useState("payments");
 
     return (
-        <div className="bg-[#211113] text-white min-h-screen flex flex-col font-[family-name:var(--font-space-grotesk)]">
+        <div className="bg-[#211113] text-white min-h-screen flex flex-col font-(family-name:--font-space-grotesk)">
 
-            <main className="flex-grow">
+            <main className="grow">
                 {/* Hero */}
                 <div className="relative w-full overflow-hidden">
                     <div className="absolute inset-0 bg-[#181112]">
                         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-7xl opacity-20 bg-[radial-gradient(circle_at_center,rgba(175,18,37,0.4)_0%,transparent_70%)]" />
-                        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:32px_32px] [mask-image:radial-gradient(ellipse_at_center,black_50%,transparent_100%)]" />
+                        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-size-[32px_32px] mask-[radial-gradient(ellipse_at_center,black_50%,transparent_100%)]" />
                     </div>
                     <div className="relative z-10 container mx-auto px-6 py-16 md:py-24 flex flex-col items-center text-center">
-                        <span className="mb-4 inline-flex items-center rounded-full border border-[#533c3f] bg-[#261c1d] px-3 py-1 text-xs font-medium text-primary">
+                        <span className="mb-4 inline-flex items-center rounded-full border border-[#533c3f] bg-[#261c1d] px-3 py-1 text-[14px] font-medium text-primary">
                             <span className="mr-1.5 h-1.5 w-1.5 rounded-full bg-primary animate-pulse" />
                             Support Center
                         </span>
                         <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white mb-6">
-                            How can we <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-red-400">help you?</span>
+                            How can we <span className="text-transparent bg-clip-text bg-linear-to-r from-primary to-red-400">help you?</span>
                         </h1>
                         <p className="text-[#b89da1] text-lg max-w-2xl mb-10">
                             Search our knowledge base for answers to your questions about payments, security, orders, and more.
@@ -89,7 +89,7 @@ export default function FAQPage() {
                                     {c.icon}
                                 </div>
                                 <h3 className="text-lg font-bold text-white mb-1">{c.label}</h3>
-                                <p className="text-sm text-[#b89da1]">{c.desc}</p>
+                                <p className="text-[14px] text-[#b89da1]">{c.desc}</p>
                                 <div className={`absolute bottom-0 left-0 h-1 w-full bg-primary transform transition-transform origin-left ${activeCategory === c.id ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'}`} />
                             </button>
                         ))}
@@ -100,7 +100,7 @@ export default function FAQPage() {
                         {/* Sidebar */}
                         <aside className="hidden lg:block sticky top-24 h-fit">
                             <nav className="flex flex-col gap-2">
-                                <p className="text-xs font-bold uppercase tracking-wider text-[#b89da1] mb-3 pl-4">Categories</p>
+                                <p className="text-[14px] font-bold uppercase tracking-wider text-[#b89da1] mb-3 pl-4">Categories</p>
                                 {categories.map((c) => (
                                     <button key={c.id} onClick={() => setActiveCategory(c.id)} className={`flex items-center gap-3 rounded-lg px-4 py-3 text-left transition-all border-l-4 ${activeCategory === c.id ? 'bg-primary/10 border-primary text-white font-medium' : 'border-transparent text-[#b89da1] hover:bg-[#261c1d] hover:text-white'}`}>
                                         <span className="text-lg">{c.icon}</span>
@@ -108,11 +108,11 @@ export default function FAQPage() {
                                     </button>
                                 ))}
                             </nav>
-                            <div className="mt-10 p-6 rounded-xl bg-gradient-to-br from-[#261c1d] to-[#181112] border border-[#533c3f] text-center">
+                            <div className="mt-10 p-6 rounded-xl bg-linear-to-br from-[#261c1d] to-[#181112] border border-[#533c3f] text-center">
                                 <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-[#533c3f] text-white text-2xl">🎧</div>
                                 <h4 className="font-bold text-white mb-2">Still need help?</h4>
-                                <p className="text-sm text-[#b89da1] mb-4">Our support team is available 24/7 to assist you.</p>
-                                <Link href="/contact" className="block w-full rounded-lg bg-white py-2 text-sm font-bold text-black hover:bg-gray-200 transition-colors text-center">Contact Support</Link>
+                                <p className="text-[14px] text-[#b89da1] mb-4">Our support team is available 24/7 to assist you.</p>
+                                <Link href="/contact" className="block w-full rounded-lg bg-white py-2 text-[14px] font-bold text-black hover:bg-gray-200 transition-colors text-center">Contact Support</Link>
                             </div>
                         </aside>
 
@@ -146,7 +146,7 @@ export default function FAQPage() {
                                 <span className="text-white">BOOST</span>
                             </span>
                         </div>
-                        <p className="text-[#b89da1] text-sm">The premium marketplace for competitive gaming. Boost your rank, learn from the best, and dominate the leaderboards.</p>
+                        <p className="text-[#b89da1] text-[14px]">The premium marketplace for competitive gaming. Boost your rank, learn from the best, and dominate the leaderboards.</p>
                     </div>
                     <div className="grid grid-cols-2 md:grid-cols-3 gap-12 text-sm">
                         <div className="flex flex-col gap-3">
@@ -169,7 +169,7 @@ export default function FAQPage() {
                         </div>
                     </div>
                 </div>
-                <div className="container mx-auto mt-12 pt-8 border-t border-[#533c3f] flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-[#b89da1]">
+                <div className="container mx-auto mt-12 pt-8 border-t border-[#533c3f] flex flex-col md:flex-row justify-between items-center gap-4 text-[14px] text-[#b89da1]">
                     <p className="font-cairo font-black tracking-widest uppercase">© 2024 CFNBOOST Inc. All rights reserved.</p>
                     <div className="flex gap-6">
                         <a className="hover:text-white transition-colors" href="#">Privacy Policy</a>

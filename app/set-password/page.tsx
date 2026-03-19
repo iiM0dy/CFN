@@ -90,7 +90,7 @@ export default function SetPasswordPage() {
                     <h1 className="text-3xl font-black text-white tracking-tighter uppercase mb-2 leading-none">
                         Secure Account
                     </h1>
-                    <p className="text-slate-500 text-sm font-medium">
+                    <p className="text-slate-500 text-[14px] font-medium">
                         Create a password to access your account anytime.
                     </p>
                 </div>
@@ -106,7 +106,7 @@ export default function SetPasswordPage() {
                                 className="mb-6 p-4 bg-red-500/10 border border-red-500/20 rounded-xl flex items-start gap-3"
                             >
                                 <span className="material-symbols-outlined text-red-500 text-lg shrink-0">error</span>
-                                <p className="text-xs text-red-400 font-medium leading-relaxed mt-0.5">{authError}</p>
+                                <p className="text-[14px] text-red-400 font-medium leading-relaxed mt-0.5">{authError}</p>
                             </motion.div>
                         )}
                         {authSuccess && (
@@ -117,30 +117,30 @@ export default function SetPasswordPage() {
                                 className="mb-6 p-4 bg-green-500/10 border border-green-500/20 rounded-xl flex items-start gap-3"
                             >
                                 <span className="material-symbols-outlined text-green-500 text-lg shrink-0">check_circle</span>
-                                <p className="text-xs text-green-400 font-medium leading-relaxed mt-0.5">{authSuccess}</p>
+                                <p className="text-[14px] text-green-400 font-medium leading-relaxed mt-0.5">{authSuccess}</p>
                             </motion.div>
                         )}
                     </AnimatePresence>
 
                     <form className="space-y-5" onSubmit={onSubmit}>
                         <div className="space-y-1.5">
-                            <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest px-1">Email</label>
+                            <label className="text-[14px] font-black text-slate-500 uppercase tracking-widest px-1">Email</label>
                             <input
                                 disabled
                                 value={session?.user?.email || "Loading..."}
-                                className="w-full bg-white/[0.01] border border-white/5 rounded-2xl px-6 py-4 text-slate-500 outline-none font-bold text-sm cursor-not-allowed"
+                                className="w-full bg-white/1 border border-white/5 rounded-2xl px-6 py-4 text-slate-500 outline-none font-bold text-sm cursor-not-allowed"
                                 type="email"
                             />
                         </div>
 
                         <div className="space-y-1.5">
-                            <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest pl-1">New Password</label>
+                            <label className="text-[14px] font-black text-slate-500 uppercase tracking-widest pl-1">New Password</label>
                             <div className="relative group">
                                 <input
                                     value={password}
                                     onChange={e => setPassword(e.target.value)}
                                     required
-                                    className="w-full bg-white/[0.03] border border-white/5 rounded-2xl px-6 py-4 pr-14 text-white focus:border-primary transition-all outline-none font-bold text-sm"
+                                    className="w-full bg-white/3 border border-white/5 rounded-2xl px-6 py-4 pr-14 text-white focus:border-primary transition-all outline-none font-bold text-sm"
                                     placeholder="••••••••"
                                     type={showPassword ? "text" : "password"}
                                 />
@@ -155,12 +155,12 @@ export default function SetPasswordPage() {
                         </div>
 
                         <div className="space-y-1.5">
-                            <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest pl-1">Confirm Password</label>
+                            <label className="text-[14px] font-black text-slate-500 uppercase tracking-widest pl-1">Confirm Password</label>
                             <input
                                 value={confirmPassword}
                                 onChange={e => setConfirmPassword(e.target.value)}
                                 required
-                                className="w-full bg-white/[0.03] border border-white/5 rounded-2xl px-6 py-4 text-white focus:border-primary transition-all outline-none font-bold text-sm"
+                                className="w-full bg-white/3 border border-white/5 rounded-2xl px-6 py-4 text-white focus:border-primary transition-all outline-none font-bold text-sm"
                                 placeholder="••••••••"
                                 type="password"
                             />
@@ -185,14 +185,14 @@ export default function SetPasswordPage() {
                     <div className="mt-8 flex flex-col items-center gap-2 opacity-30">
                         <div className="flex items-center gap-2">
                             <span className="material-symbols-outlined text-[12px]">verified_user</span>
-                            <span className="text-[8px] font-black uppercase tracking-[0.2em] text-white">Secure Connection</span>
+                            <span className="text-[14px] font-black uppercase tracking-[0.2em] text-white">Secure Connection</span>
                         </div>
                     </div>
                 </div>
 
                 {/* Bottom Link */}
                 <div className="mt-8 text-center">
-                    <Link href="/" className="text-[10px] font-black text-slate-500 uppercase tracking-widest hover:text-primary transition-colors flex items-center justify-center gap-2">
+                    <Link href="/" className="text-[14px] font-black text-slate-500 uppercase tracking-widest hover:text-primary transition-colors flex items-center justify-center gap-2">
                         <span className="material-symbols-outlined text-[16px]">west</span>
                         Return to Homepage
                     </Link>

@@ -145,7 +145,7 @@ export default function OrdersTable({ initialOrders }: OrdersTableProps) {
                     </div>
                     <div>
                         <h2 className="text-lg font-black text-white uppercase italic tracking-tight">Customer Orders</h2>
-                        <p className="text-slate-500 text-[10px] font-bold uppercase tracking-widest">Total: {filteredOrders.length} orders</p>
+                        <p className="text-slate-500 text-[14px] font-bold uppercase tracking-widest">Total: {filteredOrders.length} orders</p>
                     </div>
                 </div>
 
@@ -156,12 +156,12 @@ export default function OrdersTable({ initialOrders }: OrdersTableProps) {
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
                             placeholder="Search orders..."
-                            className="bg-white/5 border border-white/5 rounded-2xl pl-12 pr-6 py-3 text-xs text-white focus:border-primary/50 outline-none w-full md:w-80 transition-all font-medium placeholder:text-slate-800"
+                            className="bg-white/5 border border-white/5 rounded-2xl pl-12 pr-6 py-3 text-[14px] text-white focus:border-primary/50 outline-none w-full md:w-80 transition-all font-medium placeholder:text-slate-800"
                         />
                     </div>
                     <button
                         onClick={handleExport}
-                        className="flex items-center gap-2 px-5 py-3 bg-primary hover:bg-[#8a0e1d] rounded-2xl text-[10px] font-black text-white transition-all uppercase tracking-[0.2em] shadow-lg shadow-primary/20 cursor-pointer"
+                        className="flex items-center gap-2 px-5 py-3 bg-primary hover:bg-[#8a0e1d] rounded-2xl text-[14px] font-black text-white transition-all uppercase tracking-[0.2em] shadow-lg shadow-primary/20 cursor-pointer"
                     >
                         <Download className="size-4" />
                         Export
@@ -174,13 +174,13 @@ export default function OrdersTable({ initialOrders }: OrdersTableProps) {
                 <Table>
                     <TableHeader className="bg-white/2 border-b border-white/5">
                         <TableRow className="hover:bg-transparent border-none">
-                            <TableHead className="px-8 h-12 text-[9px] font-black text-slate-500 uppercase tracking-[0.2em]">Order ID</TableHead>
-                            <TableHead className="px-8 h-12 text-[9px] font-black text-slate-500 uppercase tracking-[0.2em]">Service</TableHead>
-                            <TableHead className="px-8 h-12 text-[9px] font-black text-slate-500 uppercase tracking-[0.2em]">Customer</TableHead>
-                            <TableHead className="px-8 h-12 text-[9px] font-black text-slate-500 uppercase tracking-[0.2em]">Status</TableHead>
-                            <TableHead className="px-8 h-12 text-[9px] font-black text-slate-500 uppercase tracking-[0.2em]">Date</TableHead>
-                            <TableHead className="px-8 h-12 text-[9px] font-black text-slate-500 uppercase tracking-[0.2em]">Price</TableHead>
-                            <TableHead className="px-8 h-12 text-[9px] font-black text-slate-500 uppercase tracking-[0.2em] text-right">Actions</TableHead>
+                            <TableHead className="px-8 h-12 text-[14px] font-black text-slate-500 uppercase tracking-[0.2em]">Order ID</TableHead>
+                            <TableHead className="px-8 h-12 text-[14px] font-black text-slate-500 uppercase tracking-[0.2em]">Service</TableHead>
+                            <TableHead className="px-8 h-12 text-[14px] font-black text-slate-500 uppercase tracking-[0.2em]">Customer</TableHead>
+                            <TableHead className="px-8 h-12 text-[14px] font-black text-slate-500 uppercase tracking-[0.2em]">Status</TableHead>
+                            <TableHead className="px-8 h-12 text-[14px] font-black text-slate-500 uppercase tracking-[0.2em]">Date</TableHead>
+                            <TableHead className="px-8 h-12 text-[14px] font-black text-slate-500 uppercase tracking-[0.2em]">Price</TableHead>
+                            <TableHead className="px-8 h-12 text-[14px] font-black text-slate-500 uppercase tracking-[0.2em] text-right">Actions</TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -192,7 +192,7 @@ export default function OrdersTable({ initialOrders }: OrdersTableProps) {
                                             <Package className="size-8" />
                                         </div>
                                         <div>
-                                            <p className="text-white font-black uppercase tracking-widest italic text-sm">No orders found</p>
+                                            <p className="text-white font-black uppercase tracking-widest italic text-[14px]">No orders found</p>
                                         </div>
                                     </div>
                                 </TableCell>
@@ -200,33 +200,33 @@ export default function OrdersTable({ initialOrders }: OrdersTableProps) {
                         ) : (
                             filteredOrders.map((order) => (
                                 <TableRow key={order.id} className="hover:bg-white/1 border-b border-white/5 transition-colors group">
-                                    <TableCell className="px-8 py-6 font-mono text-[10px] font-bold text-slate-500 group-hover:text-primary transition-colors">
+                                    <TableCell className="px-8 py-6 font-mono text-[14px] font-bold text-slate-500 group-hover:text-primary transition-colors">
                                         #{order.id.slice(-8).toUpperCase()}
                                     </TableCell>
                                     <TableCell className="px-8 py-6">
                                         <div className="flex items-center gap-4">
-                                            <div className="size-10 rounded-xl bg-linear-to-br from-slate-800 to-slate-900 flex items-center justify-center border border-white/5 text-[10px] font-black text-slate-400 group-hover:border-primary/30 transition-all">
+                                            <div className="size-10 rounded-xl bg-linear-to-br from-slate-800 to-slate-900 flex items-center justify-center border border-white/5 text-[14px] font-black text-slate-400 group-hover:border-primary/30 transition-all">
                                                 {order.service.game.name[0]}
                                             </div>
                                             <div>
-                                                <p className="text-xs font-black text-white uppercase tracking-tight">{order.service.name}</p>
-                                                <p className="text-[10px] text-slate-600 font-bold uppercase tracking-tighter mt-0.5">{order.service.game.name} • {order.platform}</p>
+                                                <p className="text-[14px] font-black text-white uppercase tracking-tight">{order.service.name}</p>
+                                                <p className="text-[14px] text-slate-600 font-bold uppercase tracking-tighter mt-0.5">{order.service.game.name} • {order.platform}</p>
                                             </div>
                                         </div>
                                     </TableCell>
                                     <TableCell className="px-8 py-6">
                                         <div className="flex items-center gap-3">
-                                            <div className="size-8 rounded-lg bg-white/5 border border-white/5 flex items-center justify-center text-[10px] font-black text-slate-400">
+                                            <div className="size-8 rounded-lg bg-white/5 border border-white/5 flex items-center justify-center text-[14px] font-black text-slate-400">
                                                 {(order.user?.email || "A")[0].toUpperCase()}
                                             </div>
                                             <div>
-                                                <p className="text-xs font-bold text-slate-200">{order.user?.email || "Anonymous"}</p>
-                                                <p className="text-[9px] font-mono text-slate-600 italic">{order.user?.email || "N/A"}</p>
+                                                <p className="text-[14px] font-bold text-slate-200">{order.user?.email || "Anonymous"}</p>
+                                                <p className="text-[14px] font-mono text-slate-600 italic">{order.user?.email || "N/A"}</p>
                                             </div>
                                         </div>
                                     </TableCell>
                                     <TableCell className="px-8 py-6">
-                                        <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-lg border text-[9px] font-black uppercase tracking-widest ${order.status === "paid" || order.status === "completed"
+                                        <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-lg border text-[14px] font-black uppercase tracking-widest ${order.status === "paid" || order.status === "completed"
                                             ? "bg-emerald-500/5 text-emerald-500 border-emerald-500/20"
                                             : order.status === "cancelled"
                                                 ? "bg-red-500/5 text-red-500 border-red-500/20"
@@ -242,14 +242,14 @@ export default function OrdersTable({ initialOrders }: OrdersTableProps) {
                                         </div>
                                     </TableCell>
                                     <TableCell className="px-8 py-6">
-                                        <div className="flex items-center gap-2 text-slate-500 font-bold uppercase text-[9px] tracking-tighter">
+                                        <div className="flex items-center gap-2 text-slate-500 font-bold uppercase text-[14px] tracking-tighter">
                                             <Clock className="size-3" />
                                             {new Date(order.createdAt).toLocaleDateString()}
                                         </div>
                                     </TableCell>
                                     <TableCell className="px-8 py-6">
-                                        <p className="text-sm font-black text-white tracking-tighter">${Number(order.totalPrice).toFixed(2)}</p>
-                                        <p className="text-[9px] text-primary font-bold uppercase tracking-widest italic">{order.quantity} Units</p>
+                                        <p className="text-[14px] font-black text-white tracking-tighter">${Number(order.totalPrice).toFixed(2)}</p>
+                                        <p className="text-[14px] text-primary font-bold uppercase tracking-widest italic">{order.quantity} Units</p>
                                     </TableCell>
                                     <TableCell className="px-8 py-6 text-right">
                                         <div className="flex items-center justify-end gap-2">
@@ -278,7 +278,7 @@ export default function OrdersTable({ initialOrders }: OrdersTableProps) {
                                                     </button>
                                                 </DropdownMenuTrigger>
                                                 <DropdownMenuContent align="end" className="w-56 bg-[#0D0D0D] border-white/5 text-slate-300">
-                                                    <DropdownMenuLabel className="text-[10px] font-black uppercase tracking-widest text-slate-500">More Actions</DropdownMenuLabel>
+                                                    <DropdownMenuLabel className="text-[14px] font-black uppercase tracking-widest text-slate-500">More Actions</DropdownMenuLabel>
                                                     <DropdownMenuSeparator className="bg-white/5" />
                                                     <DropdownMenuItem
                                                         onClick={() => updateOrderStatus(order.id, 'cancelled')}
@@ -286,7 +286,7 @@ export default function OrdersTable({ initialOrders }: OrdersTableProps) {
                                                         className="gap-2 focus:bg-red-500/10 focus:text-red-500 cursor-pointer"
                                                     >
                                                         <XCircle className="size-4" />
-                                                        <span className="text-xs font-bold uppercase">Cancel Order</span>
+                                                        <span className="text-[14px] font-bold uppercase">Cancel Order</span>
                                                     </DropdownMenuItem>
                                                     <DropdownMenuItem
                                                         onClick={() => {
@@ -301,7 +301,7 @@ export default function OrdersTable({ initialOrders }: OrdersTableProps) {
                                                         className="gap-2 focus:bg-red-600 focus:text-white text-primary cursor-pointer"
                                                     >
                                                         <Trash2 className="size-4" />
-                                                        <span className="text-xs font-bold uppercase">Delete Permanently</span>
+                                                        <span className="text-[14px] font-bold uppercase">Delete Permanently</span>
                                                     </DropdownMenuItem>
                                                     <DropdownMenuSeparator className="bg-white/5" />
                                                     <DropdownMenuItem
@@ -309,7 +309,7 @@ export default function OrdersTable({ initialOrders }: OrdersTableProps) {
                                                         className="gap-2 focus:bg-white/5 cursor-pointer"
                                                     >
                                                         <Info className="size-4" />
-                                                        <span className="text-xs font-bold uppercase">Full Details</span>
+                                                        <span className="text-[14px] font-bold uppercase">Full Details</span>
                                                     </DropdownMenuItem>
                                                 </DropdownMenuContent>
                                             </DropdownMenu>
@@ -330,7 +330,7 @@ export default function OrdersTable({ initialOrders }: OrdersTableProps) {
                             <div className="h-6 w-1 bg-primary rounded-full" />
                             <SheetTitle className="text-xl font-black uppercase italic tracking-tighter text-white">Order Details</SheetTitle>
                         </div>
-                        <SheetDescription className="text-slate-500 text-xs font-bold uppercase tracking-widest">
+                        <SheetDescription className="text-slate-500 text-[14px] font-bold uppercase tracking-widest">
                             Information for Order #{selectedOrder?.id.slice(-8).toUpperCase()}
                         </SheetDescription>
                     </SheetHeader>
@@ -339,18 +339,18 @@ export default function OrdersTable({ initialOrders }: OrdersTableProps) {
                         <div className="space-y-8">
                             {/* Status Card */}
                             <div className="bg-white/5 rounded-3xl p-6 border border-white/5">
-                                <h4 className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] mb-4 flex items-center gap-2">
+                                <h4 className="text-[14px] font-black text-slate-500 uppercase tracking-[0.2em] mb-4 flex items-center gap-2">
                                     <Shield className="size-3 text-primary" />
                                     Current Status
                                 </h4>
                                 <div className="flex items-center justify-between">
-                                    <div className={`px-4 py-2 rounded-xl border font-black text-xs uppercase tracking-widest ${selectedOrder.status === 'completed' ? 'bg-emerald-500/10 text-emerald-500 border-emerald-500/20' :
+                                    <div className={`px-4 py-2 rounded-xl border font-black text-[14px] uppercase tracking-widest ${selectedOrder.status === 'completed' ? 'bg-emerald-500/10 text-emerald-500 border-emerald-500/20' :
                                         selectedOrder.status === 'cancelled' ? 'bg-red-500/10 text-red-500 border-red-500/20' :
                                             'bg-amber-500/10 text-amber-500 border-amber-500/20'
                                         }`}>
                                         {selectedOrder.status}
                                     </div>
-                                    <p className="text-xs font-bold text-slate-400">
+                                    <p className="text-[14px] font-bold text-slate-400">
                                         Placed on: {new Date(selectedOrder.createdAt).toLocaleDateString()}
                                     </p>
                                 </div>
@@ -359,70 +359,70 @@ export default function OrdersTable({ initialOrders }: OrdersTableProps) {
                             {/* Customer Details */}
                             <div className="grid grid-cols-2 gap-4">
                                 <div className="bg-white/2 rounded-2xl p-5 border border-white/5">
-                                    <p className="text-[9px] font-black text-slate-500 uppercase tracking-widest mb-2 italic">Customer</p>
+                                    <p className="text-[14px] font-black text-slate-500 uppercase tracking-widest mb-2 italic">Customer</p>
                                     <div className="flex items-center gap-3">
-                                        <div className="size-8 rounded-lg bg-primary/20 flex items-center justify-center text-primary font-black uppercase text-[10px]">
+                                        <div className="size-8 rounded-lg bg-primary/20 flex items-center justify-center text-primary font-black uppercase text-[14px]">
                                             {(selectedOrder.user?.email || "A")[0].toUpperCase()}
                                         </div>
                                         <div>
-                                            <p className="text-xs font-black text-white leading-none">{selectedOrder.user?.email || "Anonymous"}</p>
+                                            <p className="text-[14px] font-black text-white leading-none">{selectedOrder.user?.email || "Anonymous"}</p>
                                         </div>
                                     </div>
                                 </div>
                                 <div className="bg-white/2 rounded-2xl p-5 border border-white/5">
-                                    <p className="text-[9px] font-black text-slate-500 uppercase tracking-widest mb-2 italic">Order Total</p>
+                                    <p className="text-[14px] font-black text-slate-500 uppercase tracking-widest mb-2 italic">Order Total</p>
                                     <p className="text-xl font-black text-white tracking-tighter">${Number(selectedOrder.totalPrice).toFixed(2)}</p>
-                                    <p className="text-[9px] text-emerald-500 font-bold uppercase italic mt-1">{selectedOrder.quantity} Units</p>
+                                    <p className="text-[14px] text-emerald-500 font-bold uppercase italic mt-1">{selectedOrder.quantity} Units</p>
                                 </div>
                             </div>
 
                             {/* Service Details */}
                             <div className="space-y-4">
-                                <h4 className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] flex items-center gap-2">
+                                <h4 className="text-[14px] font-black text-slate-500 uppercase tracking-[0.2em] flex items-center gap-2">
                                     <ClipboardList className="size-3 text-primary" />
                                     Order Configuration
                                 </h4>
                                 <div className="bg-white/2 rounded-3xl p-6 border border-white/5 space-y-6">
                                     <div className="grid grid-cols-2 gap-y-6 gap-x-4">
                                         <div>
-                                            <p className="text-[9px] font-black text-slate-600 uppercase tracking-widest mb-1 italic">Service</p>
-                                            <p className="text-xs font-bold text-white uppercase">{selectedOrder.service.name}</p>
+                                            <p className="text-[14px] font-black text-slate-600 uppercase tracking-widest mb-1 italic">Service</p>
+                                            <p className="text-[14px] font-bold text-white uppercase">{selectedOrder.service.name}</p>
                                         </div>
                                         <div>
-                                            <p className="text-[9px] font-black text-slate-600 uppercase tracking-widest mb-1 italic">Game</p>
-                                            <p className="text-xs font-bold text-white uppercase">{selectedOrder.service.game.name}</p>
+                                            <p className="text-[14px] font-black text-slate-600 uppercase tracking-widest mb-1 italic">Game</p>
+                                            <p className="text-[14px] font-bold text-white uppercase">{selectedOrder.service.game.name}</p>
                                         </div>
                                         <div>
-                                            <p className="text-[9px] font-black text-slate-600 uppercase tracking-widest mb-1 italic">Platform</p>
-                                            <p className="text-xs font-bold text-white uppercase">{selectedOrder.platform || "Standard"}</p>
+                                            <p className="text-[14px] font-black text-slate-600 uppercase tracking-widest mb-1 italic">Platform</p>
+                                            <p className="text-[14px] font-bold text-white uppercase">{selectedOrder.platform || "Standard"}</p>
                                         </div>
                                         <div>
-                                            <p className="text-[9px] font-black text-slate-600 uppercase tracking-widest mb-1 italic">Speed</p>
-                                            <p className="text-xs font-bold text-white uppercase">{selectedOrder.completionSpeed || "Standard"}</p>
+                                            <p className="text-[14px] font-black text-slate-600 uppercase tracking-widest mb-1 italic">Speed</p>
+                                            <p className="text-[14px] font-bold text-white uppercase">{selectedOrder.completionSpeed || "Standard"}</p>
                                         </div>
                                     </div>
 
                                     <div className="pt-6 border-t border-white/5">
-                                        <p className="text-[9px] font-black text-slate-500 uppercase tracking-widest mb-3 italic">Selected Options</p>
+                                        <p className="text-[14px] font-black text-slate-500 uppercase tracking-widest mb-3 italic">Selected Options</p>
                                         <div className="bg-black/40 rounded-2xl p-4 border border-white/5 space-y-2">
                                             {selectedOrder.selectedOptions ? (
                                                 Object.entries(selectedOrder.selectedOptions as any).map(([key, value]: [string, any]) => (
-                                                    <div key={key} className="flex justify-between items-center text-[11px]">
+                                                    <div key={key} className="flex justify-between items-center text-[14px]">
                                                         <span className="text-slate-500 font-bold uppercase">{key.replace(/_/g, ' ')}</span>
                                                         <span className="text-white font-black uppercase text-right pl-4">{String(value)}</span>
                                                     </div>
                                                 ))
                                             ) : (
-                                                <p className="text-[10px] text-slate-700 italic font-medium">No custom options selected.</p>
+                                                <p className="text-[14px] text-slate-700 italic font-medium">No custom options selected.</p>
                                             )}
                                         </div>
                                     </div>
 
                                     {selectedOrder.orderNotes && selectedOrder.orderNotes.trim().length > 0 && (
                                         <div className="pt-6 border-t border-white/5">
-                                            <p className="text-[9px] font-black text-slate-500 uppercase tracking-widest mb-3 italic">Order Notes</p>
+                                            <p className="text-[14px] font-black text-slate-500 uppercase tracking-widest mb-3 italic">Order Notes</p>
                                             <div className="bg-black/40 rounded-2xl p-4 border border-white/5">
-                                                <p className="text-[12px] text-slate-200 leading-relaxed whitespace-pre-wrap">
+                                                <p className="text-[14px] text-slate-200 leading-relaxed whitespace-pre-wrap">
                                                     {selectedOrder.orderNotes}
                                                 </p>
                                             </div>
@@ -438,13 +438,13 @@ export default function OrdersTable({ initialOrders }: OrdersTableProps) {
                             <button
                                 onClick={() => updateOrderStatus(selectedOrder!.id, 'completed')}
                                 disabled={selectedOrder?.status === 'completed'}
-                                className="flex-1 h-12 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-[10px] uppercase tracking-widest transition-all disabled:opacity-30 cursor-pointer"
+                                className="flex-1 h-12 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-[14px] uppercase tracking-widest transition-all disabled:opacity-30 cursor-pointer"
                             >
                                 Mark as Completed
                             </button>
                             <button
                                 onClick={() => setSelectedOrder(null)}
-                                className="flex-1 h-12 rounded-2xl bg-white/5 border border-white/5 text-slate-400 font-bold text-[10px] uppercase tracking-widest hover:text-white transition-all cursor-pointer"
+                                className="flex-1 h-12 rounded-2xl bg-white/5 border border-white/5 text-slate-400 font-bold text-[14px] uppercase tracking-widest hover:text-white transition-all cursor-pointer"
                             >
                                 Close Details
                             </button>

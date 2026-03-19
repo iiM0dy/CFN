@@ -63,7 +63,7 @@ export default function BecomeProPage() {
                                     Initialize Application
                                 </a>
                                 <div className="flex items-center gap-4 px-8 py-5 rounded-2xl border border-white/10 bg-white/2">
-                                    <span className="text-xs font-black uppercase tracking-widest text-slate-500">Payout methods:</span>
+                                    <span className="text-[14px] font-black uppercase tracking-widest text-slate-500">Payout methods:</span>
                                     <div className="flex gap-4 opacity-70">
                                         <span className="material-symbols-outlined text-xl">payments</span>
                                         <span className="material-symbols-outlined text-xl">currency_bitcoin</span>
@@ -75,7 +75,7 @@ export default function BecomeProPage() {
 
                         {/* Professional Requirements Card */}
                         <div className="w-full lg:w-[400px] bg-[#0A0A0A] border border-white/10 rounded-[40px] p-10 shadow-3xl">
-                            <h4 className="text-xs font-black text-slate-500 uppercase tracking-[0.4em] mb-8 border-b border-white/5 pb-4">Minimum Standards</h4>
+                            <h4 className="text-[14px] font-black text-slate-500 uppercase tracking-[0.4em] mb-8 border-b border-white/5 pb-4">Minimum Standards</h4>
                             <div className="space-y-6">
                                 {requirements.map((req, i) => (
                                     <div key={i} className="flex justify-between items-center">
@@ -86,7 +86,7 @@ export default function BecomeProPage() {
                             </div>
                             <div className="mt-10 p-6 rounded-2xl bg-primary/5 border border-primary/10">
                                 <div className="text-3xl font-black text-white mb-1">98.4%</div>
-                                <div className="text-[10px] font-black text-primary uppercase tracking-widest">Internal Retention Rate</div>
+                                <div className="text-[14px] font-black text-primary uppercase tracking-widest">Internal Retention Rate</div>
                             </div>
                         </div>
                     </div>
@@ -100,7 +100,7 @@ export default function BecomeProPage() {
                         {stats.map((stat, i) => (
                             <div key={i} className="text-center">
                                 <div className="text-4xl md:text-5xl font-black text-white mb-2 tracking-tighter">{stat.value}</div>
-                                <div className="text-[10px] font-black text-slate-500 uppercase tracking-[0.4em]">{stat.label}</div>
+                                <div className="text-[14px] font-black text-slate-500 uppercase tracking-[0.4em]">{stat.label}</div>
                             </div>
                         ))}
                     </div>
@@ -128,14 +128,14 @@ export default function BecomeProPage() {
                                         <span className="material-symbols-outlined">schedule</span>
                                     </div>
                                     <h5 className="font-black uppercase text-sm tracking-wider">Dynamic Scheduling</h5>
-                                    <p className="text-slate-500 text-xs leading-relaxed font-medium">Claim orders at your own pace. No mandatory hours, just performance-based allocation.</p>
+                                    <p className="text-slate-500 text-[14px] leading-relaxed font-medium">Claim orders at your own pace. No mandatory hours, just performance-based allocation.</p>
                                 </div>
                                 <div className="space-y-4">
                                     <div className="size-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-primary">
                                         <span className="material-symbols-outlined">lock_reset</span>
                                     </div>
                                     <h5 className="font-black uppercase text-sm tracking-wider">Protocol Safety</h5>
-                                    <p className="text-slate-500 text-xs leading-relaxed font-medium">Automatic VPN matching and hardware id spoofing integrated into our private client.</p>
+                                    <p className="text-slate-500 text-[14px] leading-relaxed font-medium">Automatic VPN matching and hardware id spoofing integrated into our private client.</p>
                                 </div>
                             </div>
                         </div>
@@ -151,7 +151,7 @@ export default function BecomeProPage() {
                                 ].map((item, i) => (
                                     <div key={i} className="pb-6 border-b border-white/5 last:border-0">
                                         <h6 className="text-sm font-black text-white uppercase mb-2">Q: {item.q}</h6>
-                                        <p className="text-xs text-slate-500 font-medium leading-relaxed">{item.a}</p>
+                                        <p className="text-[14px] text-slate-500 font-medium leading-relaxed">{item.a}</p>
                                     </div>
                                 ))}
                             </div>
@@ -177,8 +177,8 @@ export default function BecomeProPage() {
                             <div className="flex items-center gap-6 p-6 rounded-3xl bg-white/2 border border-white/5">
                                 <span className="material-symbols-outlined text-4xl text-primary">contact_support</span>
                                 <div>
-                                    <h4 className="text-white font-black text-xs uppercase tracking-widest mb-1">Deployment Support</h4>
-                                    <p className="text-slate-500 text-[10px] font-bold uppercase">hiring@cfnboost.com</p>
+                                    <h4 className="text-white font-black text-[14px] uppercase tracking-widest mb-1">Deployment Support</h4>
+                                    <p className="text-slate-500 text-[14px] font-bold uppercase">hiring@cfnboost.com</p>
                                 </div>
                             </div>
                         </div>
@@ -195,9 +195,9 @@ export default function BecomeProPage() {
                                         <div className="size-20 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-500 mb-8">
                                             <span className="material-symbols-outlined text-4xl">check_circle</span>
                                         </div>
-                                        <h3 className="text-2xl font-black text-white uppercase tracking-tight mb-4 text-primary">Transmission Received</h3>
+                                        <h3 className="text-2xl font-black uppercase tracking-tight mb-4 text-primary">Transmission Received</h3>
                                         <p className="text-slate-400 font-medium mb-10">Your dossier has been encrypted and sent to HR. Monitor your Discord for contact.</p>
-                                        <button onClick={() => setIsSuccess(false)} className="text-[10px] font-black text-slate-500 uppercase tracking-[0.4em] hover:text-white transition-colors">Start New Session</button>
+                                        <button onClick={() => setIsSuccess(false)} className="text-[14px] font-black text-slate-500 uppercase tracking-[0.4em] hover:text-white transition-colors">Start New Session</button>
                                     </motion.div>
                                 ) : (
                                     <motion.div
@@ -208,23 +208,23 @@ export default function BecomeProPage() {
                                         <form className="space-y-8" onSubmit={handleSubmit}>
                                             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                                                 <div className="space-y-2">
-                                                    <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest pl-1">Full Name / Alias</label>
+                                                    <label className="text-[14px] font-black text-slate-500 uppercase tracking-widest pl-1">Full Name / Alias</label>
                                                     <input required type="text" className="w-full bg-white/3 border border-white/5 rounded-2xl px-6 py-5 text-white focus:border-primary transition-all outline-none font-bold text-sm" placeholder="e.g. Ghost_X" />
                                                 </div>
                                                 <div className="space-y-2">
-                                                    <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest pl-1">Discord ID</label>
+                                                    <label className="text-[14px] font-black text-slate-500 uppercase tracking-widest pl-1">Discord ID</label>
                                                     <input required type="text" className="w-full bg-white/3 border border-white/5 rounded-2xl px-6 py-5 text-white focus:border-primary transition-all outline-none font-bold text-sm" placeholder="username#0000" />
                                                 </div>
                                             </div>
 
                                             <div className="space-y-4">
-                                                <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest pl-1 block">Active Disciplines</label>
+                                                <label className="text-[14px] font-black text-slate-500 uppercase tracking-widest pl-1 block">Active Disciplines</label>
                                                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                                                     {["Valorant", "League", "CS2", "Dota 2"].map((game) => (
                                                         <div
                                                             key={game}
                                                             onClick={() => toggleGame(game)}
-                                                            className={`flex items-center justify-center py-4 rounded-xl border transition-all cursor-pointer font-black text-[10px] uppercase tracking-widest ${selectedGames.includes(game) ? 'bg-primary border-primary text-white' : 'bg-white/2 border-white/5 text-slate-500 hover:border-white/20'}`}
+                                                            className={`flex items-center justify-center py-4 rounded-xl border transition-all cursor-pointer font-black text-[14px] uppercase tracking-widest ${selectedGames.includes(game) ? 'bg-primary border-primary text-white' : 'bg-white/2 border-white/5 text-slate-500 hover:border-white/20'}`}
                                                         >
                                                             {game}
                                                         </div>
@@ -233,7 +233,7 @@ export default function BecomeProPage() {
                                             </div>
 
                                             <div className="space-y-2">
-                                                <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest pl-1">Experience Summary</label>
+                                                <label className="text-[14px] font-black text-slate-500 uppercase tracking-widest pl-1">Experience Summary</label>
                                                 <textarea required className="w-full bg-white/3 border border-white/5 rounded-2xl px-6 py-5 text-white focus:border-primary transition-all outline-none font-bold text-sm min-h-[140px]" placeholder="List your peak ranks and past professional team experience..." />
                                             </div>
 
@@ -251,7 +251,7 @@ export default function BecomeProPage() {
                                                 )}
                                             </button>
 
-                                            <div className="flex items-center justify-center gap-2 text-[9px] font-bold text-slate-700 uppercase tracking-widest">
+                                            <div className="flex items-center justify-center gap-2 text-[11px] font-bold text-slate-700 uppercase tracking-widest">
                                                 <span className="material-symbols-outlined text-[14px]">lock</span>
                                                 End-to-end encrypted submission
                                             </div>

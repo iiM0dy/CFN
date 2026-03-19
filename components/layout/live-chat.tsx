@@ -142,10 +142,10 @@ export function LiveChat() {
                                     </div>
                                     {chatState === 'chat' && (
                                         <div>
-                                            <h3 className="text-white text-xs font-black uppercase tracking-widest">Support Core</h3>
+                                            <h3 className="text-white text-[14px] font-black uppercase tracking-widest">Support Core</h3>
                                             <div className="flex items-center gap-1.5 mt-0.5">
                                                 <div className="size-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                                                <span className="text-[10px] text-emerald-500 font-bold uppercase tracking-widest">Live Response</span>
+                                                <span className="text-[14px] text-emerald-500 font-bold uppercase tracking-widest">Live Response</span>
                                             </div>
                                         </div>
                                     )}
@@ -164,7 +164,7 @@ export function LiveChat() {
                                     <h2 className="text-3xl font-black text-white uppercase tracking-tighter leading-none mb-4">
                                         Ready for <br /><span className="text-primary italic">Transmission?</span>
                                     </h2>
-                                    <p className="text-slate-500 text-xs font-bold uppercase tracking-widest leading-relaxed">
+                                    <p className="text-slate-500 text-[14px] font-bold uppercase tracking-widest leading-relaxed">
                                         Active support line established. Estimated response: <span className="text-white">&lt; 3 mins</span>
                                     </p>
                                 </motion.div>
@@ -173,7 +173,7 @@ export function LiveChat() {
                             {chatState === 'chat' && (
                                 <button
                                     onClick={() => setChatState("home")}
-                                    className="absolute left-1/2 -bottom-4 -translate-x-1/2 px-4 py-2 bg-[#1A1A1A] border border-white/10 rounded-full text-[10px] font-black uppercase tracking-widest text-slate-500 hover:text-white transition-all shadow-xl"
+                                    className="absolute left-1/2 -bottom-4 -translate-x-1/2 px-4 py-2 bg-[#1A1A1A] border border-white/10 rounded-full text-[14px] font-black uppercase tracking-widest text-slate-500 hover:text-white transition-all shadow-xl"
                                 >
                                     Home Base
                                 </button>
@@ -192,21 +192,21 @@ export function LiveChat() {
                                         className="flex-1 p-8 space-y-8 overflow-y-auto scrollbar-hide"
                                     >
                                         <div>
-                                            <h4 className="text-[10px] font-black text-slate-600 uppercase tracking-[0.3em] mb-4">New Connection</h4>
+                                            <h4 className="text-[14px] font-black text-slate-600 uppercase tracking-[0.3em] mb-4">New Connection</h4>
                                             <button
                                                 onClick={() => setChatState("chat")}
                                                 className="w-full group p-6 bg-white/5 border border-white/10 rounded-3xl hover:bg-white/10 transition-all text-left flex items-center justify-between"
                                             >
                                                 <div>
                                                     <span className="block text-sm font-black text-white uppercase tracking-widest mb-1">Start Chat</span>
-                                                    <span className="block text-[10px] text-slate-500 font-bold uppercase tracking-tight">Open a line to the command center</span>
+                                                    <span className="block text-[14px] text-slate-500 font-bold uppercase tracking-tight">Open a line to the command center</span>
                                                 </div>
                                                 <span className="material-symbols-outlined text-primary group-hover:translate-x-2 transition-transform">east</span>
                                             </button>
                                         </div>
 
                                         <div className="space-y-4">
-                                            <h4 className="text-[10px] font-black text-slate-600 uppercase tracking-[0.3em] mb-4">Quick Protocols</h4>
+                                            <h4 className="text-[14px] font-black text-slate-600 uppercase tracking-[0.3em] mb-4">Quick Protocols</h4>
                                             {[
                                                 { label: "Check Order Status", icon: "package_2", query: "Can you check my order status?" },
                                                 { label: "Pricing Inquiry", icon: "payments", query: "I have a question about pricing." },
@@ -218,7 +218,7 @@ export function LiveChat() {
                                                     className="w-full p-4 bg-white/3 border border-white/5 rounded-2xl hover:bg-white/5 transition-all flex items-center gap-4 text-left"
                                                 >
                                                     <span className="material-symbols-outlined text-slate-500 text-lg">{item.icon}</span>
-                                                    <span className="text-[11px] font-black text-slate-400 uppercase tracking-widest">{item.label}</span>
+                                                    <span className="text-[14px] font-black text-slate-400 uppercase tracking-widest">{item.label}</span>
                                                 </button>
                                             ))}
                                         </div>
@@ -241,14 +241,14 @@ export function LiveChat() {
                                                 >
                                                     <div className={`max-w-[85%] ${!msg.isAdmin ? 'items-end' : 'items-start'} flex flex-col gap-2`}>
                                                         <div
-                                                            className={`p-4 rounded-3xl text-[13px] font-medium leading-relaxed ${!msg.isAdmin
+                                                            className={`p-4 rounded-3xl text-[14px] font-medium leading-relaxed ${!msg.isAdmin
                                                                 ? "bg-linear-to-br from-primary to-primary-dark text-white rounded-tr-none shadow-lg shadow-primary/20"
                                                                 : "bg-white/5 text-slate-200 border border-white/10 rounded-tl-none"
                                                                 }`}
                                                         >
                                                             {msg.text}
                                                         </div>
-                                                        <span className="text-[9px] text-slate-600 font-bold uppercase tracking-widest px-1">
+                                                        <span className="text-[14px] text-slate-600 font-bold uppercase tracking-widest px-1">
                                                             {new Date(msg.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                                                         </span>
                                                     </div>

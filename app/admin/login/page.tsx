@@ -66,12 +66,12 @@ export default function AdminLoginPage() {
                 <div className="bg-[#0A0A0A] border border-white/5 rounded-[32px] p-8 shadow-2xl">
                     <form className="space-y-5" onSubmit={handleSubmit}>
                         <div className="space-y-1.5">
-                            <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest pl-1">Admin Email</label>
+                            <label className="text-[12px] font-black text-slate-500 uppercase tracking-widest pl-1">Admin Email</label>
                             <input
                                 required
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
-                                className="w-full bg-white/[0.03] border border-white/5 rounded-2xl px-6 py-4 text-white focus:border-primary transition-all outline-none font-bold text-sm"
+                                className="w-full bg-white/3 border border-white/5 rounded-2xl px-6 py-4 text-white focus:border-primary transition-all outline-none font-bold text-sm"
                                 placeholder="admin@cfnboost.com"
                                 type="email"
                             />
@@ -79,14 +79,14 @@ export default function AdminLoginPage() {
 
                         <div className="space-y-1.5">
                             <div className="flex justify-between items-center px-1">
-                                <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Access Protocol (Password)</label>
+                                <label className="text-[12px] font-black text-slate-500 uppercase tracking-widest">Access Protocol (Password)</label>
                             </div>
                             <div className="relative group">
                                 <input
                                     required
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
-                                    className="w-full bg-white/[0.03] border border-white/5 rounded-2xl px-6 py-4 pr-14 text-white focus:border-primary transition-all outline-none font-bold text-sm"
+                                    className="w-full bg-white/3 border border-white/5 rounded-2xl px-6 py-4 pr-14 text-white focus:border-primary transition-all outline-none font-bold text-sm"
                                     placeholder="••••••••"
                                     type={showPassword ? "text" : "password"}
                                 />
@@ -118,14 +118,14 @@ export default function AdminLoginPage() {
                     <div className="mt-8 flex flex-col items-center gap-2 opacity-30">
                         <div className="flex items-center gap-2">
                             <span className="material-symbols-outlined text-[12px]">verified_user</span>
-                            <span className="text-[8px] font-black uppercase tracking-[0.2em] text-white">Authorized Logging Active</span>
+                            <span className="text-[11px] font-black uppercase tracking-[0.2em] text-white">Authorized Logging Active</span>
                         </div>
                     </div>
                 </div>
 
                 {/* Bottom Link */}
                 <div className="mt-8 text-center">
-                    <Link href="/" className="text-[10px] font-black text-slate-500 uppercase tracking-widest hover:text-primary transition-colors flex items-center justify-center gap-2">
+                    <Link href="/" className="text-[12px] font-black text-slate-500 uppercase tracking-widest hover:text-primary transition-colors flex items-center justify-center gap-2">
                         <span className="material-symbols-outlined text-[16px]">west</span>
                         Return to Homepage
                     </Link>

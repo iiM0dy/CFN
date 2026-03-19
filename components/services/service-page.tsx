@@ -45,11 +45,11 @@ export function ServicePage({ game, tagline, description, stats, services }: Ser
         <div className="bg-[#0B0B0B] text-white min-h-screen flex flex-col font-cairo overflow-x-hidden">
             <main className="grow w-full max-w-[1440px] mx-auto px-6 lg:px-10 pt-9 pb-12">
                 {/* Tactical Breadcrumbs */}
-                <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 mb-9">
+                <div className="flex items-center gap-2 text-[14px] font-black uppercase tracking-[0.2em] text-slate-500 mb-9">
                     <Link href="/" className="hover:text-primary transition-colors">Home</Link>
-                    <span className="material-symbols-outlined text-[10px]">chevron_right</span>
+                    <span className="material-symbols-outlined text-[14px]">chevron_right</span>
                     <Link href="/services" className="hover:text-primary transition-colors">Services</Link>
-                    <span className="material-symbols-outlined text-[10px]">chevron_right</span>
+                    <span className="material-symbols-outlined text-[14px]">chevron_right</span>
                     <span className="text-white">{game}</span>
                 </div>
 
@@ -59,7 +59,7 @@ export function ServicePage({ game, tagline, description, stats, services }: Ser
                     <div className="absolute -bottom-20 -right-20 w-96 h-96 bg-primary/5 blur-[120px] rounded-full pointer-events-none"></div>
 
                     <div className="relative z-10 max-w-3xl">
-                        <div className="inline-flex items-center gap-2 px-3 py-1 mb-8 rounded-full bg-primary/20 border border-primary/30 text-primary text-[10px] font-black uppercase tracking-widest">
+                        <div className="inline-flex items-center gap-2 px-3 py-1 mb-8 rounded-full bg-primary/20 border border-primary/30 text-primary text-[14px] font-black uppercase tracking-widest">
                             <span className="flex h-2 w-2 rounded-full bg-primary"></span>
                             Verified Specialist Network Active
                         </div>
@@ -76,7 +76,7 @@ export function ServicePage({ game, tagline, description, stats, services }: Ser
                             {stats.map((stat) => (
                                 <div key={stat.label} className="flex flex-col">
                                     <span className="text-3xl font-black text-white tracking-tighter font-cairo">{stat.value}</span>
-                                    <span className="text-[9px] font-black text-slate-500 uppercase tracking-widest mt-1">{stat.label}</span>
+                                    <span className="text-[11px] font-black text-slate-500 uppercase tracking-widest mt-1">{stat.label}</span>
                                 </div>
                             ))}
                         </div>
@@ -103,12 +103,12 @@ export function ServicePage({ game, tagline, description, stats, services }: Ser
                                     <div className="space-y-1">
                                         <h3 className="text-xl font-black text-white uppercase tracking-tight group-hover:text-primary transition-colors">{service.name}</h3>
                                         <div className="flex items-center gap-1">
-                                            <span className="material-symbols-outlined text-[10px] text-primary">verified</span>
-                                            <span className="text-[9px] font-black text-slate-500 uppercase tracking-widest">Guaranteed Success</span>
+                                            <span className="material-symbols-outlined text-[14px] text-primary">verified</span>
+                                            <span className="text-[11px] font-black text-slate-500 uppercase tracking-widest">Guaranteed Success</span>
                                         </div>
                                     </div>
                                     <div className="flex flex-col items-end">
-                                        <span className="text-[9px] font-black text-slate-500 uppercase tracking-widest mb-1 leading-none">Starting From</span>
+                                        <span className="text-[11px] font-black text-slate-500 uppercase tracking-widest mb-1 leading-none">Starting From</span>
                                         <span className="text-2xl font-black text-white tracking-tighter font-cairo leading-none">{formatPrice(service.price)}</span>
                                     </div>
                                 </div>
@@ -117,7 +117,7 @@ export function ServicePage({ game, tagline, description, stats, services }: Ser
 
                                 <div className="flex flex-wrap gap-2 mb-10">
                                     {service.features.map((f) => (
-                                        <span key={f} className="px-3 py-1.5 text-[9px] font-black uppercase tracking-widest rounded-lg bg-[#161616] border border-white/5 text-slate-500 group-hover:text-slate-300 transition-colors flex items-center gap-1.5">
+                                        <span key={f} className="px-3 py-1.5 text-[11px] font-black uppercase tracking-widest rounded-lg bg-[#161616] border border-white/5 text-slate-500 group-hover:text-slate-300 transition-colors flex items-center gap-1.5">
                                             <span className="size-1 rounded-full bg-primary/50"></span>
                                             {f}
                                         </span>
@@ -125,7 +125,7 @@ export function ServicePage({ game, tagline, description, stats, services }: Ser
                                 </div>
 
                                 <button
-                                    className="w-full py-4 bg-[#161616] border border-white/5 hover:bg-primary hover:border-primary text-white font-black text-[10px] uppercase tracking-[0.2em] rounded-xl flex items-center justify-center gap-3 transition-all relative z-10 group"
+                                    className="w-full py-4 bg-[#161616] border border-white/5 hover:bg-primary hover:border-primary text-white font-black text-[14px] uppercase tracking-[0.2em] rounded-xl flex items-center justify-center gap-3 transition-all relative z-10 group"
                                     onClick={() => handleAdd(service)}
                                 >
                                     INITIATE PROCUREMENT
@@ -146,7 +146,7 @@ export function ServicePage({ game, tagline, description, stats, services }: Ser
                     ].map((item) => (
                         <div key={item.label} className="bg-[#111111] border border-white/5 rounded-xl p-6 flex flex-col items-center text-center gap-3 shadow-lg">
                             <span className="material-symbols-outlined text-primary text-2xl">{item.icon}</span>
-                            <span className="text-[9px] font-black text-slate-500 uppercase tracking-widest">{item.label}</span>
+                            <span className="text-[11px] font-black text-slate-500 uppercase tracking-widest">{item.label}</span>
                         </div>
                     ))}
                 </div>

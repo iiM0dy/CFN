@@ -38,7 +38,7 @@ export default function CashbackPage() {
                 }
                 .glass {
                     background: rgba(20, 13, 14, 0.7);
-                    backdrop-filter: blur(12px);
+                    backdrop-filter: blur(14px);
                     border: 1px solid rgba(255, 255, 255, 0.05);
                 }
                 .card-glow:hover {
@@ -78,7 +78,7 @@ export default function CashbackPage() {
                     <div className="absolute top-1/4 -left-20 w-[500px] h-[500px] bg-[#B11226]/10 rounded-full blur-[150px] pointer-events-none"></div>
                     <div className="relative z-10 w-full max-w-[1440px] mx-auto px-6 lg:px-10 grid lg:grid-cols-2 gap-16 items-center">
                         <div className="text-left">
-                            <div className="inline-flex items-center gap-3 px-5 py-2 mb-8 rounded-full bg-white/5 border border-white/10 text-[#B11226] text-[11px] font-black uppercase tracking-[0.25em] backdrop-blur-md">
+                            <div className="inline-flex items-center gap-3 px-5 py-2 mb-8 rounded-full bg-white/5 border border-white/10 text-[#B11226] text-[14px] font-black uppercase tracking-[0.25em] backdrop-blur-md">
                                 <span className="relative flex h-2 w-2">
                                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#B11226] opacity-75"></span>
                                     <span className="relative inline-flex rounded-full h-2 w-2 bg-[#B11226]"></span>
@@ -93,11 +93,11 @@ export default function CashbackPage() {
                             </p>
                             <div className="flex flex-wrap gap-12 mb-12 py-8 border-y border-white/5">
                                 <div>
-                                    <p className="text-[11px] text-slate-500 uppercase tracking-[0.2em] font-bold mb-2">Platform Volume</p>
+                                    <p className="text-[14px] text-slate-500 uppercase tracking-[0.2em] font-bold mb-2">Platform Volume</p>
                                     <p className="text-4xl font-bold text-white tracking-tighter">{formatPrice(1248590.42)}</p>
                                 </div>
                                 <div>
-                                    <p className="text-[11px] text-slate-500 uppercase tracking-[0.2em] font-bold mb-2">Verified Pros</p>
+                                    <p className="text-[14px] text-slate-500 uppercase tracking-[0.2em] font-bold mb-2">Verified Pros</p>
                                     <p className="text-4xl font-bold text-white tracking-tighter">12,402</p>
                                 </div>
                             </div>
@@ -126,12 +126,12 @@ export default function CashbackPage() {
                                             <div className="w-8 h-8 rounded bg-[#B11226]/20 flex items-center justify-center">
                                                 <Wallet className="size-5 text-[#B11226] glow-subtle" />
                                             </div>
-                                            <p className="text-[11px] text-slate-400 font-bold uppercase tracking-[0.2em]">Live Wallet</p>
+                                            <p className="text-[14px] text-slate-400 font-bold uppercase tracking-[0.2em]">Live Wallet</p>
                                         </div>
                                         <p className="text-3xl font-black text-white tracking-tight">{formatPrice(452.20)}</p>
                                         <div className="flex items-center gap-1.5 mt-3">
                                             <TrendingUp className="size-4 text-green-500" />
-                                            <span className="text-[11px] text-green-500 font-black tracking-widest">+12.4% MONTHLY</span>
+                                            <span className="text-[14px] text-green-500 font-black tracking-widest">+12.4% MONTHLY</span>
                                         </div>
                                     </div>
                                 </div>
@@ -148,7 +148,7 @@ export default function CashbackPage() {
                         <div className="flex items-center gap-16 px-8 leading-none">
                             <div className="flex items-center gap-4 shrink-0">
                                 <Activity className="size-4 text-[#B11226] glow-subtle" />
-                                <span className="text-[11px] font-black text-slate-500 uppercase tracking-[0.3em]">Live Redemptions:</span>
+                                <span className="text-[14px] font-black text-slate-500 uppercase tracking-[0.3em]">Live Redemptions:</span>
                             </div>
                             {[
                                 { name: "Slayer99", rank: "Global Elite", amount: 42.50 },
@@ -158,10 +158,10 @@ export default function CashbackPage() {
                                 { name: "PixelSlayer", rank: "Radiant", amount: 12.30 }
                             ].map((item, i) => (
                                 <div key={i} className="flex items-center gap-4 bg-white/5 px-4 py-2 rounded-lg border border-white/5">
-                                    <span className="text-xs font-bold text-white">{item.name}</span>
+                                    <span className="text-[14px] font-bold text-white">{item.name}</span>
                                     <div className="w-1 h-1 rounded-full bg-slate-700"></div>
-                                    <span className="text-xs text-slate-500">{item.rank}</span>
-                                    <span className="text-xs font-bold text-[#B11226]">+{formatPrice(item.amount)}</span>
+                                    <span className="text-[14px] text-slate-500">{item.rank}</span>
+                                    <span className="text-[14px] font-bold text-[#B11226]">+{formatPrice(item.amount)}</span>
                                 </div>
                             ))}
                         </div>
@@ -169,7 +169,7 @@ export default function CashbackPage() {
                         <div className="flex items-center gap-16 px-8 leading-none">
                             <div className="flex items-center gap-4 shrink-0">
                                 <Activity className="size-4 text-[#B11226] glow-subtle" />
-                                <span className="text-[11px] font-black text-slate-500 uppercase tracking-[0.3em]">Live Redemptions:</span>
+                                <span className="text-[14px] font-black text-slate-500 uppercase tracking-[0.3em]">Live Redemptions:</span>
                             </div>
                             {[
                                 { name: "Slayer99", rank: "Global Elite", amount: 42.50 },
@@ -179,10 +179,10 @@ export default function CashbackPage() {
                                 { name: "PixelSlayer", rank: "Radiant", amount: 12.30 }
                             ].map((item, i) => (
                                 <div key={"dup" + i} className="flex items-center gap-4 bg-white/5 px-4 py-2 rounded-lg border border-white/5">
-                                    <span className="text-xs font-bold text-white">{item.name}</span>
+                                    <span className="text-[14px] font-bold text-white">{item.name}</span>
                                     <div className="w-1 h-1 rounded-full bg-slate-700"></div>
-                                    <span className="text-xs text-slate-500">{item.rank}</span>
-                                    <span className="text-xs font-bold text-[#B11226]">+{formatPrice(item.amount)}</span>
+                                    <span className="text-[14px] text-slate-500">{item.rank}</span>
+                                    <span className="text-[14px] font-bold text-[#B11226]">+{formatPrice(item.amount)}</span>
                                 </div>
                             ))}
                         </div>
@@ -202,7 +202,7 @@ export default function CashbackPage() {
                                 <div className="w-16 h-16 rounded-2xl bg-[#B11226]/10 flex items-center justify-center mb-10 border border-[#B11226]/20 text-[#B11226] group-hover:scale-110 transition-transform">
                                     <Coins className="size-8 glow-subtle" />
                                 </div>
-                                <div className="text-[11px] text-[#B11226] font-black uppercase tracking-[0.3em] mb-4">Phase 01</div>
+                                <div className="text-[14px] text-[#B11226] font-black uppercase tracking-[0.3em] mb-4">Phase 01</div>
                                 <h3 className="text-2xl font-bold text-white mb-4">Execute Contract</h3>
                                 <p className="text-slate-400 font-light leading-relaxed">Initiate any service across our marketplace. All transactions are logged instantly.</p>
                             </div>
@@ -211,7 +211,7 @@ export default function CashbackPage() {
                                 <div className="w-16 h-16 rounded-2xl bg-[#B11226]/10 flex items-center justify-center mb-10 border border-[#B11226]/20 text-[#B11226] group-hover:scale-110 transition-transform">
                                     <Award className="size-8 glow-subtle" />
                                 </div>
-                                <div className="text-[11px] text-[#B11226] font-black uppercase tracking-[0.3em] mb-4">Phase 02</div>
+                                <div className="text-[14px] text-[#B11226] font-black uppercase tracking-[0.3em] mb-4">Phase 02</div>
                                 <h3 className="text-2xl font-bold text-white mb-4">Accumulate Credits</h3>
                                 <p className="text-slate-400 font-light leading-relaxed">Dynamic cashback calculations applied based on your current tier status.</p>
                             </div>
@@ -220,7 +220,7 @@ export default function CashbackPage() {
                                 <div className="w-16 h-16 rounded-2xl bg-[#B11226]/10 flex items-center justify-center mb-10 border border-[#B11226]/20 text-[#B11226] group-hover:scale-110 transition-transform">
                                     <RefreshCw className="size-8 glow-subtle" />
                                 </div>
-                                <div className="text-[11px] text-[#B11226] font-black uppercase tracking-[0.3em] mb-4">Phase 03</div>
+                                <div className="text-[14px] text-[#B11226] font-black uppercase tracking-[0.3em] mb-4">Phase 03</div>
                                 <h3 className="text-2xl font-bold text-white mb-4">Instant Liquidity</h3>
                                 <p className="text-slate-400 font-light leading-relaxed">Redeem your wallet balance for any marketplace asset with zero friction.</p>
                             </div>
@@ -238,10 +238,10 @@ export default function CashbackPage() {
                                 <p className="text-slate-400 text-lg font-light leading-relaxed">Advanced progression mechanics. Your influence in the ecosystem scales with your participation.</p>
                             </div>
                             <div className="glass p-8 rounded-2xl shadow-xl">
-                                <p className="text-[11px] text-slate-500 uppercase tracking-[0.3em] font-black mb-2">Current Identity</p>
+                                <p className="text-[14px] text-slate-500 uppercase tracking-[0.3em] font-black mb-2">Current Identity</p>
                                 <div className="flex items-center gap-4">
                                     <span className="text-3xl font-black text-white tracking-tighter">INITIATE</span>
-                                    <span className="px-3 py-1 bg-slate-800 text-white text-[10px] font-black rounded tracking-widest uppercase">Rank 01</span>
+                                    <span className="px-3 py-1 bg-slate-800 text-white text-[14px] font-black rounded tracking-widest uppercase">Rank 01</span>
                                 </div>
                             </div>
                         </div>
@@ -250,11 +250,11 @@ export default function CashbackPage() {
                             <div className="group relative p-10 rounded-3xl bg-white/2 border border-white/5 card-glow transition-all">
                                 <div className="flex items-center justify-between mb-10">
                                     <Shield className="size-10 text-[#cd7f32] glow-subtle" />
-                                    <span className="text-[11px] font-black text-slate-500 uppercase tracking-widest">Bronze</span>
+                                    <span className="text-[14px] font-black text-slate-500 uppercase tracking-widest">Bronze</span>
                                 </div>
                                 <div className="mb-12">
                                     <h4 className="text-6xl font-black text-white mb-2">2%</h4>
-                                    <p className="text-[11px] text-slate-500 font-bold uppercase tracking-[0.2em]">Base Multiplier</p>
+                                    <p className="text-[14px] text-slate-500 font-bold uppercase tracking-[0.2em]">Base Multiplier</p>
                                 </div>
                                 <div className="space-y-5 mb-10">
                                     <div className="flex items-center gap-3 text-xs text-slate-400">
@@ -267,7 +267,7 @@ export default function CashbackPage() {
                                     </div>
                                 </div>
                                 <div className="pt-8 border-t border-white/5">
-                                    <div className="flex justify-between text-[11px] text-slate-500 font-black uppercase mb-3 tracking-widest">
+                                    <div className="flex justify-between text-[14px] text-slate-500 font-black uppercase mb-3 tracking-widest">
                                         <span>Status</span>
                                         <span>ACTIVE</span>
                                     </div>
@@ -280,11 +280,11 @@ export default function CashbackPage() {
                             <div className="group relative p-10 rounded-3xl bg-white/2 border border-white/5 card-glow transition-all">
                                 <div className="flex items-center justify-between mb-10">
                                     <Swords className="size-10 text-[#c0c0c0] glow-subtle" />
-                                    <span className="text-[11px] font-black text-slate-500 uppercase tracking-widest">Silver</span>
+                                    <span className="text-[14px] font-black text-slate-500 uppercase tracking-widest">Silver</span>
                                 </div>
                                 <div className="mb-12">
                                     <h4 className="text-6xl font-black text-white mb-2">5%</h4>
-                                    <p className="text-[11px] text-slate-500 font-bold uppercase tracking-[0.2em]">Tier II Multiplier</p>
+                                    <p className="text-[14px] text-slate-500 font-bold uppercase tracking-[0.2em]">Tier II Multiplier</p>
                                 </div>
                                 <div className="space-y-5 mb-10">
                                     <div className="flex items-center gap-3 text-xs text-white/80 font-semibold">
@@ -297,7 +297,7 @@ export default function CashbackPage() {
                                     </div>
                                 </div>
                                 <div className="pt-8 border-t border-white/5">
-                                    <div className="flex justify-between text-[11px] text-slate-500 font-black uppercase mb-3 tracking-widest">
+                                    <div className="flex justify-between text-[14px] text-slate-500 font-black uppercase mb-3 tracking-widest">
                                         <span>Threshold</span>
                                         <span>{formatPrice(500)}</span>
                                     </div>
@@ -309,14 +309,14 @@ export default function CashbackPage() {
                             {/* Gold */}
                             <div className="group relative p-10 rounded-3xl bg-[#B11226]/10 border border-[#B11226]/30 ring-1 ring-[#B11226]/40 shadow-2xl scale-105 z-10 overflow-hidden">
                                 <div className="absolute inset-0 noise-texture"></div>
-                                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-[#B11226] text-white text-[10px] font-black px-6 py-1.5 rounded-full uppercase tracking-[0.3em] shadow-xl">Most Optimized</div>
+                                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-[#B11226] text-white text-[14px] font-black px-6 py-1.5 rounded-full uppercase tracking-[0.3em] shadow-xl">Most Optimized</div>
                                 <div className="flex items-center justify-between mb-10">
                                     <Medal className="size-10 text-[#ffd700] glow-subtle" />
-                                    <span className="text-[11px] font-black text-[#B11226] uppercase tracking-widest">Gold</span>
+                                    <span className="text-[14px] font-black text-[#B11226] uppercase tracking-widest">Gold</span>
                                 </div>
                                 <div className="mb-12">
                                     <h4 className="text-6xl font-black text-white mb-2">7.5%</h4>
-                                    <p className="text-[11px] text-slate-400 font-bold uppercase tracking-[0.2em]">Elite Multiplier</p>
+                                    <p className="text-[14px] text-slate-400 font-bold uppercase tracking-[0.2em]">Elite Multiplier</p>
                                 </div>
                                 <div className="space-y-5 mb-10">
                                     <div className="flex items-center gap-3 text-xs text-white font-bold">
@@ -329,7 +329,7 @@ export default function CashbackPage() {
                                     </div>
                                 </div>
                                 <div className="pt-8 border-t border-[#B11226]/20">
-                                    <div className="flex justify-between text-[11px] text-slate-400 font-black uppercase mb-3 tracking-widest">
+                                    <div className="flex justify-between text-[14px] text-slate-400 font-black uppercase mb-3 tracking-widest">
                                         <span>Threshold</span>
                                         <span>{formatPrice(2500)}</span>
                                     </div>
@@ -343,11 +343,11 @@ export default function CashbackPage() {
                                 <div className="absolute inset-0 opacity-20 pointer-events-none bg-[radial-gradient(circle_at_50%_50%,#B11226_0%,transparent_70%)]"></div>
                                 <div className="flex items-center justify-between mb-10">
                                     <Diamond className="size-10 text-[#B11226] glow-subtle" />
-                                    <span className="text-[11px] font-black text-slate-400 uppercase tracking-widest">Elite</span>
+                                    <span className="text-[14px] font-black text-slate-400 uppercase tracking-widest">Elite</span>
                                 </div>
                                 <div className="mb-12">
                                     <h4 className="text-6xl font-black text-white mb-2">10%</h4>
-                                    <p className="text-[11px] text-slate-500 font-bold uppercase tracking-[0.2em]">Apex Multiplier</p>
+                                    <p className="text-[14px] text-slate-500 font-bold uppercase tracking-[0.2em]">Apex Multiplier</p>
                                 </div>
                                 <div className="space-y-5 mb-10">
                                     <div className="flex items-center gap-3 text-xs text-white font-bold">
@@ -360,7 +360,7 @@ export default function CashbackPage() {
                                     </div>
                                 </div>
                                 <div className="pt-8 border-t border-white/10">
-                                    <span className="text-[11px] text-[#B11226] font-black uppercase tracking-[0.3em] animate-pulse">INVITATION ONLY</span>
+                                    <span className="text-[14px] text-[#B11226] font-black uppercase tracking-[0.3em] animate-pulse">INVITATION ONLY</span>
                                 </div>
                             </div>
                         </div>
@@ -376,7 +376,7 @@ export default function CashbackPage() {
                             <div className="relative z-10 max-w-xl text-center lg:text-left">
                                 <div className="inline-flex items-center gap-3 mb-8 px-4 py-1.5 rounded-full bg-[#B11226]/10 border border-[#B11226]/20">
                                     <UserPlus className="size-4 text-[#B11226] glow-subtle" />
-                                    <span className="text-[#B11226] font-black uppercase tracking-[0.3em] text-[10px]">Expansion Protocol</span>
+                                    <span className="text-[#B11226] font-black uppercase tracking-[0.3em] text-[14px]">Expansion Protocol</span>
                                 </div>
                                 <h2 className="text-5xl md:text-6xl font-black text-white mb-8 tracking-tighter">Deploy your <br /><span className="text-[#B11226]">affiliate link.</span></h2>
                                 <p className="text-slate-400 text-lg mb-12 leading-relaxed font-light">Scale your wallet balance by recruiting your network. Earn <span className="text-white font-bold">{formatPrice(20.00)} credits</span> for every qualified active recruit.</p>
@@ -403,11 +403,11 @@ export default function CashbackPage() {
                                                 <img alt="user" src={src} className="w-full h-full object-cover" />
                                             </div>
                                         ))}
-                                        <div className="w-12 h-12 rounded-full border-2 border-[#B11226] flex items-center justify-center bg-[#B11226] text-[10px] font-black text-white shadow-xl">
+                                        <div className="w-12 h-12 rounded-full border-2 border-[#B11226] flex items-center justify-center bg-[#B11226] text-[14px] font-black text-white shadow-xl">
                                             +14K
                                         </div>
                                     </div>
-                                    <p className="text-[11px] font-black text-white uppercase tracking-[0.3em]">RECRUITED THIS CYCLE</p>
+                                    <p className="text-[14px] font-black text-white uppercase tracking-[0.3em]">RECRUITED THIS CYCLE</p>
                                 </div>
                             </div>
                         </div>
@@ -425,7 +425,7 @@ export default function CashbackPage() {
                                 Initialize Session
                             </button>
                         </div>
-                        <p className="mt-16 text-slate-700 text-[11px] uppercase tracking-[0.6em] font-black">Professional Infrastructure • End-to-End Encryption • Instant Settlement</p>
+                        <p className="mt-16 text-slate-700 text-[14px] uppercase tracking-[0.6em] font-black">Professional Infrastructure • End-to-End Encryption • Instant Settlement</p>
                     </div>
                 </section>
             </main>

@@ -2,7 +2,7 @@ import { auth } from "@/auth"
 import { prisma } from "@/lib/prisma"
 import { NextResponse } from "next/server"
 
-// GET - Get user's favorites
+// GET - Get user's favorites (services and games)
 export async function GET() {
   try {
     const session = await auth()
@@ -11,8 +11,8 @@ export async function GET() {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
     }
 
-    // Use raw query to fetch favorites with services and their options/values for price calculation
-    const favoritesData = await prisma.$queryRaw<any[]>`
+    // Fetch Service Favorites (Offers)
+    const serviceFavoritesData = await prisma.$queryRaw<any[]>`
       SELECT fav.id, fav."serviceId", fav."createdAt",
              json_build_object(
                'id', s.id,
@@ -53,8 +53,8 @@ export async function GET() {
       ORDER BY fav."createdAt" DESC
     `
 
-    // Calculate display price for each favorite service
-    const favorites = favoritesData.map(fav => {
+    // Process service prices
+    const services = serviceFavoritesData.map(fav => {
       const service = fav.service;
       let basePrice = Number(service.basePrice);
       let minAdditionalPrice = 0;
@@ -83,21 +83,34 @@ export async function GET() {
         ...fav,
         service: {
           ...service,
-          displayPrice: finalDisplayPrice.toFixed(2)
+          displayPrice: finalDisplayPrice.toFixed(2),
+          slug: encodeURIComponent(service.name.toLowerCase().replace(/[^a-z0-9]+/g, '-'))
         }
       };
     });
 
-    // Add slug to the services in the response
-    const favoritesWithSlug = favorites.map(fav => ({
-      ...fav,
-      service: {
-        ...fav.service,
-        slug: encodeURIComponent(fav.service.name.toLowerCase().replace(/[^a-z0-9]+/g, '-'))
-      }
-    }))
+    // Fetch Game Favorites
+    const gameFavorites = await prisma.gameFavorite.findMany({
+      where: { userId: session.user.id },
+      include: {
+        game: true
+      },
+      orderBy: { createdAt: 'desc' }
+    });
 
-    return NextResponse.json(favoritesWithSlug)
+    return NextResponse.json({
+      services,
+      games: gameFavorites.map(gf => ({
+        id: gf.id,
+        gameId: gf.gameId,
+        createdAt: gf.createdAt,
+        game: {
+          ...gf.game,
+          // Ensure we have a friendly slug
+          slug: gf.game.slug || encodeURIComponent(gf.game.name.toLowerCase().replace(/[^a-z0-9]+/g, '-'))
+        }
+      }))
+    });
   } catch (error) {
     console.error("Error fetching favorites:", error)
     return NextResponse.json({ error: "Failed to fetch favorites" }, { status: 500 })
@@ -113,20 +126,29 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
     }
 
-    const { serviceId } = await request.json()
+    const { serviceId, gameId } = await request.json()
 
-    if (!serviceId) {
-      return NextResponse.json({ error: "Service ID is required" }, { status: 400 })
+    if (serviceId) {
+      const favorite = await prisma.favorite.create({
+        data: {
+          userId: session.user.id,
+          serviceId
+        }
+      })
+      return NextResponse.json(favorite)
+    } 
+    
+    if (gameId) {
+      const favorite = await prisma.gameFavorite.create({
+        data: {
+          userId: session.user.id,
+          gameId
+        }
+      })
+      return NextResponse.json(favorite)
     }
 
-    const favorite = await prisma.favorite.create({
-      data: {
-        userId: session.user.id,
-        serviceId
-      }
-    })
-
-    return NextResponse.json(favorite)
+    return NextResponse.json({ error: "Service ID or Game ID is required" }, { status: 400 })
   } catch (error: any) {
     if (error.code === 'P2002') {
       return NextResponse.json({ error: "Already in favorites" }, { status: 400 })
@@ -147,23 +169,36 @@ export async function DELETE(request: Request) {
 
     const { searchParams } = new URL(request.url)
     const serviceId = searchParams.get('serviceId')
+    const gameId = searchParams.get('gameId')
 
-    if (!serviceId) {
-      return NextResponse.json({ error: "Service ID is required" }, { status: 400 })
+    if (serviceId) {
+      await prisma.favorite.delete({
+        where: {
+          userId_serviceId: {
+            userId: session.user.id,
+            serviceId
+          }
+        }
+      })
+      return NextResponse.json({ success: true })
     }
 
-    await prisma.favorite.delete({
-      where: {
-        userId_serviceId: {
-          userId: session.user.id,
-          serviceId
+    if (gameId) {
+      await prisma.gameFavorite.delete({
+        where: {
+          userId_gameId: {
+            userId: session.user.id,
+            gameId
+          }
         }
-      }
-    })
+      })
+      return NextResponse.json({ success: true })
+    }
 
-    return NextResponse.json({ success: true })
+    return NextResponse.json({ error: "Service ID or Game ID is required" }, { status: 400 })
   } catch (error) {
     console.error("Error removing favorite:", error)
     return NextResponse.json({ error: "Failed to remove favorite" }, { status: 500 })
   }
 }
+

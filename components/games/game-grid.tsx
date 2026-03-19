@@ -48,7 +48,7 @@ export function GameGrid({ initialGames, categories }: GameGridProps) {
                 <button
                   key={c}
                   onClick={() => setActiveCategory(c)}
-                  className={`flex items-center gap-2 px-5 py-2.5 rounded-lg text-[11px] font-black uppercase tracking-widest transition-all duration-300 border ${activeCategory === c
+                  className={`flex items-center gap-2 px-5 py-2.5 rounded-lg text-[14px] font-black uppercase tracking-widest transition-all duration-300 border ${activeCategory === c
                     ? "bg-primary border-primary text-white shadow-lg shadow-primary/20"
                     : "bg-[#161616] border-white/5 text-slate-500 hover:text-white hover:border-white/10"
                     }`}
@@ -80,9 +80,9 @@ export function GameGrid({ initialGames, categories }: GameGridProps) {
             <span className="h-6 w-1 bg-primary rounded-full"></span>
             Battlefield Selection
           </h2>
-          <p className="text-slate-500 text-[10px] font-bold uppercase tracking-widest mt-1">Select title to deploy professional experts</p>
+          <p className="text-slate-500 text-[14px] font-bold uppercase tracking-widest mt-1">Select title to deploy professional experts</p>
         </div>
-        <div className="text-slate-600 text-[10px] font-black uppercase tracking-[0.2em] hidden sm:block">
+        <div className="text-slate-600 text-[14px] font-black uppercase tracking-[0.2em] hidden sm:block">
           Network Capacity: <span className="text-primary">{filteredGames.length} ACTIVE NODES</span>
         </div>
       </div>
@@ -106,7 +106,7 @@ export function GameGrid({ initialGames, categories }: GameGridProps) {
             >
               {/* Coming Soon Badge */}
               {!game.isActive && (
-                <div className="absolute top-4 right-4 z-30 px-3 py-1 bg-[#111]/80 backdrop-blur-md border border-white/5 rounded-full text-white text-[10px] font-black uppercase tracking-[0.2em]">
+                <div className="absolute top-4 right-4 z-30 px-3 py-1 bg-[#111]/80 backdrop-blur-md border border-white/5 rounded-full text-white text-[14px] font-black uppercase tracking-[0.2em]">
                   Coming Soon
                 </div>
               )}
@@ -137,14 +137,14 @@ export function GameGrid({ initialGames, categories }: GameGridProps) {
                 <h3 className="text-2xl font-black text-white mb-1 group-hover:text-primary transition-colors uppercase tracking-tight">
                   {game.name}
                 </h3>
-                <p className="text-slate-400 text-[10px] font-bold uppercase tracking-widest line-clamp-1">
+                <p className="text-slate-400 text-[14px] font-bold uppercase tracking-widest line-clamp-1">
                   {game.description || 'Verified Service Node'}
                 </p>
 
                 {game.isActive && (
                   <div className="mt-4 flex items-center justify-center transition-all duration-500 opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0">
                     <div className="flex items-center gap-2 group/btn">
-                      <span className="text-[10px] font-black text-primary tracking-[0.3em] uppercase">
+                      <span className="text-[14px] font-black text-primary tracking-[0.3em] uppercase">
                         VIEW PACKAGES
                       </span>
                       <span className="material-symbols-outlined text-primary text-sm">
@@ -165,8 +165,8 @@ export function GameGrid({ initialGames, categories }: GameGridProps) {
               <span className="material-symbols-outlined text-slate-500 group-hover:text-primary text-4xl transition-colors">add_moderator</span>
             </div>
             <h3 className="text-2xl font-black text-white mb-3 uppercase tracking-tighter">Game Not Found?</h3>
-            <p className="text-slate-600 text-[10px] font-black leading-relaxed mb-8 max-w-[220px] uppercase tracking-[0.2em]">Contact Us to add a new game for CFNBOOST services</p>
-            <span className="px-6 py-2.5 bg-[#161616] border border-white/5 rounded-lg text-[9px] font-black text-slate-300 tracking-[0.3em] group-hover:bg-primary group-hover:text-white group-hover:border-primary transition-all uppercase">CONTACT US</span>
+            <p className="text-slate-600 text-[14px] font-black leading-relaxed mb-8 max-w-[220px] uppercase tracking-[0.2em]">Contact Us to add a new game for CFNBOOST services</p>
+            <span className="px-6 py-2.5 bg-[#161616] border border-white/5 rounded-lg text-[14px] font-black text-slate-300 tracking-[0.3em] group-hover:bg-primary group-hover:text-white group-hover:border-primary transition-all uppercase">CONTACT US</span>
           </div>
         </Link>
 

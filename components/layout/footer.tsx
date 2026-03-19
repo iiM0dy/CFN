@@ -36,7 +36,7 @@ export function Footer() {
                             <div className="text-primary">
                                 <CFNLogo className="size-6" />
                             </div>
-                            <span className="text-xl font-black tracking-tight uppercase font-[family-name:var(--font-brand)]">
+                            <span className="text-xl font-black tracking-tight uppercase font-(family-name:--font-brand)">
                                 <span className="text-primary">CFN</span>
                                 <span className="text-white">BOOST</span>
                             </span>
@@ -98,9 +98,9 @@ export function Footer() {
                 </div>
 
                 <div className="pt-8 border-t border-[#1A1A1A] flex flex-col md:flex-row justify-between items-center gap-4">
-                    <p className="text-gray-600 text-xs">
+                    <p className="text-gray-600 text-[14px] font-bold uppercase tracking-widest">
                         © 2024{" "}
-                        <span className="font-black tracking-wide font-[family-name:var(--font-brand)]">
+                        <span className="font-black tracking-wide font-(family-name:--font-brand)">
                             <span className="text-primary">CFN</span>
                             <span className="text-white">BOOST</span>
                         </span>

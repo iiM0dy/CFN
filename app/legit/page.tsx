@@ -20,7 +20,7 @@ function FAQItem({ q, a }: { q: string, a: string }) {
             <div
                 className={`overflow-hidden transition-all duration-300 ease-in-out ${isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}
             >
-                <div className="px-6 pb-6 pt-4 text-slate-400 text-sm leading-relaxed border-t border-white/5">
+                <div className="px-6 pb-6 pt-4 text-slate-400 text-[14px] leading-relaxed border-t border-white/5">
                     {a}
                 </div>
             </div>
@@ -56,7 +56,7 @@ export default function LegitPage() {
                                     <span className="material-symbols-outlined fill-1" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
                                     <span className="material-symbols-outlined fill-1" style={{ fontVariationSettings: "'FILL' 0.5" }}>star_half</span>
                                 </div>
-                                <p className="text-sm font-medium text-slate-400">4.9/5 stars from 10,000+ reviews</p>
+                                <p className="text-[14px] font-medium text-slate-400">4.9/5 stars from 10,000+ reviews</p>
                             </div>
                             <div className="h-10 w-px bg-[#2a1215]"></div>
                             <img alt="Trustpilot Logo" className="h-6" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCkLHyJucL8Y4gNH3Ud3Ab1DjO-ufREWV3hFrUL0qEEUR3SWcxmV7NLirI0qTjNuGKbsMH1cec-NQ2NsEgy8Va81UYi3jo113lRTDbw7o1RqGhFWD18rK7992nkMeb1mE9nmdNqRdBDk81nyZ_vDVXEucAAtA_8vYSb6aKdRo_HsQOzq6Z8UEvCqaPgUCJcdA7RyPoOnKwQcVcT5Wru-NquCaDM_94WYvsvOiI7xciVJLpQzCuL26ZhYE6qJSEo-TqYZtT7H5-02Vm2" />
@@ -88,7 +88,7 @@ export default function LegitPage() {
                             <span className="material-symbols-outlined text-primary text-3xl">enhanced_encryption</span>
                         </div>
                         <h3 className="text-xl font-bold mb-3">AES-256 SSL</h3>
-                        <p className="text-sm text-slate-400 leading-relaxed">End-to-end military-grade encryption for every data byte transferred during your session.</p>
+                        <p className="text-[14px] text-slate-400 leading-relaxed">End-to-end military-grade encryption for every data byte transferred during your session.</p>
                     </div>
 
                     {/* Protocol Card 2 */}
@@ -97,7 +97,7 @@ export default function LegitPage() {
                             <span className="material-symbols-outlined text-primary text-3xl">vpn_lock</span>
                         </div>
                         <h3 className="text-xl font-bold mb-3">Premium VPN</h3>
-                        <p className="text-sm text-slate-400 leading-relaxed">Our boosters match your exact IP location using residential proxies to bypass regional detection.</p>
+                        <p className="text-[14px] text-slate-400 leading-relaxed">Our boosters match your exact IP location using residential proxies to bypass regional detection.</p>
                     </div>
 
                     {/* Protocol Card 3 */}
@@ -106,7 +106,7 @@ export default function LegitPage() {
                             <span className="material-symbols-outlined text-primary text-3xl">chat_bubble</span>
                         </div>
                         <h3 className="text-xl font-bold mb-3">Encrypted Comms</h3>
-                        <p className="text-sm text-slate-400 leading-relaxed">Direct communication via secure, self-destructing Discord or WhatsApp channels only.</p>
+                        <p className="text-[14px] text-slate-400 leading-relaxed">Direct communication via secure, self-destructing Discord or WhatsApp channels only.</p>
                     </div>
 
                     {/* Protocol Card 4 */}
@@ -115,7 +115,7 @@ export default function LegitPage() {
                             <span className="material-symbols-outlined text-primary text-3xl">visibility_off</span>
                         </div>
                         <h3 className="text-xl font-bold mb-3">Full Anonymity</h3>
-                        <p className="text-sm text-slate-400 leading-relaxed">Boosters never see your login credentials; our proprietary launcher handles authentication.</p>
+                        <p className="text-[14px] text-slate-400 leading-relaxed">Boosters never see your login credentials; our proprietary launcher handles authentication.</p>
                     </div>
                 </div>
             </section>
@@ -128,21 +128,21 @@ export default function LegitPage() {
                             <span className="material-symbols-outlined text-primary text-4xl">currency_exchange</span>
                             <div>
                                 <h4 className="text-lg font-bold mb-1 uppercase">Money-Back</h4>
-                                <p className="text-sm text-slate-400">Instant, full refund if your service hasn't started within the guaranteed timeframe.</p>
+                                <p className="text-[14px] text-slate-400">Instant, full refund if your service hasn't started within the guaranteed timeframe.</p>
                             </div>
                         </div>
                         <div className="flex items-start gap-6 p-6 rounded-xl border border-primary/20 bg-[#161616]">
                             <span className="material-symbols-outlined text-primary text-4xl">sentiment_very_satisfied</span>
                             <div>
                                 <h4 className="text-lg font-bold mb-1 uppercase">Satisfaction</h4>
-                                <p className="text-sm text-slate-400">We don't mark a job as complete until you are 100% happy with the results.</p>
+                                <p className="text-[14px] text-slate-400">We don't mark a job as complete until you are 100% happy with the results.</p>
                             </div>
                         </div>
                         <div className="flex items-start gap-6 p-6 rounded-xl border border-primary/20 bg-[#161616]">
                             <span className="material-symbols-outlined text-primary text-4xl">security</span>
                             <div>
                                 <h4 className="text-lg font-bold mb-1 uppercase">Safety Insurance</h4>
-                                <p className="text-sm text-slate-400">All accounts are covered by our $50,000 corporate bond for total peace of mind.</p>
+                                <p className="text-[14px] text-slate-400">All accounts are covered by our $50,000 corporate bond for total peace of mind.</p>
                             </div>
                         </div>
                     </div>
@@ -159,7 +159,7 @@ export default function LegitPage() {
                         </div>
                         <div className="absolute -bottom-6 -right-6 bg-primary p-6 rounded-xl hidden md:block">
                             <p className="text-3xl font-bold">Top 0.1%</p>
-                            <p className="text-xs font-medium uppercase tracking-widest opacity-80">Global Player Pool</p>
+                            <p className="text-[14px] font-medium uppercase tracking-widest opacity-80">Global Player Pool</p>
                         </div>
                     </div>
                     <div>
@@ -173,10 +173,10 @@ export default function LegitPage() {
                                 { step: 5, title: "Probation Period", desc: "30-day monitored trial with restricted access before reaching full Elite status." }
                             ].map((item) => (
                                 <div key={item.step} className="flex gap-6">
-                                    <div className="shrink-0 w-8 h-8 rounded-full border border-primary text-primary flex items-center justify-center font-bold text-sm">{item.step}</div>
+                                    <div className="shrink-0 w-8 h-8 rounded-full border border-primary text-primary flex items-center justify-center font-bold text-[14px]">{item.step}</div>
                                     <div>
                                         <h5 className="font-bold mb-1">{item.title}</h5>
-                                        <p className="text-sm text-slate-400">{item.desc}</p>
+                                        <p className="text-[14px] text-slate-400">{item.desc}</p>
                                     </div>
                                 </div>
                             ))}
@@ -188,9 +188,9 @@ export default function LegitPage() {
             {/* Secure Payment Infrastructure - Updated with Home Page style icons */}
             <section className="py-24 border-y border-border-dark bg-[#050505]">
                 <div className="max-w-7xl mx-auto px-6">
-                    <p className="text-center text-[10px] font-black text-primary uppercase tracking-[0.4em] mb-12">Secure Payment Infrastructure</p>
+                    <p className="text-center text-[14px] font-black text-primary uppercase tracking-[0.4em] mb-12">Secure Payment Infrastructure</p>
 
-                    <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-10 items-center opacity-40 hover:opacity-100 transition-opacity text-[11px] font-semibold">
+                    <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-10 items-center opacity-40 hover:opacity-100 transition-opacity text-[14px] font-semibold">
                         <div className="flex justify-center">
                             <div className="flex items-center gap-2 text-gray-300">
                                 <svg className="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -234,7 +234,7 @@ export default function LegitPage() {
                             </div>
                         </div>
                         <div className="flex justify-center">
-                            <div className="flex items-center gap-2 font-black text-xs text-gray-300">
+                            <div className="flex items-center gap-2 font-black text-[14px] text-gray-300">
                                 <svg className="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                                 </svg>
@@ -274,7 +274,7 @@ export default function LegitPage() {
                             TALK TO SUPPORT
                         </Link>
                     </div>
-                    <p className="mt-8 text-xs text-slate-500 uppercase tracking-widest">Average support response time: 45 seconds</p>
+                    <p className="mt-8 text-[14px] text-slate-500 uppercase tracking-widest">Average support response time: 45 seconds</p>
                 </div>
             </section>
         </div>

@@ -31,7 +31,7 @@ export default function AdminHeader() {
                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-slate-500" />
                     <input
                         placeholder="Search dashboard..."
-                        className="bg-white/5 border border-white/5 rounded-xl pl-10 pr-4 py-2 text-xs text-white focus:border-primary/50 outline-none w-64 transition-all"
+                        className="bg-white/5 border border-white/5 rounded-xl pl-10 pr-4 py-2 text-[14px] text-white focus:border-primary/50 outline-none w-64 transition-all"
                     />
                 </div>
 
@@ -48,8 +48,8 @@ export default function AdminHeader() {
                             <User className="size-4" />
                         </div>
                         <div className="text-left hidden sm:block">
-                            <p className="text-[10px] font-black text-white uppercase tracking-tight">Admin User</p>
-                            <p className="text-[8px] text-slate-500 font-bold uppercase tracking-widest">General Access</p>
+                            <p className="text-[14px] font-black text-white uppercase tracking-tight">Admin User</p>
+                            <p className="text-[14px] text-slate-500 font-bold uppercase tracking-widest">General Access</p>
                         </div>
                     </button>
                 </div>

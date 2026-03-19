@@ -80,14 +80,14 @@ export default async function BlogPostPage({ params }: Props) {
                         <div className="max-w-[1440px] px-6 lg:px-10 w-full flex flex-col items-center">
                             <Link
                                 href="/blog"
-                                className="group inline-flex items-center gap-2 mb-12 text-[10px] font-black uppercase tracking-[0.4em] text-slate-500 hover:text-primary transition-all"
+                                className="group inline-flex items-center gap-2 mb-12 text-[12px] font-black uppercase tracking-[0.4em] text-slate-500 hover:text-primary transition-all"
                             >
                                 <span className="material-symbols-outlined text-sm group-hover:-translate-x-2 transition-transform">west</span>
                                 Back to Blog
                             </Link>
 
                             <div className="inline-flex items-center gap-3 px-4 py-1.5 rounded bg-primary/20 border border-primary/30 mb-8 backdrop-blur-xl">
-                                <span className="text-[10px] font-black uppercase tracking-[0.2em] text-primary">{post.category}</span>
+                                <span className="text-[12px] font-black uppercase tracking-[0.2em] text-primary">{post.category}</span>
                             </div>
 
                             <h1 className="text-5xl md:text-8xl font-black tracking-[calc(-0.05em)] uppercase mb-8 leading-[0.85] max-w-5xl">
@@ -99,14 +99,14 @@ export default async function BlogPostPage({ params }: Props) {
                                     <div className="size-8 rounded-full bg-primary/20 flex items-center justify-center border border-primary/20">
                                         <span className="material-symbols-outlined text-sm text-primary">person</span>
                                     </div>
-                                    <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">Author: <span className="text-white">{post.author}</span></span>
+                                    <span className="text-[12px] font-black uppercase tracking-widest text-slate-400">Author: <span className="text-white">{post.author}</span></span>
                                 </div>
                                 <div className="hidden sm:block h-4 w-px bg-white/10" />
                                 <div className="flex items-center gap-3">
                                     <div className="size-8 rounded-full bg-primary/20 flex items-center justify-center border border-primary/20">
                                         <span className="material-symbols-outlined text-sm text-primary">calendar_month</span>
                                     </div>
-                                    <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">Published: <span className="text-white">{new Date(post.publishedAt).toLocaleDateString()}</span></span>
+                                    <span className="text-[12px] font-black uppercase tracking-widest text-slate-400">Published: <span className="text-white">{new Date(post.publishedAt).toLocaleDateString()}</span></span>
                                 </div>
                             </div>
                         </div>
@@ -120,21 +120,21 @@ export default async function BlogPostPage({ params }: Props) {
                         <aside className="lg:w-48 xl:w-64 order-2 lg:order-1">
                             <div className="sticky top-32 space-y-12">
                                 <div>
-                                    <h4 className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-500 mb-6 border-l-2 border-primary pl-4">Post Info</h4>
+                                    <h4 className="text-[12px] font-black uppercase tracking-[0.3em] text-slate-500 mb-6 border-l-2 border-primary pl-4">Post Info</h4>
                                     <div className="space-y-4">
                                         <div className="p-4 bg-white/5 rounded-xl border border-white/5">
-                                            <span className="block text-[9px] font-bold text-slate-500 uppercase tracking-widest mb-1">Sector</span>
-                                            <span className="text-[10px] font-black uppercase text-white tracking-widest">Global Mainnet</span>
+                                            <span className="block text-[11px] font-bold text-slate-500 uppercase tracking-widest mb-1">Sector</span>
+                                            <span className="text-[12px] font-black uppercase text-white tracking-widest">Global Mainnet</span>
                                         </div>
                                         <div className="p-4 bg-white/5 rounded-xl border border-white/5">
-                                            <span className="block text-[9px] font-bold text-slate-500 uppercase tracking-widest mb-1">Clearance</span>
-                                            <span className="text-[10px] font-black uppercase text-emerald-400 tracking-widest">Public Access</span>
+                                            <span className="block text-[11px] font-bold text-slate-500 uppercase tracking-widest mb-1">Clearance</span>
+                                            <span className="text-[12px] font-black uppercase text-emerald-400 tracking-widest">Public Access</span>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div>
-                                    <h4 className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-500 mb-6 border-l-2 border-primary pl-4">Actions</h4>
+                                    <h4 className="text-[12px] font-black uppercase tracking-[0.3em] text-slate-500 mb-6 border-l-2 border-primary pl-4">Actions</h4>
                                     <div className="flex flex-col gap-3">
                                         <ShareButton />
                                     </div>
@@ -176,7 +176,7 @@ export default async function BlogPostPage({ params }: Props) {
                                 href="/#games"
                                 className="group relative h-20 px-16 rounded-2xl bg-primary flex items-center justify-center overflow-hidden hover:scale-105 transition-all duration-500 shadow-[0_20px_50px_-10px_rgba(175,18,37,0.5)] active:scale-95"
                             >
-                                <span className="relative z-10 text-xs font-black uppercase tracking-[0.4em] text-white flex items-center gap-4">
+                                <span className="relative z-10 text-[12px] font-black uppercase tracking-[0.4em] text-white flex items-center gap-4">
                                     Start Now
                                     <span className="material-symbols-outlined text-xl group-hover:translate-x-2 transition-transform">bolt</span>
                                 </span>

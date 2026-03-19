@@ -78,27 +78,27 @@ export default function TrackOrderPage() {
             >
                 <div className="text-center mb-8">
                     <h1 className="text-3xl font-black text-white uppercase tracking-tighter mb-2">Track Order</h1>
-                    <p className="text-slate-500 text-xs uppercase tracking-widest font-bold">Find your orders by email</p>
+                    <p className="text-slate-500 text-[14px] uppercase tracking-widest font-bold">Find your orders by email</p>
                 </div>
 
                 {!hasSearched || orders.length === 0 ? (
                     <>
                         <form onSubmit={handleSubmit} className="space-y-6 max-w-md mx-auto">
                             <div className="space-y-2">
-                                <label htmlFor="email" className="text-xs font-bold text-slate-400 uppercase tracking-wider ml-1">Email Address</label>
+                                <label htmlFor="email" className="text-[14px] font-bold text-slate-400 uppercase tracking-wider ml-1">Email Address</label>
                                 <input
                                     id="email"
                                     type="email"
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
                                     placeholder="Used during checkout"
-                                    className="w-full bg-[#111] border border-white/10 rounded-lg px-4 py-3 text-white placeholder:text-slate-600 focus:outline-none focus:border-primary transition-colors text-sm"
+                                    className="w-full bg-[#111] border border-white/10 rounded-lg px-4 py-3 text-white placeholder:text-slate-600 focus:outline-none focus:border-primary transition-colors text-[14px]"
                                     required 
                                 />
                             </div>
 
                             {error && (
-                                <div className="p-3 bg-red-500/10 border border-red-500/20 rounded-lg text-red-400 text-xs font-medium flex items-center gap-2">
+                                <div className="p-3 bg-red-500/10 border border-red-500/20 rounded-lg text-red-400 text-[14px] font-medium flex items-center gap-2">
                                     <span className="material-symbols-outlined text-sm">error</span>
                                     {error}
                                 </div>
@@ -124,7 +124,7 @@ export default function TrackOrderPage() {
                         </form>
                         
                         <div className="mt-6 text-center">
-                            <Link href="/login" className="text-xs text-slate-500 hover:text-white transition-colors uppercase tracking-wider font-bold">
+                            <Link href="/login" className="text-[14px] text-slate-500 hover:text-white transition-colors uppercase tracking-wider font-bold">
                                 Sign In for better experience
                             </Link>
                         </div>
@@ -133,12 +133,12 @@ export default function TrackOrderPage() {
                     <div className="space-y-6">
                         <div className="flex justify-between items-center bg-white/5 border border-white/10 rounded-xl p-4 mb-6">
                             <div>
-                                <p className="text-xs text-slate-400 uppercase tracking-widest font-bold mb-1">Found Orders For</p>
+                                <p className="text-[14px] text-slate-400 uppercase tracking-widest font-bold mb-1">Found Orders For</p>
                                 <p className="text-sm font-medium text-white">{email}</p>
                             </div>
                             <button 
                                 onClick={() => { setHasSearched(false); setOrders([]); setEmail(""); }}
-                                className="text-xs font-bold uppercase tracking-widest text-primary hover:text-white transition-colors py-2 px-4 rounded-lg bg-primary/10 hover:bg-primary sm:border border-primary/20 whitespace-nowrap"
+                                className="text-[14px] font-bold uppercase tracking-widest text-primary hover:text-white transition-colors py-2 px-4 rounded-lg bg-primary/10 hover:bg-primary sm:border border-primary/20 whitespace-nowrap"
                             >
                                 Search Another
                             </button>
@@ -159,12 +159,12 @@ export default function TrackOrderPage() {
                                         <div className="flex-1 min-w-0">
                                             <div className="flex items-center justify-between gap-2 mb-1">
                                                 <h3 className="text-sm font-bold text-white truncate">{order.serviceName}</h3>
-                                                <span className={`text-[10px] font-black uppercase tracking-widest px-2 py-1 rounded-md border shrink-0 ${getStatusColor(order.status)}`}>
+                                                <span className={`text-[14px] font-black uppercase tracking-widest px-2 py-1 rounded-md border shrink-0 ${getStatusColor(order.status)}`}>
                                                     {order.status}
                                                 </span>
                                             </div>
-                                            <p className="text-xs text-slate-400 font-medium truncate mb-2">{order.gameName}</p>
-                                            <div className="flex items-center justify-between text-xs">
+                                            <p className="text-[14px] text-slate-400 font-medium truncate mb-2">{order.gameName}</p>
+                                            <div className="flex items-center justify-between text-[14px]">
                                                 <span className="text-slate-500 font-mono">#{order.id.slice(-6)}</span>
                                                 <span className="font-bold text-primary">${Number(order.totalPrice).toFixed(2)}</span>
                                             </div>

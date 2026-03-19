@@ -247,12 +247,12 @@ export default function ServiceDetailsPage() {
   };
 
   const handleOrderClick = () => {
-      setAuthError("");
-      if (status === "unauthenticated") {
-          setAuthError("Please enter your email and press Submit to proceed to checkout.");
-          return;
-      }
-      setShowPaymentModal(true);
+    setAuthError("");
+    if (status === "unauthenticated") {
+      setAuthError("Please enter your email and press Submit to proceed to checkout.");
+      return;
+    }
+    setShowPaymentModal(true);
   };
 
   const handleGuestLogin = async () => {
@@ -263,24 +263,24 @@ export default function ServiceDetailsPage() {
     }
     setIsSubmitting(true);
     try {
-        const loginRes = await signIn("guest_email_login", {
-            email,
-            redirect: false
-        });
-        if (loginRes?.error) {
-            if (loginRes.error.toLowerCase().includes("configuration") || loginRes.error.toLowerCase().includes("credentialssignin") || loginRes.error.includes("account")) {
-                 setAuthError("This email already has an account. Please log in normally.");
-            } else {
-                 setAuthError("Login failed: " + loginRes.error);
-            }
+      const loginRes = await signIn("guest_email_login", {
+        email,
+        redirect: false
+      });
+      if (loginRes?.error) {
+        if (loginRes.error.toLowerCase().includes("configuration") || loginRes.error.toLowerCase().includes("credentialssignin") || loginRes.error.includes("account")) {
+          setAuthError("This email already has an account. Please log in normally.");
         } else {
-            window.location.reload(); 
+          setAuthError("Login failed: " + loginRes.error);
         }
+      } else {
+        window.location.reload();
+      }
     } catch (e) {
-        console.error("Auto login exception", e);
-        setAuthError("An error occurred during sign in.");
+      console.error("Auto login exception", e);
+      setAuthError("An error occurred during sign in.");
     } finally {
-        setIsSubmitting(false);
+      setIsSubmitting(false);
     }
   };
 
@@ -288,7 +288,10 @@ export default function ServiceDetailsPage() {
     setCheckoutError("");
     if (!selectedPaymentMethod) { setCheckoutError('Please select a payment method'); return; }
     if (selectedPaymentMethod !== 'stripe') { setCheckoutError(`${selectedPaymentMethod.toUpperCase()} is currently unavailable.`); return; }
-    if (!email) { setCheckoutError("Session email is missing. Please refresh."); return; }
+
+    const purchaseEmail = session?.user?.email || email;
+    if (!purchaseEmail) { setCheckoutError("Session email is missing. Please refresh."); return; }
+
     setIsSubmitting(true);
 
     try {
@@ -296,7 +299,7 @@ export default function ServiceDetailsPage() {
         method: "POST", headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           items: [{ id: service?.id || 'unknown', name: service?.name || 'Service', description: `${service?.name} - ${platform || 'Standard'} | ${completionMethod || 'Direct'}`, price: calculateTotalPrice() / quantity, image: service?.image || null, quantity }],
-          customerEmail: email,
+          customerEmail: purchaseEmail,
           metadata: { discord, orderNotes, selectedOptions: JSON.stringify(selectedOptions), platform: platform || 'Standard', completionMethod: completionMethod || 'Direct', userId: session?.user?.id || "guest" },
           successUrl: `${window.location.origin}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
           cancelUrl: `${window.location.origin}${window.location.pathname}`,
@@ -329,11 +332,11 @@ export default function ServiceDetailsPage() {
     <section className="relative">
       <div className="flex items-center gap-4 mb-5">
         <div className="flex items-center justify-center w-7 h-7 rounded-lg bg-primary/10 border border-primary/20 shrink-0">
-          <span className="text-[11px] font-black text-primary">{step}</span>
+          <span className="text-[14px] font-black text-primary">{step}</span>
         </div>
         <h3 className="text-sm font-black text-white uppercase tracking-[0.15em] font-cairo flex items-center gap-2">
           {title}
-          {optional && <span className="text-[10px] font-medium text-slate-500 normal-case tracking-normal">(Optional)</span>}
+          {optional && <span className="text-[14px] font-medium text-slate-500 normal-case tracking-normal">(Optional)</span>}
         </h3>
       </div>
       {children}
@@ -347,7 +350,7 @@ export default function ServiceDetailsPage() {
         ? 'border-primary bg-primary/5'
         : 'border-white/5 bg-[#0a0a0a] hover:border-white/10 hover:bg-[#0f0f0f]'
       }`}>
-      
+
       {/* Custom Checkmark Design */}
       <div className="relative flex items-center justify-center shrink-0">
         <div className={`size-5 rounded-full border-2 transition-colors duration-200 flex items-center justify-center
@@ -356,7 +359,7 @@ export default function ServiceDetailsPage() {
             ${checked ? 'scale-100' : 'scale-0'}`} />
         </div>
       </div>
-      
+
       <div className="relative z-10 flex-1 flex flex-col justify-center w-full">
         {children}
       </div>
@@ -368,7 +371,7 @@ export default function ServiceDetailsPage() {
       <main className="grow w-full max-w-[1440px] mx-auto px-6 lg:px-10 pt-8 pb-16">
 
         {/* Breadcrumbs */}
-        <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-slate-600 mb-8">
+        <div className="flex items-center gap-2 text-[14px] font-black uppercase tracking-[0.2em] text-slate-600 mb-8">
           <Link href="/" className="hover:text-primary transition-colors">Home</Link>
           <span className="text-slate-700">/</span>
           <Link href={`/${service.game.slug}/services`} className="hover:text-primary transition-colors">{service.game.name}</Link>
@@ -407,14 +410,14 @@ export default function ServiceDetailsPage() {
                 <div className="flex flex-col gap-4 flex-1">
                   {/* top row */}
                   <div className="flex items-center justify-between gap-4">
-                    <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-[10px] font-bold uppercase tracking-widest">
+                    <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-[14px] font-bold uppercase tracking-widest">
                       <span className="material-symbols-outlined text-xs">bolt</span>
                       Service Detail
                     </div>
                     <button
                       onClick={toggleFavorite}
                       disabled={favoriteLoading}
-                      className={`flex items-center gap-2 px-4 py-2 rounded-lg border transition-all duration-300 text-[11px] font-black uppercase tracking-widest
+                      className={`flex items-center gap-2 px-4 py-2 rounded-lg border transition-all duration-300 text-[14px] font-black uppercase tracking-widest
                         ${isFavorite ? 'bg-primary border-primary text-white' : 'bg-white/5 border-white/10 text-slate-400 hover:border-primary/50 hover:text-white'}`}
                     >
                       <span className={`material-symbols-outlined text-[16px] ${isFavorite ? 'fill-1' : ''}`}>favorite</span>
@@ -428,7 +431,7 @@ export default function ServiceDetailsPage() {
                       {service.name}
                     </h1>
                     <div className="flex flex-col items-start md:items-end shrink-0">
-                      <span className="text-[9px] font-black text-primary uppercase tracking-widest mb-0.5">Starting From</span>
+                      <span className="text-[11px] font-black text-primary uppercase tracking-widest mb-0.5">Starting From</span>
                       <span className="text-3xl font-black text-white tracking-tighter font-cairo">{formatPrice(minPrice)}</span>
                     </div>
                   </div>
@@ -576,7 +579,7 @@ export default function ServiceDetailsPage() {
                           { label: 'Desired Level', key: 'desired', min: (selectedOptions[option.id]?.current ?? option.minValue ?? 0) + 1, max: option.maxValue || 100 },
                         ].map(field => (
                           <div key={field.key}>
-                            <label className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 mb-2 block">{field.label}</label>
+                            <label className="text-[14px] font-black uppercase tracking-[0.2em] text-slate-500 mb-2 block">{field.label}</label>
                             <div className="bg-[#050505] border border-white/5 rounded-xl p-3 focus-within:border-primary/40 transition-colors">
                               <input type="number" min={field.min} max={field.max}
                                 value={selectedOptions[option.id]?.[field.key] ?? (field.key === 'current' ? option.minValue : option.maxValue) ?? 0}
@@ -609,7 +612,7 @@ export default function ServiceDetailsPage() {
                               right: `${100 - (((selectedOptions[option.id]?.desired ?? option.maxValue ?? 100) - (option.minValue || 0)) / ((option.maxValue || 100) - (option.minValue || 0))) * 100}%`
                             }} />
                           {['current', 'desired'].map(key => (
-                            <div key={key} className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 size-4 bg-white rounded-full border-2 border-primary shadow-[0_0_10px_rgba(175,18,37,0.4)] pointer-events-none z-10 transition-all duration-300"
+                            <div key={key} className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 size-4 bg-white rounded-full border-2 border-primary shadow-[0_0_14px_rgba(175,18,37,0.4)] pointer-events-none z-10 transition-all duration-300"
                               style={{ left: `${(((selectedOptions[option.id]?.[key] ?? (key === 'current' ? option.minValue : option.maxValue) ?? 0) - (option.minValue || 0)) / ((option.maxValue || 100) - (option.minValue || 0))) * 100}%` }} />
                           ))}
                         </div>
@@ -621,7 +624,7 @@ export default function ServiceDetailsPage() {
                               const isActive = level >= (selectedOptions[option.id]?.current ?? min) && level <= (selectedOptions[option.id]?.desired ?? max);
                               return (
                                 <div key={idx} className="absolute -translate-x-1/2" style={{ left: `${((level - min) / range) * 100}%` }}>
-                                  <span className={`text-[10px] font-black tracking-tighter transition-colors ${isActive ? 'text-primary' : 'text-slate-700'}`}>{level}</span>
+                                  <span className={`text-[14px] font-black tracking-tighter transition-colors ${isActive ? 'text-primary' : 'text-slate-700'}`}>{level}</span>
                                 </div>
                               );
                             });
@@ -643,7 +646,7 @@ export default function ServiceDetailsPage() {
                           value={selectedOptions[option.id] || option.minValue || 0}
                           onChange={e => setSelectedOptions({ ...selectedOptions, [option.id]: Number(e.target.value) })}
                           className="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-primary" />
-                        <div className="flex justify-between mt-3 text-[10px] font-black text-slate-600 uppercase tracking-widest">
+                        <div className="flex justify-between mt-3 text-[14px] font-black text-slate-600 uppercase tracking-widest">
                           <span>{(option.minValue || 0) >= 1000 ? `${((option.minValue || 0) / 1000).toFixed(0)}K` : option.minValue}</span>
                           <span>{(option.maxValue || 0) >= 1000000 ? `${((option.maxValue || 0) / 1000000).toFixed(0)}M` : `${((option.maxValue || 0) / 1000).toFixed(0)}K`}</span>
                         </div>
@@ -688,7 +691,7 @@ export default function ServiceDetailsPage() {
                       <label key={speed.value} className="cursor-pointer block group">
                         <input type="radio" name="completionSpeed" value={speed.value} checked={isChecked}
                           onClick={e => { if (isChecked) { e.preventDefault(); setCompletionSpeed(null); } else setCompletionSpeed(speed.value); }}
-                          onChange={() => {}} className="sr-only" />
+                          onChange={() => { }} className="sr-only" />
                         <RadioCard checked={isChecked}>
                           <div className="flex-1">
                             <div className="flex justify-between items-start mb-1.5">
@@ -771,16 +774,16 @@ export default function ServiceDetailsPage() {
                   <h3 className="text-sm font-black text-white uppercase tracking-widest font-cairo">Quantity</h3>
                 </div>
                 <div className="flex items-end justify-between mb-4">
-                  <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Units</span>
+                  <span className="text-[14px] font-bold text-slate-500 uppercase tracking-widest">Units</span>
                   <div className="flex items-baseline gap-1">
                     <span className="text-4xl font-black text-white font-cairo leading-none">{quantity}</span>
-                    <span className="text-[10px] font-black text-primary uppercase tracking-widest">QTY</span>
+                    <span className="text-[14px] font-black text-primary uppercase tracking-widest">QTY</span>
                   </div>
                 </div>
                 <input type="range" min="1" max={service?.maxQuantity || 15} step="1" value={quantity}
                   onChange={e => setQuantity(Number(e.target.value))}
                   className="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-primary mb-3" />
-                <div className="flex justify-between text-[10px] font-black text-slate-600 uppercase tracking-widest">
+                <div className="flex justify-between text-[14px] font-black text-slate-600 uppercase tracking-widest">
                   <span>Min 01</span>
                   <span>Limit {service?.maxQuantity || 15}</span>
                 </div>
@@ -797,19 +800,19 @@ export default function ServiceDetailsPage() {
 
                 {/* Promo code */}
                 <div className="mb-6">
-                  <label className="text-[10px] text-slate-500 font-bold uppercase tracking-[0.2em] mb-2 block">Promo Code</label>
+                  <label className="text-[14px] text-slate-500 font-bold uppercase tracking-[0.2em] mb-2 block">Promo Code</label>
                   <div className="flex gap-2">
                     <input type="text" value={promoCode}
                       onChange={e => { setPromoCode(e.target.value.toUpperCase()); setPromoCodeError(""); setPromoCodeData(null); }}
                       placeholder="ENTER CODE..."
                       className="flex-1 bg-[#050505] border border-white/5 rounded-lg px-3 py-2.5 text-white text-xs font-bold uppercase tracking-widest placeholder:text-slate-700 focus:border-primary/40 focus:outline-none transition-all" />
                     <button type="button" onClick={validatePromoCode} disabled={!promoCode.trim() || isValidatingPromo}
-                      className="px-4 py-2.5 bg-[#1a1a1a] hover:bg-primary text-white text-[10px] font-black uppercase tracking-widest rounded-lg transition-all disabled:opacity-40 border border-white/5">
+                      className="px-4 py-2.5 bg-[#1a1a1a] hover:bg-primary text-white text-[14px] font-black uppercase tracking-widest rounded-lg transition-all disabled:opacity-40 border border-white/5">
                       {isValidatingPromo ? '...' : 'Apply'}
                     </button>
                   </div>
-                  {promoCodeError && <p className="text-primary text-[10px] font-black uppercase tracking-widest mt-2 flex items-center gap-1"><span className="material-symbols-outlined text-xs">error</span>{promoCodeError}</p>}
-                  {promoCodeData && <p className="text-emerald-500 text-[10px] font-black uppercase tracking-widest mt-2 flex items-center gap-1"><span className="material-symbols-outlined text-xs">check_circle</span>Discount Applied: {promoCodeData.discountType === 'percentage' ? `${promoCodeData.discount}%` : formatPrice(promoCodeData.discount)}</p>}
+                  {promoCodeError && <p className="text-primary text-[14px] font-black uppercase tracking-widest mt-2 flex items-center gap-1"><span className="material-symbols-outlined text-xs">error</span>{promoCodeError}</p>}
+                  {promoCodeData && <p className="text-emerald-500 text-[14px] font-black uppercase tracking-widest mt-2 flex items-center gap-1"><span className="material-symbols-outlined text-xs">check_circle</span>Discount Applied: {promoCodeData.discountType === 'percentage' ? `${promoCodeData.discount}%` : formatPrice(promoCodeData.discount)}</p>}
                 </div>
 
                 {/* Summary rows */}
@@ -817,23 +820,25 @@ export default function ServiceDetailsPage() {
                   {[
                     { label: 'Service', value: service.name },
                     platform && { label: 'Platform', value: platform },
-                    { label: 'Amount', value: (() => {
-                      if (service?.name === "Workshop Leveling") {
-                        const whatToLevelOption = service.options?.find(o => o.label === "What should we level up?");
-                        const mode = whatToLevelOption ? selectedOptions[whatToLevelOption.id] : null;
-                        if (mode === "scrappy" || mode === "specific_bench") {
-                          const rangeOpt = service.options?.find(o => o.label?.toLowerCase().includes("level range") && isOptionVisible(o));
-                          if (rangeOpt) { const range = selectedOptions[rangeOpt.id]; if (range && typeof range === 'object') return Math.max(0, Number(range.desired ?? 0) - Number(range.current ?? 0)); }
+                    {
+                      label: 'Amount', value: (() => {
+                        if (service?.name === "Workshop Leveling") {
+                          const whatToLevelOption = service.options?.find(o => o.label === "What should we level up?");
+                          const mode = whatToLevelOption ? selectedOptions[whatToLevelOption.id] : null;
+                          if (mode === "scrappy" || mode === "specific_bench") {
+                            const rangeOpt = service.options?.find(o => o.label?.toLowerCase().includes("level range") && isOptionVisible(o));
+                            if (rangeOpt) { const range = selectedOptions[rangeOpt.id]; if (range && typeof range === 'object') return Math.max(0, Number(range.desired ?? 0) - Number(range.current ?? 0)); }
+                          }
                         }
-                      }
-                      return quantity;
-                    })() },
+                        return quantity;
+                      })()
+                    },
                     completionMethod && { label: 'Method', value: completionMethod },
                     completionSpeed && { label: 'Speed', value: completionSpeed === 'express' ? 'Express +20%' : 'Super Express +40%', highlight: true },
                   ].filter(Boolean).map((row: any) => (
                     <div key={row.label} className="flex justify-between items-center">
-                      <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">{row.label}</span>
-                      <span className={`text-[11px] font-black uppercase tracking-tight text-right ${row.highlight ? 'text-primary' : 'text-white'}`}>{row.value}</span>
+                      <span className="text-[14px] font-bold text-slate-500 uppercase tracking-widest">{row.label}</span>
+                      <span className={`text-[14px] font-black uppercase tracking-tight text-right ${row.highlight ? 'text-primary' : 'text-white'}`}>{row.value}</span>
                     </div>
                   ))}
                 </div>
@@ -841,40 +846,40 @@ export default function ServiceDetailsPage() {
                 {/* Total */}
                 <div className="flex items-center justify-between mb-6">
                   <div>
-                    <div className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em]">Total Price</div>
-                    <div className="text-[10px] text-slate-700 mt-0.5">Secure transaction</div>
+                    <div className="text-[14px] font-bold text-slate-500 uppercase tracking-[0.2em]">Total Price</div>
+                    <div className="text-[11px] text-slate-700 mt-0.5 font-bold uppercase tracking-widest">Secure transaction</div>
                   </div>
                   <span className="text-4xl font-black text-white tracking-tighter font-cairo">{formatPrice(calculateTotalPrice())}</span>
                 </div>
 
                 {status === "unauthenticated" && (
                   <div className="mb-4 space-y-2 p-4 rounded-xl border border-white/10 bg-[#111]">
-                    <label className="text-[10px] text-slate-400 font-bold uppercase tracking-[0.2em] block">
+                    <label className="text-[14px] text-slate-400 font-bold uppercase tracking-[0.2em] block">
                       Enter Email to Checkout
                     </label>
                     <div className="flex gap-2">
-                      <input 
-                        type="email" 
-                        value={email} 
-                        onChange={(e) => setEmail(e.target.value)} 
+                      <input
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                         placeholder="your@email.com"
                         className="flex-1 bg-[#050505] border border-white/5 rounded-lg px-3 py-2.5 text-white text-xs font-bold tracking-widest placeholder:text-slate-700 focus:border-primary/40 focus:outline-none transition-all"
                       />
-                      <button 
+                      <button
                         onClick={handleGuestLogin}
                         disabled={!email || isSubmitting}
-                        className="px-4 py-2.5 bg-[#1a1a1a] hover:bg-primary text-white text-[10px] font-black uppercase tracking-widest rounded-lg transition-all disabled:opacity-40 border border-white/5"
+                        className="px-4 py-2.5 bg-[#1a1a1a] hover:bg-primary text-white text-[14px] font-black uppercase tracking-widest rounded-lg transition-all disabled:opacity-40 border border-white/5"
                       >
                         {isSubmitting ? '...' : 'Submit'}
                       </button>
                     </div>
-                    <p className="text-[9px] text-slate-600 font-medium">
+                    <p className="text-[11px] text-slate-600 font-black uppercase tracking-widest">
                       Submit your email to seamlessly create your account and track your order.
                     </p>
                     {authError && (
                       <div className="bg-primary/10 border border-primary/20 rounded-md p-2 flex items-center gap-2">
                         <span className="material-symbols-outlined text-primary text-xs">error</span>
-                        <p className="text-primary text-[10px] font-black uppercase tracking-widest">{authError}</p>
+                        <p className="text-primary text-[11px] font-black uppercase tracking-widest">{authError}</p>
                       </div>
                     )}
                   </div>
@@ -885,7 +890,7 @@ export default function ServiceDetailsPage() {
                   <span className="material-symbols-outlined text-lg">arrow_forward</span>
                 </button>
 
-                <div className="flex items-center justify-center gap-2 mt-4 text-[10px] text-slate-600 font-black uppercase tracking-widest">
+                <div className="flex items-center justify-center gap-2 mt-4 text-[14px] text-slate-600 font-black uppercase tracking-widest">
                   <span className="material-symbols-outlined text-sm">lock</span>256-Bit Secure Protocol
                 </div>
               </div>
@@ -902,7 +907,7 @@ export default function ServiceDetailsPage() {
                     <div className="size-9 rounded-lg bg-white/[0.04] border border-white/5 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all duration-300 shrink-0">
                       <span className="material-symbols-outlined text-base">{badge.icon}</span>
                     </div>
-                    <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest group-hover:text-slate-300 transition-colors">{badge.label}</span>
+                    <span className="text-[14px] font-black text-slate-500 uppercase tracking-widest group-hover:text-slate-300 transition-colors">{badge.label}</span>
                   </div>
                 ))}
               </div>
@@ -943,7 +948,7 @@ export default function ServiceDetailsPage() {
 
                 {/* customer info */}
                 <div className="space-y-1.5">
-                  <label className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Order Notes (Optional)</label>
+                  <label className="text-[14px] font-bold text-slate-500 uppercase tracking-wider">Order Notes (Optional)</label>
                   <textarea value={orderNotes} onChange={e => setOrderNotes(e.target.value)} placeholder="Any specific requirements..." rows={2}
                     className="w-full bg-[#050505] border border-white/5 rounded-xl px-4 py-3 text-sm text-white focus:border-primary/50 transition-all outline-none resize-none hover:border-white/10" />
                 </div>
@@ -975,11 +980,11 @@ export default function ServiceDetailsPage() {
                           </div>
                         </div>
                         <div className="flex items-center gap-3">
-                            <span className="material-symbols-outlined">{m.icon}</span>
-                            {m.label}
+                          <span className="material-symbols-outlined">{m.icon}</span>
+                          {m.label}
                         </div>
                         <div className="ml-auto flex shrink-0">
-                            <span className="text-[9px] border border-white/20 px-2 py-0.5 rounded text-white bg-white/5 uppercase font-black tracking-widest">Soon</span>
+                          <span className="text-[11px] border border-white/20 px-2 py-0.5 rounded text-white bg-white/5 uppercase font-black tracking-widest">Soon</span>
                         </div>
                       </div>
                     ))}
@@ -1003,7 +1008,7 @@ export default function ServiceDetailsPage() {
                     <><span>Pay Now</span><span className="material-symbols-outlined text-xl">arrow_forward</span></>
                   )}
                 </button>
-                <p className="text-center text-[10px] text-slate-600 mt-3 flex items-center justify-center gap-1.5 uppercase tracking-widest font-black">
+                <p className="text-center text-[14px] text-slate-600 mt-3 flex items-center justify-center gap-1.5 uppercase tracking-widest font-black">
                   <span className="material-symbols-outlined text-xs">lock</span>Secure SSL Encrypted Payment
                 </p>
               </div>

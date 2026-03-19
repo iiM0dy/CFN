@@ -3,6 +3,7 @@ import Link from "next/link"
 import { notFound } from "next/navigation"
 import { ServiceList } from "@/components/services/service-list"
 import { Footer } from "@/components/layout/footer"
+import { GameFavoriteButton } from "@/components/services/game-favorite-button"
 
 
 export default async function GameServicesPage({ params }: { params: Promise<{ gameSlug: string }> }) {
@@ -93,12 +94,16 @@ export default async function GameServicesPage({ params }: { params: Promise<{ g
         <div className="bg-[#0B0B0B] text-white min-h-screen flex flex-col font-cairo overflow-x-hidden">
             <main className="grow w-full max-w-[1440px] mx-auto px-6 lg:px-10 pt-9 pb-12">
                 {/* Tactical Breadcrumbs */}
-                <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 mb-9">
-                    <Link href="/" className="hover:text-primary transition-colors">Home</Link>
-                    <span className="material-symbols-outlined text-[10px]">chevron_right</span>
-                    <Link href="/games" className="hover:text-primary transition-colors">Games</Link>
-                    <span className="material-symbols-outlined text-[10px]">chevron_right</span>
-                    <span className="text-white">{game.name}</span>
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 mb-12">
+                    <div className="flex items-center gap-2 text-[14px] font-black uppercase tracking-[0.2em] text-slate-500">
+                        <Link href="/" className="hover:text-primary transition-colors">Home</Link>
+                        <span className="material-symbols-outlined text-[14px]">chevron_right</span>
+                        <Link href="/games" className="hover:text-primary transition-colors">Games</Link>
+                        <span className="material-symbols-outlined text-[14px]">chevron_right</span>
+                        <span className="text-white">{game.name}</span>
+                    </div>
+
+                    <GameFavoriteButton gameId={game.id} />
                 </div>
 
                 <ServiceList initialServices={game.services} />
@@ -116,7 +121,7 @@ export default async function GameServicesPage({ params }: { params: Promise<{ g
                                 <div className="text-4xl md:text-5xl font-black text-white group-hover:text-primary transition-all duration-500 mb-2 tracking-tighter italic">
                                     {stat.value}
                                 </div>
-                                <div className="text-slate-500 text-[10px] font-black uppercase tracking-[0.2em] group-hover:text-primary/50 transition-colors">
+                                <div className="text-slate-500 text-[14px] font-black uppercase tracking-[0.2em] group-hover:text-primary/50 transition-colors">
                                     {stat.label}
                                 </div>
                                 <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-8 h-0.5 bg-primary/0 group-hover:bg-primary/50 transition-all duration-500"></div>

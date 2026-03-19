@@ -54,35 +54,35 @@ export function PricingSection() {
                         <div className="grid grid-cols-2 gap-8 py-8 border-y border-white/5">
                             <div>
                                 <div className="text-3xl font-black text-white mb-1">98.4%</div>
-                                <div className="text-xs font-black text-slate-500 uppercase tracking-widest">Success Rate</div>
+                                <div className="text-[14px] font-black text-slate-500 uppercase tracking-widest">Success Rate</div>
                             </div>
                             <div>
                                 <div className="text-3xl font-black text-white mb-1">15m</div>
-                                <div className="text-xs font-black text-slate-500 uppercase tracking-widest">Avg. Response</div>
+                                <div className="text-[14px] font-black text-slate-500 uppercase tracking-widest">Avg. Response</div>
                             </div>
                         </div>
 
                         {/* Feature Cards */}
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div className="group p-6 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-primary/30 transition-all duration-500">
+                            <div className="group p-6 rounded-2xl bg-white/2 border border-white/5 hover:border-primary/30 transition-all duration-500">
                                 <div className="size-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary mb-5 group-hover:scale-110 transition-transform">
                                     <svg className="size-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 00-2 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                                     </svg>
                                 </div>
                                 <h4 className="text-white font-black text-sm uppercase tracking-wider mb-2">Encrypted VPN</h4>
-                                <p className="text-slate-500 text-xs leading-relaxed">
+                                <p className="text-slate-500 text-[14px] leading-relaxed">
                                     Full protocol protection matching your local signature.
                                 </p>
                             </div>
-                            <div className="group p-6 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-primary/30 transition-all duration-500">
+                            <div className="group p-6 rounded-2xl bg-white/2 border border-white/5 hover:border-primary/30 transition-all duration-500">
                                 <div className="size-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary mb-5 group-hover:scale-110 transition-transform">
                                     <svg className="size-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                                     </svg>
                                 </div>
                                 <h4 className="text-white font-black text-sm uppercase tracking-wider mb-2">Instant Allocation</h4>
-                                <p className="text-slate-500 text-xs leading-relaxed">
+                                <p className="text-slate-500 text-[14px] leading-relaxed">
                                     Operational deployment within minutes of acquisition.
                                 </p>
                             </div>
@@ -103,9 +103,9 @@ export function PricingSection() {
                                 {/* Parameters Selection */}
                                 <div className="grid grid-cols-2 gap-4">
                                     <div className="space-y-2">
-                                        <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest pl-1">Target Title</label>
+                                        <label className="text-[14px] font-black text-slate-500 uppercase tracking-widest pl-1">Target Title</label>
                                         <div className="relative group">
-                                            <select className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-4 text-white hover:border-primary/50 transition-all outline-none appearance-none font-bold uppercase text-xs tracking-wider">
+                                            <select className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-4 text-white hover:border-primary/50 transition-all outline-none appearance-none font-bold uppercase text-[14px] tracking-wider">
                                                 <option>Valorant</option>
                                                 <option>League of Legends</option>
                                                 <option>CS2</option>
@@ -116,9 +116,9 @@ export function PricingSection() {
                                         </div>
                                     </div>
                                     <div className="space-y-2">
-                                        <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest pl-1">Region</label>
+                                        <label className="text-[14px] font-black text-slate-500 uppercase tracking-widest pl-1">Region</label>
                                         <div className="relative group">
-                                            <select className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-4 text-white hover:border-primary/50 transition-all outline-none appearance-none font-bold uppercase text-xs tracking-wider">
+                                            <select className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-4 text-white hover:border-primary/50 transition-all outline-none appearance-none font-bold uppercase text-[14px] tracking-wider">
                                                 <option>North America</option>
                                                 <option>Europe West</option>
                                                 <option>Asia Pacific</option>
@@ -133,7 +133,7 @@ export function PricingSection() {
                                 {/* Rank Progress Area */}
                                 <div className="bg-black/40 border border-white/5 rounded-2xl p-6 space-y-6">
                                     <div className="flex justify-between items-end">
-                                        <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Rank Progression</span>
+                                        <span className="text-[14px] font-black text-slate-500 uppercase tracking-widest">Rank Progression</span>
                                         <div className="text-right">
                                             <div className="text-primary font-black text-sm uppercase tracking-tighter">
                                                 {getLabel(currentRank)} → {getLabel(desiredRank)}
@@ -143,7 +143,7 @@ export function PricingSection() {
 
                                     <div className="space-y-4">
                                         <div className="space-y-2">
-                                            <div className="flex justify-between text-[10px] text-slate-600 font-bold uppercase"><span>Start</span><span>{getLabel(currentRank)}</span></div>
+                                            <div className="flex justify-between text-[14px] text-slate-600 font-bold uppercase"><span>Start</span><span>{getLabel(currentRank)}</span></div>
                                             <input
                                                 type="range" min="1" max="100" value={currentRank}
                                                 onChange={(e) => setCurrentRank(Number(e.target.value))}
@@ -151,7 +151,7 @@ export function PricingSection() {
                                             />
                                         </div>
                                         <div className="space-y-2">
-                                            <div className="flex justify-between text-[10px] text-slate-600 font-bold uppercase"><span>Desired</span><span>{getLabel(desiredRank)}</span></div>
+                                            <div className="flex justify-between text-[14px] text-slate-600 font-bold uppercase"><span>Desired</span><span>{getLabel(desiredRank)}</span></div>
                                             <input
                                                 type="range" min="1" max="100" value={desiredRank}
                                                 onChange={(e) => setDesiredRank(Number(e.target.value))}
@@ -164,11 +164,11 @@ export function PricingSection() {
                                 {/* Results Grid */}
                                 <div className="grid grid-cols-2 gap-4">
                                     <div className="bg-primary/5 border border-primary/20 rounded-2xl p-5 group hover:bg-primary/10 transition-all">
-                                        <span className="text-[9px] font-black text-primary uppercase tracking-[0.2em] block mb-1">Acquisition Cost</span>
+                                        <span className="text-[14px] font-black text-primary uppercase tracking-[0.2em] block mb-1">Acquisition Cost</span>
                                         <div className="text-3xl font-black text-white tracking-tighter">{formatPrice(price)}</div>
                                     </div>
-                                    <div className="bg-white/[0.03] border border-white/5 rounded-2xl p-5 transition-all">
-                                        <span className="text-[9px] font-black text-slate-500 uppercase tracking-[0.2em] block mb-1">Time to Target</span>
+                                    <div className="bg-white/3 border border-white/5 rounded-2xl p-5 transition-all">
+                                        <span className="text-[14px] font-black text-slate-500 uppercase tracking-[0.2em] block mb-1">Time to Target</span>
                                         <div className="text-xl font-black text-white flex items-center gap-2">
                                             <span className="material-symbols-outlined text-[18px] text-primary">schedule</span>
                                             {days} Day{days > 1 ? "s" : ""}
@@ -181,7 +181,7 @@ export function PricingSection() {
                                     <span className="material-symbols-outlined transition-transform group-hover:translate-x-1">arrow_forward</span>
                                 </button>
 
-                                <p className="text-center text-[9px] font-bold text-slate-700 uppercase tracking-widest">Secure transaction via encrypted gateway</p>
+                                <p className="text-center text-[14px] font-black text-slate-700 uppercase tracking-widest">Secure transaction via encrypted gateway</p>
                             </div>
                         </div>
                     </div>

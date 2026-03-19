@@ -140,7 +140,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
               <div className="flex items-center gap-4 mb-6">
                 <div className="flex flex-col">
                   <h2 className="text-xl font-black text-white uppercase tracking-tight">Search Nexus</h2>
-                  <p className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em] -mt-1">Operational Query System</p>
+                  <p className="text-[14px] font-bold text-slate-500 uppercase tracking-[0.2em] -mt-1">Operational Query System</p>
                 </div>
                 <button
                   onClick={onClose}
@@ -182,7 +182,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
             {/* Left Sidebar - Games List (Hidden on result view on mobile if results exist) */}
             <div className={`w-full md:w-80 border-b md:border-b-0 md:border-r border-white/5 bg-[#0B0B0B] shrink-0 md:overflow-y-auto ${searchQuery ? 'hidden md:block' : 'block'}`}>
               <div className="p-4">
-                <h3 className="text-[10px] font-black text-primary uppercase tracking-[0.3em] mb-4 px-4 bg-primary/5 border-l-2 border-primary py-2 rounded-r-lg">Popular Games</h3>
+                <h3 className="text-[14px] font-black text-primary uppercase tracking-[0.3em] mb-4 px-4 bg-primary/5 border-l-2 border-primary py-2 rounded-r-lg">Popular Games</h3>
                 {loading ? (
                   <div className="flex items-center justify-center py-20">
                     <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-primary"></div>
@@ -217,13 +217,13 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                   searching ? (
                     <div className="flex flex-col items-center justify-center py-20 gap-4">
                       <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-primary"></div>
-                      <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Scanning Database...</span>
+                      <span className="text-[14px] font-black text-slate-500 uppercase tracking-widest">Scanning Database...</span>
                     </div>
                   ) : searchResults.length > 0 ? (
                     <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                       <div className="flex items-center gap-3 mb-8">
                         <span className="h-px bg-white/10 grow"></span>
-                        <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest px-4 py-1.5 border border-white/5 rounded-full">
+                        <p className="text-[14px] font-black text-slate-500 uppercase tracking-widest px-4 py-1.5 border border-white/5 rounded-full">
                           {searchResults.length} Match{searchResults.length !== 1 ? 'es' : ''} Found
                         </p>
                         <span className="h-px bg-white/10 grow"></span>
@@ -237,11 +237,11 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                             className="group p-5 bg-[#111111] border border-white/5 rounded-2xl hover:border-primary/40 hover:bg-[#161616] transition-all relative overflow-hidden"
                           >
                             <div className="relative z-10">
-                              <span className="text-[9px] font-black text-primary uppercase tracking-widest block mb-1">{service.game?.name}</span>
+                              <span className="text-[14px] font-black text-primary uppercase tracking-widest block mb-1">{service.game?.name}</span>
                               <h4 className="font-bold text-white group-hover:text-white transition-colors uppercase tracking-tight leading-tight">
                                 {service.name}
                               </h4>
-                              <div className="mt-3 text-[11px] font-black text-white/50 group-hover:text-primary transition-colors">
+                              <div className="mt-3 text-[14px] font-black text-white/50 group-hover:text-primary transition-colors">
                                 {formatPrice(service.displayPrice ? Number(service.displayPrice) : Number(service.basePrice))}
                               </div>
                             </div>
@@ -270,7 +270,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                       <ChevronRight className="size-12 text-slate-700" />
                     </div>
                     <h3 className="text-lg font-black text-slate-500 mb-2 uppercase tracking-[0.2em]">Deployment Selection</h3>
-                    <p className="text-[10px] font-bold text-slate-700 uppercase tracking-widest">Select a sector to view active missions</p>
+                    <p className="text-[14px] font-bold text-slate-700 uppercase tracking-widest">Select a sector to view active missions</p>
                   </div>
                 ) : services[hoveredGame] ? (
                   /* Game Services */
@@ -280,7 +280,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                         {games.find(g => g.slug === hoveredGame)?.name}
                       </h3>
                       <span className="h-px bg-white/10 grow"></span>
-                      <span className="text-[10px] font-black text-primary uppercase tracking-[0.3em]">Sector Services</span>
+                      <span className="text-[14px] font-black text-primary uppercase tracking-[0.3em]">Sector Services</span>
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 pb-12">
                       {services[hoveredGame].map((service) => (
@@ -293,7 +293,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                           <h4 className="font-bold text-slate-200 group-hover:text-white transition-colors uppercase tracking-tight">
                             {service.name}
                           </h4>
-                          <span className="absolute bottom-4 right-4 text-[10px] font-black text-primary group-hover:translate-x-0 transition-all">
+                          <span className="absolute bottom-4 right-4 text-[14px] font-black text-primary group-hover:translate-x-0 transition-all">
                             {formatPrice(service.displayPrice ? Number(service.displayPrice) : Number(service.basePrice))}
                           </span>
                         </Link>
@@ -304,7 +304,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                   /* Loading */
                   <div className="flex flex-col items-center justify-center h-full py-20 gap-4">
                     <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-primary"></div>
-                    <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Accessing Sector...</span>
+                    <span className="text-[14px] font-black text-slate-500 uppercase tracking-widest">Accessing Sector...</span>
                   </div>
                 )}
               </div>

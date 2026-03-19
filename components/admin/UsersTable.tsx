@@ -84,7 +84,7 @@ export default function UsersTable({ initialUsers }: UsersTableProps) {
                     </div>
                     <div>
                         <h2 className="text-lg font-black text-white uppercase italic tracking-tight">Manage Users</h2>
-                        <p className="text-slate-500 text-[10px] font-bold uppercase tracking-widest">Active users: {users.length}</p>
+                        <p className="text-slate-500 text-[14px] font-bold uppercase tracking-widest">Active users: {users.length}</p>
                     </div>
                 </div>
 
@@ -93,7 +93,7 @@ export default function UsersTable({ initialUsers }: UsersTableProps) {
                         <Search className="absolute left-4 top-1/2 -translate-y-1/2 size-4 text-slate-600" />
                         <input
                             placeholder="Search users..."
-                            className="bg-white/5 border border-white/5 rounded-2xl pl-12 pr-6 py-3 text-xs text-white focus:border-indigo-500/50 outline-none w-full md:w-80 transition-all font-medium placeholder:text-slate-800"
+                            className="bg-white/5 border border-white/5 rounded-2xl pl-12 pr-6 py-3 text-[14px] text-white focus:border-indigo-500/50 outline-none w-full md:w-80 transition-all font-medium placeholder:text-slate-800"
                         />
                     </div>
                 </div>
@@ -104,11 +104,11 @@ export default function UsersTable({ initialUsers }: UsersTableProps) {
                 <Table>
                     <TableHeader className="bg-white/2 border-b border-white/5">
                         <TableRow className="hover:bg-transparent border-none">
-                            <TableHead className="px-8 h-12 text-[9px] font-black text-slate-500 uppercase tracking-[0.2em]">User Info</TableHead>
-                            <TableHead className="px-8 h-12 text-[9px] font-black text-slate-500 uppercase tracking-[0.2em]">Role</TableHead>
-                            <TableHead className="px-8 h-12 text-[9px] font-black text-slate-500 uppercase tracking-[0.2em]">Orders</TableHead>
-                            <TableHead className="px-8 h-12 text-[9px] font-black text-slate-500 uppercase tracking-[0.2em]">Joined Date</TableHead>
-                            <TableHead className="px-8 h-12 text-[9px] font-black text-slate-500 uppercase tracking-[0.2em] text-right">Actions</TableHead>
+                            <TableHead className="px-8 h-12 text-[14px] font-black text-slate-500 uppercase tracking-[0.2em]">User Info</TableHead>
+                            <TableHead className="px-8 h-12 text-[14px] font-black text-slate-500 uppercase tracking-[0.2em]">Role</TableHead>
+                            <TableHead className="px-8 h-12 text-[14px] font-black text-slate-500 uppercase tracking-[0.2em]">Orders</TableHead>
+                            <TableHead className="px-8 h-12 text-[14px] font-black text-slate-500 uppercase tracking-[0.2em]">Joined Date</TableHead>
+                            <TableHead className="px-8 h-12 text-[14px] font-black text-slate-500 uppercase tracking-[0.2em] text-right">Actions</TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -116,12 +116,12 @@ export default function UsersTable({ initialUsers }: UsersTableProps) {
                             <TableRow key={user.id} className="hover:bg-white/1 border-b border-white/5 transition-colors group">
                                 <TableCell className="px-8 py-6">
                                     <div className="flex items-center gap-4">
-                                        <div className="size-10 rounded-xl bg-linear-to-br from-slate-800 to-slate-900 flex items-center justify-center border border-white/5 text-xs font-black text-white uppercase group-hover:border-indigo-500/30 transition-all">
+                                        <div className="size-10 rounded-xl bg-linear-to-br from-slate-800 to-slate-900 flex items-center justify-center border border-white/5 text-[14px] font-black text-white uppercase group-hover:border-indigo-500/30 transition-all">
                                             {user.email ? user.email[0].toUpperCase() : "?"}
                                         </div>
                                         <div>
-                                            <p className="text-xs font-black text-white uppercase tracking-tight">{user.email || "No Email"}</p>
-                                            <p className="text-[10px] text-slate-500 font-bold tracking-tight flex items-center gap-1 opacity-70">
+                                            <p className="text-[14px] font-black text-white uppercase tracking-tight">{user.email || "No Email"}</p>
+                                            <p className="text-[14px] text-slate-500 font-bold tracking-tight flex items-center gap-1 opacity-70">
                                                 <Mail className="size-3" />
                                                 {user.email}
                                             </p>
@@ -129,7 +129,7 @@ export default function UsersTable({ initialUsers }: UsersTableProps) {
                                     </div>
                                 </TableCell>
                                 <TableCell className="px-8 py-6">
-                                    <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-lg border text-[9px] font-black uppercase tracking-widest ${user.role === "ADMIN"
+                                    <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-lg border text-[14px] font-black uppercase tracking-widest ${user.role === "ADMIN"
                                         ? "bg-primary/5 text-primary border-primary/20"
                                         : "bg-emerald-500/5 text-emerald-500 border-emerald-500/20"
                                         }`}>
@@ -139,12 +139,12 @@ export default function UsersTable({ initialUsers }: UsersTableProps) {
                                 </TableCell>
                                 <TableCell className="px-8 py-6">
                                     <div className="flex flex-col gap-1">
-                                        <p className="text-sm font-black text-white tracking-tighter">{user._count.serviceOrders}</p>
-                                        <p className="text-[9px] text-slate-600 font-black uppercase tracking-widest italic">Orders</p>
+                                        <p className="text-[14px] font-black text-white tracking-tighter">{user._count.serviceOrders}</p>
+                                        <p className="text-[14px] text-slate-600 font-black uppercase tracking-widest italic">Orders</p>
                                     </div>
                                 </TableCell>
                                 <TableCell className="px-8 py-6">
-                                    <div className="flex items-center gap-2 text-slate-500 font-bold uppercase text-[9px] tracking-tighter">
+                                    <div className="flex items-center gap-2 text-slate-500 font-bold uppercase text-[14px] tracking-tighter">
                                         <Calendar className="size-3" />
                                         {new Date(user.createdAt).toLocaleDateString()}
                                     </div>
@@ -195,7 +195,7 @@ export default function UsersTable({ initialUsers }: UsersTableProps) {
                             <div className="h-6 w-1 bg-indigo-500 rounded-full" />
                             <SheetTitle className="text-xl font-black uppercase italic tracking-tighter text-white">User Information</SheetTitle>
                         </div>
-                        <SheetDescription className="text-slate-500 text-xs font-bold uppercase tracking-widest">
+                        <SheetDescription className="text-slate-500 text-[14px] font-bold uppercase tracking-widest">
                             Details for {selectedUser?.email}
                         </SheetDescription>
                     </SheetHeader>
@@ -209,18 +209,18 @@ export default function UsersTable({ initialUsers }: UsersTableProps) {
                                     </div>
                                     <div>
                                         <h3 className="text-xl font-black text-white uppercase leading-none">{selectedUser.email || "No Email"}</h3>
-                                        <p className="text-slate-500 text-sm mt-1">{selectedUser.email}</p>
+                                        <p className="text-slate-500 text-[14px] mt-1">{selectedUser.email}</p>
                                     </div>
                                 </div>
 
                                 <div className="grid grid-cols-2 gap-4">
                                     <div className="p-4 bg-black/40 rounded-2xl border border-white/5">
-                                        <p className="text-[9px] font-black text-slate-600 uppercase tracking-widest mb-1 italic">Account Role</p>
-                                        <p className="text-xs font-bold text-white uppercase">{selectedUser.role}</p>
+                                        <p className="text-[14px] font-black text-slate-600 uppercase tracking-widest mb-1 italic">Account Role</p>
+                                        <p className="text-[14px] font-bold text-white uppercase">{selectedUser.role}</p>
                                     </div>
                                     <div className="p-4 bg-black/40 rounded-2xl border border-white/5">
-                                        <p className="text-[9px] font-black text-slate-600 uppercase tracking-widest mb-1 italic">Total Orders</p>
-                                        <p className="text-xs font-bold text-white uppercase">{selectedUser._count.serviceOrders} Orders</p>
+                                        <p className="text-[14px] font-black text-slate-600 uppercase tracking-widest mb-1 italic">Total Orders</p>
+                                        <p className="text-[14px] font-bold text-white uppercase">{selectedUser._count.serviceOrders} Orders</p>
                                     </div>
                                 </div>
                             </div>
@@ -230,7 +230,7 @@ export default function UsersTable({ initialUsers }: UsersTableProps) {
                     <SheetFooter className="mt-10 pt-6 border-t border-white/5">
                         <button
                             onClick={() => setSelectedUser(null)}
-                            className="w-full h-12 rounded-2xl bg-white/5 border border-white/5 text-slate-400 font-bold text-[10px] uppercase tracking-widest hover:text-white transition-all cursor-pointer"
+                            className="w-full h-12 rounded-2xl bg-white/5 border border-white/5 text-slate-400 font-bold text-[14px] uppercase tracking-widest hover:text-white transition-all cursor-pointer"
                         >
                             Close Details
                         </button>

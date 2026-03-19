@@ -50,7 +50,7 @@ export default async function Home() {
         <HeroSection />
 
         {/* ── GAMES GRID ── */}
-        <section id="games" className="bg-[#050505] py-10">
+        <section id="games" className="bg-[#050505] py-10 scroll-mt-20">
           <div className="max-w-[1440px] mx-auto px-6 lg:px-10">
 
             {/* header */}
@@ -68,7 +68,7 @@ export default async function Home() {
               {FILTERS.map((f, i) => (
                 <button
                   key={f}
-                  className={`rounded-full border px-4 py-1.5 text-xs font-bold uppercase tracking-wider transition-all
+                  className={`rounded-full border px-4 py-1.5 text-[14px] font-bold uppercase tracking-wider transition-all
                     ${i === 0
                       ? "border-primary bg-primary text-white"
                       : "border-border bg-card text-muted-foreground hover:border-primary hover:text-white"
@@ -104,7 +104,7 @@ export default async function Home() {
                     <div className="absolute inset-0 bg-linear-to-t from-[#080808]/90 via-[#080808]/20 to-transparent pointer-events-none" />
                     <div className="relative z-10 p-3 pointer-events-none">
                       <div className="font-cairo text-sm font-black leading-tight text-white uppercase tracking-tight mb-0.5">{g.name}</div>
-                      <div className="text-[10px] text-text-dim font-medium">{g.tag}</div>
+                      <div className="text-[14px] text-text-dim font-medium">{g.tag}</div>
                     </div>
                   </Link>
                 )
@@ -157,7 +157,7 @@ export default async function Home() {
 
                       {/* Content Section */}
                       <div className="p-5 flex flex-col flex-1 bg-[#0A0A0A]">
-                        <div className="text-[11px] font-bold uppercase tracking-widest text-slate-500 mb-1.5">
+                        <div className="text-[14px] font-bold uppercase tracking-widest text-slate-500 mb-1.5">
                           {fs.game.name}
                         </div>
                         <div className="text-sm font-bold leading-snug text-white line-clamp-2 min-h-[40px] mb-4">
@@ -165,13 +165,13 @@ export default async function Home() {
                         </div>
 
                         <div className="mt-auto flex flex-col">
-                          <span className="text-[10px] uppercase font-bold tracking-widest text-[#888] mb-0.5">Starting at</span>
+                          <span className="text-[14px] uppercase font-bold tracking-widest text-[#888] mb-0.5">Starting at</span>
                           <div className="text-xl font-black text-white">
                             ${Number(fs.basePrice).toFixed(2)}
                           </div>
                         </div>
 
-                        <button className="mt-4 w-full rounded-md bg-primary py-2.5 text-[11px] font-black uppercase tracking-widest text-white transition-colors hover:bg-primary/90">
+                        <button className="mt-4 w-full rounded-md bg-primary py-2.5 text-[14px] font-black uppercase tracking-widest text-white transition-colors hover:bg-primary/90">
                           Buy Now
                         </button>
                       </div>
@@ -193,7 +193,7 @@ export default async function Home() {
 
                       {/* Content Section */}
                       <div className="p-5 flex flex-col flex-1 bg-[#0A0A0A]">
-                        <div className="text-[11px] font-bold uppercase tracking-widest text-slate-500 mb-1.5">
+                        <div className="text-[14px] font-bold uppercase tracking-widest text-slate-500 mb-1.5">
                           {f.game}
                         </div>
                         <div className="text-sm font-bold leading-snug text-white line-clamp-2 min-h-[40px] mb-4">
@@ -201,13 +201,13 @@ export default async function Home() {
                         </div>
 
                         <div className="mt-auto flex flex-col">
-                          <span className="text-[10px] uppercase font-bold tracking-widest text-[#888] mb-0.5">Starting at</span>
+                          <span className="text-[14px] uppercase font-bold tracking-widest text-[#888] mb-0.5">Starting at</span>
                           <div className="text-xl font-black text-white">
                             {f.price}
                           </div>
                         </div>
 
-                        <button className="mt-4 w-full rounded-md bg-primary py-2.5 text-[11px] font-black uppercase tracking-widest text-white transition-colors hover:bg-primary/90">
+                        <button className="mt-4 w-full rounded-md bg-primary py-2.5 text-[14px] font-black uppercase tracking-widest text-white transition-colors hover:bg-primary/90">
                           Buy Now
                         </button>
                       </div>

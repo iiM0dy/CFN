@@ -18,7 +18,7 @@ export function ShareButton() {
     return (
         <button
             onClick={handleShare}
-            className="w-full py-3 px-4 rounded-lg bg-surface hover:bg-surface-light border border-white/5 text-[9px] font-black uppercase tracking-widest transition-all text-left flex items-center justify-between group"
+            className="w-full py-3 px-4 rounded-lg bg-surface hover:bg-surface-light border border-white/5 text-[14px] font-black uppercase tracking-widest transition-all text-left flex items-center justify-between group"
         >
             <span className="flex items-center gap-2">
                 {copied ? "Link Copied!" : "Share Link"}

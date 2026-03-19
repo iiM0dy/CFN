@@ -32,7 +32,7 @@ export function GameCard({ game }: GameCardProps) {
         >
             {/* Coming Soon Badge */}
             {!game.isActive && (
-                <div className="absolute top-4 right-4 z-30 px-3 py-1 bg-primary/90 backdrop-blur-sm rounded-full text-white text-[10px] font-bold uppercase tracking-widest">
+                <div className="absolute top-4 right-4 z-30 px-3 py-1 bg-primary/90 backdrop-blur-sm rounded-full text-white text-[14px] font-bold uppercase tracking-widest">
                     Coming Soon
                 </div>
             )}
@@ -63,13 +63,13 @@ export function GameCard({ game }: GameCardProps) {
                 <h3 className="text-2xl font-bold text-white mb-1 group-hover:text-primary transition-colors uppercase tracking-tight">
                     {game.name}
                 </h3>
-                <p className="text-slate-300 text-xs font-medium uppercase tracking-wider line-clamp-1">
+                <p className="text-slate-300 text-[14px] font-medium uppercase tracking-wider line-clamp-1">
                     {game.description || 'Professional Ranking'}
                 </p>
 
                 {game.isActive && (
                     <div className="mt-4 flex items-center justify-between opacity-0 group-hover:opacity-100 transition-all translate-y-4 group-hover:translate-y-0 duration-300">
-                        <span className="text-[10px] font-bold text-primary tracking-widest uppercase">VIEW PACKAGES</span>
+                        <span className="text-[14px] font-bold text-primary tracking-widest uppercase">VIEW PACKAGES</span>
                         <span className="material-symbols-outlined text-primary text-sm">north_east</span>
                     </div>
                 )}

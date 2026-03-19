@@ -35,7 +35,7 @@ export default function AnnouncementBar() {
             >
                 <div className="max-w-[1440px] mx-auto px-6 h-10 flex items-center justify-center gap-3">
                     <Megaphone className="size-3.5 animate-bounce" />
-                    <p className="text-[10px] md:text-xs font-black uppercase tracking-widest text-center truncate px-10">
+                    <p className="text-[14px] font-black uppercase tracking-widest text-center truncate px-10">
                         {announcement.message}
                     </p>
                     <button
@@ -45,7 +45,7 @@ export default function AnnouncementBar() {
                         <X className="size-3" />
                     </button>
                 </div>
-                <div className="absolute bottom-0 left-0 h-[1px] w-full bg-white/20" />
+                <div className="absolute bottom-0 left-0 h-px w-full bg-white/20" />
             </motion.div>
         </AnimatePresence>
     );
