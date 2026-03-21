@@ -11,7 +11,7 @@ import { prisma } from "@/lib/prisma"
 const FILTERS = ["All", "WoW", "Valorant", "League of Legends", "CS2", "Fortnite", "Elden Ring", "Destiny 2"]
 
 const GAMES = [
-  { name: "World of Warcraft", tag: "Raid • Leveling", icon: Swords, bg: "https://i.postimg.cc/YCzk2Rg7/Refine-the-image-make-the-logo-inspired-shape-much-larger-and-more-integrated-into-the-background.png", href: "/wow/services" },
+  { name: "World of Warcraft", tag: "Raid • Leveling", icon: Swords, bg: "https://i.postimg.cc/YSMr1sCZ/15-(2).png", href: "/wow/services" },
   { name: "ARC Raiders", tag: "Materials • Loot", icon: Star, bg: "https://i.postimg.cc/YCzk2Rg7/Refine-the-image-make-the-logo-inspired-shape-much-larger-and-more-integrated-into-the-background.png", href: "/arc-raiders/services" },
   { name: "Valorant", tag: "Rank • Coaching", icon: Target, bg: "https://i.postimg.cc/YCzk2Rg7/Refine-the-image-make-the-logo-inspired-shape-much-larger-and-more-integrated-into-the-background.png", href: "/valorant/services" },
   { name: "League of Legends", tag: "Rank • Duo Queue", icon: Trophy, bg: "https://i.postimg.cc/YCzk2Rg7/Refine-the-image-make-the-logo-inspired-shape-much-larger-and-more-integrated-into-the-background.png", href: "/lol/services" },
