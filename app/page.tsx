@@ -11,7 +11,7 @@ import { prisma } from "@/lib/prisma"
 const FILTERS = ["All", "WoW", "Valorant", "League of Legends", "CS2", "Fortnite", "Elden Ring", "Destiny 2"]
 
 const GAMES = [
-  { name: "World of Warcraft", tag: "Raid • Leveling", icon: Swords, bg: "https://i.postimg.cc/YSMr1sCZ/15-(2).png", href: "/wow/services" },
+  { name: "World of Warcraft", tag: "Raid • Leveling", icon: Swords, bg: "https://i.postimg.cc/fRFFs36m/15-(4).png", character: "https://i.postimg.cc/4NfjQR6c/15-(3).png", href: "/wow/services" },
   { name: "ARC Raiders", tag: "Materials • Loot", icon: Star, bg: "https://i.postimg.cc/YCzk2Rg7/Refine-the-image-make-the-logo-inspired-shape-much-larger-and-more-integrated-into-the-background.png", href: "/arc-raiders/services" },
   { name: "Valorant", tag: "Rank • Coaching", icon: Target, bg: "https://i.postimg.cc/YCzk2Rg7/Refine-the-image-make-the-logo-inspired-shape-much-larger-and-more-integrated-into-the-background.png", href: "/valorant/services" },
   { name: "League of Legends", tag: "Rank • Duo Queue", icon: Trophy, bg: "https://i.postimg.cc/YCzk2Rg7/Refine-the-image-make-the-logo-inspired-shape-much-larger-and-more-integrated-into-the-background.png", href: "/lol/services" },
@@ -100,11 +100,19 @@ export default async function Home() {
                       ) : (
                         <div className={`absolute inset-0 bg-linear-to-br ${g.bg}`} />
                       )}
+
+                      {(g as any).character && (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img
+                          src={(g as any).character}
+                          alt={`${g.name} character`}
+                          className="absolute -right-4 -bottom-4 h-[110%] w-auto object-contain transition-transform duration-500 ease-out group-hover:scale-115 pointer-events-none z-20"
+                        />
+                      )}
                     </div>
                     <div className="absolute inset-0 bg-linear-to-t from-[#080808]/90 via-[#080808]/20 to-transparent pointer-events-none" />
-                    <div className="relative z-10 p-3 pointer-events-none">
+                    <div className="relative z-30 p-4 pointer-events-none">
                       <div className="font-cairo text-sm font-black leading-tight text-white uppercase tracking-tight mb-0.5">{g.name}</div>
-                      <div className="text-[14px] text-text-dim font-medium">{g.tag}</div>
                     </div>
                   </Link>
                 )
