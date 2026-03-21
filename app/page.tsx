@@ -44,7 +44,7 @@ export default async function Home() {
 
   const dbGames = await prisma.gameService.findMany({
     where: { isActive: true },
-    orderBy: { name: "asc" }
+    orderBy: { order: "asc" }
   });
 
   // Use DB games if they exist, otherwise fallback

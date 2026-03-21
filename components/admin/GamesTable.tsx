@@ -13,10 +13,12 @@ import {
   User,
   MoreVertical,
   Check,
-  AlertCircle
+  AlertCircle,
+  ArrowUp,
+  ArrowDown
 } from "lucide-react";
 import { toast } from "sonner";
-import { updateGame, deleteGame, createGame } from "@/actions/game";
+import { updateGame, deleteGame, createGame, reorderGames } from "@/actions/game";
 import { motion, AnimatePresence } from "framer-motion";
 
 interface GamesTableProps {
@@ -105,6 +107,33 @@ export default function GamesTable({ initialGames }: GamesTableProps) {
     }
   };
 
+  const handleMove = async (index: number, direction: 'up' | 'down') => {
+    const newGames = [...games];
+    const targetIndex = direction === 'up' ? index - 1 : index + 1;
+    
+    if (targetIndex < 0 || targetIndex >= newGames.length) return;
+    
+    // Swap games
+    const [movedItem] = newGames.splice(index, 1);
+    newGames.splice(targetIndex, 0, movedItem);
+    
+    // Optimistic UI
+    setGames(newGames);
+    
+    try {
+      const res = await reorderGames(newGames.map(g => g.id));
+      if (!res.success) {
+        toast.error("Reordering failed: " + res.error);
+        setGames(games); // rollback on error
+      } else {
+        toast.success("Order updated");
+      }
+    } catch (error) {
+      toast.error("Something went wrong");
+      setGames(games); // rollback on error
+    }
+  };
+
   return (
     <div className="bg-[#0A0A0A] border border-white/5 rounded-[32px] overflow-hidden shadow-2xl">
       {/* Top Bar */}
@@ -133,6 +162,7 @@ export default function GamesTable({ initialGames }: GamesTableProps) {
         <table className="w-full border-collapse">
           <thead>
             <tr className="border-b border-white/5 bg-white/[0.02]">
+              <th className="px-8 py-5 text-left text-[12px] font-black uppercase tracking-[0.2em] text-slate-500 italic">Order</th>
               <th className="px-8 py-5 text-left text-[12px] font-black uppercase tracking-[0.2em] text-slate-500 italic">Game Info</th>
               <th className="px-8 py-5 text-left text-[12px] font-black uppercase tracking-[0.2em] text-slate-500 italic">Images</th>
               <th className="px-8 py-5 text-left text-[12px] font-black uppercase tracking-[0.2em] text-slate-500 italic">Status</th>
@@ -150,6 +180,24 @@ export default function GamesTable({ initialGames }: GamesTableProps) {
                   key={game.id} 
                   className="border-b border-white/5 hover:bg-white/[0.03] transition-colors group"
                 >
+                  <td className="px-8 py-6">
+                    <div className="flex items-center gap-2">
+                      <button 
+                        disabled={games.indexOf(game) === 0}
+                        onClick={() => handleMove(games.indexOf(game), 'up')}
+                        className="p-2 bg-white/3 border border-white/5 rounded-lg text-slate-600 hover:text-white disabled:opacity-20 hover:border-white/20 transition-all"
+                      >
+                        <ArrowUp className="size-3" />
+                      </button>
+                      <button 
+                        disabled={games.indexOf(game) === games.length - 1}
+                        onClick={() => handleMove(games.indexOf(game), 'down')}
+                        className="p-2 bg-white/3 border border-white/5 rounded-lg text-slate-600 hover:text-white disabled:opacity-20 hover:border-white/20 transition-all"
+                      >
+                        <ArrowDown className="size-3" />
+                      </button>
+                    </div>
+                  </td>
                   <td className="px-8 py-6">
                     <div className="flex items-center gap-4">
                       <div className="w-12 h-12 rounded-xl bg-white/5 overflow-hidden flex items-center justify-center border border-white/10 shrink-0">
@@ -254,6 +302,7 @@ export default function GamesTable({ initialGames }: GamesTableProps) {
                     />
                   </div>
                   {/* Slug */}
+                  {/* Slug */}
                   <div className="space-y-2">
                     <label className="text-[12px] font-black text-slate-500 uppercase tracking-widest pl-1 italic">Slug</label>
                     <input 
@@ -301,16 +350,31 @@ export default function GamesTable({ initialGames }: GamesTableProps) {
                   </div>
                 </div>
 
-                <div className="space-y-2">
-                  <label className="text-[12px] font-black text-slate-500 uppercase tracking-widest pl-1 italic">Destination Link (href)</label>
-                  <input 
-                    type="text" 
-                    required
-                    placeholder="/wow/services" 
-                    className="w-full bg-white/3 border border-white/5 rounded-2xl p-4 text-white focus:border-primary transition-all outline-none font-bold placeholder:text-slate-700" 
-                    value={editingGame?.href || ""}
-                    onChange={(e) => setEditingGame({ ...editingGame!, href: e.target.value })}
-                  />
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  {/* Order */}
+                  <div className="space-y-2">
+                    <label className="text-[12px] font-black text-slate-500 uppercase tracking-widest pl-1 italic">Display Order</label>
+                    <input 
+                      type="number" 
+                      placeholder="0" 
+                      className="w-full bg-white/3 border border-white/5 rounded-2xl p-4 text-white focus:border-primary transition-all outline-none font-bold placeholder:text-slate-700" 
+                      value={(editingGame as any)?.order ?? 0}
+                      onChange={(e) => setEditingGame({ ...editingGame!, order: parseInt(e.target.value) || 0 } as any)}
+                    />
+                    <p className="text-[10px] text-slate-700 font-bold uppercase pl-1 italic">Lower numbers appear first</p>
+                  </div>
+                  {/* Destination Link */}
+                  <div className="space-y-2">
+                    <label className="text-[12px] font-black text-slate-500 uppercase tracking-widest pl-1 italic">Destination Link (href)</label>
+                    <input 
+                      type="text" 
+                      required
+                      placeholder="/wow/services" 
+                      className="w-full bg-white/3 border border-white/5 rounded-2xl p-4 text-white focus:border-primary transition-all outline-none font-bold placeholder:text-slate-700" 
+                      value={editingGame?.href || ""}
+                      onChange={(e) => setEditingGame({ ...editingGame!, href: e.target.value })}
+                    />
+                  </div>
                 </div>
 
                 <div className="flex flex-wrap gap-6 pt-2">

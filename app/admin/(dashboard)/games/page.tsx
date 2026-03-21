@@ -11,7 +11,7 @@ export default async function AdminGamesPage() {
     }
 
     const games = await prisma.gameService.findMany({
-        orderBy: { name: "asc" }
+        orderBy: { order: "asc" }
     });
 
     return (
