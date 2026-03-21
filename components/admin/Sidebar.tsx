@@ -11,13 +11,15 @@ import {
     Settings,
     LogOut,
     ExternalLink,
-    Wrench
+    Wrench,
+    Gamepad2
 } from "lucide-react";
 
 const menuItems = [
     { name: "Overview", href: "/admin", icon: LayoutDashboard },
     { name: "Orders", href: "/admin/orders", icon: ShoppingBag },
     { name: "Services", href: "/admin/services", icon: Wrench },
+    { name: "Games", href: "/admin/games", icon: Gamepad2 },
     { name: "Users", href: "/admin/users", icon: Users },
     { name: "Live Chat", href: "/admin/chat", icon: MessageSquare },
 ];

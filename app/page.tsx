@@ -42,6 +42,20 @@ export default async function Home() {
     take: 8
   });
 
+  const dbGames = await prisma.gameService.findMany({
+    where: { isActive: true },
+    orderBy: { name: "asc" }
+  });
+
+  // Use DB games if they exist, otherwise fallback
+  const displayGames = dbGames.length > 0 ? dbGames.map(g => ({
+    name: g.name,
+    tag: g.description || "",
+    bg: g.bgImage,
+    character: g.charImage,
+    href: g.href
+  })) : GAMES;
+
   return (
     <div className="flex min-h-screen flex-col">
       <main className="flex-1">
@@ -81,7 +95,7 @@ export default async function Home() {
 
             {/* grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
-              {GAMES.map((g) => {
+              {displayGames.map((g) => {
                 const isImage = g.bg.includes('://') || g.bg.startsWith('/');
                 return (
                   <Link
