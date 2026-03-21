@@ -106,11 +106,10 @@ export default async function Home() {
                         <img
                           src={(g as any).character}
                           alt={`${g.name} character`}
-                          className="absolute -right-4 -bottom-4 h-[110%] w-auto object-contain transition-transform duration-500 ease-out group-hover:scale-115 pointer-events-none z-20"
+                          className="absolute -right-4 -bottom-2 h-[115%] w-auto object-contain transition-transform duration-500 ease-out group-hover:scale-115 pointer-events-none z-20"
                         />
                       )}
                     </div>
-                    <div className="absolute inset-0 bg-linear-to-t from-[#080808]/90 via-[#080808]/20 to-transparent pointer-events-none" />
                     <div className="relative z-30 p-4 pointer-events-none">
                       <div className="font-cairo text-sm font-black leading-tight text-white uppercase tracking-tight mb-0.5">{g.name}</div>
                     </div>
