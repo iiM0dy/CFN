@@ -48,8 +48,6 @@ export function ServicePage({ game, tagline, description, stats, services }: Ser
                 <div className="flex items-center gap-2 text-[14px] font-black uppercase tracking-[0.2em] text-slate-500 mb-9">
                     <Link href="/" className="hover:text-primary transition-colors">Home</Link>
                     <span className="material-symbols-outlined text-[14px]">chevron_right</span>
-                    <Link href="/services" className="hover:text-primary transition-colors">Services</Link>
-                    <span className="material-symbols-outlined text-[14px]">chevron_right</span>
                     <span className="text-white">{game}</span>
                 </div>
 

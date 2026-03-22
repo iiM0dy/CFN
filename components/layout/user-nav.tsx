@@ -72,11 +72,15 @@ export function UserNav() {
                             Favorites
                         </Link>
                     </DropdownMenuItem>
-                    <DropdownMenuItem className="rounded-xl focus:bg-white/5 focus:text-white cursor-pointer transition-colors px-3 py-2.5 text-[14px] font-medium">
-                        Profile
+                    <DropdownMenuItem asChild className="rounded-xl focus:bg-white/5 focus:text-white cursor-pointer transition-colors px-3 py-2.5 text-[14px] font-medium">
+                        <Link href="/profile">
+                            Profile
+                        </Link>
                     </DropdownMenuItem>
-                    <DropdownMenuItem className="rounded-xl focus:bg-white/5 focus:text-white cursor-pointer transition-colors px-3 py-2.5 text-[14px] font-medium">
-                        History
+                    <DropdownMenuItem asChild className="rounded-xl focus:bg-white/5 focus:text-white cursor-pointer transition-colors px-3 py-2.5 text-[14px] font-medium">
+                        <Link href="/history">
+                            History
+                        </Link>
                     </DropdownMenuItem>
                     {/* @ts-ignore */}
                     {session.user?.role === "ADMIN" && (

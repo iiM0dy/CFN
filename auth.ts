@@ -76,6 +76,11 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         session.user.hasPassword = token.hasPassword;
       }
 
+      if (token.createdAt && session.user) {
+        // @ts-ignore
+        session.user.createdAt = token.createdAt;
+      }
+
       return session;
     },
     async jwt({ token, user, trigger, session }) {
@@ -85,6 +90,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         token.role = user.role;
         // @ts-ignore
         token.hasPassword = (user as any).password !== null && (user as any).password !== undefined;
+        // @ts-ignore
+        token.createdAt = (user as any).createdAt;
       }
 
       // Allow updating session
@@ -94,8 +101,9 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
       // If missing hasPassword entirely for existing token, fetch it
       if (token.hasPassword === undefined && token.email) {
-        const dbUser = await prisma.user.findUnique({ where: { email: token.email as string }, select: { password: true } });
+        const dbUser = await prisma.user.findUnique({ where: { email: token.email as string }, select: { password: true, createdAt: true } });
         token.hasPassword = dbUser?.password !== null;
+        token.createdAt = dbUser?.createdAt;
       }
 
       return token;

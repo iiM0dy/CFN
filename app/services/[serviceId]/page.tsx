@@ -58,12 +58,13 @@ export default function ServiceDetailsPage() {
   const [favoriteLoading, setFavoriteLoading] = useState(false);
   const [authError, setAuthError] = useState("");
   const [checkoutError, setCheckoutError] = useState("");
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as HTMLElement;
       if (!target.closest('.dropdown-container')) {
-        document.querySelectorAll('[id^="dropdown-"]').forEach(d => d.classList.add('hidden'));
+        setOpenDropdown(null);
       }
     };
     document.addEventListener('click', handleClickOutside);
@@ -453,19 +454,30 @@ export default function ServiceDetailsPage() {
               {/* Platform */}
               {service.platforms?.length > 0 && (
                 <Section step={stepIndex++} title="Select Platform">
-                  <div className="grid grid-cols-3 gap-3">
-                    {service.platforms.map(p => (
-                      <label key={p} className="cursor-pointer block">
-                        <input type="radio" name="platform" value={p} checked={platform === p} onChange={e => setPlatform(e.target.value)} className="sr-only" />
-                        <RadioCard checked={platform === p}>
-                          {p.toLowerCase().includes('pc')
-                            ? <Computer className={`size-6 transition-colors ${platform === p ? 'text-white' : 'text-slate-500'}`} />
-                            : <Gamepad2 className={`size-6 transition-colors ${platform === p ? 'text-white' : 'text-slate-500'}`} />
-                          }
-                          <span className={`text-sm font-bold transition-colors ${platform === p ? 'text-white' : 'text-slate-400'}`}>{p}</span>
-                        </RadioCard>
-                      </label>
-                    ))}
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                    {(() => {
+                      const platformList = [];
+                      for (const p of service.platforms) {
+                        if (p.toLowerCase() === 'console') {
+                          platformList.push('PlayStation', 'Xbox');
+                        } else {
+                          platformList.push(p);
+                        }
+                      }
+                      
+                      // Remove duplicates in case both Console and Xbox were present
+                      const uniquePlatforms = Array.from(new Set(platformList));
+                      
+                      return uniquePlatforms.map(p => (
+                        <label key={p} className="cursor-pointer block">
+                          <input type="radio" name="platform" value={p} checked={platform === p} onChange={e => setPlatform(e.target.value)} className="sr-only" />
+                          <RadioCard checked={platform === p}>
+                            {p.toLowerCase().includes('pc') ? <Computer className={`size-6 transition-colors ${platform === p ? 'text-white' : 'text-slate-500'}`} /> : <Gamepad2 className={`size-6 transition-colors ${platform === p ? 'text-white' : 'text-slate-500'}`} />}
+                            <span className={`text-sm font-bold transition-colors ${platform === p ? 'text-white' : 'text-slate-400'}`}>{p}</span>
+                          </RadioCard>
+                        </label>
+                      ));
+                    })()}
                   </div>
                 </Section>
               )}
@@ -522,57 +534,66 @@ export default function ServiceDetailsPage() {
 
                   {/* Dropdown */}
                   {option.type === 'dropdown' && (
-                    <div className="relative dropdown-container">
-                      <button type="button" onClick={() => document.getElementById(`dropdown-${option.id}`)?.classList.toggle('hidden')}
+                    <div className="relative dropdown-container focus-within:z-40" onClick={e => e.stopPropagation()}>
+                      <button type="button" onClick={() => setOpenDropdown(openDropdown === option.id ? null : option.id)}
                         className="w-full bg-[#050505] border border-white/5 rounded-xl p-4 flex items-center justify-between text-gray-300 hover:border-primary/30 transition-colors">
                         <span className="font-medium text-sm">
                           {selectedOptions[option.id] ? option.values.find(v => v.value === selectedOptions[option.id])?.label : `Choose ${option.label.toLowerCase()}...`}
                         </span>
                         <svg className="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
                       </button>
-                      <div id={`dropdown-${option.id}`} className="hidden absolute z-10 w-full mt-2 bg-[#111] border border-white/10 rounded-xl shadow-2xl max-h-64 overflow-y-auto">
-                        <div className="p-2">
-                          {option.values.sort((a, b) => a.order - b.order).map(value => (
-                            <button key={value.id} type="button"
-                              onClick={() => { setSelectedOptions({ ...selectedOptions, [option.id]: value.value }); document.getElementById(`dropdown-${option.id}`)?.classList.add('hidden'); }}
-                              className={`w-full flex items-center justify-between p-3 rounded-lg cursor-pointer transition-colors text-left text-sm ${selectedOptions[option.id] === value.value ? 'bg-primary/10 text-white' : 'text-slate-300 hover:bg-white/5'}`}>
-                              <span>{value.label}</span>
-                              {value.priceModifier > 0 && <span className="font-bold text-primary">+{formatPrice(value.priceModifier)}</span>}
-                            </button>
-                          ))}
+                      {openDropdown === option.id && (
+                        <div className="absolute z-50 w-full mt-2 bg-[#111] border border-white/10 rounded-xl shadow-2xl max-h-64 overflow-y-auto">
+                          <div className="p-2">
+                            {option.values.sort((a, b) => a.order - b.order).map(value => (
+                              <button key={value.id} type="button"
+                                onClick={() => { setSelectedOptions({ ...selectedOptions, [option.id]: value.value }); }}
+                                className={`w-full flex items-center justify-between p-3 rounded-lg cursor-pointer transition-colors text-left text-sm ${selectedOptions[option.id] === value.value ? 'bg-primary/10 text-white' : 'text-slate-300 hover:bg-white/5'}`}>
+                                <span>{value.label}</span>
+                                {value.priceModifier > 0 && <span className="font-bold text-primary">+{formatPrice(value.priceModifier)}</span>}
+                              </button>
+                            ))}
+                          </div>
                         </div>
-                      </div>
+                      )}
                     </div>
                   )}
 
                   {/* Checkbox dropdown */}
                   {option.type === 'checkbox' && (
-                    <div className="relative dropdown-container">
-                      <button type="button" onClick={() => document.getElementById(`dropdown-${option.id}`)?.classList.toggle('hidden')}
+                    <div className="relative dropdown-container focus-within:z-40" onClick={e => e.stopPropagation()}>
+                      <button type="button" onClick={() => setOpenDropdown(openDropdown === option.id ? null : option.id)}
                         className="w-full bg-[#050505] border border-white/5 rounded-xl p-4 flex items-center justify-between text-gray-300 hover:border-primary/30 transition-colors">
-                        <span className="font-medium text-sm">
-                          {(selectedOptions[option.id] || []).length > 0 ? `${(selectedOptions[option.id] || []).length} ${option.label.toLowerCase()} selected` : `Choose ${option.label.toLowerCase()}...`}
+                        <span className="font-medium text-sm truncate pr-4">
+                          {(() => {
+                            const selected = selectedOptions[option.id] || [];
+                            if (selected.length === 0) return `Choose ${option.label.toLowerCase()}...`;
+                            const names = selected.map((val: string) => option.values.find(v => v.value === val)?.label).filter(Boolean);
+                            return names.length > 3 ? `${names.slice(0, 3).join(", ")} +${names.length - 3}` : names.join(", ");
+                          })()}
                         </span>
-                        <svg className="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
+                        <svg className="w-4 h-4 text-slate-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
                       </button>
-                      <div id={`dropdown-${option.id}`} className="hidden absolute z-10 w-full mt-2 bg-[#111] border border-white/10 rounded-xl shadow-2xl max-h-64 overflow-y-auto">
-                        <div className="p-2">
-                          {option.values.sort((a, b) => a.order - b.order).map(value => (
-                            <label key={value.id} className="flex items-center justify-between p-3 rounded-lg hover:bg-white/5 cursor-pointer transition-colors">
-                              <div className="flex items-center gap-3">
-                                <input type="checkbox" value={value.value} checked={(selectedOptions[option.id] || []).includes(value.value)}
-                                  onChange={e => {
-                                    const current = selectedOptions[option.id] || [];
-                                    setSelectedOptions({ ...selectedOptions, [option.id]: e.target.checked ? [...current, value.value] : current.filter((v: string) => v !== value.value) });
-                                  }}
-                                  className="w-4 h-4 rounded border-slate-700 bg-[#141414] text-primary focus:ring-primary focus:ring-offset-0" />
-                                <span className="text-sm text-slate-300">{value.label}</span>
-                              </div>
-                              {value.priceModifier > 0 && <span className="text-sm font-bold text-primary">+{formatPrice(value.priceModifier)}</span>}
-                            </label>
-                          ))}
+                      {openDropdown === option.id && (
+                        <div className="absolute z-50 w-full mt-2 bg-[#111] border border-white/10 rounded-xl shadow-2xl max-h-64 overflow-y-auto">
+                          <div className="p-2">
+                            {option.values.sort((a, b) => a.order - b.order).map(value => (
+                              <label key={value.id} className="flex items-center justify-between p-3 rounded-lg hover:bg-white/5 cursor-pointer transition-colors">
+                                <div className="flex items-center gap-3">
+                                  <input type="checkbox" value={value.value} checked={(selectedOptions[option.id] || []).includes(value.value)}
+                                    onChange={e => {
+                                      const current = selectedOptions[option.id] || [];
+                                      setSelectedOptions({ ...selectedOptions, [option.id]: e.target.checked ? [...current, value.value] : current.filter((v: string) => v !== value.value) });
+                                    }}
+                                    className="w-4 h-4 rounded border-slate-700 bg-[#141414] text-primary focus:ring-primary focus:ring-offset-0" />
+                                  <span className="text-sm text-slate-300">{value.label}</span>
+                                </div>
+                                {value.priceModifier > 0 && <span className="text-sm font-bold text-primary">+{formatPrice(value.priceModifier)}</span>}
+                              </label>
+                            ))}
+                          </div>
                         </div>
-                      </div>
+                      )}
                     </div>
                   )}
 

@@ -98,8 +98,6 @@ export default async function GameServicesPage({ params }: { params: Promise<{ g
                     <div className="flex items-center gap-2 text-[14px] font-black uppercase tracking-[0.2em] text-slate-500">
                         <Link href="/" className="hover:text-primary transition-colors">Home</Link>
                         <span className="material-symbols-outlined text-[14px]">chevron_right</span>
-                        <Link href="/games" className="hover:text-primary transition-colors">Games</Link>
-                        <span className="material-symbols-outlined text-[14px]">chevron_right</span>
                         <span className="text-white">{game.name}</span>
                     </div>
 
