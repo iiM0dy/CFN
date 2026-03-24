@@ -72,7 +72,7 @@ export default async function Home() {
               <div>
                 <div className="h-px w-12 bg-primary mb-4" />
                 <h2 className="text-3xl md:text-4xl font-black text-white tracking-tighter uppercase">
-                  Choose from <span className="text-primary">100+ Games</span>
+                  Available <span className="text-primary">Games</span>
                 </h2>
               </div>
             </div>
