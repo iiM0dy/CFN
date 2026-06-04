@@ -1,5 +1,5 @@
 import { auth } from "@/auth";
-import { prisma } from "@/lib/prisma";
+import { api } from "@/lib/api";
 import GamesTable from "@/components/admin/GamesTable";
 import { redirect } from "next/navigation";
 
@@ -10,9 +10,8 @@ export default async function AdminGamesPage() {
         redirect("/admin/login");
     }
 
-    const games = await prisma.gameService.findMany({
-        orderBy: { order: "asc" }
-    });
+    const token = (session?.user as any)?.accessToken;
+    const games = await api("/admin/games", { token }).catch(() => []);
 
     return (
         <div className="space-y-6">

@@ -1,14 +1,15 @@
 import { NextResponse } from "next/server";
 import { auth } from "@/auth";
-import { prisma } from "@/lib/prisma";
+
+const API = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8888/api';
 
 export async function GET() {
     try {
-        const announcement = await prisma.announcement.findFirst({
-            where: { isActive: true },
-            orderBy: { createdAt: "desc" }
+        const res = await fetch(`${API}/announcement`, {
+            headers: { 'Accept': 'application/json' }
         });
-        return NextResponse.json(announcement);
+        const data = await res.json();
+        return NextResponse.json(data);
     } catch (error) {
         return new NextResponse("Internal Error", { status: 500 });
     }
@@ -16,27 +17,27 @@ export async function GET() {
 
 export async function POST(req: Request) {
     const session = await auth();
+    const token = (session?.user as any)?.accessToken;
 
-    if ((session?.user as any)?.role !== "ADMIN") {
+    if ((session?.user as any)?.role !== "ADMIN" || !token) {
         return new NextResponse("Unauthorized", { status: 401 });
     }
 
     try {
-        const { message, isActive } = await req.json();
+        const body = await req.json();
 
-        // Deactivate old announcements if this one is active
-        if (isActive) {
-            await prisma.announcement.updateMany({
-                where: { isActive: true },
-                data: { isActive: false }
-            });
-        }
-
-        const newAnnouncement = await prisma.announcement.create({
-            data: { message, isActive }
+        const res = await fetch(`${API}/announcement`, {
+            method: "POST",
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            },
+            body: JSON.stringify(body)
         });
 
-        return NextResponse.json(newAnnouncement);
+        const data = await res.json();
+        return NextResponse.json(data);
     } catch (error) {
         console.error("[ANNOUNCEMENT_POST]", error);
         return new NextResponse("Internal Error", { status: 500 });
@@ -45,16 +46,27 @@ export async function POST(req: Request) {
 
 export async function DELETE() {
     const session = await auth();
+    const token = (session?.user as any)?.accessToken;
 
-    if ((session?.user as any)?.role !== "ADMIN") {
+    if ((session?.user as any)?.role !== "ADMIN" || !token) {
         return new NextResponse("Unauthorized", { status: 401 });
     }
 
     try {
-        await prisma.announcement.deleteMany({
-            where: { isActive: true }
+        const res = await fetch(`${API}/announcement`, {
+            method: "DELETE",
+            headers: {
+                "Accept": "application/json",
+                "Authorization": `Bearer ${token}`
+            }
         });
-        return new NextResponse(null, { status: 204 });
+
+        if (res.status === 204) {
+            return new NextResponse(null, { status: 204 });
+        }
+
+        const data = await res.json();
+        return NextResponse.json(data);
     } catch (error) {
         return new NextResponse("Internal Error", { status: 500 });
     }

@@ -4,7 +4,7 @@ import { HowItWorks } from "@/components/home/how-it-works"
 import { TestimonialsSection } from "@/components/home/testimonials-section"
 import Link from "next/link"
 import { Target, Swords, Trophy, Crosshair, CloudLightning, Flame, Shield, Gamepad2, Aperture, Bomb, Sword, Star } from "lucide-react"
-import { prisma } from "@/lib/prisma"
+import { api } from "@/lib/api"
 
 // ── DATA ─────────────────────────────────────────────────────────────────────
 
@@ -35,20 +35,12 @@ const FEATURED = [
 // ── PAGE ─────────────────────────────────────────────────────────────────────
 
 export default async function Home() {
-  const featuredServices = await prisma.service.findMany({
-    where: { isFeatured: true },
-    include: { game: true },
-    orderBy: { createdAt: 'desc' },
-    take: 8
-  });
+  const { data: featuredServices } = await api('/featured-services').catch(() => ({ data: [] }));
 
-  const dbGames = await prisma.gameService.findMany({
-    where: { isActive: true },
-    orderBy: { order: "asc" }
-  });
+  const { data: dbGames } = await api('/games').catch(() => ({ data: [] }));
 
   // Use DB games if they exist, otherwise fallback
-  const displayGames = dbGames.length > 0 ? dbGames.map(g => ({
+  const displayGames = dbGames.length > 0 ? dbGames.map((g: any) => ({
     name: g.name,
     tag: g.description || "",
     bg: g.bgImage,
@@ -95,7 +87,7 @@ export default async function Home() {
 
             {/* grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
-              {displayGames.map((g) => {
+              {displayGames.map((g: any) => {
                 const isImage = g.bg.includes('://') || g.bg.startsWith('/');
                 return (
                   <Link
@@ -152,7 +144,7 @@ export default async function Home() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
               {featuredServices.length > 0 ? (
-                featuredServices.map((fs) => {
+                featuredServices.map((fs: any) => {
                   const bgImage = fs.image || fs.game.bgImage || "from-[#1a0520] to-[#2d0a35]";
                   const isBgUrl = bgImage.includes('://') || bgImage.startsWith('/');
 

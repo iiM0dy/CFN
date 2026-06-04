@@ -1,29 +1,22 @@
 import { NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma";
+import { auth } from "@/auth";
+import { api } from "@/lib/api";
 
 export async function POST(req: Request) {
     try {
+        const session = await auth();
+        const token = (session?.user as any)?.accessToken;
         const body = await req.json();
-        const { sessionId, text, sender, isAdmin } = body;
 
-        const message = await prisma.chatMessage.create({
-            data: {
-                sessionId,
-                text,
-                sender,
-                isAdmin: isAdmin || false
-            }
-        });
-
-        // Update session timestamp
-        await prisma.chatSession.update({
-            where: { id: sessionId },
-            data: { updatedAt: new Date() }
+        const message = await api("/chat/message", {
+            method: "POST",
+            body: JSON.stringify(body),
+            token: token || undefined
         });
 
         return NextResponse.json(message);
-    } catch (error) {
+    } catch (error: any) {
         console.error("Chat Message Error:", error);
-        return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+        return NextResponse.json({ error: error.message || "Internal Server Error" }, { status: 500 });
     }
 }

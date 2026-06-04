@@ -39,3 +39,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# ── Laravel Backend ───────────────────────────
+backend/vendor/
+backend/node_modules/
+backend/.env
+backend/storage/framework/views/*.php
+backend/storage/logs/*.log

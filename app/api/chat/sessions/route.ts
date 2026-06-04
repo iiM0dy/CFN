@@ -1,21 +1,20 @@
 import { NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma";
+import { auth } from "@/auth";
+import { api } from "@/lib/api";
 
 export async function GET() {
     try {
-        const sessions = await prisma.chatSession.findMany({
-            include: {
-                messages: {
-                    orderBy: { createdAt: "desc" },
-                    take: 1
-                }
-            },
-            orderBy: { updatedAt: "desc" }
-        });
+        const session = await auth();
+        const token = (session?.user as any)?.accessToken;
 
+        if (!token) {
+            return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+        }
+
+        const sessions = await api("/chat/sessions", { token });
         return NextResponse.json(sessions);
-    } catch (error) {
+    } catch (error: any) {
         console.error("Chat Sessions List Error:", error);
-        return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+        return NextResponse.json({ error: error.message || "Internal Server Error" }, { status: 500 });
     }
 }

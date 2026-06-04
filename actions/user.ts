@@ -1,65 +1,51 @@
 "use server";
 
 import { auth } from "@/auth";
-import { prisma } from "@/lib/prisma";
-import bcrypt from "bcryptjs";
+import { api } from "@/lib/api";
 import { revalidatePath } from "next/cache";
 
 export async function updateProfile(data: { name: string }) {
     const session = await auth();
+    const token = (session?.user as any)?.accessToken;
 
-    if (!session?.user?.id) {
+    if (!token) {
         return { error: "Unauthorized" };
     }
 
     try {
-        await prisma.user.update({
-            where: { id: session.user.id },
-            data: { name: data.name }
+        await api("/user/profile", {
+            method: "PATCH",
+            body: JSON.stringify({ name: data.name }),
+            token
         });
 
         revalidatePath("/profile");
         return { success: true };
-    } catch (error) {
-        return { error: "Failed to update profile" };
+    } catch (error: any) {
+        return { error: error.message || "Failed to update profile" };
     }
 }
 
 export async function changePassword(data: { currentPassword?: string, newPassword: string }) {
     const session = await auth();
+    const token = (session?.user as any)?.accessToken;
 
-    if (!session?.user?.id) {
+    if (!token) {
         return { error: "Unauthorized" };
     }
 
     try {
-        const user = await prisma.user.findUnique({
-            where: { id: session.user.id }
-        });
-
-        if (!user) return { error: "User not found" };
-
-        // If user already has a password, verify current one
-        if (user.password) {
-            if (!data.currentPassword) {
-                return { error: "Current password is required" };
-            }
-
-            const isMatch = await bcrypt.compare(data.currentPassword, user.password);
-            if (!isMatch) {
-                return { error: "Incorrect current password" };
-            }
-        }
-
-        const hashedPassword = await bcrypt.hash(data.newPassword, 10);
-
-        await prisma.user.update({
-            where: { id: session.user.id },
-            data: { password: hashedPassword }
+        await api("/user/change-password", {
+            method: "POST",
+            body: JSON.stringify({
+                currentPassword: data.currentPassword,
+                newPassword: data.newPassword
+            }),
+            token
         });
 
         return { success: true };
-    } catch (error) {
-        return { error: "Failed to change password" };
+    } catch (error: any) {
+        return { error: error.message || "Failed to change password" };
     }
 }

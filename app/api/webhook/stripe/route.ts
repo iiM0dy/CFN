@@ -1,48 +1,29 @@
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
-import { stripe } from "@/lib/stripe";
-import { prisma } from "@/lib/prisma";
-import Stripe from "stripe";
+
+const API = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8888/api';
 
 export async function POST(req: Request) {
     const body = await req.text();
     const signature = (await headers()).get("Stripe-Signature") as string;
 
-    let event: Stripe.Event;
-
     try {
-        event = stripe.webhooks.constructEvent(
+        const res = await fetch(`${API}/webhook/stripe`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Stripe-Signature": signature,
+            },
             body,
-            signature,
-            process.env.STRIPE_WEBHOOK_SECRET!
-        );
+        });
+
+        if (!res.ok) {
+            const errText = await res.text();
+            return new NextResponse(`Forwarding Error: ${errText}`, { status: res.status });
+        }
+
+        return new NextResponse(null, { status: 200 });
     } catch (error: any) {
-        return new NextResponse(`Webhook Error: ${error.message}`, { status: 400 });
+        return new NextResponse(`Webhook Forwarding Error: ${error.message}`, { status: 400 });
     }
-
-    const session = event.data.object as Stripe.Checkout.Session;
-
-    if (event.type === "checkout.session.completed") {
-        console.log("Payment successful for session:", session.id);
-
-        const metadata = session.metadata;
-
-        // Handle standard Order model
-        if (metadata?.orderId) {
-            await prisma.order.update({
-                where: { id: metadata.orderId },
-                data: { status: "PAID" },
-            });
-        }
-
-        // Handle ServiceOrder model
-        if (metadata?.serviceOrderId) {
-            await prisma.serviceOrder.update({
-                where: { id: metadata.serviceOrderId },
-                data: { status: "paid" },
-            });
-        }
-    }
-
-    return new NextResponse(null, { status: 200 });
 }

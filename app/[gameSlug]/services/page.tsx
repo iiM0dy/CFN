@@ -1,4 +1,4 @@
-import { prisma } from "@/lib/prisma"
+import { api } from "@/lib/api"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 import { ServiceList } from "@/components/services/service-list"
@@ -9,85 +9,20 @@ import { GameFavoriteButton } from "@/components/services/game-favorite-button"
 export default async function GameServicesPage({ params }: { params: Promise<{ gameSlug: string }> }) {
     const { gameSlug } = await params
 
-    // Use a raw query as a fallback if the Prisma client types are out of sync with the DB
-    // This avoids the PrismaClientValidationError for the missing 'slug' field
-    const games = await prisma.$queryRaw<any[]>`
-        SELECT * FROM "GameService" WHERE "slug" = ${gameSlug} LIMIT 1
-    `
-    const game = games[0]
+    // Fetch game with services from the Laravel API
+    const gameData = await api(`/games/${gameSlug}/services`).catch(() => null);
 
-    if (game) {
-        // Fetch services with options and values using raw query
-        const services = await prisma.$queryRaw<any[]>`
-            SELECT s.*, 
-                   (
-                       SELECT json_agg(
-                           json_build_object(
-                               'id', so.id,
-                               'label', so.label,
-                               'type', so.type,
-                               'required', so.required,
-                               'minValue', so."minValue",
-                               'maxValue', so."maxValue",
-                               'values', (
-                                   SELECT json_agg(
-                                       json_build_object(
-                                           'id', sov.id,
-                                           'label', sov.label,
-                                           'value', sov.value,
-                                           'priceModifier', sov."priceModifier"
-                                       )
-                                   ) FROM "ServiceOptionValue" sov WHERE sov."optionId" = so.id
-                               )
-                           )
-                       ) FROM "ServiceOption" so WHERE so."serviceId" = s.id
-                   ) as options
-            FROM "Service" s
-            WHERE s."gameId" = ${game.id}
-        `
-
-        // Calculate display price for each service and ensure serializability
-        game.services = services.map(service => {
-            let basePrice = Number(service.basePrice);
-            let minAdditionalPrice = 0;
-
-            if (service.options && service.options.length > 0) {
-                service.options.forEach((opt: any) => {
-                    // For number/range options (like coins), find price for minimum amount
-                    if (opt.type === 'number' || opt.type === 'range') {
-                        if (opt.minValue && opt.minValue > 0) {
-                            // If it's a "per 1000" style price (common in coins)
-                            if (service.name?.toLowerCase().includes('coin')) {
-                                basePrice = (basePrice * opt.minValue) / 1000;
-                            } else {
-                                // Simple multiplication for other types
-                                basePrice = basePrice * opt.minValue;
-                            }
-                        }
-                    }
-                    // For selection options, if REQUIRED, add the cheapest variant price
-                    else if (opt.required && opt.values && opt.values.length > 0) {
-                        const prices = opt.values.map((v: any) => Number(v.priceModifier || 0));
-                        minAdditionalPrice += Math.min(...prices);
-                    }
-                });
-            }
-
-            const finalDisplayPrice = basePrice + minAdditionalPrice;
-
-            return {
-                ...service,
-                basePrice: Number(service.basePrice),
-                createdAt: service.createdAt?.toString() || null,
-                updatedAt: service.updatedAt?.toString() || null,
-                options: service.options || [],
-                displayPrice: finalDisplayPrice.toFixed(2)
-            };
-        });
-    }
+    const game = gameData?.data ?? gameData;
 
     if (!game) {
         notFound()
+    }
+
+    // The API returns services with options, displayPrice already computed server-side.
+    // If services come nested under game.services, use them directly.
+    // Otherwise, if the API returns a flat services array, attach them.
+    if (!game.services) {
+        game.services = [];
     }
 
     return (

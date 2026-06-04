@@ -1,14 +1,15 @@
 import { NextResponse } from "next/server";
 import { auth } from "@/auth";
-import { prisma } from "@/lib/prisma";
+import { api } from "@/lib/api";
 
 export async function PATCH(
     req: Request,
     { params }: { params: Promise<{ id: string }> }
 ) {
     const session = await auth();
+    const token = (session?.user as any)?.accessToken;
 
-    if ((session?.user as any)?.role !== "ADMIN") {
+    if ((session?.user as any)?.role !== "ADMIN" || !token) {
         return new NextResponse("Unauthorized", { status: 401 });
     }
 
@@ -16,14 +17,15 @@ export async function PATCH(
         const { id } = await params;
         const { status } = await req.json();
 
-        const updatedSession = await prisma.chatSession.update({
-            where: { id },
-            data: { status },
+        const updatedSession = await api(`/admin/chat/${id}/status`, {
+            method: "PATCH",
+            body: JSON.stringify({ status }),
+            token
         });
 
         return NextResponse.json(updatedSession);
-    } catch (error) {
+    } catch (error: any) {
         console.error("[CHAT_STATUS_PATCH]", error);
-        return new NextResponse("Internal Error", { status: 500 });
+        return new NextResponse(error.message || "Internal Error", { status: 500 });
     }
 }

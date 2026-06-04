@@ -1,6 +1,7 @@
 "use server";
 
-import { prisma } from "@/lib/prisma";
+import { api } from "@/lib/api";
+import { auth } from "@/auth";
 import { revalidatePath } from "next/cache";
 
 export async function createGame(data: { 
@@ -14,27 +15,23 @@ export async function createGame(data: {
   isActive?: boolean;
   isPopular?: boolean;
 }) {
-  try {
-    // If order is not provided, find the max order and add 1
-    let orderToSet = data.order;
-    if (orderToSet === undefined) {
-      const lastGame = await prisma.gameService.findFirst({
-        orderBy: { order: 'desc' },
-        select: { order: true }
-      });
-      orderToSet = (lastGame?.order ?? -1) + 1;
-    }
+  const session = await auth();
+  const token = (session?.user as any)?.accessToken;
 
-    const game = await prisma.gameService.create({
-      data: {
-        ...data,
-        order: orderToSet,
-        charImage: data.charImage || null
-      }
+  if (!token) {
+    return { error: "Unauthorized" };
+  }
+
+  try {
+    const response = await api("/admin/games", {
+      method: "POST",
+      body: JSON.stringify(data),
+      token
     });
+
     revalidatePath("/admin/games");
     revalidatePath("/");
-    return { success: true, game };
+    return { success: true, game: response };
   } catch (error: any) {
     return { error: error.message };
   }
@@ -51,17 +48,23 @@ export async function updateGame(id: string, data: Partial<{
   isPopular: boolean;
   order: number;
 }>) {
+  const session = await auth();
+  const token = (session?.user as any)?.accessToken;
+
+  if (!token) {
+    return { error: "Unauthorized" };
+  }
+
   try {
-    const game = await prisma.gameService.update({
-      where: { id },
-      data: {
-        ...data,
-        charImage: data.charImage ?? undefined, // handle null if needed
-      }
+    const response = await api(`/admin/games/${id}`, {
+      method: "PATCH",
+      body: JSON.stringify(data),
+      token
     });
+
     revalidatePath("/admin/games");
     revalidatePath("/");
-    return { success: true, game };
+    return { success: true, game: response };
   } catch (error: any) {
     console.error("Update error:", error);
     return { error: error.message };
@@ -69,16 +72,20 @@ export async function updateGame(id: string, data: Partial<{
 }
 
 export async function reorderGames(ids: string[]) {
+  const session = await auth();
+  const token = (session?.user as any)?.accessToken;
+
+  if (!token) {
+    return { error: "Unauthorized" };
+  }
+
   try {
-    // Update all games orders based on the index in the array
-    await Promise.all(
-      ids.map((id, index) => 
-        prisma.gameService.update({
-          where: { id },
-          data: { order: index }
-        })
-      )
-    );
+    await api("/admin/games/reorder", {
+      method: "POST",
+      body: JSON.stringify({ ids }),
+      token
+    });
+
     revalidatePath("/admin/games");
     revalidatePath("/");
     return { success: true };
@@ -88,8 +95,19 @@ export async function reorderGames(ids: string[]) {
 }
 
 export async function deleteGame(id: string) {
+  const session = await auth();
+  const token = (session?.user as any)?.accessToken;
+
+  if (!token) {
+    return { error: "Unauthorized" };
+  }
+
   try {
-    await prisma.gameService.delete({ where: { id } });
+    await api(`/admin/games/${id}`, {
+      method: "DELETE",
+      token
+    });
+
     revalidatePath("/admin/games");
     revalidatePath("/");
     return { success: true };

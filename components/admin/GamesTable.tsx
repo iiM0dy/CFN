@@ -1,7 +1,20 @@
 "use client";
 
 import { useState } from "react";
-import { GameService } from "@prisma/client";
+export interface GameService {
+  id: string;
+  name: string;
+  slug: string;
+  description: string;
+  bgImage: string;
+  charImage?: string | null;
+  href: string;
+  order: number;
+  isActive: boolean;
+  isPopular: boolean;
+  createdAt: string | Date;
+  updatedAt: string | Date;
+}
 import { 
   Pencil, 
   Trash2, 

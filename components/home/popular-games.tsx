@@ -1,12 +1,10 @@
-import { prisma } from "@/lib/prisma"
+import { api } from "@/lib/api"
 import Link from "next/link"
 import { GameCard } from "./game-card"
 
 export async function PopularGames() {
-    // Get all games (both active and inactive) for display
-    const games = await prisma.$queryRaw<any[]>`
-        SELECT * FROM "GameService" ORDER BY "isActive" DESC, name ASC
-    `
+    // Get all games from the Laravel API
+    const { data: games } = await api('/games').catch(() => ({ data: [] }))
 
     if (games.length === 0) return null
 
@@ -26,7 +24,7 @@ export async function PopularGames() {
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                    {games.map((game) => (
+                    {games.map((game: any) => (
                         <GameCard key={game.id} game={game} />
                     ))}
                 </div>

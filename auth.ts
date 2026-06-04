@@ -1,14 +1,10 @@
 import NextAuth from "next-auth"
-import { PrismaAdapter } from "@auth/prisma-adapter"
-import { prisma } from "@/lib/prisma"
 import authConfig from "./auth.config"
 import Credentials from "next-auth/providers/credentials"
 import { LoginSchema } from "@/schemas"
-import bcrypt from "bcryptjs"
-import { stripe } from "@/lib/stripe"
+import { api } from "@/lib/api"
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
-  adapter: PrismaAdapter(prisma),
   session: { strategy: "jwt" },
   ...authConfig,
   providers: [
@@ -20,18 +16,22 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         if (validatedFields.success) {
           const { email, password } = validatedFields.data;
 
-          const user = await prisma.user.findUnique({
-            where: { email }
-          });
+          try {
+            const data = await api("/login", {
+              method: "POST",
+              body: JSON.stringify({ email, password }),
+            });
 
-          if (!user || !user.password) return null;
-
-          const passwordsMatch = await bcrypt.compare(
-            password,
-            user.password
-          );
-
-          if (passwordsMatch) return user;
+            if (data?.success && data?.token && data?.user) {
+              return {
+                ...data.user,
+                token: data.token,
+              };
+            }
+          } catch (error) {
+            console.error("Laravel Auth Error:", error);
+            return null;
+          }
         }
 
         return null;
@@ -46,17 +46,24 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       async authorize(credentials) {
         if (!credentials?.email) return null;
 
-        let user = await prisma.user.findUnique({ where: { email: credentials.email as string } });
-        if (user && user.password !== null) {
-            throw new Error("This email has an account. Please log in before proceeding.");
+        try {
+          const data = await api("/guest-login", {
+            method: "POST",
+            body: JSON.stringify({ email: credentials.email as string }),
+          });
+
+          if (data?.success && data?.token && data?.user) {
+            return {
+              ...data.user,
+              token: data.token,
+            };
+          }
+        } catch (error: any) {
+          console.error("Laravel Guest Auth Error:", error);
+          throw new Error(error.message || "Failed to log in as guest.");
         }
-        
-        if (!user) {
-            user = await prisma.user.create({
-                data: { email: credentials.email as string, password: null }
-            });
-        }
-        return user;
+
+        return null;
       }
     })
   ],
@@ -81,6 +88,11 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         session.user.createdAt = token.createdAt;
       }
 
+      if (token.accessToken && session.user) {
+        // @ts-ignore
+        session.user.accessToken = token.accessToken;
+      }
+
       return session;
     },
     async jwt({ token, user, trigger, session }) {
@@ -89,9 +101,11 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         // @ts-ignore
         token.role = user.role;
         // @ts-ignore
-        token.hasPassword = (user as any).password !== null && (user as any).password !== undefined;
+        token.hasPassword = (user as any).hasPassword;
         // @ts-ignore
         token.createdAt = (user as any).createdAt;
+        // @ts-ignore
+        token.accessToken = (user as any).token;
       }
 
       // Allow updating session
@@ -99,11 +113,17 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         token.hasPassword = session.hasPassword;
       }
 
-      // If missing hasPassword entirely for existing token, fetch it
-      if (token.hasPassword === undefined && token.email) {
-        const dbUser = await prisma.user.findUnique({ where: { email: token.email as string }, select: { password: true, createdAt: true } });
-        token.hasPassword = dbUser?.password !== null;
-        token.createdAt = dbUser?.createdAt;
+      // If missing hasPassword entirely for existing token, fetch it from Laravel
+      if (token.hasPassword === undefined && token.accessToken) {
+        try {
+          const dbUser = await api("/user", { token: token.accessToken as string });
+          if (dbUser) {
+            token.hasPassword = dbUser.hasPassword;
+            token.createdAt = dbUser.createdAt;
+          }
+        } catch (e) {
+          console.error("Error fetching user in jwt callback:", e);
+        }
       }
 
       return token;

@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { Footer } from "@/components/layout/footer";
-import { prisma } from "@/lib/prisma";
+import { api } from "@/lib/api";
 import { ReadingProgress } from "@/components/blog/reading-progress";
 import { ShareButton } from "@/components/blog/share-button";
 
@@ -16,9 +16,8 @@ export async function generateMetadata(
     parent: ResolvingMetadata
 ): Promise<Metadata> {
     const { slug } = await params;
-    const post = await prisma.blogPost.findUnique({
-        where: { slug }
-    });
+    const postData = await api(`/blog/${slug}`).catch(() => null);
+    const post = postData?.data ?? postData;
 
     if (!post) return { title: "Post Not Found | CFNboost" };
 
@@ -35,9 +34,8 @@ export async function generateMetadata(
 
 export default async function BlogPostPage({ params }: Props) {
     const { slug } = await params;
-    const post = await prisma.blogPost.findUnique({
-        where: { slug }
-    });
+    const postData = await api(`/blog/${slug}`).catch(() => null);
+    const post = postData?.data ?? postData;
 
     if (!post || !post.isActive) {
         notFound();

@@ -1,5 +1,5 @@
 import { auth } from "@/auth";
-import { prisma } from "@/lib/prisma";
+import { api } from "@/lib/api";
 import OrdersTable from "@/components/admin/OrdersTable";
 
 export default async function AdminOrdersPage() {
@@ -9,15 +9,8 @@ export default async function AdminOrdersPage() {
         return null; // Layout handles redirect
     }
 
-    const serviceOrders = await prisma.serviceOrder.findMany({
-        include: {
-            user: true,
-            service: {
-                include: { game: true }
-            }
-        },
-        orderBy: { createdAt: "desc" }
-    });
+    const token = (session?.user as any)?.accessToken;
+    const serviceOrders = await api("/admin/orders", { token }).catch(() => []);
 
     return <OrdersTable initialOrders={serviceOrders} />;
 }

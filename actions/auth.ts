@@ -2,10 +2,9 @@
 
 import { LoginSchema, RegisterSchema } from "@/schemas";
 import { z } from "zod";
-import bcrypt from "bcryptjs";
-import { prisma } from "@/lib/prisma";
 import { signIn } from "@/auth";
 import { AuthError } from "next-auth";
+import { api } from "@/lib/api";
 
 export const register = async (values: z.infer<typeof RegisterSchema>) => {
     const validatedFields = RegisterSchema.safeParse(values);
@@ -15,26 +14,22 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
     }
 
     const { email, password } = validatedFields.data;
-    const hashedPassword = await bcrypt.hash(password, 10);
 
-    const existingUser = await prisma.user.findUnique({
-        where: {
-            email,
-        },
-    });
+    try {
+        const response = await api("/register", {
+            method: "POST",
+            body: JSON.stringify({ email, password }),
+        });
 
-    if (existingUser) {
-        return { error: "Email already in use!" };
+        if (response?.error) {
+            return { error: response.error };
+        }
+
+        return { success: "User created!" };
+    } catch (error: any) {
+        console.error("Register API error:", error);
+        return { error: error.message || "Something went wrong!" };
     }
-
-    await prisma.user.create({
-        data: {
-            email,
-            password: hashedPassword,
-        },
-    });
-
-    return { success: "User created!" };
 };
 
 

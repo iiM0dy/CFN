@@ -1,45 +1,22 @@
 import { NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma";
 import { auth } from "@/auth";
+import { api } from "@/lib/api";
 
 export async function POST(req: Request) {
     try {
+        const session = await auth();
+        const token = (session?.user as any)?.accessToken;
         const body = await req.json();
-        const { userEmail, userName, userId } = body;
 
-        // Try to find an active session for this user/email
-        let session = await prisma.chatSession.findFirst({
-            where: {
-                OR: [
-                    userId ? { userId } : {},
-                    userEmail ? { userEmail } : {}
-                ].filter(condition => Object.keys(condition).length > 0),
-                status: "active"
-            },
-            include: {
-                messages: {
-                    orderBy: { createdAt: "asc" }
-                }
-            }
+        const chatSession = await api("/chat/session", {
+            method: "POST",
+            body: JSON.stringify(body),
+            token: token || undefined
         });
 
-        if (!session) {
-            session = await prisma.chatSession.create({
-                data: {
-                    userId,
-                    userEmail,
-                    userName,
-                    status: "active"
-                },
-                include: {
-                    messages: true
-                }
-            });
-        }
-
-        return NextResponse.json(session);
-    } catch (error) {
+        return NextResponse.json(chatSession);
+    } catch (error: any) {
         console.error("Chat Session Error:", error);
-        return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+        return NextResponse.json({ error: error.message || "Internal Server Error" }, { status: 500 });
     }
 }

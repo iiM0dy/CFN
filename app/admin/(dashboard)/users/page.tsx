@@ -1,5 +1,5 @@
 import { auth } from "@/auth";
-import { prisma } from "@/lib/prisma";
+import { api } from "@/lib/api";
 import UsersTable from "@/components/admin/UsersTable";
 
 export default async function AdminUsersPage() {
@@ -9,10 +9,13 @@ export default async function AdminUsersPage() {
         return null; // Layout handles redirect
     }
 
-    const users = await prisma.user.findMany({
-        orderBy: { createdAt: "desc" },
-        include: { _count: { select: { serviceOrders: true } } }
-    });
+    const token = (session?.user as any)?.accessToken;
+    const users = await api("/admin/users", { token }).catch(() => []);
 
-    return <UsersTable initialUsers={users} />;
+    const mappedUsers = users.map((u: any) => ({
+        ...u,
+        _count: { serviceOrders: u.serviceOrdersCount ?? 0 }
+    }));
+
+    return <UsersTable initialUsers={mappedUsers} />;
 }

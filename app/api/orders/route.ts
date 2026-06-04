@@ -1,76 +1,45 @@
-import { auth } from "@/auth"
-import { prisma } from "@/lib/prisma"
-import { NextResponse } from "next/server"
+import { auth } from "@/auth";
+import { NextResponse } from "next/server";
 
-// GET - Get user's orders
+const API = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8888/api';
+
 export async function GET(request: Request) {
-  try {
-    const session = await auth()
+  const session = await auth();
+  const token = (session?.user as any)?.accessToken;
 
-    if (!session?.user?.id) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
-    }
-
-    const { searchParams } = new URL(request.url)
-    const status = searchParams.get('status')
-
-    const where: any = { userId: session.user.id }
-    if (status) {
-      where.status = status
-    }
-
-    const orders = await prisma.serviceOrder.findMany({
-      where,
-      include: {
-        service: {
-          include: {
-            game: true
-          }
-        }
-      },
-      orderBy: { createdAt: 'desc' }
-    })
-
-    return NextResponse.json(orders)
-  } catch (error) {
-    console.error("Error fetching orders:", error)
-    return NextResponse.json({ error: "Failed to fetch orders" }, { status: 500 })
+  if (!token) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
+
+  const url = new URL(request.url);
+  const res = await fetch(`${API}/orders${url.search}`, {
+    headers: {
+      'Accept': 'application/json',
+      'Authorization': `Bearer ${token}`,
+    },
+  });
+  const data = await res.text();
+  return new Response(data, { status: res.status, headers: { 'Content-Type': 'application/json' } });
 }
 
-// POST - Create new order
 export async function POST(request: Request) {
-  try {
-    const session = await auth()
-    const data = await request.json()
+  const session = await auth();
+  const token = (session?.user as any)?.accessToken;
 
-    const order = await prisma.serviceOrder.create({
-      data: {
-        userId: session?.user?.id || null,
-        serviceId: data.serviceId,
-        totalPrice: data.totalPrice,
-        quantity: data.quantity,
-        platform: data.platform,
-        completionMethod: data.completionMethod,
-        completionSpeed: data.completionSpeed,
-        orderNotes: data.orderNotes || null,
-        promoCode: data.promoCode,
-        discount: data.discount || 0,
-        selectedOptions: data.selectedOptions,
-        status: 'pending'
-      } as any,
-      include: {
-        service: {
-          include: {
-            game: true
-          }
-        }
-      }
-    })
-
-    return NextResponse.json(order)
-  } catch (error) {
-    console.error("Error creating order:", error)
-    return NextResponse.json({ error: "Failed to create order" }, { status: 500 })
+  if (!token) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
+
+  const body = await request.text();
+  const res = await fetch(`${API}/orders`, {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`,
+    },
+    body,
+  });
+  const data = await res.text();
+  return new Response(data, { status: res.status, headers: { 'Content-Type': 'application/json' } });
 }

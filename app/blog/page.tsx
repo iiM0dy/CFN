@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Footer } from "@/components/layout/footer";
-import { prisma } from "@/lib/prisma";
+import { api } from "@/lib/api";
 import { BlogSearch } from "@/components/blog/blog-search";
 
 export const dynamic = 'force-dynamic';
@@ -11,10 +11,7 @@ export const metadata: Metadata = {
 };
 
 export default async function BlogListingPage() {
-    const posts = await prisma.blogPost.findMany({
-        where: { isActive: true },
-        orderBy: { publishedAt: 'desc' }
-    });
+    const { data: posts } = await api('/blog').catch(() => ({ data: [] }));
 
     return (
         <div className="flex min-h-screen flex-col bg-[#050505] text-white overflow-x-hidden selection:bg-primary/30 selection:text-primary">
@@ -27,11 +24,11 @@ export default async function BlogListingPage() {
                         "@type": "Blog",
                         "name": "CFNboost Journal",
                         "url": "https://www.cfnboost.com/blog",
-                        "blogPost": posts.map(post => ({
+                        "blogPost": posts.map((post: any) => ({
                             "@type": "BlogPosting",
                             "headline": post.title,
                             "image": `https://www.cfnboost.com${post.image || "/assets/blog/setup.png"}`,
-                            "datePublished": post.publishedAt.toISOString()
+                            "datePublished": post.publishedAt?.toISOString ? post.publishedAt.toISOString() : String(post.publishedAt)
                         }))
                     })
                 }}
