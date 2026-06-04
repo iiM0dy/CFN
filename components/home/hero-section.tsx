@@ -4,38 +4,54 @@ import { useState, useEffect } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { motion, AnimatePresence, Variants } from "framer-motion"
-import { Shield, HeadphonesIcon, CheckCircle } from "lucide-react"
 
 const heroImageUrl = "https://i.postimg.cc/YCzk2Rg7/Refine-the-image-make-the-logo-inspired-shape-much-larger-and-more-integrated-into-the-background.png"
 
 const HERO_GAME_CARDS = [
-    { image: "/assets/val-char-bg.png", label: "Valorant", sub: "Rank Boost", slug: "valorant", tagline: "Climb every rank with precision" },
+    { image: "/assets/val-char-bg.png", label: "Valorant", sub: "Rank Boost", slug: "valorant", tagline: "Dominate every ranked match" },
     { image: "/assets/wow-char-bg.png", label: "WoW", sub: "Powerleveling", slug: "wow", tagline: "Conquer Azeroth effortlessly" },
-    { image: "/assets/lol-char-bg.png", label: "LoL", sub: "Duo Queue", slug: "lol", tagline: "Rise through the ranks together" },
+    { image: "/assets/lol-char-bg.png", label: "LoL", sub: "Duo Queue", slug: "lol", tagline: "Climb the ladder together" },
     { image: "/assets/arc-char-bg.png", label: "ARC Raiders", sub: "Materials", slug: "arc-raiders", tagline: "Stockpile rare resources" },
 ]
 
+// stagger variants
 const containerVariants: Variants = {
     hidden: {},
-    show: { transition: { staggerChildren: 0.12 } },
+    show: { transition: { staggerChildren: 0.1 } },
 }
 
 const fadeUp: Variants = {
-    hidden: { opacity: 0, y: 24 },
-    show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
+    hidden: { opacity: 0, y: 20 },
+    show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
 }
 
 export function HeroSection() {
+    const [expertsCount, setExpertsCount] = useState(412)
     const [activeIndex, setActiveIndex] = useState(0)
-    const [direction, setDirection] = useState(1)
+    const [direction, setDirection] = useState(1) // 1 = forward, -1 = backward
 
     useEffect(() => {
+        const calculateExperts = () => {
+            const now = new Date().getTime()
+            const fifteenMinutes = 15 * 60 * 1000
+            const seed = Math.floor(now / fifteenMinutes)
+            const x = Math.sin(seed) * 10000
+            const randomValue = 400 + Math.floor((x - Math.floor(x)) * 201)
+            setExpertsCount(randomValue)
+        }
+        calculateExperts()
+        const expInterval = setInterval(calculateExperts, 60000)
+
+        // Auto-cycle panels
         const panelInterval = setInterval(() => {
             setDirection(1)
             setActiveIndex((prev) => (prev + 1) % HERO_GAME_CARDS.length)
         }, 5000)
 
-        return () => clearInterval(panelInterval)
+        return () => {
+            clearInterval(expInterval)
+            clearInterval(panelInterval)
+        }
     }, [])
 
     const goTo = (index: number) => {
@@ -45,6 +61,7 @@ export function HeroSection() {
 
     const activeCard = HERO_GAME_CARDS[activeIndex]
 
+    // Panel slide variants
     const panelVariants = {
         enter: (dir: number) => ({
             x: dir > 0 ? "100%" : "-100%",
@@ -65,6 +82,7 @@ export function HeroSection() {
         }),
     }
 
+    // Text animation variants
     const textSlide = {
         enter: { opacity: 0, y: 30 },
         center: { opacity: 1, y: 0, transition: { duration: 0.5, delay: 0.3 } },
@@ -72,15 +90,15 @@ export function HeroSection() {
     }
 
     return (
-        <header className="relative w-full min-h-[480px] sm:min-h-[600px] lg:min-h-[660px] flex items-center overflow-hidden border-b border-white/5 bg-[#050505]">
+        <header className="relative w-full min-h-[680px] flex items-center overflow-hidden border-b border-white/5 bg-[#050505]">
 
-            {/* Backgrounds */}
+            {/* ── Backgrounds ── */}
             <div className="absolute inset-0 z-0 overflow-hidden">
                 <div className="absolute inset-0 z-20 bg-linear-to-t from-[#050505] via-[#050505]/60 to-transparent" />
                 <div className="absolute inset-0 z-20 bg-linear-to-r from-[#050505] via-[#050505]/70 to-transparent" />
-                <div className="absolute inset-0 z-10 bg-[radial-gradient(ellipse_80%_60%_at_65%_50%,rgba(175,18,37,0.07)_0%,transparent_70%)]" />
-                <div className="absolute inset-0 z-10 opacity-25 mix-blend-overlay bg-[linear-gradient(0deg,rgba(255,255,255,0.015)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.015)_1px,transparent_1px)] bg-size-[48px_48px]" />
-                <div className="absolute inset-0 z-10 opacity-30 mix-blend-overlay">
+                <div className="absolute inset-0 z-10 bg-[radial-gradient(circle_at_30%_50%,rgba(175,18,37,0.18)_0%,transparent_60%)]" />
+                <div className="absolute inset-0 z-10 opacity-40 mix-blend-overlay bg-[linear-gradient(0deg,rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-size-[40px_40px]" />
+                <div className="absolute inset-0 z-10 opacity-40 mix-blend-overlay">
                     <Image
                         src={heroImageUrl}
                         alt="Background"
@@ -91,10 +109,10 @@ export function HeroSection() {
                 </div>
             </div>
 
-            {/* Content */}
-            <div className="relative z-30 w-full max-w-[1440px] mx-auto px-6 lg:px-10 py-12 sm:py-16 lg:py-20 flex flex-col justify-center h-full">
+            {/* ── Content ── */}
+            <div className="relative z-30 w-full max-w-[1440px] mx-auto px-6 lg:px-10 py-16 lg:py-20 flex flex-col justify-center h-full">
 
-                <div className="flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-12 w-full">
+                <div className="flex flex-col lg:flex-row items-center justify-between gap-10 w-full">
 
                     {/* LEFT: Text + CTAs */}
                     <motion.div
@@ -103,205 +121,184 @@ export function HeroSection() {
                         initial="hidden"
                         animate="show"
                     >
-                        {/* Eyebrow */}
-                        <motion.div variants={fadeUp} className="flex items-center gap-2.5 mb-6">
-                            <div className="h-px w-8 bg-primary" />
-                            <span className="text-[11px] font-medium uppercase tracking-[0.2em] text-gray-400">
-                                Fast, secure, player-focused
-                            </span>
-                        </motion.div>
 
-                        {/* Heading */}
+                        {/* heading */}
                         <motion.h1
                             variants={fadeUp}
-                            className="hero-title text-[42px] sm:text-5xl md:text-7xl lg:text-[84px] font-bold leading-[0.9] tracking-tighter text-white mb-4 sm:mb-6"
+                            className="hero-title text-5xl md:text-7xl lg:text-[88px] font-bold leading-[0.9] tracking-tighter text-white mb-6 drop-shadow-[0_0_30px_rgba(175,18,37,0.45)]"
                         >
                             ASCEND
                             <br />
                             <span className="hero-gradient-text">BEYOND LIMITS</span>
                         </motion.h1>
 
-                        {/* Subtitle */}
+                        {/* subtitle */}
                         <motion.p
                             variants={fadeUp}
-                            className="text-sm sm:text-[15px] md:text-base text-gray-400 max-w-md leading-relaxed mb-6 sm:mb-8"
+                            className="text-base md:text-lg text-gray-400 max-w-md font-medium leading-relaxed tracking-tight mb-10"
                         >
-                            Professional boosting, coaching, and progression services for competitive players.
-                            Fast delivery, secure checkout, and real support from start to finish.
+                            Professional boosting and progression services delivered by top-tier players.
+                            <br />
+                            Fast results. Secure process. Real progress.
                         </motion.p>
 
                         {/* CTAs */}
-                        <motion.div variants={fadeUp} className="flex flex-col sm:flex-row gap-3 mb-5 sm:mb-6">
+                        <motion.div variants={fadeUp} className="flex flex-col sm:flex-row gap-4">
                             <Link
                                 href="/#games"
-                                className="group min-h-[48px] px-6 sm:px-7 rounded-lg bg-primary hover:bg-primary-dark text-white font-semibold text-sm uppercase tracking-wider transition-all duration-300 shadow-[0_8px_24px_-4px_rgba(175,18,37,0.45)] hover:-translate-y-0.5 flex items-center gap-2.5 justify-center w-full sm:w-auto"
+                                className="group h-14 px-10 rounded-lg bg-primary hover:bg-primary-dark text-white font-black text-[14px] uppercase tracking-[0.25em] transition-all duration-300 shadow-[0_15px_30px_-5px_rgba(175,18,37,0.6)] hover:-translate-y-0.5 flex items-center gap-3 justify-center w-full sm:w-auto"
                             >
                                 Explore Games
-                                <svg className="size-4 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <svg className="size-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0-5 5m5-5H6" />
                                 </svg>
                             </Link>
                             <Link
                                 href="/become-pro"
-                                className="min-h-[48px] px-6 sm:px-7 rounded-lg bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 text-white font-semibold text-sm uppercase tracking-wider transition-all duration-300 backdrop-blur-sm flex items-center justify-center w-full sm:w-auto"
+                                className="h-14 px-10 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-white font-black text-[14px] uppercase tracking-[0.25em] transition-all duration-300 backdrop-blur-md flex items-center justify-center w-full sm:w-auto"
                             >
-                                Become a Pro
+                                Become a PRO
                             </Link>
-                        </motion.div>
-
-                        {/* Trust line */}
-                        <motion.div variants={fadeUp} className="flex flex-wrap items-center gap-x-4 gap-y-2 text-[11px] sm:text-xs text-gray-500">
-                            <span className="flex items-center gap-1.5">
-                                <CheckCircle className="size-3.5 text-emerald-600" />
-                                Secure checkout
-                            </span>
-                            <span className="flex items-center gap-1.5">
-                                <Shield className="size-3.5 text-emerald-600" />
-                                Verified boosters
-                            </span>
-                            <span className="flex items-center gap-1.5">
-                                <HeadphonesIcon className="size-3.5 text-emerald-600" />
-                                24/7 support
-                            </span>
                         </motion.div>
                     </motion.div>
 
-                    {/* RIGHT: Game Showcase Card */}
-                    <div className="hidden lg:flex relative w-[440px] h-[490px] shrink-0 items-center justify-center">
-                        {/* Subtle ambient glow behind the card */}
-                        <div className="absolute -inset-10 rounded-full bg-primary/[0.06] blur-[80px] pointer-events-none" />
+                    {/* RIGHT: Full-Bleed Sliding Panel */}
+                    <div className="hidden lg:block relative w-[440px] h-[520px] shrink-0 rounded-2xl overflow-hidden">
+                        {/* Panel Image — AnimatePresence for slide transitions */}
+                        <AnimatePresence initial={false} custom={direction} mode="popLayout">
+                            <motion.div
+                                key={activeIndex}
+                                custom={direction}
+                                variants={panelVariants}
+                                initial="enter"
+                                animate="center"
+                                exit="exit"
+                                className="absolute inset-0"
+                            >
+                                <Image
+                                    src={activeCard.image}
+                                    alt={activeCard.label}
+                                    fill
+                                    sizes="440px"
+                                    className="object-cover object-top"
+                                    priority
+                                />
 
-                        {/* Main card — single container */}
-                        <div className="relative w-full h-full rounded-[20px] overflow-hidden border border-white/[0.08] shadow-[0_16px_64px_-12px_rgba(0,0,0,0.5)]">
-                            <AnimatePresence initial={false} custom={direction} mode="popLayout">
-                                <motion.div
-                                    key={activeIndex}
-                                    custom={direction}
-                                    variants={panelVariants}
-                                    initial="enter"
-                                    animate="center"
-                                    exit="exit"
-                                    className="absolute inset-0"
-                                >
-                                    <Image
-                                        src={activeCard.image}
-                                        alt={`${activeCard.label} - ${activeCard.sub}`}
-                                        fill
-                                        sizes="440px"
-                                        className="object-cover object-[center_20%]"
-                                        priority
-                                    />
-                                    <div className="absolute inset-0 bg-linear-to-t from-[#050505] via-[#050505]/25 to-transparent" />
-                                </motion.div>
-                            </AnimatePresence>
+                                {/* Overlays */}
+                                <div className="absolute inset-0 bg-linear-to-t from-[#050505] via-[#050505]/30 to-transparent" />
+                                <div className="absolute inset-0 bg-linear-to-l from-transparent via-transparent to-[#050505]/40" />
+                            </motion.div>
+                        </AnimatePresence>
 
-                            {/* Panel Content */}
-                            <div className="absolute inset-0 z-20 flex flex-col justify-between p-6">
-                                <div className="flex items-center justify-between">
-                                    <AnimatePresence mode="wait">
-                                        <motion.div
-                                            key={activeIndex}
-                                            variants={textSlide}
-                                            initial="enter"
-                                            animate="center"
-                                            exit="exit"
-                                            className="bg-primary/90 backdrop-blur-sm rounded-md px-3 py-1.5"
-                                        >
-                                            <span className="text-[11px] font-semibold text-white uppercase tracking-wider">{activeCard.sub}</span>
-                                        </motion.div>
-                                    </AnimatePresence>
+                        {/* Border & glow */}
+                        <div className="absolute inset-0 rounded-2xl border border-white/10 pointer-events-none z-10" />
+                        <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-primary/10 pointer-events-none z-10" />
 
-                                    <div className="bg-black/40 backdrop-blur-md rounded-md px-2.5 py-1">
-                                        <span className="text-[11px] font-medium text-white/40 uppercase tracking-wider">
-                                            {String(activeIndex + 1).padStart(2, '0')} / {String(HERO_GAME_CARDS.length).padStart(2, '0')}
-                                        </span>
-                                    </div>
+                        {/* Panel Content Overlay — stays on top */}
+                        <div className="absolute inset-0 z-20 flex flex-col justify-between p-6">
+                            {/* Top: Service badge */}
+                            <div className="flex items-center justify-between">
+                                <AnimatePresence mode="wait">
+                                    <motion.div
+                                        key={activeIndex}
+                                        variants={textSlide}
+                                        initial="enter"
+                                        animate="center"
+                                        exit="exit"
+                                        className="bg-primary/90 backdrop-blur-sm rounded-lg px-3 py-1.5 border border-primary/50"
+                                    >
+                                        <span className="text-[14px] font-black text-white uppercase tracking-widest">{activeCard.sub}</span>
+                                    </motion.div>
+                                </AnimatePresence>
+
+                                {/* Card counter */}
+                                <div className="bg-black/40 backdrop-blur-md rounded-lg px-3 py-1.5 border border-white/10">
+                                    <span className="text-[14px] font-black text-white/60 uppercase tracking-widest">
+                                        {String(activeIndex + 1).padStart(2, '0')} / {String(HERO_GAME_CARDS.length).padStart(2, '0')}
+                                    </span>
                                 </div>
+                            </div>
 
-                                <div>
-                                    <AnimatePresence mode="wait">
-                                        <motion.div
-                                            key={activeIndex}
-                                            variants={textSlide}
-                                            initial="enter"
-                                            animate="center"
-                                            exit="exit"
+                            {/* Bottom: Game info + CTA */}
+                            <div>
+                                <AnimatePresence mode="wait">
+                                    <motion.div
+                                        key={activeIndex}
+                                        variants={textSlide}
+                                        initial="enter"
+                                        animate="center"
+                                        exit="exit"
+                                    >
+                                        <h3 className="font-cairo text-4xl font-black text-white uppercase tracking-tighter leading-none mb-2 drop-shadow-[0_2px_20px_rgba(0,0,0,0.5)]">
+                                            {activeCard.label}
+                                        </h3>
+                                        <p className="text-sm text-white/60 font-medium mb-5 italic">
+                                            {activeCard.tagline}
+                                        </p>
+                                        <Link
+                                            href={`/${activeCard.slug}/services`}
+                                            className="group inline-flex items-center gap-2 bg-white/10 hover:bg-primary border border-white/20 hover:border-primary rounded-xl px-5 py-3 backdrop-blur-md transition-all duration-300"
                                         >
-                                            <h3 className="font-cairo text-[28px] font-bold text-white uppercase tracking-tighter leading-none mb-1">
-                                                {activeCard.label}
-                                            </h3>
-                                            <p className="text-[13px] text-white/40 font-medium mb-5">
-                                                {activeCard.tagline}
-                                            </p>
-                                            <Link
-                                                href={`/${activeCard.slug}/services`}
-                                                className="group inline-flex items-center gap-2.5 bg-white/10 hover:bg-primary border border-white/15 hover:border-primary rounded-lg px-5 py-3 min-h-[44px] backdrop-blur-sm transition-all duration-300"
-                                            >
-                                                <span className="text-[12px] font-semibold text-white uppercase tracking-wider">View Services</span>
-                                                <svg className="w-4 h-4 text-white group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                                                </svg>
-                                            </Link>
-                                        </motion.div>
-                                    </AnimatePresence>
+                                            <span className="text-[14px] font-black text-white uppercase tracking-widest">View Services</span>
+                                            <svg className="w-4 h-4 text-white group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                                            </svg>
+                                        </Link>
+                                    </motion.div>
+                                </AnimatePresence>
 
-                                    {/* Navigation dots + arrows */}
-                                    <div className="flex items-center justify-between mt-5">
-                                        <div className="flex items-center gap-1.5">
-                                            {HERO_GAME_CARDS.map((_, i) => (
-                                                <button
-                                                    key={i}
-                                                    onClick={() => goTo(i)}
-                                                    className="relative flex items-center justify-center p-1 -m-1"
-                                                    aria-label={`Go to ${HERO_GAME_CARDS[i].label}`}
-                                                >
-                                                    <div
-                                                        className="relative h-1.5 rounded-full transition-all duration-300"
-                                                        style={{ width: i === activeIndex ? 22 : 6 }}
-                                                    >
-                                                        <div className={`absolute inset-0 rounded-full transition-colors duration-300 ${
-                                                            i === activeIndex ? 'bg-primary' : 'bg-white/20'
-                                                        }`} />
-                                                        {i === activeIndex && (
-                                                            <motion.div
-                                                                className="absolute inset-y-0 left-0 bg-white/30 rounded-full"
-                                                                initial={{ width: "0%" }}
-                                                                animate={{ width: "100%" }}
-                                                                transition={{ duration: 5, ease: "linear" }}
-                                                                key={`progress-${activeIndex}`}
-                                                            />
-                                                        )}
-                                                    </div>
-                                                </button>
-                                            ))}
-                                        </div>
+                                {/* Navigation dots + arrows */}
+                                <div className="flex items-center justify-between mt-6">
+                                    <div className="flex gap-2">
+                                        {HERO_GAME_CARDS.map((_, i) => (
+                                            <button
+                                                key={i}
+                                                onClick={() => goTo(i)}
+                                                className="relative h-1.5 rounded-full overflow-hidden transition-all duration-300"
+                                                style={{ width: i === activeIndex ? 32 : 12 }}
+                                            >
+                                                <div className={`absolute inset-0 rounded-full transition-colors duration-300 ${
+                                                    i === activeIndex ? 'bg-primary' : 'bg-white/20'
+                                                }`} />
+                                                {/* Progress fill for active dot */}
+                                                {i === activeIndex && (
+                                                    <motion.div
+                                                        className="absolute inset-y-0 left-0 bg-white/40 rounded-full"
+                                                        initial={{ width: "0%" }}
+                                                        animate={{ width: "100%" }}
+                                                        transition={{ duration: 5, ease: "linear" }}
+                                                        key={`progress-${activeIndex}`}
+                                                    />
+                                                )}
+                                            </button>
+                                        ))}
+                                    </div>
 
-                                        <div className="flex items-center gap-1.5">
-                                            <button
-                                                onClick={() => goTo((activeIndex - 1 + HERO_GAME_CARDS.length) % HERO_GAME_CARDS.length)}
-                                                className="w-7 h-7 min-w-[36px] min-h-[36px] rounded-md bg-white/10 hover:bg-white/15 border border-white/10 flex items-center justify-center text-white transition-all"
-                                                aria-label="Previous game"
-                                            >
-                                                <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                                                </svg>
-                                            </button>
-                                            <button
-                                                onClick={() => goTo((activeIndex + 1) % HERO_GAME_CARDS.length)}
-                                                className="w-7 h-7 min-w-[36px] min-h-[36px] rounded-md bg-white/10 hover:bg-white/15 border border-white/10 flex items-center justify-center text-white transition-all"
-                                                aria-label="Next game"
-                                            >
-                                                <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                                                </svg>
-                                            </button>
-                                        </div>
+                                    {/* Arrow controls */}
+                                    <div className="flex gap-2">
+                                        <button
+                                            onClick={() => goTo((activeIndex - 1 + HERO_GAME_CARDS.length) % HERO_GAME_CARDS.length)}
+                                            className="w-8 h-8 rounded-lg bg-white/10 hover:bg-white/20 border border-white/10 flex items-center justify-center text-white transition-all backdrop-blur-sm"
+                                        >
+                                            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                                            </svg>
+                                        </button>
+                                        <button
+                                            onClick={() => goTo((activeIndex + 1) % HERO_GAME_CARDS.length)}
+                                            className="w-8 h-8 rounded-lg bg-white/10 hover:bg-white/20 border border-white/10 flex items-center justify-center text-white transition-all backdrop-blur-sm"
+                                        >
+                                            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                            </svg>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
             </div>
         </header>
     )

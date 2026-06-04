@@ -1,230 +1,242 @@
+import { Footer } from "@/components/layout/footer"
 import { HeroSection } from "@/components/home/hero-section"
 import { HowItWorks } from "@/components/home/how-it-works"
 import { TestimonialsSection } from "@/components/home/testimonials-section"
-import { Footer } from "@/components/layout/footer"
 import Link from "next/link"
+import { Target, Swords, Trophy, Crosshair, CloudLightning, Flame, Shield, Gamepad2, Aperture, Bomb, Sword, Star } from "lucide-react"
 import { api } from "@/lib/api"
-import { Gamepad2, Package, ArrowRight } from "lucide-react"
 
-// ── FALLBACK DATA (used only when API returns empty) ────────────────────────
+// ── DATA ─────────────────────────────────────────────────────────────────────
 
-const GRADIENT_PRESETS = [
-  "from-[#1a0a2e] to-[#0d0515]",
-  "from-[#0a1a2e] to-[#050d15]",
-  "from-[#1a0a0a] to-[#0d0505]",
-  "from-[#0a1a12] to-[#050d08]",
-  "from-[#1a150a] to-[#0d0a05]",
-  "from-[#0a0f1a] to-[#05080d]",
+const FILTERS = ["All", "WoW", "Valorant", "League of Legends", "CS2", "Fortnite", "Elden Ring", "Destiny 2"]
+
+const GAMES = [
+  { name: "World of Warcraft", tag: "Raid • Leveling", icon: Swords, bg: "https://i.postimg.cc/fRFFs36m/15-(4).png", character: "https://i.postimg.cc/4NfjQR6c/15-(3).png", href: "/wow/services" },
+  { name: "ARC Raiders", tag: "Materials • Loot", icon: Star, bg: "https://i.postimg.cc/YCzk2Rg7/Refine-the-image-make-the-logo-inspired-shape-much-larger-and-more-integrated-into-the-background.png", href: "/arc-raiders/services" },
+  { name: "Valorant", tag: "Rank • Coaching", icon: Target, bg: "https://i.postimg.cc/YCzk2Rg7/Refine-the-image-make-the-logo-inspired-shape-much-larger-and-more-integrated-into-the-background.png", href: "/valorant/services" },
+  { name: "League of Legends", tag: "Rank • Duo Queue", icon: Trophy, bg: "https://i.postimg.cc/YCzk2Rg7/Refine-the-image-make-the-logo-inspired-shape-much-larger-and-more-integrated-into-the-background.png", href: "/lol/services" },
+  { name: "Path Of Exile", tag: "Currency • Items", icon: Crosshair, bg: "https://i.postimg.cc/YCzk2Rg7/Refine-the-image-make-the-logo-inspired-shape-much-larger-and-more-integrated-into-the-background.png", href: "/poe/services" },
+  { name: "Path Of Exile 2", tag: "Currency • Items", icon: CloudLightning, bg: "https://i.postimg.cc/YCzk2Rg7/Refine-the-image-make-the-logo-inspired-shape-much-larger-and-more-integrated-into-the-background.png", href: "#" },
+  { name: "Throne And Liberty", tag: "Currency • Items", icon: Flame, bg: "https://i.postimg.cc/YCzk2Rg7/Refine-the-image-make-the-logo-inspired-shape-much-larger-and-more-integrated-into-the-background.png", href: "#" },
+  { name: "Diablo IV", tag: "Power • Gold", icon: Sword, bg: "https://i.postimg.cc/YCzk2Rg7/Refine-the-image-make-the-logo-inspired-shape-much-larger-and-more-integrated-into-the-background.png", href: "#" },
+  { name: "Marvel Rivals", tag: "Currency • Items", icon: Shield, bg: "https://i.postimg.cc/YCzk2Rg7/Refine-the-image-make-the-logo-inspired-shape-much-larger-and-more-integrated-into-the-background.png", href: "#" },
+  { name: "Overwatch", tag: "Rank • Coaching", icon: Gamepad2, bg: "https://i.postimg.cc/YCzk2Rg7/Refine-the-image-make-the-logo-inspired-shape-much-larger-and-more-integrated-into-the-background.png", href: "#" },
+  { name: "Destiny 2", tag: "Rank • Coaching", icon: Aperture, bg: "https://i.postimg.cc/YCzk2Rg7/Refine-the-image-make-the-logo-inspired-shape-much-larger-and-more-integrated-into-the-background.png", href: "#" },
+  { name: "Call of Duty", tag: "MWIII • Warzone", icon: Bomb, bg: "https://i.postimg.cc/YCzk2Rg7/Refine-the-image-make-the-logo-inspired-shape-much-larger-and-more-integrated-into-the-background.png", href: "#" },
 ]
 
-const GAMES_FALLBACK = [
-  { name: "World of Warcraft", description: "Raid \u00b7 Leveling", bgImage: "https://i.postimg.cc/fRFFs36m/15-(4).png", charImage: "https://i.postimg.cc/4NfjQR6c/15-(3).png", slug: "wow" },
-  { name: "Valorant", description: "Rank \u00b7 Coaching", bgImage: "", slug: "valorant" },
-  { name: "League of Legends", description: "Rank \u00b7 Duo Queue", bgImage: "", slug: "lol" },
-  { name: "CS2", description: "Rank \u00b7 Premier", bgImage: "", slug: "cs2" },
-  { name: "Fortnite", description: "Ranks \u00b7 Challenges", bgImage: "", slug: "fortnite" },
-  { name: "Elden Ring", description: "Bosses \u00b7 Runes", bgImage: "", slug: "elden-ring" },
+const FEATURED = [
+  { game: "Valorant", title: "Rank Boost — Platinum → Diamond", price: "$45.00", icon: Target, bg: "from-[#1a0520] to-[#2d0a35]" },
+  { game: "World of Warcraft", title: "Mythic+ Dungeon Carry ×10", price: "$29.00", icon: Swords, bg: "from-[#0a1a10] to-[#0d2015]" },
+  { game: "League of Legends", title: "Solo Rank Boost — Gold → Plat", price: "$19.00", icon: Trophy, bg: "from-[#1a0a0a] to-[#2a0d10]" },
+  { game: "CS2", title: "Premier Rating Boost +3000", price: "$35.00", icon: Crosshair, bg: "from-[#0a0a1a] to-[#10102a]" },
 ]
-
-function getInitials(name: string) {
-  return name.split(" ").map(w => w[0]).join("").slice(0, 2).toUpperCase()
-}
-
-function getGradientForIndex(i: number) {
-  return GRADIENT_PRESETS[i % GRADIENT_PRESETS.length]
-}
 
 // ── PAGE ─────────────────────────────────────────────────────────────────────
 
 export default async function Home() {
-  const { data: featuredServices } = await api('/featured-services').catch(() => ({ data: [] }))
-  const { data: dbGames } = await api('/games').catch(() => ({ data: [] }))
+  const { data: featuredServices } = await api('/featured-services').catch(() => ({ data: [] }));
 
-  const displayGames = dbGames.length > 0
-    ? dbGames.map((g: any) => ({
-        name: g.name,
-        description: g.description || "",
-        bgImage: g.bgImage || "",
-        charImage: g.charImage || "",
-        slug: g.slug || g.href?.split('/')[1] || "",
-        serviceCount: g.serviceCount,
-      }))
-    : GAMES_FALLBACK
+  const { data: dbGames } = await api('/games').catch(() => ({ data: [] }));
+
+  // Use DB games if they exist, otherwise fallback
+  const displayGames = dbGames.length > 0 ? dbGames.map((g: any) => ({
+    name: g.name,
+    tag: g.description || "",
+    bg: g.bgImage,
+    character: g.charImage,
+    href: g.href
+  })) : GAMES;
 
   return (
     <div className="flex min-h-screen flex-col">
       <main className="flex-1">
 
-        {/* HERO */}
+        {/* ── HERO (unchanged) ── */}
         <HeroSection />
 
-        {/* AVAILABLE GAMES */}
-        <section id="games" className="section-alt pt-14 pb-16 scroll-mt-20">
+        {/* ── GAMES GRID ── */}
+        <section id="games" className="bg-[#050505] py-10 scroll-mt-20">
           <div className="max-w-[1440px] mx-auto px-6 lg:px-10">
 
-            <div className="mb-8">
-              <div className="h-px w-12 bg-primary mb-4" />
-              <h2 className="font-cairo text-3xl md:text-[34px] font-bold text-white tracking-tight uppercase">
-                Available <span className="text-primary">Games</span>
-              </h2>
-              <p className="text-gray-500 text-sm mt-2">
-                Browse our catalog of competitive games and find the service you need.
-              </p>
+            {/* header */}
+            <div className="flex items-center justify-between mb-5">
+              <div>
+                <div className="h-px w-12 bg-primary mb-4" />
+                <h2 className="text-3xl md:text-4xl font-black text-white tracking-tighter uppercase">
+                  Available <span className="text-primary">Games</span>
+                </h2>
+              </div>
             </div>
 
-            {displayGames.length > 0 ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-3">
-                {displayGames.map((g: any, i: number) => {
-                  const isImage = g.bgImage && (g.bgImage.includes('://') || g.bgImage.startsWith('/'))
-                  const initials = getInitials(g.name)
-                  return (
-                    <Link
-                      key={g.name}
-                      href={`/${g.slug}/services`}
-                      className="group relative flex w-full h-[160px] sm:h-[180px] items-end overflow-hidden rounded-xl border border-white/[0.06] bg-[#0e0e0e] transition-all duration-300 hover:-translate-y-1 hover:border-primary/30 hover:shadow-[0_12px_40px_-8px_rgba(0,0,0,0.6)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary sm:[&_span.svc-cta]:opacity-0 sm:[&_span.svc-cta]:translate-y-1 sm:group-hover:[&_span.svc-cta]:opacity-100 sm:group-hover:[&_span.svc-cta]:translate-y-0"
-                    >
-                      {/* Background */}
-                      <div className="absolute inset-0 overflow-hidden">
-                        {isImage ? (
-                          // eslint-disable-next-line @next/next/no-img-element
-                          <img
-                            src={g.bgImage}
-                            alt={`${g.name} background`}
-                            className="absolute inset-0 w-full h-full object-cover opacity-40 group-hover:opacity-70 group-hover:scale-110 transition-all duration-700 pointer-events-none"
-                          />
-                        ) : (
-                          <div className={`absolute inset-0 bg-gradient-to-br ${getGradientForIndex(i)} opacity-80`} />
-                        )}
-                        <div className="absolute inset-0 bg-gradient-to-t from-[#0e0e0e] via-[#0e0e0e]/50 to-transparent" />
-                      </div>
+            {/* filter tabs */}
+            <div className="flex flex-wrap gap-2 mb-6">
+              {FILTERS.map((f, i) => (
+                <button
+                  key={f}
+                  className={`rounded-full border px-4 py-1.5 text-[14px] font-bold uppercase tracking-wider transition-all
+                    ${i === 0
+                      ? "border-primary bg-primary text-white"
+                      : "border-border bg-card text-muted-foreground hover:border-primary hover:text-white"
+                    }`}
+                >
+                  {f}
+                </button>
+              ))}
+            </div>
 
-                      {/* Initials fallback when no image */}
-                      {!isImage && (
-                        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                          <span className="font-cairo text-5xl font-black text-white/[0.06] select-none group-hover:text-white/[0.1] transition-colors duration-500">
-                            {initials}
-                          </span>
-                        </div>
-                      )}
-
-                      {/* Character image */}
-                      {g.charImage && (
+            {/* grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
+              {displayGames.map((g: any) => {
+                const isImage = g.bg.includes('://') || g.bg.startsWith('/');
+                return (
+                  <Link
+                    key={g.name}
+                    href={g.href}
+                    className="group relative flex w-full h-[115px] items-end overflow-hidden rounded-xl border border-border bg-card transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/50"
+                  >
+                    <div className="absolute inset-0 flex items-center justify-center overflow-hidden">
+                      {isImage ? (
                         // eslint-disable-next-line @next/next/no-img-element
                         <img
-                          src={g.charImage}
-                          alt=""
-                          className="absolute -right-3 -bottom-4 h-[115%] w-auto object-contain opacity-60 group-hover:opacity-90 group-hover:scale-105 transition-all duration-500 pointer-events-none z-10"
-                          aria-hidden="true"
+                          src={g.bg}
+                          alt={g.name}
+                          className="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:opacity-80 transition-opacity duration-300 pointer-events-none"
                         />
+                      ) : (
+                        <div className={`absolute inset-0 bg-linear-to-br ${g.bg}`} />
                       )}
 
-                      {/* Content */}
-                      <div className="relative z-20 p-3 sm:p-4 w-full">
-                        <h3 className="font-cairo text-[15px] sm:text-[15px] font-bold text-white uppercase tracking-tight leading-tight mb-1 line-clamp-2">
-                          {g.name}
-                        </h3>
-                        {g.description && (
-                          <p className="text-[11px] text-gray-300 sm:text-gray-400 font-medium mb-2" dangerouslySetInnerHTML={{ __html: g.description }} />
-                        )}
-                        {/* On mobile: always visible. On desktop: only on hover via CSS above. */}
-                        <span className="svc-cta inline-flex items-center gap-1 text-[11px] font-semibold text-primary/90 sm:text-primary opacity-100 translate-y-0 sm:opacity-0 sm:translate-y-1 transition-all duration-300">
-                          View Services <ArrowRight className="size-3" />
-                        </span>
-                      </div>
-                    </Link>
-                  )
-                })}
-              </div>
-            ) : (
-              /* Empty State */
-              <div className="flex flex-col items-center justify-center py-16 text-center">
-                <div className="size-14 rounded-xl bg-white/[0.03] border border-white/5 flex items-center justify-center mb-4">
-                  <Gamepad2 className="size-6 text-gray-600" />
-                </div>
-                <p className="text-gray-500 text-sm max-w-sm">
-                  No games are available at the moment. Check back soon as we expand our catalog.
-                </p>
-              </div>
-            )}
+                      {(g as any).character && (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img
+                          src={(g as any).character}
+                          alt={`${g.name} character`}
+                          className="absolute -right-4 -bottom-2 h-[115%] w-auto object-contain transition-transform duration-500 ease-out group-hover:scale-115 pointer-events-none z-20"
+                        />
+                      )}
+                    </div>
+                    <div className="relative z-30 p-4 pointer-events-none">
+                      <div className="font-cairo text-sm font-black leading-tight text-white uppercase tracking-tight mb-0.5">{g.name}</div>
+                    </div>
+                  </Link>
+                )
+              })}
+            </div>
           </div>
         </section>
 
-        {/* FEATURED SERVICES — hidden when empty for clean production behavior */}
-        {featuredServices.length > 0 && (
-          <section className="bg-[#050505] pb-16 pt-4">
-            <div className="max-w-[1440px] mx-auto px-6 lg:px-10">
+        {/* divider */}
+        <div className="mx-6 lg:mx-10 h-px bg-border" />
 
-              <div className="mb-8">
+        {/* ── FEATURED SERVICES ── */}
+        <section className="bg-[#050505] py-10">
+          <div className="max-w-[1440px] mx-auto px-6 lg:px-10">
+
+            <div className="flex items-center justify-between mb-6">
+              <div>
                 <div className="h-px w-12 bg-primary mb-4" />
-                <h2 className="font-cairo text-3xl md:text-[34px] font-bold text-white tracking-tight uppercase">
+                <h2 className="text-3xl md:text-4xl font-black text-white tracking-tighter uppercase">
                   Featured <span className="text-primary">Services</span>
                 </h2>
-                <p className="text-gray-500 text-sm mt-2">
-                  Popular services chosen by our community.
-                </p>
               </div>
+            </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                {featuredServices.map((fs: any) => {
-                  const bgImage = fs.image || fs.game?.bgImage || ""
-                  const isBgUrl = bgImage && (bgImage.includes('://') || bgImage.startsWith('/'))
-                  const serviceSlug = fs.slug || fs.name?.toLowerCase().replace(/[^a-z0-9]+/g, '-') || String(fs.id)
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+              {featuredServices.length > 0 ? (
+                featuredServices.map((fs: any) => {
+                  const bgImage = fs.image || fs.game.bgImage || "from-[#1a0520] to-[#2d0a35]";
+                  const isBgUrl = bgImage.includes('://') || bgImage.startsWith('/');
 
                   return (
                     <Link
-                      href={`/services/${encodeURIComponent(serviceSlug)}`}
+                      href={`/services/${encodeURIComponent(fs.name.toLowerCase().replace(/[^a-z0-9]+/g, '-'))}`}
                       key={fs.id}
-                      className="group flex flex-col overflow-hidden rounded-xl bg-[#0c0c0c] border border-white/[0.06] hover:border-white/10 transition-all duration-300 hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                      className="group flex flex-col overflow-hidden rounded-[20px] bg-[#0A0A0A] border border-white/5 hover:border-white/10 transition-all duration-300"
                     >
-                      {/* Thumbnail */}
-                      <div className="relative h-[140px] sm:h-[160px] w-full overflow-hidden bg-[#111]">
+                      {/* thumbnail */}
+                      <div className="relative h-[188px] w-full overflow-hidden border-b border-white/5">
                         {isBgUrl ? (
                           // eslint-disable-next-line @next/next/no-img-element
                           <img
                             src={bgImage}
-                            alt={`${fs.name} thumbnail`}
-                            className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-90 group-hover:scale-105 transition-all duration-500 pointer-events-none"
+                            alt={fs.name}
+                            className="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:scale-105 group-hover:opacity-100 transition-all duration-500 pointer-events-none"
                           />
                         ) : (
-                          <div className="absolute inset-0 bg-gradient-to-br from-[#1a0520] to-[#0a0a0a] flex items-center justify-center">
-                            <Package className="size-7 text-gray-700" />
-                          </div>
+                          <div className={`absolute inset-0 bg-linear-to-br opacity-80 group-hover:scale-105 group-hover:opacity-100 transition-all duration-500 ${bgImage}`} />
                         )}
-                        <div className="absolute inset-0 bg-gradient-to-t from-[#0c0c0c] via-transparent to-transparent" />
                       </div>
 
-                      {/* Content */}
-                      <div className="p-4 flex flex-col flex-1">
-                        <div className="text-[10px] font-semibold uppercase tracking-widest text-gray-500 mb-1">
-                          {fs.game?.name || "Service"}
+                      {/* Content Section */}
+                      <div className="p-5 flex flex-col flex-1 bg-[#0A0A0A]">
+                        <div className="text-[14px] font-bold uppercase tracking-widest text-slate-500 mb-1.5">
+                          {fs.game.name}
                         </div>
-                        <h3 className="text-[13px] font-semibold leading-snug text-white line-clamp-2 min-h-[36px] mb-3" title={fs.name}>
+                        <div className="text-sm font-bold leading-snug text-white line-clamp-2 min-h-[40px] mb-4">
                           {fs.name}
-                        </h3>
+                        </div>
 
-                        <div className="mt-auto">
-                          <div className="text-[10px] uppercase font-medium tracking-widest text-gray-600 mb-0.5">Starting at</div>
-                          <div className="text-base font-bold text-white">
-                            {fs.basePrice != null && !isNaN(Number(fs.basePrice)) ? `$${Number(fs.basePrice).toFixed(2)}` : "--.--"}
+                        <div className="mt-auto flex flex-col">
+                          <span className="text-[14px] uppercase font-bold tracking-widest text-[#888] mb-0.5">Starting at</span>
+                          <div className="text-xl font-black text-white">
+                            ${Number(fs.basePrice).toFixed(2)}
                           </div>
                         </div>
 
-                        <div className="mt-3 w-full rounded-lg bg-white/5 group-hover:bg-primary border border-white/5 group-hover:border-primary py-2 text-center text-[12px] font-semibold text-white uppercase tracking-wider transition-all duration-300">
-                          View Details
-                        </div>
+                        <button className="mt-4 w-full rounded-md bg-primary py-2.5 text-[14px] font-black uppercase tracking-widest text-white transition-colors hover:bg-primary/90">
+                          Buy Now
+                        </button>
                       </div>
                     </Link>
                   )
-                })}
-              </div>
-            </div>
-          </section>
-        )}
+                })
+              ) : (
+                FEATURED.map((f) => {
+                  const Icon = f.icon;
+                  return (
+                    <div
+                      key={f.title}
+                      className="group flex flex-col overflow-hidden rounded-[20px] bg-[#0A0A0A] border border-white/5 hover:border-white/10 transition-all duration-300"
+                    >
+                      {/* thumbnail */}
+                      <div className="relative h-[188px] w-full overflow-hidden border-b border-white/5">
+                        <div className={`absolute inset-0 bg-linear-to-br opacity-80 group-hover:scale-105 group-hover:opacity-100 transition-all duration-500 ${f.bg}`} />
+                      </div>
 
-        {/* HOW IT WORKS */}
+                      {/* Content Section */}
+                      <div className="p-5 flex flex-col flex-1 bg-[#0A0A0A]">
+                        <div className="text-[14px] font-bold uppercase tracking-widest text-slate-500 mb-1.5">
+                          {f.game}
+                        </div>
+                        <div className="text-sm font-bold leading-snug text-white line-clamp-2 min-h-[40px] mb-4">
+                          {f.title}
+                        </div>
+
+                        <div className="mt-auto flex flex-col">
+                          <span className="text-[14px] uppercase font-bold tracking-widest text-[#888] mb-0.5">Starting at</span>
+                          <div className="text-xl font-black text-white">
+                            {f.price}
+                          </div>
+                        </div>
+
+                        <button className="mt-4 w-full rounded-md bg-primary py-2.5 text-[14px] font-black uppercase tracking-widest text-white transition-colors hover:bg-primary/90">
+                          Buy Now
+                        </button>
+                      </div>
+                    </div>
+                  )
+                })
+              )}
+            </div>
+          </div>
+        </section>
+
+        {/* ── OPERATIONAL SEQUENCE ── */}
         <HowItWorks />
 
-        {/* TESTIMONIALS — hidden when no reviews exist for clean production behavior */}
+
+        {/* ── TESTIMONIALS ── */}
         <TestimonialsSection />
 
       </main>
