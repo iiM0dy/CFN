@@ -51,7 +51,7 @@ export default function FAQPage() {
     const [activeCategory, setActiveCategory] = useState("payments");
 
     return (
-        <div className="bg-[#211113] text-white min-h-screen flex flex-col font-(family-name:--font-space-grotesk)">
+        <div className="bg-[#211113] text-white min-h-screen flex flex-col font-(family-name:--font-inter)">
 
             <main className="grow">
                 {/* Hero */}

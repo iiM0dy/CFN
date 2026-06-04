@@ -31,7 +31,7 @@ export default function AnnouncementBar() {
                 initial={{ height: 0, opacity: 0 }}
                 animate={{ height: "auto", opacity: 1 }}
                 exit={{ height: 0, opacity: 0 }}
-                className="bg-primary text-white overflow-hidden relative"
+                className="bg-primary text-white overflow-hidden relative z-[110]"
             >
                 <div className="max-w-[1440px] mx-auto px-6 h-10 flex items-center justify-center gap-3">
                     <Megaphone className="size-3.5 animate-bounce" />

@@ -26,7 +26,7 @@ function StarIcons({ count }: { count: number }) {
 
 export default function WallOfFamePage() {
     return (
-        <div className="relative flex min-h-screen w-full flex-col bg-[#181112] text-white font-(family-name:--font-space-grotesk)">
+        <div className="relative flex min-h-screen w-full flex-col bg-[#181112] text-white font-(family-name:--font-inter)">
 
             <main className="flex-1 flex flex-col items-center w-full px-6 py-8 md:py-12">
                 <div className="w-full max-w-7xl flex flex-col gap-10">

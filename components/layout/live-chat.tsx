@@ -124,14 +124,14 @@ export function LiveChat() {
     }
 
     return (
-        <div className="fixed bottom-6 right-6 z-200 font-sans">
+        <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-200 font-sans">
             <AnimatePresence>
                 {isOpen && (
                     <motion.div
                         initial={{ opacity: 0, scale: 0.95, y: 20 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.95, y: 20 }}
-                        className="absolute bottom-20 right-0 w-[350px] md:w-[420px] h-[600px] bg-[#0A0A0A] border border-white/10 rounded-[2.5rem] shadow-2xl flex flex-col overflow-hidden backdrop-blur-3xl"
+                        className="absolute bottom-16 sm:bottom-20 right-0 w-[calc(100vw-2rem)] sm:w-[350px] md:w-[420px] h-[500px] sm:h-[600px] bg-[#0A0A0A] border border-white/10 rounded-[2rem] sm:rounded-[2.5rem] shadow-2xl flex flex-col overflow-hidden backdrop-blur-3xl"
                     >
                         {/* Dynamic Header */}
                         <div className={`p-8 transition-all duration-500 ${chatState === 'home' ? 'bg-linear-to-br from-primary/20 via-primary/5 to-transparent h-64' : 'bg-white/5 border-b border-white/10 p-6'}`}>
@@ -285,7 +285,7 @@ export function LiveChat() {
             {/* Toggle Button */}
             <button
                 onClick={() => setIsOpen(!isOpen)}
-                className={`relative group size-16 rounded-[2rem] flex items-center justify-center transition-all duration-500 shadow-2xl ${isOpen ? "bg-[#1A1A1A] rotate-90" : "bg-primary hover:scale-110 hover:-translate-y-1 active:scale-95 shadow-primary/40"
+                className={`relative group size-12 sm:size-16 rounded-[1.5rem] sm:rounded-[2rem] flex items-center justify-center transition-all duration-500 shadow-2xl ${isOpen ? "bg-[#1A1A1A] rotate-90" : "bg-primary hover:scale-110 hover:-translate-y-1 active:scale-95 shadow-primary/40"
                     }`}
             >
                 <div className="absolute inset-0 bg-primary/20 rounded-[2rem] animate-ping opacity-0 group-hover:opacity-100 transition-opacity" />

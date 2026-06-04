@@ -103,7 +103,7 @@ export default function MyOrdersPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#080808] text-white font-(family-name:--font-space-grotesk)">
+    <div className="min-h-screen bg-[#080808] text-white font-(family-name:--font-inter)">
       <main className="grow w-full px-6 lg:px-10 py-8 max-w-[1440px] mx-auto">
         {/* Breadcrumbs */}
         <div className="flex items-center gap-2 text-[14px] font-black uppercase tracking-widest text-slate-500 mb-8">

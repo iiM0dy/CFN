@@ -7,7 +7,7 @@
   --background: #080808;
   --foreground: #ffffff;
 
-  --card: #151515;
+  --card: #111111;
   --card-foreground: #ffffff;
 
   --popover: #151515;
@@ -29,11 +29,11 @@
   --destructive: #7f1d1d;
   --destructive-foreground: #ffffff;
 
-  --border: #2A2A2A;
-  --input: #333333;
+  --border: #222222;
+  --input: #2a2a2a;
   --ring: #af1225;
 
-  --surface-dark: #161616;
+  --surface-dark: #111111;
   --border-dark: #2a1215;
   --surface-light: #211113;
   --text-dim: #b89da1;
@@ -70,7 +70,7 @@
   --radius-sm: calc(var(--radius) - 2px);
   --radius-md: calc(var(--radius));
   --radius-lg: calc(var(--radius) + 4px);
-  --font-sans: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, monospace;
   --font-cairo: var(--font-cairo), ui-sans-serif, system-ui, sans-serif;
 }
@@ -89,6 +89,7 @@ body {
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  line-height: 1.6;
 }
 
 /* Material Symbols */
@@ -104,27 +105,10 @@ body {
   white-space: nowrap;
   direction: ltr;
   font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-
-  /* Support for all WebKit browsers. */
   -webkit-font-smoothing: antialiased;
-  /* Support for Safari and Chrome. */
   text-rendering: optimizeLegibility;
-
-  /* Support for Firefox. */
   -moz-osx-font-smoothing: grayscale;
-
-  /* Support for IE. */
   font-feature-settings: 'liga';
-}
-
-/* Text glow matching design */
-.text-glow {
-  text-shadow: 0 0 20px rgba(175, 18, 37, 0.5);
-}
-
-/* Box glow */
-.bg-glow {
-  box-shadow: 0 0 40px -10px rgba(175, 18, 37, 0.3);
 }
 
 /* Selection color */
@@ -168,7 +152,7 @@ body {
   background: var(--primary);
 }
 
-/* Critical Hero Styles to prevent FOUT/Flash */
+/* Hero title */
 .hero-title {
   line-height: 0.9 !important;
   letter-spacing: -0.05em !important;
@@ -183,15 +167,12 @@ body {
   -webkit-text-fill-color: transparent !important;
   display: inline-block;
   padding-right: 0.05em;
-  /* Avoid clipping text stroke */
 }
 
-/* Ensure the dark class is recognized immediately for all components */
 html.dark {
   color-scheme: dark;
 }
 
-/* Supplemental Contact Page Styles */
 .glow-button {
   box-shadow: 0 0 15px rgba(175, 18, 37, 0.4);
   transition: all 0.3s ease;
@@ -204,4 +185,28 @@ html.dark {
 .input-focus:focus {
   border-color: var(--primary) !important;
   box-shadow: 0 0 0 2px rgba(175, 18, 37, 0.2) !important;
+}
+
+/* Skeleton loading animation */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.skeleton {
+  background: linear-gradient(90deg, #1a1a1a 25%, #252525 50%, #1a1a1a 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+  border-radius: 8px;
+}
+
+/* Subtle section divider */
+.section-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border), transparent);
+}
+
+/* Subtle background variation for alternating sections */
+.section-alt {
+  background: #060606;
 }

@@ -5,7 +5,7 @@ import { CFNLogo } from "@/components/layout/cfnboost-logo";
 
 export default function StoryPage() {
     return (
-        <div className="relative flex min-h-screen w-full flex-col bg-[#211113] text-slate-100 font-(family-name:--font-space-grotesk) antialiased overflow-x-hidden">
+        <div className="relative flex min-h-screen w-full flex-col bg-[#211113] text-slate-100 font-(family-name:--font-inter) antialiased overflow-x-hidden">
 
             <main className="grow">
                 {/* Hero Section */}

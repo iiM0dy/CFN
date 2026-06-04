@@ -22,7 +22,7 @@ import { useCurrency } from "@/context/currency-context"
 export default function CashbackPage() {
     const { formatPrice } = useCurrency()
     return (
-        <div className="bg-[#070405] text-slate-100 antialiased selection:bg-[#B11226] selection:text-white min-h-screen font-(family-name:--font-space-grotesk)">
+        <div className="bg-[#070405] text-slate-100 antialiased selection:bg-[#B11226] selection:text-white min-h-screen font-(family-name:--font-inter)">
             <style jsx>{`
                 @keyframes infinite-scroll {
                     from { transform: translateX(0); }
