@@ -1,93 +1,128 @@
 "use client"
 
-const testimonials = [
-    {
-        quote: "Absolutely insane speed. The booster was super chill and even gave me tips on my crosshair placement. Went from Gold to Ascendant in a week.",
-        author: "Alex M.",
-        tag: "Valorant • Rank Boost",
-        avatar: "https://lh3.googleusercontent.com/aida-public/AB6AXuBUYyZhJYTAnm3v14dfaNhV_psEjYBsmvmp9rRDBB4klGaep7z3IQeGnzoU4zby3pMpFqvM1Epq02WzbrnJiGRyLGT-YncIdtBBRv3lkkWXYfoJamD0RWz7J3VpfmPJRN0-EgKyENFG07OWwY6V2F4uxTZtI8MHfK6pV0mv-Ex83fo_sKDQlINs9d0nDGZ2quem7yb51GHKgaiOPfjlS0g0qVw9NOClmxBWdylhe110gtfzt7JOlTvpGFsE0OS6UFS5GquxorrNQlJJ",
-    },
-    {
-        quote: <>Support was online at 3 AM to help me with my order. The transparency is what makes <span className="font-black text-primary font-cairo">CFNboost</span> the best. No sketchy business.</>,
-        author: "Sarah K.",
-        tag: "LoL • Duo Queue",
-        avatar: "https://lh3.googleusercontent.com/aida-public/AB6AXuAOvioGXQ6xKtNPx0DlGE-iOuwXunePADe0BLkNwn1csFdwZO96bOdBFyhQzR01gIkEGNLJya_2y-TUX5USd9F_XvvDzPdL-M854S1Qrx0XF0_O6XmRlw_OUu00Qp5PuNz7F6w871Hv-sph_LIJfh9K0b_bkz8jW-cQw8hvcccFX5aVCmL66o2t9WeuHATX6V86R8fz0nppR7lNhDzk_kehuGxkn8vPd6k7SWc4Vsw4loxtZbZLaAxtFTBPbPSV2nDaDeNwNm6f57Vr",
-    },
-    {
-        quote: <>Used other sites before, but <span className="font-black text-primary font-cairo">CFNboost</span> is cleaner and faster. The booster respected my offline mode request perfectly.</>,
-        author: "David R.",
-        tag: "CS2 • Premier",
-        avatar: "https://lh3.googleusercontent.com/aida-public/AB6AXuCUroKfm0jdN3bJQQcefGxSqM-mvwX3x0uCdZ2rdgnZUL_ITRW0QnxHQnieebavOhdHvK2FyoYb8AmQExGBZ07DRT3rHXQVV5aEQRb1Qru0KjD8ffqlxlPL8i3ZCkajhJ5ZMiCon3mLgPTwDGxgOU_pd0C2r0uhLfAFnbBYh39GiyG9rDPQKC8ftPEf1pyA4e1Xh0MdrCxD_audHGJIMkDuQLIBQQZNECpPOWn_0OHIYZVYAGDHXr9mOAu1DyEOoP36T5mOhk6nXKIC",
-    },
-]
+import { MessageSquareQuote } from "lucide-react"
 
-export function TestimonialsSection() {
+interface Review {
+    quote: string
+    author: string
+    tag: string
+    avatar: string
+}
+
+function StarRating() {
     return (
-        <section className="py-24 bg-[#050505]">
+        <div className="flex gap-0.5">
+            {[...Array(5)].map((_, j) => (
+                <svg key={j} className="w-3.5 h-3.5 text-primary" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674 4.911.017c.969.004 1.371 1.24.588 1.81l-3.97 2.883 1.485 4.686c.285.9-.755 1.65-1.54 1.118L10 15.347l-3.944 2.768c-.784.55-1.825-.218-1.54-1.118l1.485-4.686-3.97-2.883c-.783-.57-.38-1.806.588-1.81l4.911-.017 1.519-4.674z" />
+                </svg>
+            ))}
+        </div>
+    )
+}
+
+function ReviewCard({ testimonial, featured }: { testimonial: Review; featured?: boolean }) {
+    return (
+        <div className={`relative flex flex-col rounded-xl border bg-[#0c0c0c] p-6 transition-all duration-300 ${
+            featured
+                ? "border-primary/30 shadow-[0_0_30px_rgba(175,18,37,0.12)]"
+                : "border-white/[0.06] hover:border-white/10"
+        }`}>
+            <StarRating />
+
+            <p className="text-gray-300 text-[13px] leading-relaxed mt-4 mb-5 flex-1 line-clamp-5">
+                                &ldquo;{testimonial.quote}&rdquo;
+                            </p>
+
+            <div className="flex items-center gap-3 pt-4 border-t border-white/5">
+                {testimonial.avatar ? (
+                    <div
+                        className="size-9 rounded-full bg-primary/10 border border-white/10 bg-cover bg-center shrink-0"
+                        style={{ backgroundImage: `url('${testimonial.avatar}')` }}
+                        aria-hidden="true"
+                    />
+                ) : (
+                    <div className="size-9 rounded-full bg-primary/10 border border-white/10 flex items-center justify-center shrink-0">
+                        <span className="text-[11px] font-bold text-primary">
+                            {testimonial.author.split(" ").map(w => w[0]).join("").slice(0, 2).toUpperCase()}
+                        </span>
+                    </div>
+                )}
+                <div className="min-w-0">
+                    <h5 className="text-white font-medium text-[13px] truncate">{testimonial.author}</h5>
+                    <span className="text-[11px] text-gray-500 truncate block">
+                        {testimonial.tag}
+                    </span>
+                </div>
+            </div>
+        </div>
+    )
+}
+
+function ReviewSkeleton() {
+    return (
+        <div className="rounded-xl border border-white/[0.06] bg-[#0c0c0c] p-6">
+            <div className="skeleton h-2.5 w-24 mb-4" />
+            <div className="space-y-1.5 mb-5">
+                <div className="skeleton h-2.5 w-full" />
+                <div className="skeleton h-2.5 w-full" />
+                <div className="skeleton h-2.5 w-3/4" />
+            </div>
+            <div className="flex items-center gap-3 pt-4 border-t border-white/5">
+                <div className="skeleton size-9 rounded-full" />
+                <div>
+                    <div className="skeleton h-2.5 w-20 mb-1.5" />
+                    <div className="skeleton h-2 w-28" />
+                </div>
+            </div>
+        </div>
+    )
+}
+
+export function TestimonialsSection({ reviews = [], loading = false }: { reviews?: Review[]; loading?: boolean }) {
+    const hasReviews = !loading && reviews.length > 0
+
+    // Hide section entirely when no reviews and not loading (production-ready)
+    if (!loading && reviews.length === 0) {
+        return null
+    }
+
+    return (
+        <section className="py-16 bg-[#050505]">
             <div className="max-w-[1440px] mx-auto px-6 lg:px-10">
-                <div className="flex flex-col md:flex-row justify-between items-center gap-8 mb-16">
-                    <h2 className="text-4xl md:text-5xl font-black text-white tracking-tighter uppercase">
-                        Feedbacks
-                    </h2>
-                    <div className="flex gap-3">
-                        <button className="size-11 rounded-full border border-white/10 flex items-center justify-center hover:bg-white/5 transition-colors">
-                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                            </svg>
-                        </button>
-                        <button className="size-11 rounded-full border border-white/10 flex items-center justify-center hover:bg-white/5 transition-colors">
-                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                            </svg>
-                        </button>
+
+                <div className="flex items-center justify-between mb-10">
+                    <div>
+                        <div className="h-px w-12 bg-primary mb-4" />
+                        <h2 className="font-cairo text-3xl md:text-[34px] font-bold text-white tracking-tight uppercase">
+                            What Players <span className="text-primary">Say</span>
+                        </h2>
                     </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    {testimonials.map((t, i) => (
-                        <div
-                            key={t.author}
-                            className={`relative rounded-2xl border border-white/10 bg-[#0a0a0a]/80 p-10 backdrop-blur-md overflow-hidden ${i === 1 ? "border-primary/40 shadow-[0_0_35px_rgba(175,18,37,0.25)]" : ""
-                                }`}
-                        >
-                            <div className="absolute top-8 right-8 opacity-10">
-                                <svg className="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24">
-                                    <path d="M7.17 6A5.001 5.001 0 002 11v7h7v-7H6.83A3.001 3.001 0 019 8.17V6H7.17zM17.17 6A5.001 5.001 0 0012 11v7h7v-7h-2.17A3.001 3.001 0 0120 8.17V6h-2.83z" />
-                                </svg>
-                            </div>
-
-                            <div className="flex gap-1 mb-6">
-                                {[...Array(5)].map((_, j) => (
-                                    <svg
-                                        key={j}
-                                        className="w-4 h-4 text-primary"
-                                        fill="currentColor"
-                                        viewBox="0 0 20 20"
-                                    >
-                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674 4.911.017c.969.004 1.371 1.24.588 1.81l-3.97 2.883 1.485 4.686c.285.9-.755 1.65-1.54 1.118L10 15.347l-3.944 2.768c-.784.55-1.825-.218-1.54-1.118l1.485-4.686-3.97-2.883c-.783-.57-.38-1.806.588-1.81l4.911-.017 1.519-4.674z" />
-                                    </svg>
-                                ))}
-                            </div>
-
-                            <p className="text-gray-300 text-sm md:text-base mb-8 leading-relaxed">
-                                &ldquo;{t.quote}&rdquo;
-                            </p>
-
-                            <div className="flex items-center gap-4 border-t border-white/10 pt-6 mt-2">
-                                <div
-                                    className="size-12 rounded-full bg-primary/20 border border-primary/40 bg-cover bg-center shrink-0"
-                                    style={{ backgroundImage: `url('${t.avatar}')` }}
-                                />
-                                <div>
-                                    <h5 className="text-white font-bold text-sm uppercase tracking-tight">{t.author}</h5>
-                                    <span className="text-[14px] text-gray-500 font-medium uppercase tracking-widest">
-                                        {t.tag}
-                                    </span>
-                                </div>
-                            </div>
+                {loading ? (
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+                        <ReviewSkeleton />
+                        <ReviewSkeleton />
+                        <ReviewSkeleton />
+                    </div>
+                ) : hasReviews ? (
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+                        {reviews.map((t, i) => (
+                            <ReviewCard key={t.author} testimonial={t} featured={i === 1} />
+                        ))}
+                    </div>
+                ) : (
+                    <div className="flex flex-col items-center justify-center py-14 text-center">
+                        <div className="size-12 rounded-xl bg-white/[0.03] border border-white/5 flex items-center justify-center mb-4">
+                            <MessageSquareQuote className="size-5 text-gray-600" />
                         </div>
-                    ))}
-                </div>
+                        <p className="text-gray-400 text-sm font-medium mb-1">No reviews yet</p>
+                        <p className="text-gray-600 text-xs max-w-sm">
+                            Customer feedback will appear here once verified reviews are available.
+                        </p>
+                    </div>
+                )}
             </div>
         </section>
     )

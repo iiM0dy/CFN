@@ -200,6 +200,17 @@ export function Header() {
                             </AnimatePresence>
                         </div>
 
+                        {/* Mobile Log In (visible only when logged out on mobile) */}
+                        {!session && (
+                            <Link
+                                href="/login"
+                                className="md:hidden flex items-center justify-center h-9 px-3.5 rounded-lg bg-primary hover:bg-primary-dark text-white text-[12px] font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary shrink-0"
+                                aria-label="Log in"
+                            >
+                                Log In
+                            </Link>
+                        )}
+
                         {/* Mobile Menu Toggle */}
                         <button
                             className="md:hidden flex items-center justify-center size-9 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] text-gray-300 hover:text-white transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
