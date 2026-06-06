@@ -30,7 +30,7 @@ export const CurrencyProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         // Fetch live exchange rate
         async function fetchExchangeRate() {
             try {
-                const response = await fetch("https://api.frankfurter.app/latest?from=USD&to=EUR");
+                const response = await fetch("/api/exchange-rate");
                 if (response.ok) {
                     const data = await response.json();
                     if (data.rates && data.rates.EUR) {

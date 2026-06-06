@@ -8,6 +8,7 @@ export async function GET(request: Request) {
       ...(request.headers.get('authorization') ? { 'Authorization': request.headers.get('authorization')! } : {}),
     },
   });
-  const data = await res.text();
-  return new Response(data, { status: res.status, headers: { 'Content-Type': 'application/json' } });
+  const json = await res.json().catch(() => null);
+  const data = json?.data ?? json;
+  return Response.json(data, { status: res.status });
 }

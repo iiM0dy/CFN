@@ -8,20 +8,33 @@ export default async function AdminPage() {
     const token = (session?.user as any)?.accessToken;
 
     if (!token) {
-        redirect("/");
+        redirect("/admin/login");
     }
 
-    const data = await api('/admin/dashboard-stats', { token }).catch(() => null);
+    const raw = await api("/admin/dashboard-stats", { token }).catch(() => null);
 
-    if (!data) {
-        redirect("/");
+    if (!raw) {
+        redirect("/admin/login");
     }
 
-    return (
-        <AdminOverview
-            stats={data.stats ?? { totalOrders: 0, pendingOrders: 0, revenue: 0, totalUsers: 0 }}
-            recentOrders={data.recentOrders ?? []}
-            analytics={data.analytics ?? []}
-        />
-    );
+    const data = {
+        orderCount: raw.orderCount ?? 0,
+        serviceOrderCount: raw.serviceOrderCount ?? 0,
+        pendingOrderCount: raw.pendingOrderCount ?? 0,
+        pendingServiceOrderCount: raw.pendingServiceOrderCount ?? 0,
+        totalRevenue: raw.totalRevenue ?? 0,
+        totalServiceRevenue: raw.totalServiceRevenue ?? 0,
+        userCount: raw.userCount ?? 0,
+        latestOrders: raw.latestOrders ?? [],
+        openChats: raw.openChats ?? 0,
+        activeOrderCount: raw.activeOrderCount ?? 0,
+        completedOrderCount: raw.completedOrderCount ?? 0,
+        gamesCount: raw.gamesCount ?? 0,
+        servicesCount: raw.servicesCount ?? 0,
+        missingPriceCount: raw.missingPriceCount ?? 0,
+        missingImageCount: raw.missingImageCount ?? 0,
+        featuredCount: raw.featuredCount ?? 0,
+    };
+
+    return <AdminOverview data={data} />;
 }

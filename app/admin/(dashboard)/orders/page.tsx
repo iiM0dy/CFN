@@ -10,7 +10,7 @@ export default async function AdminOrdersPage() {
     }
 
     const token = (session?.user as any)?.accessToken;
-    const serviceOrders = await api("/admin/orders", { token }).catch(() => []);
+    const res = await api<{ data: any[] }>("/admin/orders", { token }).catch(() => ({ data: [] }));
 
-    return <OrdersTable initialOrders={serviceOrders} />;
+    return <OrdersTable initialOrders={res.data} />;
 }

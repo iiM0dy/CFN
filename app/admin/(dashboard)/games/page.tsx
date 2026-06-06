@@ -11,7 +11,7 @@ export default async function AdminGamesPage() {
     }
 
     const token = (session?.user as any)?.accessToken;
-    const games = await api("/admin/games", { token }).catch(() => []);
+    const res = await api<{ data: any[] }>("/admin/games", { token }).catch(() => ({ data: [] }));
 
     return (
         <div className="space-y-6">
@@ -22,7 +22,7 @@ export default async function AdminGamesPage() {
                 </div>
             </div>
             
-            <GamesTable initialGames={games} />
+            <GamesTable initialGames={res.data} />
         </div>
     );
 }

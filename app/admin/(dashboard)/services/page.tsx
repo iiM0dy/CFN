@@ -6,11 +6,14 @@ export default async function AdminServicesPage() {
     const session = await auth();
 
     if ((session?.user as any)?.role !== "ADMIN") {
-        return null; // Layout handles redirect
+        return null;
     }
 
     const token = (session?.user as any)?.accessToken;
-    const services = await api("/admin/services", { token }).catch(() => []);
+    const [servicesRes, gamesRes] = await Promise.all([
+        api<{ data: any[] }>("/admin/services", { token }).catch(() => ({ data: [] })),
+        api<{ data: any[] }>("/admin/games", { token }).catch(() => ({ data: [] })),
+    ]);
 
-    return <ServicesTable initialServices={services} />;
+    return <ServicesTable initialServices={servicesRes.data} games={gamesRes.data} />;
 }

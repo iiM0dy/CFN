@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { notFound } from "next/navigation";
 import { useSession, signIn } from "next-auth/react";
-import { Computer, Gamepad2, Rocket, Zap } from "lucide-react";
+import { Computer, Gamepad2, Rocket, Zap, Shield, Headphones, Truck, UserCheck, Heart, Lock, ArrowRight, X as XIcon } from "lucide-react";
 import { useCurrency } from "@/context/currency-context";
 import { motion } from "framer-motion";
 import { toast } from "sonner";
@@ -320,10 +320,10 @@ export default function ServiceDetailsPage() {
   };
 
   if (loading) return (
-    <div className="min-h-screen bg-[#050505] flex items-center justify-center">
-      <div className="flex flex-col items-center gap-4">
-        <div className="w-12 h-12 rounded-full border-2 border-white/5 border-t-primary animate-spin" />
-        <p className="text-xs font-black text-slate-600 uppercase tracking-widest">Loading Service...</p>
+    <div className="min-h-screen bg-[#080808] flex items-center justify-center">
+      <div className="flex flex-col items-center gap-3">
+        <div className="w-8 h-8 rounded-full border-2 border-white/[0.06] border-t-primary animate-spin" />
+        <p className="text-xs text-slate-500">Loading service...</p>
       </div>
     </div>
   );
@@ -337,13 +337,13 @@ export default function ServiceDetailsPage() {
   // ── Section wrapper ──────────────────────────────────────────────────────────
   const Section = ({ step, title, optional = false, children }: { step: number; title: string; optional?: boolean; children: React.ReactNode }) => (
     <section className="relative">
-      <div className="flex items-center gap-4 mb-5">
+      <div className="flex items-center gap-3 mb-4">
         <div className="flex items-center justify-center w-7 h-7 rounded-lg bg-primary/10 border border-primary/20 shrink-0">
-          <span className="text-[14px] font-black text-primary">{step}</span>
+          <span className="text-xs font-bold text-primary">{String(step).padStart(2, '0')}</span>
         </div>
-        <h3 className="text-sm font-black text-white uppercase tracking-[0.15em] font-cairo flex items-center gap-2">
+        <h3 className="font-cairo text-sm font-bold text-white uppercase tracking-wide flex items-center gap-2">
           {title}
-          {optional && <span className="text-[14px] font-medium text-slate-500 normal-case tracking-normal">(Optional)</span>}
+          {optional && <span className="text-[11px] font-normal text-slate-500 normal-case tracking-normal">(Optional)</span>}
         </h3>
       </div>
       {children}
@@ -352,98 +352,97 @@ export default function ServiceDetailsPage() {
 
   // ── Radio card ───────────────────────────────────────────────────────────────
   const RadioCard = ({ checked, children }: { checked: boolean; children: React.ReactNode }) => (
-    <div className={`group relative flex items-center gap-4 p-4 rounded-xl border transition-colors duration-200 cursor-pointer overflow-hidden
+    <div className={`group relative flex items-center gap-3 p-4 rounded-xl border transition-all duration-200 cursor-pointer
       ${checked
-        ? 'border-primary bg-primary/5'
-        : 'border-white/5 bg-[#0a0a0a] hover:border-white/10 hover:bg-[#0f0f0f]'
+        ? 'border-primary/40 bg-primary/[0.06] shadow-[0_0_20px_-6px_rgba(175,18,37,0.15)]'
+        : 'border-white/[0.06] bg-[#0c0c0c] hover:border-white/10 hover:bg-[#0f0f0f]'
       }`}>
-
-      {/* Custom Checkmark Design */}
       <div className="relative flex items-center justify-center shrink-0">
-        <div className={`size-5 rounded-full border-2 transition-colors duration-200 flex items-center justify-center
+        <div className={`size-4 rounded-full border-2 transition-colors duration-200 flex items-center justify-center
           ${checked ? 'border-primary' : 'border-slate-700 group-hover:border-slate-500'}`}>
-          <div className={`size-2.5 rounded-full bg-primary transition-transform duration-200 transform
+          <div className={`size-2 rounded-full bg-primary transition-transform duration-200 transform
             ${checked ? 'scale-100' : 'scale-0'}`} />
         </div>
       </div>
-
-      <div className="relative z-10 flex-1 flex flex-col justify-center w-full">
+      <div className="flex-1 flex flex-col justify-center w-full">
         {children}
       </div>
     </div>
   );
 
   return (
-    <div className="relative flex min-h-screen flex-col bg-[#050505] text-white font-sans">
+    <div className="relative flex min-h-screen flex-col bg-[#080808] text-white font-sans">
       <main className="grow w-full max-w-[1440px] mx-auto px-6 lg:px-10 pt-8 pb-16">
 
         {/* Breadcrumbs */}
-        <div className="flex items-center gap-2 text-[14px] font-black uppercase tracking-[0.2em] text-slate-600 mb-8">
-          <Link href="/" className="hover:text-primary transition-colors">Home</Link>
+        <nav className="flex items-center gap-1.5 text-xs text-slate-500 mb-6">
+          <Link href="/" className="hover:text-white transition-colors">Home</Link>
           <span className="text-slate-700">/</span>
-          <Link href={`/${service.game.slug}/services`} className="hover:text-primary transition-colors">{service.game.name}</Link>
+          <Link href={`/${service.game.slug}/services`} className="hover:text-white transition-colors">{service.game.name}</Link>
           <span className="text-slate-700">/</span>
-          <span className="text-slate-400">{service.name}</span>
-        </div>
+          <span className="text-slate-300 font-medium">{service.name}</span>
+        </nav>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 relative">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 relative">
 
           {/* ── LEFT COLUMN ── */}
-          <div className="lg:col-span-8 flex flex-col gap-8">
+          <div className="lg:col-span-8 flex flex-col gap-6">
 
             {/* ── SERVICE HERO ── */}
-            <div className="relative rounded-2xl overflow-hidden border border-white/5 bg-[#050505] shadow-2xl">
-              {/* bg image */}
+            <div className="relative rounded-xl overflow-hidden border border-white/[0.06] bg-[#0c0c0c]">
               {service.image && (
                 <div className="absolute inset-0">
-                  <img src={service.image} alt={service.name} className="w-full h-full object-cover opacity-20" />
-                  <div className="absolute inset-0 bg-gradient-to-r from-[#050505] via-[#050505]/80 to-transparent" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-transparent" />
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={service.image} alt="" aria-hidden="true" className="w-full h-full object-cover opacity-20" />
+                  <div className="absolute inset-0 bg-gradient-to-r from-[#0c0c0c] via-[#0c0c0c]/80 to-[#0c0c0c]/40" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0c0c0c] via-transparent to-transparent" />
                 </div>
               )}
-              {/* subtle red glow */}
-              <div className="absolute top-0 right-0 w-64 h-64 bg-primary/8 blur-[80px] rounded-full pointer-events-none" />
 
-              <div className="relative z-10 p-7 flex flex-col md:flex-row gap-7">
-                {/* 16:9 Thumbnail Image */}
-                {service.image && (
-                  <div className="hidden md:block shrink-0">
-                    <div className="w-64 h-36 rounded-xl overflow-hidden border border-white/10 shadow-2xl">
+              <div className="relative z-10 p-5 sm:p-6 flex flex-col sm:flex-row gap-5">
+                {/* Thumbnail */}
+                <div className="shrink-0">
+                  <div className="w-full sm:w-52 h-32 sm:h-32 rounded-xl overflow-hidden border border-white/[0.08] bg-[#111] shadow-xl">
+                    {service.image ? (
+                      // eslint-disable-next-line @next/next/no-img-element
                       <img src={service.image} alt={service.name} className="w-full h-full object-cover" />
-                    </div>
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-[#1a0a2e] to-[#0d0515]">
+                        <span className="text-3xl font-bold text-white/[0.06] select-none">{service.name.split(" ").map(w => w[0]).join("").slice(0, 2).toUpperCase()}</span>
+                      </div>
+                    )}
                   </div>
-                )}
+                </div>
 
-                <div className="flex flex-col gap-4 flex-1">
-                  {/* top row */}
-                  <div className="flex items-center justify-between gap-4">
-                    <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-[14px] font-bold uppercase tracking-widest">
-                      <span className="material-symbols-outlined text-xs">bolt</span>
-                      Service Detail
-                    </div>
+                <div className="flex flex-col flex-1 min-w-0">
+                  <div className="flex items-center justify-between gap-2 mb-2">
+                    <span className="text-[10px] font-bold text-primary/70 uppercase tracking-widest">
+                      {service.game.name}
+                    </span>
                     <button
                       onClick={toggleFavorite}
                       disabled={favoriteLoading}
-                      className={`flex items-center gap-2 px-4 py-2 rounded-lg border transition-all duration-300 text-[14px] font-black uppercase tracking-widest
-                        ${isFavorite ? 'bg-primary border-primary text-white' : 'bg-white/5 border-white/10 text-slate-400 hover:border-primary/50 hover:text-white'}`}
+                      aria-label={isFavorite ? "Remove from saved services" : "Save this service"}
+                      className={`inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border text-[11px] font-bold uppercase tracking-wider transition-all duration-200 cursor-pointer shrink-0
+                        ${isFavorite ? 'bg-primary/10 border-primary/30 text-primary' : 'bg-white/[0.04] border-white/[0.06] text-slate-400 hover:border-primary/30 hover:text-primary'}`}
                     >
-                      <span className={`material-symbols-outlined text-[16px] ${isFavorite ? 'fill-1' : ''}`}>favorite</span>
-                      {isFavorite ? 'Saved' : 'Save Asset'}
+                      <Heart className={`size-3 ${isFavorite ? 'fill-primary' : ''}`} />
+                      {isFavorite ? 'Saved' : 'Save'}
                     </button>
                   </div>
 
-                  {/* title + price */}
-                  <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
-                    <h1 className="text-4xl md:text-5xl font-black text-white uppercase tracking-tighter font-cairo drop-shadow-[0_0_30px_rgba(175,18,37,0.3)]">
-                      {service.name}
-                    </h1>
-                    <div className="flex flex-col items-start md:items-end shrink-0">
-                      <span className="text-[11px] font-black text-primary uppercase tracking-widest mb-0.5">Starting From</span>
-                      <span className="text-3xl font-black text-white tracking-tighter font-cairo">{formatPrice(minPrice)}</span>
-                    </div>
-                  </div>
+                  <h1 className="font-cairo text-2xl sm:text-3xl font-bold text-white uppercase tracking-tight mb-1.5">
+                    {service.name}
+                  </h1>
 
-                  <p className="text-slate-400 text-sm leading-relaxed max-w-xl line-clamp-2">{service.description}</p>
+                  {service.description && (
+                    <p className="text-slate-400 text-[13px] leading-relaxed line-clamp-2 mb-3">{service.description}</p>
+                  )}
+
+                  <div className="mt-auto flex items-baseline gap-1.5">
+                    <span className="text-[10px] text-slate-500 uppercase tracking-wider font-medium">From</span>
+                    <span className="text-2xl font-bold text-white tracking-tight">{formatPrice(minPrice)}</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -472,8 +471,10 @@ export default function ServiceDetailsPage() {
                         <label key={p} className="cursor-pointer block">
                           <input type="radio" name="platform" value={p} checked={platform === p} onChange={e => setPlatform(e.target.value)} className="sr-only" />
                           <RadioCard checked={platform === p}>
-                            {p.toLowerCase().includes('pc') ? <Computer className={`size-6 transition-colors ${platform === p ? 'text-white' : 'text-slate-500'}`} /> : <Gamepad2 className={`size-6 transition-colors ${platform === p ? 'text-white' : 'text-slate-500'}`} />}
-                            <span className={`text-sm font-bold transition-colors ${platform === p ? 'text-white' : 'text-slate-400'}`}>{p}</span>
+                            <div className="flex items-center gap-2.5 flex-1">
+                              {p.toLowerCase().includes('pc') ? <Computer className={`size-4 shrink-0 transition-colors ${platform === p ? 'text-white' : 'text-slate-500'}`} /> : <Gamepad2 className={`size-4 shrink-0 transition-colors ${platform === p ? 'text-white' : 'text-slate-500'}`} />}
+                              <span className={`text-sm font-medium transition-colors ${platform === p ? 'text-white' : 'text-slate-300'}`}>{p}</span>
+                            </div>
                           </RadioCard>
                         </label>
                       ));
@@ -499,7 +500,9 @@ export default function ServiceDetailsPage() {
                               <span className={`text-sm font-bold transition-colors ${selectedOptions[option.id] === value.value ? 'text-white' : 'text-slate-300'}`}>{value.label}</span>
                               {value.priceModifier > 0
                                 ? <span className={`text-xs px-2 py-0.5 rounded font-bold ${selectedOptions[option.id] === value.value ? 'bg-white/20 text-white' : 'bg-primary/10 text-primary border border-primary/20'}`}>+{formatPrice(value.priceModifier)}</span>
-                                : <span className="text-xs px-2 py-0.5 rounded bg-white/5 text-slate-500">Free</span>
+                                : value.priceModifier < 0
+                                  ? <span className={`text-xs px-2 py-0.5 rounded font-bold ${selectedOptions[option.id] === value.value ? 'bg-white/20 text-white' : 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'}`}>-{formatPrice(Math.abs(value.priceModifier))}</span>
+                                  : null
                               }
                             </div>
                           </RadioCard>
@@ -536,7 +539,7 @@ export default function ServiceDetailsPage() {
                   {option.type === 'dropdown' && (
                     <div className="relative dropdown-container focus-within:z-40" onClick={e => e.stopPropagation()}>
                       <button type="button" onClick={() => setOpenDropdown(openDropdown === option.id ? null : option.id)}
-                        className="w-full bg-[#050505] border border-white/5 rounded-xl p-4 flex items-center justify-between text-gray-300 hover:border-primary/30 transition-colors">
+                        className="w-full bg-white/[0.03] border border-white/[0.06] rounded-lg p-3.5 flex items-center justify-between text-slate-300 hover:border-white/10 transition-colors">
                         <span className="font-medium text-sm">
                           {selectedOptions[option.id] ? option.values.find(v => v.value === selectedOptions[option.id])?.label : `Choose ${option.label.toLowerCase()}...`}
                         </span>
@@ -551,6 +554,7 @@ export default function ServiceDetailsPage() {
                                 className={`w-full flex items-center justify-between p-3 rounded-lg cursor-pointer transition-colors text-left text-sm ${selectedOptions[option.id] === value.value ? 'bg-primary/10 text-white' : 'text-slate-300 hover:bg-white/5'}`}>
                                 <span>{value.label}</span>
                                 {value.priceModifier > 0 && <span className="font-bold text-primary">+{formatPrice(value.priceModifier)}</span>}
+                                {value.priceModifier < 0 && <span className="font-bold text-emerald-400">-{formatPrice(Math.abs(value.priceModifier))}</span>}
                               </button>
                             ))}
                           </div>
@@ -563,7 +567,7 @@ export default function ServiceDetailsPage() {
                   {option.type === 'checkbox' && (
                     <div className="relative dropdown-container focus-within:z-40" onClick={e => e.stopPropagation()}>
                       <button type="button" onClick={() => setOpenDropdown(openDropdown === option.id ? null : option.id)}
-                        className="w-full bg-[#050505] border border-white/5 rounded-xl p-4 flex items-center justify-between text-gray-300 hover:border-primary/30 transition-colors">
+                        className="w-full bg-white/[0.03] border border-white/[0.06] rounded-lg p-3.5 flex items-center justify-between text-slate-300 hover:border-white/10 transition-colors">
                         <span className="font-medium text-sm truncate pr-4">
                           {(() => {
                             const selected = selectedOptions[option.id] || [];
@@ -598,68 +602,104 @@ export default function ServiceDetailsPage() {
                   )}
 
                   {/* Range */}
-                  {option.type === 'range' && (
-                    <div className="p-6 rounded-2xl bg-[#0d0d0d] border border-white/5 space-y-8">
-                      <div className="grid grid-cols-2 gap-4">
-                        {[
-                          { label: 'Current Level', key: 'current', min: option.minValue || 0, max: (selectedOptions[option.id]?.desired ?? option.maxValue ?? 100) - 1 },
-                          { label: 'Desired Level', key: 'desired', min: (selectedOptions[option.id]?.current ?? option.minValue ?? 0) + 1, max: option.maxValue || 100 },
-                        ].map(field => (
-                          <div key={field.key}>
-                            <label className="text-[14px] font-black uppercase tracking-[0.2em] text-slate-500 mb-2 block">{field.label}</label>
-                            <div className="bg-[#050505] border border-white/5 rounded-xl p-3 focus-within:border-primary/40 transition-colors">
-                              <input type="number" min={field.min} max={field.max}
-                                value={selectedOptions[option.id]?.[field.key] ?? (field.key === 'current' ? option.minValue : option.maxValue) ?? 0}
-                                onChange={e => {
-                                  let val = Number(e.target.value);
-                                  val = Math.max(field.min, Math.min(val, field.max));
-                                  setSelectedOptions({ ...selectedOptions, [option.id]: { ...selectedOptions[option.id], [field.key]: val } });
-                                }}
-                                className="bg-transparent border-none text-white font-bold w-full focus:outline-none text-center text-lg" />
+                  {option.type === 'range' && (() => {
+                    const min = option.minValue || 0;
+                    const max = option.maxValue || 100;
+                    const range = max - min;
+                    const currentVal = selectedOptions[option.id]?.current ?? min;
+                    const desiredVal = selectedOptions[option.id]?.desired ?? max;
+                    const pct = (v: number) => ((v - min) / range) * 100;
+                    const updateRange = (key: string, raw: number) => {
+                      let val = Math.round(Math.max(min, Math.min(raw, max)));
+                      if (key === 'current') val = Math.min(val, desiredVal - 1);
+                      else val = Math.max(val, currentVal + 1);
+                      setSelectedOptions({ ...selectedOptions, [option.id]: { ...selectedOptions[option.id], [key]: val } });
+                    };
+                    const startDrag = (key: string, trackEl: HTMLElement) => {
+                      const rect = trackEl.getBoundingClientRect();
+                      const move = (clientX: number) => {
+                        const ratio = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
+                        const raw = min + ratio * range;
+                        const val = Math.round(Math.max(min, Math.min(raw, max)));
+                        setSelectedOptions(prev => {
+                          const cur = prev[option.id] || {};
+                          const c = cur.current ?? min;
+                          const d = cur.desired ?? max;
+                          const clamped = key === 'current' ? Math.min(Math.max(val, min), d - 1) : Math.max(Math.min(val, max), c + 1);
+                          return { ...prev, [option.id]: { ...cur, [key]: clamped } };
+                        });
+                      };
+                      const onMouseMove = (ev: MouseEvent) => { ev.preventDefault(); move(ev.clientX); };
+                      const onTouchMove = (ev: TouchEvent) => { move(ev.touches[0].clientX); };
+                      const onUp = () => {
+                        document.removeEventListener('mousemove', onMouseMove);
+                        document.removeEventListener('touchmove', onTouchMove);
+                        document.removeEventListener('mouseup', onUp);
+                        document.removeEventListener('touchend', onUp);
+                      };
+                      document.addEventListener('mousemove', onMouseMove);
+                      document.addEventListener('touchmove', onTouchMove);
+                      document.addEventListener('mouseup', onUp);
+                      document.addEventListener('touchend', onUp);
+                    };
+                    const marks = range <= 10
+                      ? Array.from({ length: range + 1 }, (_, i) => min + i)
+                      : range <= 30
+                        ? [...new Set(Array.from({ length: Math.floor(range / 5) + 1 }, (_, i) => min + i * 5).concat(max))]
+                        : [min, ...Array.from({ length: 3 }, (_, i) => Math.round(min + (range * (i + 1)) / 4)), max];
+                    return (
+                      <div className="p-5 rounded-xl bg-[#0c0c0c] border border-white/[0.06] space-y-5">
+                        <div className="grid grid-cols-2 gap-3">
+                          {[
+                            { label: 'Current Level', key: 'current', val: currentVal },
+                            { label: 'Desired Level', key: 'desired', val: desiredVal },
+                          ].map(field => (
+                            <div key={field.key}>
+                              <label className="text-[11px] font-medium text-slate-500 uppercase tracking-wider mb-1.5 block">{field.label}</label>
+                              <div className="relative bg-white/[0.04] border border-white/[0.08] rounded-lg overflow-hidden focus-within:border-primary/40 transition-colors">
+                                <input type="number" min={min} max={max}
+                                  value={field.val}
+                                  onChange={e => updateRange(field.key, Number(e.target.value))}
+                                  onBlur={e => updateRange(field.key, Number(e.target.value))}
+                                  className="bg-transparent text-white font-bold w-full focus:outline-none text-center text-xl py-3 px-4 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" />
+                              </div>
                             </div>
+                          ))}
+                        </div>
+                        <div className="px-1 pt-2 pb-1">
+                          <div className="relative h-[6px] rounded-full bg-white/[0.06] cursor-pointer"
+                            onClick={e => {
+                              const rect = e.currentTarget.getBoundingClientRect();
+                              const val = Math.round(min + ((e.clientX - rect.left) / rect.width) * range);
+                              updateRange(Math.abs(val - currentVal) <= Math.abs(val - desiredVal) ? 'current' : 'desired', val);
+                            }}>
+                            <div className="absolute h-full rounded-full bg-gradient-to-r from-primary to-primary/80 pointer-events-none"
+                              style={{ left: `${pct(currentVal)}%`, right: `${100 - pct(desiredVal)}%` }} />
+                            {[
+                              { key: 'current', val: currentVal },
+                              { key: 'desired', val: desiredVal },
+                            ].map(({ key, val }) => (
+                              <div key={key}
+                                className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 size-5 rounded-full bg-white border-[3px] border-primary shadow-[0_0_0_3px_rgba(175,18,37,0.15),0_2px_6px_rgba(0,0,0,0.3)] cursor-grab active:cursor-grabbing hover:scale-[1.15] active:scale-[1.25] transition-transform z-10 select-none touch-none"
+                                style={{ left: `${pct(val)}%` }}
+                                onMouseDown={e => { e.preventDefault(); e.stopPropagation(); startDrag(key, e.currentTarget.parentElement!); }}
+                                onTouchStart={e => { e.stopPropagation(); startDrag(key, e.currentTarget.parentElement!); }}
+                              />
+                            ))}
                           </div>
-                        ))}
-                      </div>
-                      <div className="relative pt-4 px-2">
-                        <div className="h-1.5 bg-white/5 rounded-full relative">
-                          {['current', 'desired'].map((key, i) => (
-                            <input key={key} type="range" min={option.minValue || 0} max={option.maxValue || 100}
-                              value={selectedOptions[option.id]?.[key] ?? (key === 'current' ? option.minValue : option.maxValue) ?? 0}
-                              onChange={e => {
-                                let val = Number(e.target.value);
-                                if (key === 'current') val = Math.min(val, (selectedOptions[option.id]?.desired ?? option.maxValue ?? 100) - 1);
-                                else val = Math.max(val, (selectedOptions[option.id]?.current ?? option.minValue ?? 0) + 1);
-                                setSelectedOptions({ ...selectedOptions, [option.id]: { ...selectedOptions[option.id], [key]: val } });
-                              }}
-                              className={`absolute inset-x-0 -top-1 w-full h-4 bg-transparent appearance-none pointer-events-none cursor-pointer ${i === 0 ? 'z-40' : 'z-30'} [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:size-4 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-transparent [&::-webkit-slider-thumb]:border-none [&::-webkit-slider-thumb]:pointer-events-auto`} />
-                          ))}
-                          <div className="absolute h-full bg-primary rounded-full transition-all duration-300 pointer-events-none"
-                            style={{
-                              left: `${(((selectedOptions[option.id]?.current ?? option.minValue ?? 0) - (option.minValue || 0)) / ((option.maxValue || 100) - (option.minValue || 0))) * 100}%`,
-                              right: `${100 - (((selectedOptions[option.id]?.desired ?? option.maxValue ?? 100) - (option.minValue || 0)) / ((option.maxValue || 100) - (option.minValue || 0))) * 100}%`
-                            }} />
-                          {['current', 'desired'].map(key => (
-                            <div key={key} className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 size-4 bg-white rounded-full border-2 border-primary shadow-[0_0_14px_rgba(175,18,37,0.4)] pointer-events-none z-10 transition-all duration-300"
-                              style={{ left: `${(((selectedOptions[option.id]?.[key] ?? (key === 'current' ? option.minValue : option.maxValue) ?? 0) - (option.minValue || 0)) / ((option.maxValue || 100) - (option.minValue || 0))) * 100}%` }} />
-                          ))}
-                        </div>
-                        <div className="flex justify-between mt-5">
-                          {(() => {
-                            const min = option.minValue || 0, max = option.maxValue || 100, range = max - min;
-                            const marks = range <= 10 ? Array.from({ length: range + 1 }, (_, i) => min + i) : [0, 1, 2, 3, 4].map(i => Math.round(min + (range * i) / 4));
-                            return marks.map((level, idx) => {
-                              const isActive = level >= (selectedOptions[option.id]?.current ?? min) && level <= (selectedOptions[option.id]?.desired ?? max);
+                          <div className="relative mt-3 h-4">
+                            {marks.map(level => {
+                              const isActive = level >= currentVal && level <= desiredVal;
                               return (
-                                <div key={idx} className="absolute -translate-x-1/2" style={{ left: `${((level - min) / range) * 100}%` }}>
-                                  <span className={`text-[14px] font-black tracking-tighter transition-colors ${isActive ? 'text-primary' : 'text-slate-700'}`}>{level}</span>
-                                </div>
+                                <span key={level} className={`absolute -translate-x-1/2 text-[10px] font-medium transition-colors duration-200 ${isActive ? 'text-slate-300' : 'text-slate-700'}`}
+                                  style={{ left: `${pct(level)}%` }}>{level}</span>
                               );
-                            });
-                          })()}
+                            })}
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  )}
+                    );
+                  })()}
 
                   {/* Number */}
                   {option.type === 'number' && (
@@ -667,13 +707,13 @@ export default function ServiceDetailsPage() {
                       <input type="number" min={option.minValue || 0} max={option.maxValue || 999999999} step={option.step || 1}
                         value={selectedOptions[option.id] || option.minValue || 0}
                         onChange={e => setSelectedOptions({ ...selectedOptions, [option.id]: Number(e.target.value) })}
-                        className="w-full bg-[#050505] border border-white/5 rounded-xl px-5 py-4 text-white text-lg font-bold focus:border-primary/50 focus:outline-none transition-colors" />
-                      <div className="p-4 rounded-xl bg-[#050505] border border-white/5">
+                        className="w-full bg-white/[0.03] border border-white/[0.06] rounded-lg px-4 py-3 text-white text-base font-medium focus:border-primary/30 focus:outline-none transition-colors" />
+                      <div>
                         <input type="range" min={option.minValue || 0} max={option.maxValue || 100} step={option.step || 1}
                           value={selectedOptions[option.id] || option.minValue || 0}
                           onChange={e => setSelectedOptions({ ...selectedOptions, [option.id]: Number(e.target.value) })}
-                          className="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-primary" />
-                        <div className="flex justify-between mt-3 text-[14px] font-black text-slate-600 uppercase tracking-widest">
+                          className="w-full h-1.5 bg-white/[0.06] rounded-full appearance-none cursor-pointer accent-primary" />
+                        <div className="flex justify-between mt-2 text-[10px] text-slate-600">
                           <span>{(option.minValue || 0) >= 1000 ? `${((option.minValue || 0) / 1000).toFixed(0)}K` : option.minValue}</span>
                           <span>{(option.maxValue || 0) >= 1000000 ? `${((option.maxValue || 0) / 1000000).toFixed(0)}M` : `${((option.maxValue || 0) / 1000).toFixed(0)}K`}</span>
                         </div>
@@ -684,18 +724,18 @@ export default function ServiceDetailsPage() {
                 </Section>
               ))}
 
-              {/* Deployment Method */}
+              {/* Play Method */}
               {service.completionMethods?.length > 0 && (
-                <Section step={stepIndex++} title="Deployment Method">
+                <Section step={stepIndex++} title="Choose Play Method">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                     {service.completionMethods.map(method => (
                       <label key={method} className="cursor-pointer block group">
                         <input type="radio" name="completionMethod" value={method} checked={completionMethod === method} onChange={e => setCompletionMethod(e.target.value)} className="sr-only" />
                         <RadioCard checked={completionMethod === method}>
                           <div className="flex-1">
-                            <h4 className={`font-black text-sm uppercase tracking-tight mb-1 transition-colors ${completionMethod === method ? 'text-white' : 'text-slate-200 group-hover:text-white'}`}>{method}</h4>
-                            <p className={`text-[11px] leading-relaxed transition-colors ${completionMethod === method ? 'text-white/70' : 'text-slate-500 group-hover:text-slate-400'}`}>
-                              {method.toLowerCase().includes('piloted') ? 'Our pro operative logs into your account. Encryption Active.' : 'You play on your own account alongside our squad. In-raid trading active.'}
+                            <h4 className={`font-semibold text-sm capitalize mb-0.5 transition-colors ${completionMethod === method ? 'text-white' : 'text-slate-300 group-hover:text-white'}`}>{method}</h4>
+                            <p className={`text-[11px] leading-relaxed transition-colors ${completionMethod === method ? 'text-white/60' : 'text-slate-500 group-hover:text-slate-400'}`}>
+                              {method.toLowerCase().includes('piloted') ? 'A pro player completes the service on your account.' : 'You play alongside our booster on your own account.'}
                             </p>
                           </div>
                         </RadioCard>
@@ -707,10 +747,11 @@ export default function ServiceDetailsPage() {
 
               {/* Completion Speed */}
               <Section step={stepIndex++} title="Completion Speed" optional>
+                <p className="text-[11px] text-slate-500 -mt-2 mb-3">Select a faster option or leave unselected for standard delivery.</p>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                   {[
-                    { value: 'express', label: 'Express', icon: Rocket, desc: 'Priority queue. Estimated start: 15-30 mins.' },
-                    { value: 'super_express', label: 'Super Express', icon: Zap, desc: 'Immediate start. Dedicated booster assigned instantly.' },
+                    { value: 'express', label: 'Express', icon: Rocket, desc: 'Faster processing with priority queue.' },
+                    { value: 'super_express', label: 'Super Express', icon: Zap, desc: 'Starts as soon as a booster is available.' },
                   ].map(speed => {
                     const isChecked = completionSpeed === speed.value;
                     const Icon = speed.icon;
@@ -721,15 +762,16 @@ export default function ServiceDetailsPage() {
                           onChange={() => { }} className="sr-only" />
                         <RadioCard checked={isChecked}>
                           <div className="flex-1">
-                            <div className="flex justify-between items-start mb-1.5">
-                              <h4 className={`font-bold text-sm flex items-center gap-1.5 transition-colors ${isChecked ? 'text-white' : 'text-slate-200 group-hover:text-white'}`}>
-                                {speed.label} <Icon className={`size-3.5 ${isChecked ? 'text-white' : 'text-primary'}`} />
+                            <div className="flex justify-between items-start mb-1">
+                              <h4 className={`font-medium text-sm flex items-center gap-1.5 transition-colors ${isChecked ? 'text-white' : 'text-slate-300 group-hover:text-white'}`}>
+                                <Icon className={`size-3.5 ${isChecked ? 'text-white' : 'text-primary'}`} />
+                                {speed.label}
                               </h4>
-                              <span className={`text-xs px-2 py-0.5 rounded font-bold transition-colors ${isChecked ? 'bg-white/20 text-white' : 'bg-primary/10 text-primary border border-primary/20 group-hover:border-primary/40'}`}>
+                              <span className={`text-[11px] px-2 py-0.5 rounded font-semibold transition-colors shrink-0 ${isChecked ? 'bg-white/15 text-white' : 'bg-primary/10 text-primary border border-primary/20'}`}>
                                 +{formatPrice(getSpeedBoostPrice(speed.value))}
                               </span>
                             </div>
-                            <p className={`text-[11px] transition-colors ${isChecked ? 'text-white/70' : 'text-slate-500 group-hover:text-slate-400'}`}>{speed.desc}</p>
+                            <p className={`text-[11px] transition-colors ${isChecked ? 'text-white/60' : 'text-slate-500'}`}>{speed.desc}</p>
                           </div>
                         </RadioCard>
                       </label>
@@ -740,115 +782,128 @@ export default function ServiceDetailsPage() {
             </div>
 
             {/* ── TABS ── */}
-            <div className="mt-4 border border-white/5 rounded-2xl overflow-hidden">
-              {/* tab bar */}
-              <div className="flex border-b border-white/5 bg-[#0a0a0a]">
+            <div className="border border-white/[0.06] rounded-xl overflow-hidden">
+              <div role="tablist" className="flex border-b border-white/[0.06] bg-[#0c0c0c]">
                 {[
                   { id: 'description', label: 'Description' },
                   { id: 'requirements', label: 'Requirements' },
-                  { id: 'reviews', label: 'Customer Reviews (24)' },
+                  { id: 'reviews', label: 'Reviews' },
                 ].map(tab => (
-                  <button key={tab.id} onClick={() => setActiveTab(tab.id)}
-                    className={`px-6 py-4 text-xs font-black uppercase tracking-wider transition-all relative
-                      ${activeTab === tab.id ? 'text-white' : 'text-slate-600 hover:text-slate-400'}`}>
+                  <button key={tab.id} role="tab" aria-selected={activeTab === tab.id} onClick={() => setActiveTab(tab.id)}
+                    className={`px-4 sm:px-5 py-3 text-xs font-medium transition-all relative focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-primary
+                      ${activeTab === tab.id ? 'text-white' : 'text-slate-500 hover:text-slate-300'}`}>
                     {tab.label}
                     {activeTab === tab.id && <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary" />}
                   </button>
                 ))}
               </div>
-              {/* tab content */}
-              <div className="p-6 text-slate-400 leading-relaxed space-y-4 text-sm font-cairo">
+              <div role="tabpanel" className="p-5">
                 {activeTab === 'description' && (
-                  <>
-                    <p>{service.description}</p>
-                    <h4 className="text-white font-bold mt-4 mb-2">Service Includes:</h4>
-                    <ul className="space-y-2">
-                      {['Professional service completion by verified players', 'Safe and secure delivery using VPN matching your location', '24/7 customer support throughout the process', 'Money-back guarantee if not satisfied'].map(item => (
-                        <li key={item} className="flex items-start gap-2">
-                          <span className="material-symbols-outlined text-primary text-sm mt-0.5">check_circle</span>
-                          {item}
-                        </li>
-                      ))}
-                    </ul>
-                  </>
+                  <div className="space-y-4 text-sm text-slate-400 leading-relaxed">
+                    {service.description && <p>{service.description}</p>}
+                    <div>
+                      <h4 className="text-white font-medium text-[13px] mb-2.5">What&apos;s included</h4>
+                      <ul className="space-y-1.5">
+                        {['Professional completion by verified players', 'Secure account handling with VPN protection', '24/7 support throughout the process', 'Satisfaction guarantee'].map(item => (
+                          <li key={item} className="flex items-center gap-2 text-[13px]">
+                            <span className="size-1 rounded-full bg-primary shrink-0" />
+                            <span className="text-slate-400">{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
                 )}
                 {activeTab === 'requirements' && (
-                  <>
-                    <p>To use this service, you will need:</p>
-                    <ul className="space-y-2">
-                      {['Active game account', 'Account credentials (for piloted services)', 'Stable internet connection'].map(item => (
-                        <li key={item} className="flex items-start gap-2">
-                          <span className="material-symbols-outlined text-primary text-sm mt-0.5">check_circle</span>
-                          {item}
+                  <div className="space-y-3 text-sm text-slate-400 leading-relaxed">
+                    <p>To use this service, you&apos;ll need:</p>
+                    <ul className="space-y-1.5">
+                      {['An active game account in good standing', 'Account credentials (for piloted services only)', 'A stable internet connection'].map(item => (
+                        <li key={item} className="flex items-center gap-2 text-[13px]">
+                          <span className="size-1 rounded-full bg-primary shrink-0" />
+                          <span className="text-slate-400">{item}</span>
                         </li>
                       ))}
                     </ul>
-                  </>
+                  </div>
                 )}
-                {activeTab === 'reviews' && <p className="text-slate-500">Customer reviews coming soon...</p>}
+                {activeTab === 'reviews' && (
+                  <div className="py-8 text-center">
+                    <p className="text-sm text-slate-500">No reviews yet for this service.</p>
+                    <p className="text-xs text-slate-600 mt-1">Reviews will appear here after customers complete their orders.</p>
+                  </div>
+                )}
               </div>
             </div>
           </div>
 
           {/* ── RIGHT COLUMN ── */}
           <div className="lg:col-span-4">
-            <div className="sticky top-28 space-y-4">
+            <div className="sticky top-24 space-y-3">
 
               {/* Quantity */}
-              <div className="bg-[#0a0a0a] border border-white/5 rounded-2xl p-6">
-                <div className="flex items-center gap-3 mb-5">
-                  <span className="w-1 h-5 bg-primary rounded-full" />
-                  <h3 className="text-sm font-black text-white uppercase tracking-widest font-cairo">Quantity</h3>
+              {(service?.maxQuantity ?? 15) > 1 && (
+              <div className="bg-[#0c0c0c] border border-white/[0.06] rounded-xl p-5">
+                <div className="flex items-center justify-between mb-1">
+                  <h3 className="font-cairo text-xs font-bold text-white uppercase tracking-wider flex items-center gap-2">
+                    <span className="w-0.5 h-3.5 bg-primary rounded-full" />
+                    Quantity
+                  </h3>
+                  <span className="text-[11px] text-slate-500 font-medium">{quantity} of {service?.maxQuantity || 15}</span>
                 </div>
-                <div className="flex items-end justify-between mb-4">
-                  <span className="text-[14px] font-bold text-slate-500 uppercase tracking-widest">Units</span>
-                  <div className="flex items-baseline gap-1">
-                    <span className="text-4xl font-black text-white font-cairo leading-none">{quantity}</span>
-                    <span className="text-[14px] font-black text-primary uppercase tracking-widest">QTY</span>
+                <p className="text-[11px] text-slate-600 mb-3">Choose how many units you want to order.</p>
+                <div className="flex items-center gap-2 mb-3">
+                  <button type="button" onClick={() => setQuantity(Math.max(1, quantity - 1))} disabled={quantity <= 1}
+                    aria-label="Decrease quantity"
+                    className="size-9 rounded-lg bg-white/[0.04] border border-white/[0.06] flex items-center justify-center text-slate-400 hover:text-white hover:bg-white/[0.08] disabled:opacity-30 transition-colors cursor-pointer text-base">
+                    −
+                  </button>
+                  <div className="flex-1">
+                    <input type="range" min="1" max={service?.maxQuantity || 15} step="1" value={quantity}
+                      onChange={e => setQuantity(Number(e.target.value))}
+                      aria-label="Quantity slider"
+                      className="w-full h-1.5 bg-white/[0.06] rounded-full appearance-none cursor-pointer accent-primary" />
                   </div>
-                </div>
-                <input type="range" min="1" max={service?.maxQuantity || 15} step="1" value={quantity}
-                  onChange={e => setQuantity(Number(e.target.value))}
-                  className="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-primary mb-3" />
-                <div className="flex justify-between text-[14px] font-black text-slate-600 uppercase tracking-widest">
-                  <span>Min 01</span>
-                  <span>Limit {service?.maxQuantity || 15}</span>
+                  <button type="button" onClick={() => setQuantity(Math.min(service?.maxQuantity || 15, quantity + 1))} disabled={quantity >= (service?.maxQuantity || 15)}
+                    aria-label="Increase quantity"
+                    className="size-9 rounded-lg bg-white/[0.04] border border-white/[0.06] flex items-center justify-center text-slate-400 hover:text-white hover:bg-white/[0.08] disabled:opacity-30 transition-colors cursor-pointer text-base">
+                    +
+                  </button>
                 </div>
               </div>
+              )}
 
               {/* Order Summary */}
-              <div className="bg-[#0a0a0a] border border-white/5 rounded-2xl p-6 relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-40 h-40 bg-primary/5 blur-[60px] rounded-full pointer-events-none" />
-
-                <div className="flex items-center gap-3 mb-6">
-                  <span className="w-1 h-5 bg-primary rounded-full" />
-                  <h3 className="text-sm font-black text-white uppercase tracking-widest font-cairo">Order Summary</h3>
-                </div>
+              <div className="bg-[#0c0c0c] border border-white/[0.06] rounded-xl p-5">
+                <h3 className="font-cairo text-xs font-bold text-white uppercase tracking-wider flex items-center gap-2 mb-4">
+                  <span className="w-0.5 h-3.5 bg-primary rounded-full" />
+                  Order Summary
+                </h3>
 
                 {/* Promo code */}
-                <div className="mb-6">
-                  <label className="text-[12px] text-slate-500 font-bold uppercase tracking-[0.2em] mb-2 block">Promo Code</label>
+                <div className="mb-5">
+                  <label className="text-[11px] text-slate-500 font-medium mb-1.5 block">Promo Code</label>
                   <div className="flex gap-2">
                     <input type="text" value={promoCode}
                       onChange={e => { setPromoCode(e.target.value.toUpperCase()); setPromoCodeError(""); setPromoCodeData(null); }}
-                      placeholder="ENTER CODE..."
-                      className="flex-1 bg-[#050505] border border-white/5 rounded-lg px-3 py-2.5 text-white text-[12px] font-bold uppercase tracking-widest placeholder:text-slate-700 focus:border-primary/40 focus:outline-none transition-all" />
+                      placeholder="Enter code"
+                      className="flex-1 bg-white/[0.03] border border-white/[0.06] rounded-lg px-3 py-2 text-white text-xs placeholder:text-slate-700 focus:border-white/10 focus:outline-none transition-all" />
                     <button type="button" onClick={validatePromoCode} disabled={!promoCode.trim() || isValidatingPromo}
-                      className="px-4 py-2.5 bg-[#1a1a1a] hover:bg-primary text-white text-[12px] font-black uppercase tracking-widest rounded-lg transition-all disabled:opacity-40 border border-white/5">
+                      className="px-3 py-2 bg-white/[0.04] hover:bg-white/[0.08] text-white text-xs font-medium rounded-lg transition-colors disabled:opacity-40 border border-white/[0.06] cursor-pointer">
                       {isValidatingPromo ? '...' : 'Apply'}
                     </button>
                   </div>
-                  {promoCodeError && <p className="text-primary text-[14px] font-black uppercase tracking-widest mt-2 flex items-center gap-1"><span className="material-symbols-outlined text-xs">error</span>{promoCodeError}</p>}
-                  {promoCodeData && <p className="text-emerald-500 text-[14px] font-black uppercase tracking-widest mt-2 flex items-center gap-1"><span className="material-symbols-outlined text-xs">check_circle</span>Discount Applied: {promoCodeData.discountType === 'percentage' ? `${promoCodeData.discount}%` : formatPrice(promoCodeData.discount)}</p>}
+                  {promoCodeError && <p className="text-red-400 text-[11px] mt-1.5">{promoCodeError}</p>}
+                  {promoCodeData && <p className="text-emerald-400 text-[11px] mt-1.5">Discount applied: {promoCodeData.discountType === 'percentage' ? `${promoCodeData.discount}%` : formatPrice(promoCodeData.discount)}</p>}
                 </div>
 
                 {/* Summary rows */}
-                <div className="space-y-3 mb-6 pb-6 border-b border-white/5">
+                <div className="space-y-2 mb-4 pb-4 border-b border-white/[0.04]">
                   {[
                     { label: 'Service', value: service.name },
                     platform && { label: 'Platform', value: platform },
                     {
-                      label: 'Amount', value: (() => {
+                      label: 'Quantity', value: (() => {
                         if (service?.name === "Workshop Leveling") {
                           const whatToLevelOption = service.options?.find(o => o.label === "What should we level up?");
                           const mode = whatToLevelOption ? selectedOptions[whatToLevelOption.id] : null;
@@ -861,43 +916,49 @@ export default function ServiceDetailsPage() {
                       })()
                     },
                     completionMethod && { label: 'Method', value: completionMethod },
-                    completionSpeed && { label: 'Speed', value: completionSpeed === 'express' ? 'Express +20%' : 'Super Express +40%', highlight: true },
+                    completionSpeed && { label: 'Speed', value: completionSpeed === 'express' ? 'Express (+20%)' : 'Super Express (+40%)', highlight: true },
                   ].filter(Boolean).map((row: any) => (
                     <div key={row.label} className="flex justify-between items-center">
-                      <span className="text-[12px] font-bold text-slate-500 uppercase tracking-widest">{row.label}</span>
-                      <span className={`text-[12px] font-black uppercase tracking-tight text-right ${row.highlight ? 'text-primary' : 'text-white'}`}>{row.value}</span>
+                      <span className="text-[11px] text-slate-500">{row.label}</span>
+                      <span className={`text-[11px] font-medium text-right truncate max-w-[160px] ${row.highlight ? 'text-primary' : 'text-slate-300'}`}>{row.value}</span>
                     </div>
                   ))}
                 </div>
 
-                {/* Total */}
-                <div className="flex items-center justify-between mb-6">
-                  <div>
-                    <div className="text-[12px] font-bold text-slate-500 uppercase tracking-[0.2em]">Total Price</div>
-                    <div className="text-[11px] text-slate-700 mt-0.5 font-bold uppercase tracking-widest">Secure transaction</div>
+                {/* Price breakdown */}
+                <div className="space-y-1.5 mb-4">
+                  <div className="flex justify-between items-center">
+                    <span className="text-[11px] text-slate-500">Subtotal</span>
+                    <span className="text-[11px] font-medium text-slate-300">{formatPrice(calculateBasePrice() * (completionSpeed === 'express' ? 1.20 : completionSpeed === 'super_express' ? 1.40 : 1))}</span>
                   </div>
-                  <span className="text-4xl font-black text-white tracking-tighter font-cairo">{formatPrice(calculateTotalPrice())}</span>
+                  {promoCodeData && (
+                    <div className="flex justify-between items-center">
+                      <span className="text-[11px] text-emerald-400">Discount</span>
+                      <span className="text-[11px] font-medium text-emerald-400">
+                        −{formatPrice(calculateBasePrice() * (completionSpeed === 'express' ? 1.20 : completionSpeed === 'super_express' ? 1.40 : 1) - calculateTotalPrice())}
+                      </span>
+                    </div>
+                  )}
+                  <div className="flex justify-between items-center pt-2 border-t border-white/[0.04]">
+                    <span className="text-xs font-medium text-white">Total</span>
+                    <span className="text-xl font-bold text-white tracking-tight">{formatPrice(calculateTotalPrice())}</span>
+                  </div>
                 </div>
 
                 {status === "unauthenticated" && (
-                  <div className="mb-4 space-y-2 p-4 rounded-xl border border-white/10 bg-[#111]">
-                    <label className="text-[12px] text-slate-400 font-bold uppercase tracking-[0.2em] block">
-                      Enter Email to Checkout
+                  <div className="mb-4 space-y-1.5 p-3.5 rounded-lg border border-white/[0.06] bg-white/[0.02]">
+                    <label className="text-[11px] text-slate-400 font-medium block">
+                      Email to continue
                     </label>
-                    <div className="flex flex-col gap-2">
-                      <input
-                        type="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        placeholder="your@email.com"
-                        className="w-full bg-[#050505] border border-white/5 rounded-lg px-4 py-3 text-white text-[12px] font-bold tracking-widest placeholder:text-slate-700 focus:border-primary/40 focus:outline-none transition-all"
-                      />
-                    </div>
+                    <input
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder="your@email.com"
+                      className="w-full bg-white/[0.03] border border-white/[0.06] rounded-lg px-3 py-2.5 text-white text-xs placeholder:text-slate-700 focus:border-white/10 focus:outline-none transition-all"
+                    />
                     {authError && (
-                      <div className="bg-primary/10 border border-primary/20 rounded-md p-3 flex items-center gap-2">
-                        <span className="material-symbols-outlined text-primary text-xs">error</span>
-                        <p className="text-primary text-[11px] font-black uppercase tracking-widest">{authError}</p>
-                      </div>
+                      <p className="text-red-400 text-[11px] mt-1">{authError}</p>
                     )}
                   </div>
                 )}
@@ -905,30 +966,29 @@ export default function ServiceDetailsPage() {
                 <button
                   onClick={handleOrderClick}
                   disabled={isSubmitting || (status === "unauthenticated" && !email)}
-                  className="w-full py-4 bg-primary hover:bg-[#8a0e1d] disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold text-sm uppercase tracking-widest rounded-xl transition-colors flex items-center justify-center gap-2"
+                  className="w-full min-h-[48px] bg-primary hover:bg-primary-dark disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold text-sm uppercase tracking-wider rounded-xl transition-all hover:shadow-[0_4px_20px_-4px_rgba(175,18,37,0.4)] flex items-center justify-center gap-2 cursor-pointer"
                 >
-                  {isSubmitting ? "Initiating..." : "Proceed to Checkout"}
-                  <span className="material-symbols-outlined text-lg">arrow_forward</span>
+                  {isSubmitting ? "Processing..." : "Proceed to Checkout"}
+                  <ArrowRight className="size-4" />
                 </button>
 
-                <div className="flex items-center justify-center gap-2 mt-4 text-[14px] text-slate-600 font-black uppercase tracking-widest">
-                  <span className="material-symbols-outlined text-sm">lock</span>256-Bit Secure Protocol
-                </div>
+                <p className="text-center text-[11px] text-slate-600 mt-3 flex items-center justify-center gap-1.5">
+                  <Lock className="size-3" />
+                  Secure Stripe Checkout
+                </p>
               </div>
 
               {/* Trust badges */}
-              <div className="bg-[#0a0a0a] border border-white/5 rounded-xl p-5 grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-2 gap-2">
                 {[
-                  { icon: 'verified_user', label: 'Secured' },
-                  { icon: 'support_agent', label: 'Support' },
-                  { icon: 'vpn_lock', label: 'Encrypted' },
-                  { icon: 'payments', label: 'Verified' },
+                  { icon: Shield, label: 'Secure Checkout' },
+                  { icon: Headphones, label: '24/7 Support' },
+                  { icon: Truck, label: 'Order Tracking' },
+                  { icon: UserCheck, label: 'Verified Boosters' },
                 ].map(badge => (
-                  <div key={badge.label} className="flex items-center gap-2.5 group">
-                    <div className="size-9 rounded-lg bg-white/[0.04] border border-white/5 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all duration-300 shrink-0">
-                      <span className="material-symbols-outlined text-base">{badge.icon}</span>
-                    </div>
-                    <span className="text-[14px] font-black text-slate-500 uppercase tracking-widest group-hover:text-slate-300 transition-colors">{badge.label}</span>
+                  <div key={badge.label} className="flex items-center gap-2 py-3 px-3 rounded-xl bg-[#0c0c0c] border border-white/[0.06] group hover:border-primary/20 transition-colors">
+                    <badge.icon className="size-3.5 text-primary/50 group-hover:text-primary transition-colors shrink-0" />
+                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">{badge.label}</span>
                   </div>
                 ))}
               </div>
@@ -941,114 +1001,83 @@ export default function ServiceDetailsPage() {
       {/* ── PAYMENT MODAL ── */}
       {showPaymentModal && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} onClick={() => { setShowPaymentModal(false); setSelectedPaymentMethod(null); }} className="absolute inset-0 bg-black/80 backdrop-blur-xl" />
-          <motion.div initial={{ opacity: 0, scale: 0.97, y: 12 }} animate={{ opacity: 1, scale: 1, y: 0 }} className="bg-[#0a0a0a] border border-white/10 rounded-3xl w-full max-w-lg shadow-2xl relative z-[101] overflow-hidden flex flex-col max-h-[90vh]">
-            <div className="p-8 overflow-y-auto custom-scrollbar">
-              {/* header */}
-              <div className="flex items-start justify-between mb-8">
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} onClick={() => { setShowPaymentModal(false); setSelectedPaymentMethod(null); }} className="absolute inset-0 bg-black/70 backdrop-blur-sm" />
+          <motion.div initial={{ opacity: 0, scale: 0.97, y: 12 }} animate={{ opacity: 1, scale: 1, y: 0 }} className="bg-[#0A0A0A] border border-white/[0.08] rounded-xl w-full max-w-lg shadow-2xl relative z-[101] overflow-hidden flex flex-col max-h-[90vh]">
+            <div className="p-6 overflow-y-auto custom-scrollbar">
+              <div className="flex items-start justify-between mb-6">
                 <div>
-                  <h2 className="text-2xl font-black text-white tracking-tighter">Checkout</h2>
-                  <p className="text-sm text-slate-500 mt-1">Review your service details</p>
+                  <h2 className="text-lg font-semibold text-white">Checkout</h2>
+                  <p className="text-sm text-slate-500 mt-0.5">Review your order and select payment</p>
                 </div>
-                <button onClick={() => { setShowPaymentModal(false); setSelectedPaymentMethod(null); }} className="p-2 rounded-lg hover:bg-white/5 text-slate-500 hover:text-white transition-colors">
-                  <span className="material-symbols-outlined">close</span>
+                <button onClick={() => { setShowPaymentModal(false); setSelectedPaymentMethod(null); }} className="p-1.5 rounded-md hover:bg-white/5 text-slate-500 hover:text-white transition-colors" aria-label="Close checkout">
+                  <XIcon className="size-4" />
                 </button>
               </div>
 
-              <div className="space-y-5">
-                {/* Guest Indicator */}
+              <div className="space-y-4">
                 {(status === "unauthenticated" || (session?.user as any)?.hasPassword === false) && (
-                  <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="bg-emerald-500/5 border border-emerald-500/20 rounded-2xl p-4 flex items-center gap-4">
-                    <div className="size-10 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-500 shrink-0">
-                      <span className="material-symbols-outlined text-2xl">person_add</span>
+                  <div className="bg-emerald-500/5 border border-emerald-500/20 rounded-lg p-3 flex items-center gap-3">
+                    <div className="size-8 rounded-md bg-emerald-500/10 flex items-center justify-center text-emerald-400 shrink-0">
+                      <UserCheck className="size-4" />
                     </div>
                     <div>
-                      <div className="flex items-center gap-2">
-                        <p className="text-[12px] font-black text-emerald-500 uppercase tracking-widest leading-none">Guest Checkout Active</p>
-                        <span className="size-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                      </div>
-                      <p className="text-[11px] text-slate-500 font-bold uppercase tracking-widest mt-1.5 line-clamp-1">
-                        Creating guest account for: <span className="text-slate-300">{email || session?.user?.email}</span>
-                      </p>
+                      <p className="text-xs font-medium text-emerald-400">Guest checkout</p>
+                      <p className="text-[11px] text-slate-500 mt-0.5 truncate">{email || session?.user?.email}</p>
                     </div>
-                  </motion.div>
+                  </div>
                 )}
 
-                {/* order summary */}
-                <div className="bg-[#050505] rounded-xl p-5 border border-white/5">
+                <div className="bg-white/[0.02] rounded-lg p-4 border border-white/[0.06]">
                   <div className="flex justify-between items-start">
                     <div>
-                      <h3 className="font-bold text-white">{service?.name}</h3>
-                      <p className="text-[14px] text-slate-400 mt-1">{platform} • {completionMethod}</p>
+                      <h3 className="text-sm font-semibold text-white">{service?.name}</h3>
+                      <p className="text-xs text-slate-500 mt-0.5">{platform}{completionMethod ? ` · ${completionMethod}` : ''}</p>
                     </div>
-                    <div className="text-xl font-black text-white">{formatPrice(calculateTotalPrice())}</div>
+                    <div className="text-lg font-bold text-white">{formatPrice(calculateTotalPrice())}</div>
                   </div>
                 </div>
 
-                {/* customer info */}
                 <div className="space-y-1.5">
-                  <label className="text-[14px] font-bold text-slate-500 uppercase tracking-wider">Order Notes (Optional)</label>
+                  <label className="text-[11px] font-medium text-slate-400">Order Notes (Optional)</label>
                   <textarea value={orderNotes} onChange={e => setOrderNotes(e.target.value)} placeholder="Any specific requirements..." rows={2}
-                    className="w-full bg-[#050505] border border-white/5 rounded-xl px-4 py-3 text-sm text-white focus:border-primary/50 transition-all outline-none resize-none hover:border-white/10" />
+                    className="w-full bg-white/[0.03] border border-white/[0.06] rounded-lg px-3 py-2.5 text-sm text-white focus:border-white/10 transition-all outline-none resize-none" />
                 </div>
 
-                {/* payment methods */}
-                <div className="space-y-3">
-                  <label className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Select Payment Method</label>
+                <div className="space-y-2">
+                  <label className="text-[11px] font-medium text-slate-400">Payment method</label>
                   <button onClick={() => setSelectedPaymentMethod('stripe')}
-                    className={`w-full relative flex items-center gap-4 p-4 rounded-xl border transition-colors duration-200 cursor-pointer overflow-hidden text-sm font-bold
-                      ${selectedPaymentMethod === 'stripe' ? 'border-primary bg-primary/5 text-white' : 'border-white/5 bg-[#0a0a0a] hover:border-white/10 hover:bg-[#0f0f0f] text-slate-400'}`}>
-                    <div className="relative flex items-center justify-center shrink-0">
-                      <div className={`size-5 rounded-full border-2 transition-colors duration-200 flex items-center justify-center
-                        ${selectedPaymentMethod === 'stripe' ? 'border-primary' : 'border-slate-700'}`}>
-                        <div className={`size-2.5 rounded-full bg-primary transition-transform duration-200 transform
-                          ${selectedPaymentMethod === 'stripe' ? 'scale-100' : 'scale-0'}`} />
-                      </div>
+                    className={`w-full flex items-center gap-3 p-3.5 rounded-lg border transition-colors duration-200 cursor-pointer text-sm font-medium
+                      ${selectedPaymentMethod === 'stripe' ? 'border-primary/40 bg-primary/5 text-white' : 'border-white/[0.06] bg-[#0c0c0c] hover:border-white/10 text-slate-400'}`}>
+                    <div className={`size-4 rounded-full border-2 flex items-center justify-center shrink-0 ${selectedPaymentMethod === 'stripe' ? 'border-primary' : 'border-slate-700'}`}>
+                      <div className={`size-2 rounded-full bg-primary transition-transform ${selectedPaymentMethod === 'stripe' ? 'scale-100' : 'scale-0'}`} />
                     </div>
-                    <div className="flex items-center gap-3">
-                      <span className="material-symbols-outlined">credit_card</span>
-                      Credit / Debit Card
-                    </div>
+                    Credit / Debit Card
                   </button>
-                  <div className="space-y-3">
-                    {[{ icon: 'payments', label: 'PayPal' }, { icon: 'currency_bitcoin', label: 'Crypto' }].map(m => (
-                      <div key={m.label} className="w-full relative flex items-center gap-4 p-4 rounded-xl border border-white/5 bg-[#0a0a0a] transition-colors duration-200 cursor-not-allowed overflow-hidden text-sm font-bold text-slate-400 opacity-60">
-                        <div className="relative flex items-center justify-center shrink-0">
-                          <div className="size-5 rounded-full border-2 border-slate-700 flex items-center justify-center">
-                            <div className="size-2.5 rounded-full bg-primary transform scale-0" />
-                          </div>
-                        </div>
-                        <div className="flex items-center gap-3">
-                          <span className="material-symbols-outlined">{m.icon}</span>
-                          {m.label}
-                        </div>
-                        <div className="ml-auto flex shrink-0">
-                          <span className="text-[11px] border border-white/20 px-2 py-0.5 rounded text-white bg-white/5 uppercase font-black tracking-widest">Soon</span>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
+                  {['PayPal', 'Crypto'].map(m => (
+                    <div key={m} className="w-full flex items-center gap-3 p-3.5 rounded-lg border border-white/[0.04] bg-white/[0.01] text-sm text-slate-600 cursor-not-allowed">
+                      <div className="size-4 rounded-full border-2 border-slate-800 shrink-0" />
+                      {m}
+                      <span className="ml-auto text-[9px] font-medium uppercase tracking-wider text-slate-700 bg-white/[0.03] px-1.5 py-0.5 rounded">Soon</span>
+                    </div>
+                  ))}
                 </div>
               </div>
 
-              {/* pay button */}
               <div className="pt-5 mt-2">
                 {checkoutError && (
-                  <div className="mb-4 bg-primary/10 border border-primary/20 text-primary text-xs font-bold p-3 rounded-lg flex items-center gap-2 uppercase tracking-widest">
-                    <span className="material-symbols-outlined text-sm">error</span>
-                    {checkoutError}
-                  </div>
+                  <p className="mb-3 text-red-400 text-xs bg-red-500/10 border border-red-500/20 p-2.5 rounded-lg">{checkoutError}</p>
                 )}
                 <button onClick={handlePurchase} disabled={!selectedPaymentMethod || isSubmitting}
-                  className="w-full py-4 bg-primary hover:bg-[#8a0e1d] disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold rounded-xl transition-all shadow-lg shadow-primary/20 flex items-center justify-center gap-2">
+                  className="w-full min-h-[44px] bg-primary hover:bg-primary-dark disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold text-sm rounded-lg transition-colors flex items-center justify-center gap-2 cursor-pointer">
                   {isSubmitting ? (
                     <><div className="size-4 border-2 border-white/20 border-t-white rounded-full animate-spin" /><span>Processing...</span></>
                   ) : (
-                    <><span>Pay Now</span><span className="material-symbols-outlined text-xl">arrow_forward</span></>
+                    <><span>Pay Now</span><ArrowRight className="size-4" /></>
                   )}
                 </button>
-                <p className="text-center text-[14px] text-slate-600 mt-3 flex items-center justify-center gap-1.5 uppercase tracking-widest font-black">
-                  <span className="material-symbols-outlined text-xs">lock</span>Secure SSL Encrypted Payment
+                <p className="text-center text-[11px] text-slate-600 mt-3 flex items-center justify-center gap-1.5">
+                  <Lock className="size-3" />
+                  Secure Stripe Checkout
                 </p>
               </div>
             </div>

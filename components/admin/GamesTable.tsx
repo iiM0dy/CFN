@@ -47,8 +47,8 @@ export default function GamesTable({ initialGames }: GamesTableProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const filteredGames = games.filter(g => 
-    g.name.toLowerCase().includes(search.toLowerCase()) || 
-    g.slug.toLowerCase().includes(search.toLowerCase())
+    (g.name || '').toLowerCase().includes(search.toLowerCase()) || 
+    (g.slug || '').toLowerCase().includes(search.toLowerCase())
   );
 
   const openAddModal = () => {
@@ -315,7 +315,6 @@ export default function GamesTable({ initialGames }: GamesTableProps) {
                     />
                   </div>
                   {/* Slug */}
-                  {/* Slug */}
                   <div className="space-y-2">
                     <label className="text-[12px] font-black text-slate-500 uppercase tracking-widest pl-1 italic">Slug</label>
                     <input 
@@ -327,6 +326,18 @@ export default function GamesTable({ initialGames }: GamesTableProps) {
                       onChange={(e) => setEditingGame({ ...editingGame!, slug: e.target.value.toLowerCase().replace(/ /g, '-') })}
                     />
                   </div>
+                </div>
+
+                {/* Description */}
+                <div className="space-y-2">
+                  <label className="text-[12px] font-black text-slate-500 uppercase tracking-widest pl-1 italic">Description</label>
+                  <textarea
+                    required
+                    placeholder="Rank Boost, Loot Farming, etc."
+                    className="w-full h-24 bg-white/3 border border-white/5 rounded-2xl p-4 text-white focus:border-primary transition-all outline-none font-bold placeholder:text-slate-700 resize-none"
+                    value={editingGame?.description || ""}
+                    onChange={(e) => setEditingGame({ ...editingGame!, description: e.target.value })}
+                  />
                 </div>
 
                 {/* Images */}

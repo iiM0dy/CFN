@@ -11,8 +11,8 @@ export async function GET() {
             return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
         }
 
-        const sessions = await api("/chat/sessions", { token });
-        return NextResponse.json(sessions);
+        const sessions = await api<{ data: any[] }>("/chat/sessions", { token });
+        return NextResponse.json(sessions.data ?? []);
     } catch (error: any) {
         console.error("Chat Sessions List Error:", error);
         return NextResponse.json({ error: error.message || "Internal Server Error" }, { status: 500 });

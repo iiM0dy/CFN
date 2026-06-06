@@ -18,8 +18,9 @@ export async function GET(request: Request) {
       'Authorization': `Bearer ${token}`,
     },
   });
-  const data = await res.text();
-  return new Response(data, { status: res.status, headers: { 'Content-Type': 'application/json' } });
+  const json = await res.json().catch(() => null);
+  const data = json?.data ?? json ?? [];
+  return NextResponse.json(data, { status: res.status });
 }
 
 export async function POST(request: Request) {

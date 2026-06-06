@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminAnnouncementController;
 use App\Http\Controllers\Admin\AdminChatController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AdminGameController;
 use App\Http\Controllers\Admin\AdminOrderController;
+use App\Http\Controllers\Admin\AdminReviewController;
 use App\Http\Controllers\Admin\AdminServiceController;
 use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\AnnouncementController;
@@ -86,6 +88,7 @@ Route::middleware(['auth:sanctum', 'admin'])->prefix('admin')->group(function ()
     Route::get('/dashboard-stats', [AdminDashboardController::class, 'index']);
 
     Route::get('/services', [AdminServiceController::class, 'index']);
+    Route::post('/services', [AdminServiceController::class, 'store']);
     Route::patch('/services/{id}', [AdminServiceController::class, 'update']);
     Route::delete('/services/{id}', [AdminServiceController::class, 'destroy']);
 
@@ -108,4 +111,13 @@ Route::middleware(['auth:sanctum', 'admin'])->prefix('admin')->group(function ()
 
     Route::post('/announcement', [AnnouncementController::class, 'store']);
     Route::delete('/announcement', [AnnouncementController::class, 'destroy']);
+
+    Route::get('/announcements', [AdminAnnouncementController::class, 'index']);
+    Route::post('/announcements', [AdminAnnouncementController::class, 'store']);
+    Route::patch('/announcements/{id}', [AdminAnnouncementController::class, 'update']);
+    Route::delete('/announcements/{id}', [AdminAnnouncementController::class, 'destroy']);
+
+    Route::get('/reviews', [AdminReviewController::class, 'index']);
+    Route::patch('/reviews/{id}', [AdminReviewController::class, 'update']);
+    Route::delete('/reviews/{id}', [AdminReviewController::class, 'destroy']);
 });

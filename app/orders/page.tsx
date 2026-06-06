@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
-import { Package, Clock, CheckCircle, XCircle, Loader2, ChevronRight } from "lucide-react"
+import { Package, Clock, CheckCircle, XCircle, Loader2, ArrowRight, Lock } from "lucide-react"
 
 interface Order {
   id: string
@@ -60,30 +60,30 @@ export default function MyOrdersPage() {
   const getStatusIcon = (status: string) => {
     switch (status) {
       case 'pending':
-        return <Clock className="size-5 text-yellow-500" />
+        return <Clock className="size-3.5 text-amber-400" />
       case 'active':
-        return <Loader2 className="size-5 text-blue-500 animate-spin" />
+        return <Loader2 className="size-3.5 text-blue-400 animate-spin" />
       case 'completed':
-        return <CheckCircle className="size-5 text-green-500" />
+        return <CheckCircle className="size-3.5 text-emerald-400" />
       case 'cancelled':
-        return <XCircle className="size-5 text-red-500" />
+        return <XCircle className="size-3.5 text-red-400" />
       default:
-        return <Package className="size-5 text-gray-500" />
+        return <Package className="size-3.5 text-slate-500" />
     }
   }
 
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'pending':
-        return 'bg-yellow-500/10 text-yellow-500 border-yellow-500/20'
+        return 'bg-amber-500/10 text-amber-400 border-amber-500/20'
       case 'active':
-        return 'bg-blue-500/10 text-blue-500 border-blue-500/20'
+        return 'bg-blue-500/10 text-blue-400 border-blue-500/20'
       case 'completed':
-        return 'bg-green-500/10 text-green-500 border-green-500/20'
+        return 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'
       case 'cancelled':
-        return 'bg-red-500/10 text-red-500 border-red-500/20'
+        return 'bg-red-500/10 text-red-400 border-red-500/20'
       default:
-        return 'bg-gray-500/10 text-gray-500 border-gray-500/20'
+        return 'bg-slate-500/10 text-slate-400 border-slate-500/20'
     }
   }
 
@@ -94,176 +94,207 @@ export default function MyOrdersPage() {
     return true
   })
 
+  const activeCt = orders.filter(o => o.status === 'pending' || o.status === 'active').length
+  const completedCt = orders.filter(o => o.status === 'completed').length
+
   if (status === 'loading' || loading) {
     return (
-      <div className="min-h-screen bg-[#0B0B0B] text-white flex items-center justify-center">
-        <Loader2 className="size-12 animate-spin text-primary" />
+      <div className="min-h-screen bg-[#080808] flex items-center justify-center">
+        <div className="flex flex-col items-center gap-3">
+          <div className="size-8 rounded-full border-2 border-white/[0.06] border-t-primary animate-spin" />
+          <p className="text-xs text-slate-500">Loading orders...</p>
+        </div>
       </div>
     )
   }
 
+  const tabs: { key: typeof filter; label: string; count: number }[] = [
+    { key: 'all', label: 'All Orders', count: orders.length },
+    { key: 'active', label: 'Active', count: activeCt },
+    { key: 'completed', label: 'Completed', count: completedCt },
+  ]
+
   return (
-    <div className="min-h-screen bg-[#080808] text-white font-(family-name:--font-inter)">
-      <main className="grow w-full px-6 lg:px-10 py-8 max-w-[1440px] mx-auto">
+    <div className="bg-noise min-h-screen text-white" style={{ background: 'linear-gradient(180deg, #080808 0%, #060608 50%, #080808 100%)' }}>
+      <main className="relative z-10 grow w-full px-6 lg:px-10 pt-8 pb-16 max-w-[1440px] mx-auto">
         {/* Breadcrumbs */}
-        <div className="flex items-center gap-2 text-[14px] font-black uppercase tracking-widest text-slate-500 mb-8">
-          <Link href="/" className="hover:text-primary transition-colors">Home</Link>
-          <ChevronRight className="size-3" />
-          <span className="text-white">My Orders</span>
-        </div>
+        <nav className="flex items-center gap-1.5 text-xs text-slate-500 mb-6">
+          <Link href="/" className="hover:text-white transition-colors">Home</Link>
+          <span className="text-slate-700">/</span>
+          <span className="text-slate-300 font-medium">My Orders</span>
+        </nav>
 
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-4xl md:text-5xl font-black text-white uppercase tracking-tighter mb-2">My Orders</h1>
-          <p className="text-slate-500 text-[14px] font-bold uppercase tracking-widest">Track and manage your service orders</p>
+          <div className="h-px w-12 bg-primary mb-4" />
+          <h1 className="font-cairo text-3xl md:text-4xl font-bold text-white tracking-tight uppercase mb-2">
+            My <span className="text-primary">Orders</span>
+          </h1>
+          <p className="text-sm text-slate-400">Track and manage your service orders.</p>
         </div>
 
         {/* Filter Tabs */}
-        <div className="flex gap-6 mb-10 border-b border-white/5">
-          <button
-            onClick={() => setFilter('all')}
-            className={`pb-4 text-[14px] font-black uppercase tracking-widest transition-all ${filter === 'all'
-              ? 'text-primary border-b-2 border-primary -mb-px'
-              : 'text-slate-600 hover:text-white'
+        <div className="flex gap-1 mb-8 border-b border-white/[0.06]">
+          {tabs.map(tab => (
+            <button
+              key={tab.key}
+              onClick={() => setFilter(tab.key)}
+              aria-label={`Show ${tab.label.toLowerCase()}`}
+              className={`pb-3 px-4 text-xs font-semibold transition-colors relative cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-primary ${
+                filter === tab.key
+                  ? 'text-white'
+                  : 'text-slate-500 hover:text-slate-300'
               }`}
-          >
-            All Orders ({orders.length})
-          </button>
-          <button
-            onClick={() => setFilter('active')}
-            className={`pb-4 text-[14px] font-black uppercase tracking-widest transition-all ${filter === 'active'
-              ? 'text-primary border-b-2 border-primary -mb-px'
-              : 'text-slate-600 hover:text-white'
-              }`}
-          >
-            Active ({orders.filter(o => o.status === 'pending' || o.status === 'active').length})
-          </button>
-          <button
-            onClick={() => setFilter('completed')}
-            className={`pb-4 text-[14px] font-black uppercase tracking-widest transition-all ${filter === 'completed'
-              ? 'text-primary border-b-2 border-primary -mb-px'
-              : 'text-slate-600 hover:text-white'
-              }`}
-          >
-            Completed ({orders.filter(o => o.status === 'completed').length})
-          </button>
+            >
+              {tab.label}
+              <span className={`ml-1.5 text-[10px] ${filter === tab.key ? 'text-primary' : 'text-slate-600'}`}>
+                {tab.count}
+              </span>
+              {filter === tab.key && (
+                <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary" />
+              )}
+            </button>
+          ))}
         </div>
 
-        {/* Orders List */}
+        {/* Content */}
         {status === 'unauthenticated' ? (
-          <div className="text-center py-24 bg-[#0D0D0D] border border-dashed border-white/10 rounded-[2.5rem] shadow-2xl">
-            <div className="size-20 rounded-2xl bg-primary/5 flex items-center justify-center mx-auto mb-6 border border-primary/10">
-              <span className="material-symbols-outlined text-primary text-4xl">fingerprint</span>
+          /* Login required */
+          <div className="py-20 text-center rounded-xl border border-white/[0.06] bg-[#0a0a0a]">
+            <div className="size-12 rounded-xl bg-primary/5 border border-primary/10 flex items-center justify-center mx-auto mb-4">
+              <Lock className="size-5 text-primary/50" />
             </div>
-            <h3 className="text-2xl font-black text-white uppercase tracking-widest mb-4">Please Log In</h3>
-            <p className="text-slate-500 text-[14px] font-bold uppercase tracking-widest mb-10 max-w-sm mx-auto leading-relaxed">
+            <h3 className="font-cairo text-lg font-bold text-white uppercase tracking-tight mb-1.5">Sign in Required</h3>
+            <p className="text-sm text-slate-500 max-w-sm mx-auto mb-6">
               Log in to your account to view your active orders and history.
             </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
               <Link
                 href="/login"
-                className="px-8 py-4 bg-primary hover:bg-[#8a0e1d] text-white text-[14px] font-black uppercase tracking-[0.3em] rounded-2xl transition-all shadow-xl shadow-primary/20"
+                className="min-h-[44px] px-6 flex items-center justify-center bg-primary hover:bg-primary-dark text-white text-sm font-semibold rounded-lg transition-colors"
               >
                 Log In
               </Link>
               <Link
                 href="/"
-                className="px-8 py-4 bg-white/5 hover:bg-white/10 text-white text-[14px] font-black uppercase tracking-[0.3em] rounded-2xl transition-all border border-white/5"
+                className="min-h-[44px] px-6 flex items-center justify-center bg-white/[0.04] border border-white/[0.06] text-white text-sm font-medium rounded-lg hover:bg-white/[0.07] transition-colors"
               >
                 Back to Home
               </Link>
             </div>
           </div>
         ) : filteredOrders.length === 0 ? (
-          <div className="text-center py-32 bg-[#0D0D0D] border border-dashed border-white/10 rounded-[2.5rem] shadow-2xl">
-            <Package className="size-16 text-slate-700 mx-auto mb-4" />
-            <h3 className="text-xl font-black text-white mb-2 uppercase tracking-tighter">No orders found</h3>
-            <p className="text-slate-500 mb-8 uppercase tracking-widest text-[14px] font-bold">No active Orders detected</p>
+          /* Empty state */
+          <div className="py-20 text-center rounded-xl border border-white/[0.06] bg-[#0a0a0a]">
+            <div className="size-12 rounded-xl bg-white/[0.03] border border-white/[0.06] flex items-center justify-center mx-auto mb-4">
+              <Package className="size-5 text-slate-600" />
+            </div>
+            <h3 className="font-cairo text-lg font-bold text-white uppercase tracking-tight mb-1.5">No Orders Found</h3>
+            <p className="text-sm text-slate-500 max-w-sm mx-auto mb-6">
+              {filter === 'all'
+                ? "You haven't placed any orders yet."
+                : `No ${filter} orders to show.`}
+            </p>
             <Link
               href="/#games"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-primary hover:bg-[#8a0e1d] text-white text-[14px] font-black uppercase tracking-[0.2em] rounded-xl transition-all shadow-lg shadow-primary/20"
+              className="inline-flex items-center gap-1.5 min-h-[44px] px-5 bg-primary hover:bg-primary-dark text-white text-sm font-semibold rounded-lg transition-colors"
             >
               Browse Services
-              <ChevronRight className="size-4" />
+              <ArrowRight className="size-3.5" />
             </Link>
           </div>
         ) : (
-          <div className="space-y-6">
-            {filteredOrders.map((order) => (
-              <div
-                key={order.id}
-                className="bg-[#0D0D0D] border border-white/5 rounded-3xl p-6 sm:p-8 hover:border-primary/30 transition-all shadow-2xl relative overflow-hidden group"
-              >
-                <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 blur-[50px] opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
-                <div className="flex flex-col md:flex-row gap-8 relative z-10">
-                  {/* Service Image */}
-                  {order.service.image && (
-                    <div className="w-24 h-24 sm:w-32 sm:h-32 rounded-2xl overflow-hidden border border-white/5 shrink-0 bg-[#080808]">
-                      <img
-                        src={order.service.image}
-                        alt={order.service.name}
-                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                      />
-                    </div>
-                  )}
+          /* Orders list */
+          <div className="space-y-3">
+            {filteredOrders.map((order) => {
+              const hasImage = order.service.image && (order.service.image.includes('://') || order.service.image.startsWith('/'))
+              const serviceSlug = order.service.name.toLowerCase().replace(/[^a-z0-9]+/g, '-')
 
-                  {/* Order Details */}
-                  <div className="flex-1">
-                    <div className="flex flex-col sm:flex-row sm:items-start justify-between mb-6 gap-4">
-                      <div>
-                        <h3 className="text-xl sm:text-2xl font-black text-white mb-1 uppercase tracking-tighter">{order.service.name}</h3>
-                        <p className="text-[14px] font-bold text-slate-500 uppercase tracking-widest">{order.service.game.name}</p>
-                      </div>
-                      <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-lg border text-[14px] font-black uppercase tracking-widest self-start ${getStatusColor(order.status)}`}>
-                        {getStatusIcon(order.status)}
-                        {order.status}
-                      </div>
-                    </div>
+              return (
+                <div
+                  key={order.id}
+                  className="card-lift group bg-[#0a0a0a] border border-white/[0.06] rounded-xl overflow-hidden hover:border-primary/30 transition-all"
+                >
+                  {/* Red top accent */}
+                  <div className="h-px bg-gradient-to-r from-transparent via-primary/0 to-transparent group-hover:via-primary/40 transition-all duration-500" />
 
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-[14px] mb-6">
-                      <div className="bg-white/5 p-4 rounded-2xl border border-white/5">
-                        <span className="text-slate-500 block mb-2 text-[14px] font-black uppercase tracking-widest">Order ID</span>
-                        <span className="text-white font-mono text-[14px] font-bold">#{order.id.slice(0, 8).toUpperCase()}</span>
+                  <div className="p-5 sm:p-6 flex flex-col sm:flex-row gap-5">
+                    {/* Service image */}
+                    {hasImage && (
+                      <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-lg overflow-hidden border border-white/[0.06] shrink-0 bg-[#0e0e0e]">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={order.service.image!}
+                          alt={order.service.name}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        />
                       </div>
-                      <div className="bg-white/5 p-4 rounded-2xl border border-white/5">
-                        <span className="text-slate-500 block mb-2 text-[14px] font-black uppercase tracking-widest">Quantity</span>
-                        <span className="text-white font-black text-[14px]">{order.quantity}x</span>
-                      </div>
-                      {order.platform && (
-                        <div className="bg-white/5 p-4 rounded-2xl border border-white/5">
-                          <span className="text-slate-500 block mb-2 text-[14px] font-black uppercase tracking-widest">Platform</span>
-                          <span className="text-white font-black text-[14px] uppercase">{order.platform}</span>
+                    )}
+
+                    {/* Details */}
+                    <div className="flex-1 min-w-0">
+                      <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 mb-4">
+                        <div className="min-w-0">
+                          <h3 className="font-cairo text-lg font-bold text-white uppercase tracking-tight leading-tight group-hover:text-primary transition-colors truncate">
+                            {order.service.name}
+                          </h3>
+                          <p className="text-[11px] text-slate-500 mt-0.5">{order.service.game.name}</p>
                         </div>
-                      )}
-                      <div className="bg-primary/5 p-4 rounded-2xl border border-primary/20">
-                        <span className="text-primary/70 block mb-2 text-[14px] font-black uppercase tracking-widest">Total</span>
-                        <span className="text-primary font-black text-lg leading-none">${Number(order.totalPrice).toFixed(2)}</span>
+                        <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md border text-[11px] font-semibold capitalize self-start shrink-0 ${getStatusColor(order.status)}`}>
+                          {getStatusIcon(order.status)}
+                          {order.status}
+                        </span>
                       </div>
-                    </div>
 
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between mt-auto pt-6 border-t border-white/5 gap-4">
-                      <div className="flex items-center gap-2 text-[14px] font-bold text-slate-500 uppercase tracking-widest">
-                        <Clock className="size-3" />
-                        <span>Ordered {new Date(order.createdAt).toLocaleDateString('en-US', {
-                          month: 'short',
-                          day: 'numeric',
-                          year: 'numeric',
-                          hour: '2-digit',
-                          minute: '2-digit'
-                        })}</span>
+                      {/* Meta row */}
+                      <div className="flex flex-wrap gap-x-6 gap-y-2 text-[12px] mb-4">
+                        <div>
+                          <span className="text-slate-600">Order</span>
+                          <span className="ml-1.5 text-slate-300 font-mono">#{order.id.slice(0, 8).toUpperCase()}</span>
+                        </div>
+                        <div>
+                          <span className="text-slate-600">Qty</span>
+                          <span className="ml-1.5 text-slate-300">{order.quantity}×</span>
+                        </div>
+                        {order.platform && (
+                          <div>
+                            <span className="text-slate-600">Platform</span>
+                            <span className="ml-1.5 text-slate-300 capitalize">{order.platform}</span>
+                          </div>
+                        )}
+                        <div>
+                          <span className="text-slate-600">Total</span>
+                          <span className="ml-1.5 text-white font-bold">${Number(order.totalPrice).toFixed(2)}</span>
+                        </div>
                       </div>
-                      <Link
-                        href={`/services/${encodeURIComponent(order.service.name.toLowerCase().replace(/[^a-z0-9]+/g, '-'))}`}
-                        className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-white/5 hover:bg-primary border border-white/5 hover:border-primary text-[14px] text-white font-black uppercase tracking-[0.2em] rounded-xl transition-all shadow-lg hover:shadow-primary/20 group/btn"
-                      >
-                        View Service
-                        <ChevronRight className="size-3 group-hover/btn:translate-x-1 transition-transform" />
-                      </Link>
+
+                      {/* Footer */}
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between pt-4 border-t border-white/[0.04] gap-3">
+                        <div className="flex items-center gap-1.5 text-[11px] text-slate-500">
+                          <Clock className="size-3" />
+                          <span>
+                            {new Date(order.createdAt).toLocaleDateString('en-US', {
+                              month: 'short',
+                              day: 'numeric',
+                              year: 'numeric',
+                              hour: '2-digit',
+                              minute: '2-digit'
+                            })}
+                          </span>
+                        </div>
+                        <Link
+                          href={`/services/${encodeURIComponent(serviceSlug)}`}
+                          className="inline-flex items-center gap-1.5 min-h-[36px] px-3.5 rounded-lg bg-white/[0.04] border border-white/[0.06] hover:bg-primary hover:border-primary text-xs font-semibold text-slate-300 hover:text-white transition-all"
+                        >
+                          View Service
+                          <ArrowRight className="size-3" />
+                        </Link>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              )
+            })}
           </div>
         )}
       </main>

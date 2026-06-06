@@ -24,6 +24,10 @@ class GameController extends Controller
             ->with(['options' => fn($q) => $q->orderBy('sort_order'), 'options.values' => fn($q) => $q->orderBy('sort_order')])
             ->get();
 
-        return ServiceWithPriceResource::collection($services);
+        $gameData = new GameResource($game);
+        $gameArray = $gameData->toArray(request());
+        $gameArray['services'] = ServiceWithPriceResource::collection($services);
+
+        return response()->json($gameArray);
     }
 }

@@ -1,57 +1,71 @@
 "use client";
 
-import { Bell, Search, User, Menu } from "lucide-react";
+import { Bell, Search, Menu } from "lucide-react";
 import { usePathname } from "next/navigation";
+import { useSession } from "next-auth/react";
 
-export default function AdminHeader() {
+const pageTitles: Record<string, string> = {
+    "/admin": "Overview",
+    "/admin/orders": "Orders",
+    "/admin/services": "Services",
+    "/admin/games": "Games",
+    "/admin/users": "Users",
+    "/admin/chat": "Live Chat",
+    "/admin/announcements": "Announcements",
+    "/admin/reviews": "Reviews",
+};
+
+export default function AdminHeader({ onMenuClick }: { onMenuClick?: () => void }) {
     const pathname = usePathname();
+    const { data: session } = useSession();
 
-    // Convert pathname to title (e.g., /admin/orders -> Orders)
-    const getTitle = () => {
-        if (pathname === "/admin") return "Overview";
-        const parts = pathname.split("/");
-        const last = parts[parts.length - 1];
-        return last.charAt(0).toUpperCase() + last.slice(1);
-    };
+    const title = pageTitles[pathname] ?? pathname.split("/").pop()?.replace(/-/g, " ") ?? "Admin";
+    const userEmail = session?.user?.email ?? "Admin";
+    const userInitial = userEmail[0]?.toUpperCase() ?? "A";
 
     return (
-        <header className="h-20 bg-[#0D0D0D]/80 border-b border-white/5 flex items-center justify-between px-10 sticky top-0 z-50 backdrop-blur-xl">
-            <div className="flex items-center gap-4">
-                <button className="lg:hidden p-2 hover:bg-white/5 rounded-lg text-slate-400">
-                    <Menu className="size-5" />
+        <header className="h-14 bg-[#0A0A0A]/80 border-b border-white/[0.06] flex items-center justify-between px-4 lg:px-6 sticky top-0 z-40 backdrop-blur-xl shrink-0">
+            <div className="flex items-center gap-3">
+                <button
+                    onClick={onMenuClick}
+                    className="lg:hidden p-1.5 hover:bg-white/5 rounded-md text-slate-400 transition-colors"
+                    aria-label="Open navigation menu"
+                >
+                    <Menu className="size-4" />
                 </button>
-                <div className="flex items-center gap-3">
-                    <div className="h-6 w-1 bg-primary rounded-full" />
-                    <h2 className="text-lg font-black text-white uppercase tracking-wider">{getTitle()}</h2>
-                </div>
+                <h1 className="text-sm font-semibold text-white capitalize">{title}</h1>
             </div>
 
-            <div className="flex items-center gap-6">
+            <div className="flex items-center gap-2">
+                {/* Search */}
                 <div className="relative hidden md:block">
-                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-slate-500" />
+                    <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 size-3.5 text-slate-600" />
                     <input
-                        placeholder="Search dashboard..."
-                        className="bg-white/5 border border-white/5 rounded-xl pl-10 pr-4 py-2 text-[14px] text-white focus:border-primary/50 outline-none w-64 transition-all"
+                        placeholder="Search..."
+                        className="bg-white/[0.03] border border-white/[0.06] rounded-lg pl-8 pr-3 py-1.5 text-xs text-white placeholder:text-slate-600 focus:border-white/10 focus:bg-white/[0.05] outline-none w-48 transition-all"
                     />
                 </div>
 
-                <div className="flex items-center gap-2">
-                    <button className="p-2.5 bg-white/5 border border-white/5 rounded-xl text-slate-400 hover:text-white transition-all relative">
-                        <Bell className="size-4" />
-                        <span className="absolute top-2 right-2 size-2 bg-primary rounded-full border-2 border-[#0D0D0D]" />
-                    </button>
+                {/* Notifications */}
+                <button
+                    className="p-1.5 hover:bg-white/5 rounded-md text-slate-500 hover:text-white transition-colors relative"
+                    aria-label="View notifications"
+                >
+                    <Bell className="size-3.5" />
+                </button>
 
-                    <div className="h-8 w-px bg-white/5 mx-2" />
+                {/* Divider */}
+                <div className="h-5 w-px bg-white/[0.06] mx-1" />
 
-                    <button className="flex items-center gap-3 pl-2 pr-4 py-1.5 bg-white/5 border border-white/5 rounded-xl hover:border-white/20 transition-all group">
-                        <div className="size-8 rounded-lg bg-primary/20 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors">
-                            <User className="size-4" />
-                        </div>
-                        <div className="text-left hidden sm:block">
-                            <p className="text-[14px] font-black text-white uppercase tracking-tight">Admin User</p>
-                            <p className="text-[14px] text-slate-500 font-bold uppercase tracking-widest">General Access</p>
-                        </div>
-                    </button>
+                {/* User */}
+                <div className="flex items-center gap-2 pl-1">
+                    <div className="size-7 rounded-md bg-white/[0.06] flex items-center justify-center text-[11px] font-semibold text-slate-300">
+                        {userInitial}
+                    </div>
+                    <div className="hidden sm:block">
+                        <p className="text-xs font-medium text-slate-300 leading-none truncate max-w-[140px]">{userEmail}</p>
+                        <p className="text-[10px] text-slate-600 mt-0.5">Admin</p>
+                    </div>
                 </div>
             </div>
         </header>

@@ -62,72 +62,87 @@ export default async function Home() {
         <section id="games" className="section-alt pt-14 pb-16 scroll-mt-20">
           <div className="max-w-[1440px] mx-auto px-6 lg:px-10">
 
-            <div className="mb-8">
-              <div className="h-px w-12 bg-primary mb-4" />
-              <h2 className="font-cairo text-3xl md:text-[34px] font-bold text-white tracking-tight uppercase">
-                Available <span className="text-primary">Games</span>
-              </h2>
-              <p className="text-gray-500 text-sm mt-2">
-                Browse our catalog of competitive games and find the service you need.
-              </p>
+            {/* Header */}
+            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
+              <div>
+                <div className="h-px w-12 bg-primary mb-4" />
+                <h2 className="font-cairo text-3xl md:text-[34px] font-bold text-white tracking-tight uppercase">
+                  Available <span className="text-primary">Games</span>
+                </h2>
+                <p className="text-slate-400 text-sm mt-2 max-w-xl">
+                  Choose a game to view available boosts, coaching, and progression services.
+                </p>
+              </div>
+              <Link
+                href="/services"
+                className="inline-flex items-center gap-1.5 text-sm font-semibold text-slate-400 hover:text-primary transition-colors shrink-0 group"
+              >
+                View All Games
+                <ArrowRight className="size-3.5 group-hover:translate-x-0.5 transition-transform" />
+              </Link>
             </div>
 
             {displayGames.length > 0 ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-3">
+              <div className={`grid gap-4 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 ${displayGames.length < 6 ? "xl:flex xl:justify-center xl:[&>a]:w-[200px] xl:[&>a]:shrink-0" : ""}`}>
                 {displayGames.map((g: any, i: number) => {
-                  const isImage = g.bgImage && (g.bgImage.includes('://') || g.bgImage.startsWith('/'))
+                  const hasImage = g.bgImage && (g.bgImage.includes('://') || g.bgImage.startsWith('/'))
                   const initials = getInitials(g.name)
                   return (
                     <Link
                       key={g.name}
                       href={`/${g.slug}/services`}
-                      className="group relative flex w-full h-[160px] sm:h-[180px] items-end overflow-hidden rounded-xl border border-white/[0.06] bg-[#0e0e0e] transition-all duration-300 hover:-translate-y-1 hover:border-primary/30 hover:shadow-[0_12px_40px_-8px_rgba(0,0,0,0.6)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary sm:[&_span.svc-cta]:opacity-0 sm:[&_span.svc-cta]:translate-y-1 sm:group-hover:[&_span.svc-cta]:opacity-100 sm:group-hover:[&_span.svc-cta]:translate-y-0"
+                      className="group relative flex w-full aspect-[3/4] items-end overflow-hidden rounded-xl border border-white/[0.06] bg-[#0e0e0e] transition-all duration-300 hover:scale-[1.03] hover:border-primary/40 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary focus-visible:border-primary/40"
                     >
-                      {/* Background */}
+                      {/* Background image or gradient fallback */}
                       <div className="absolute inset-0 overflow-hidden">
-                        {isImage ? (
+                        {hasImage ? (
                           // eslint-disable-next-line @next/next/no-img-element
                           <img
                             src={g.bgImage}
-                            alt={`${g.name} background`}
-                            className="absolute inset-0 w-full h-full object-cover opacity-40 group-hover:opacity-70 group-hover:scale-110 transition-all duration-700 pointer-events-none"
+                            alt=""
+                            aria-hidden="true"
+                            className="absolute inset-0 w-full h-full object-cover object-center opacity-50 group-hover:opacity-80 group-hover:scale-105 transition-all duration-700 pointer-events-none"
                           />
                         ) : (
                           <div className={`absolute inset-0 bg-gradient-to-br ${getGradientForIndex(i)} opacity-80`} />
                         )}
-                        <div className="absolute inset-0 bg-gradient-to-t from-[#0e0e0e] via-[#0e0e0e]/50 to-transparent" />
+                        {/* Gradient overlay — always present for readability */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
                       </div>
 
-                      {/* Initials fallback when no image */}
-                      {!isImage && (
-                        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                          <span className="font-cairo text-5xl font-black text-white/[0.06] select-none group-hover:text-white/[0.1] transition-colors duration-500">
+                      {/* Initials fallback */}
+                      {!hasImage && (
+                        <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none">
+                          <span className="font-cairo text-5xl font-black text-white/[0.05] group-hover:text-white/[0.08] transition-colors duration-500">
                             {initials}
                           </span>
                         </div>
                       )}
 
-                      {/* Character image */}
+                      {/* Character overlay */}
                       {g.charImage && (
                         // eslint-disable-next-line @next/next/no-img-element
                         <img
                           src={g.charImage}
                           alt=""
-                          className="absolute -right-3 -bottom-4 h-[115%] w-auto object-contain opacity-60 group-hover:opacity-90 group-hover:scale-105 transition-all duration-500 pointer-events-none z-10"
                           aria-hidden="true"
+                          className="absolute -right-3 -bottom-4 h-[115%] w-auto object-contain opacity-60 group-hover:opacity-90 group-hover:scale-105 transition-all duration-500 pointer-events-none z-10"
                         />
                       )}
 
+                      {/* Hover overlay */}
+                      <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 pointer-events-none" />
+
                       {/* Content */}
-                      <div className="relative z-20 p-3 sm:p-4 w-full">
-                        <h3 className="font-cairo text-[15px] sm:text-[15px] font-bold text-white uppercase tracking-tight leading-tight mb-1 line-clamp-2">
+                      <div className="relative z-20 p-3.5 w-full">
+                        <h3 className="font-cairo text-sm sm:text-[15px] font-bold text-white uppercase tracking-tight leading-tight mb-0.5 line-clamp-2 group-hover:text-primary transition-colors">
                           {g.name}
                         </h3>
                         {g.description && (
-                          <p className="text-[11px] text-gray-300 sm:text-gray-400 font-medium mb-2" dangerouslySetInnerHTML={{ __html: g.description }} />
+                          <p className="text-[11px] text-slate-400 font-medium mb-2 line-clamp-1" dangerouslySetInnerHTML={{ __html: g.description }} />
                         )}
-                        {/* On mobile: always visible. On desktop: only on hover via CSS above. */}
-                        <span className="svc-cta inline-flex items-center gap-1 text-[11px] font-semibold text-primary/90 sm:text-primary opacity-100 translate-y-0 sm:opacity-0 sm:translate-y-1 transition-all duration-300">
+                        {/* CTA — always visible on mobile, hover-reveal on desktop */}
+                        <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-primary transition-all duration-300 sm:opacity-0 sm:translate-y-1 sm:group-hover:opacity-100 sm:group-hover:translate-y-0 sm:group-focus-visible:opacity-100 sm:group-focus-visible:translate-y-0">
                           View Services <ArrowRight className="size-3" />
                         </span>
                       </div>
@@ -136,12 +151,11 @@ export default async function Home() {
                 })}
               </div>
             ) : (
-              /* Empty State */
-              <div className="flex flex-col items-center justify-center py-16 text-center">
-                <div className="size-14 rounded-xl bg-white/[0.03] border border-white/5 flex items-center justify-center mb-4">
-                  <Gamepad2 className="size-6 text-gray-600" />
+              <div className="flex flex-col items-center justify-center py-14 text-center">
+                <div className="size-12 rounded-xl bg-white/[0.03] border border-white/[0.06] flex items-center justify-center mb-3">
+                  <Gamepad2 className="size-5 text-slate-600" />
                 </div>
-                <p className="text-gray-500 text-sm max-w-sm">
+                <p className="text-slate-500 text-sm max-w-sm">
                   No games are available at the moment. Check back soon as we expand our catalog.
                 </p>
               </div>
@@ -149,67 +163,80 @@ export default async function Home() {
           </div>
         </section>
 
-        {/* FEATURED SERVICES — hidden when empty for clean production behavior */}
-        {featuredServices.length > 0 && (
-          <section className="bg-[#050505] pb-16 pt-4">
-            <div className="max-w-[1440px] mx-auto px-6 lg:px-10">
+        {/* FEATURED SERVICES */}
+        <section className="bg-[#050505] pb-16 pt-4">
+          <div className="max-w-[1440px] mx-auto px-6 lg:px-10">
 
-              <div className="mb-8">
+            {/* Header */}
+            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
+              <div>
                 <div className="h-px w-12 bg-primary mb-4" />
                 <h2 className="font-cairo text-3xl md:text-[34px] font-bold text-white tracking-tight uppercase">
                   Featured <span className="text-primary">Services</span>
                 </h2>
-                <p className="text-gray-500 text-sm mt-2">
-                  Popular services chosen by our community.
+                <p className="text-slate-400 text-sm mt-2 max-w-xl">
+                  Top-rated boosts and coaching packages picked by our community.
                 </p>
               </div>
+              <Link
+                href="/services"
+                className="inline-flex items-center gap-1.5 text-sm font-semibold text-slate-400 hover:text-primary transition-colors shrink-0 group"
+              >
+                View All Services
+                <ArrowRight className="size-3.5 group-hover:translate-x-0.5 transition-transform" />
+              </Link>
+            </div>
 
+            {featuredServices.length > 0 ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 {featuredServices.map((fs: any) => {
                   const bgImage = fs.image || fs.game?.bgImage || ""
-                  const isBgUrl = bgImage && (bgImage.includes('://') || bgImage.startsWith('/'))
+                  const hasBg = bgImage && (bgImage.includes('://') || bgImage.startsWith('/'))
                   const serviceSlug = fs.slug || fs.name?.toLowerCase().replace(/[^a-z0-9]+/g, '-') || String(fs.id)
+                  const hasPrice = fs.basePrice != null && !isNaN(Number(fs.basePrice))
 
                   return (
                     <Link
                       href={`/services/${encodeURIComponent(serviceSlug)}`}
                       key={fs.id}
-                      className="group flex flex-col overflow-hidden rounded-xl bg-[#0c0c0c] border border-white/[0.06] hover:border-white/10 transition-all duration-300 hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                      aria-label={`View ${fs.name} — ${hasPrice ? `from $${Number(fs.basePrice).toFixed(2)}` : "pricing available"}`}
+                      className="group flex flex-col overflow-hidden rounded-xl bg-[#0c0c0c] border border-white/[0.06] hover:border-primary/40 focus-visible:border-primary/40 transition-all duration-300 hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
                     >
                       {/* Thumbnail */}
-                      <div className="relative h-[140px] sm:h-[160px] w-full overflow-hidden bg-[#111]">
-                        {isBgUrl ? (
+                      <div className="relative h-[140px] sm:h-[152px] w-full overflow-hidden bg-[#111]">
+                        {hasBg ? (
                           // eslint-disable-next-line @next/next/no-img-element
                           <img
                             src={bgImage}
-                            alt={`${fs.name} thumbnail`}
-                            className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-90 group-hover:scale-105 transition-all duration-500 pointer-events-none"
+                            alt=""
+                            aria-hidden="true"
+                            className="absolute inset-0 w-full h-full object-cover object-center opacity-50 group-hover:opacity-80 group-hover:scale-105 transition-all duration-500 pointer-events-none"
                           />
                         ) : (
-                          <div className="absolute inset-0 bg-gradient-to-br from-[#1a0520] to-[#0a0a0a] flex items-center justify-center">
-                            <Package className="size-7 text-gray-700" />
+                          <div className="absolute inset-0 bg-gradient-to-br from-[#150a1a] to-[#0a0a0a] flex items-center justify-center">
+                            <Package className="size-6 text-slate-700" />
                           </div>
                         )}
-                        <div className="absolute inset-0 bg-gradient-to-t from-[#0c0c0c] via-transparent to-transparent" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#0c0c0c] via-[#0c0c0c]/20 to-transparent" />
                       </div>
 
                       {/* Content */}
                       <div className="p-4 flex flex-col flex-1">
-                        <div className="text-[10px] font-semibold uppercase tracking-widest text-gray-500 mb-1">
+                        <span className="text-[10px] font-semibold uppercase tracking-widest text-slate-500 mb-1">
                           {fs.game?.name || "Service"}
-                        </div>
-                        <h3 className="text-[13px] font-semibold leading-snug text-white line-clamp-2 min-h-[36px] mb-3" title={fs.name}>
+                        </span>
+                        <h3 className="text-[13px] font-bold leading-snug text-white line-clamp-2 min-h-[36px] mb-3" title={fs.name}>
                           {fs.name}
                         </h3>
 
                         <div className="mt-auto">
-                          <div className="text-[10px] uppercase font-medium tracking-widest text-gray-600 mb-0.5">Starting at</div>
-                          <div className="text-base font-bold text-white">
-                            {fs.basePrice != null && !isNaN(Number(fs.basePrice)) ? `$${Number(fs.basePrice).toFixed(2)}` : "--.--"}
+                          <span className="text-[10px] uppercase font-medium tracking-widest text-slate-600">Starting at</span>
+                          <div className="text-base font-bold text-white mt-0.5">
+                            {hasPrice ? `$${Number(fs.basePrice).toFixed(2)}` : "--.--"}
                           </div>
                         </div>
 
-                        <div className="mt-3 w-full rounded-lg bg-white/5 group-hover:bg-primary border border-white/5 group-hover:border-primary py-2 text-center text-[12px] font-semibold text-white uppercase tracking-wider transition-all duration-300">
+                        <div className="mt-3 w-full rounded-lg bg-white/[0.04] group-hover:bg-primary group-focus-visible:bg-primary border border-white/[0.06] group-hover:border-primary group-focus-visible:border-primary min-h-[44px] flex items-center justify-center text-[12px] font-semibold text-slate-300 group-hover:text-white group-focus-visible:text-white uppercase tracking-wider transition-all duration-300">
                           View Details
                         </div>
                       </div>
@@ -217,9 +244,19 @@ export default async function Home() {
                   )
                 })}
               </div>
-            </div>
-          </section>
-        )}
+            ) : (
+              /* Empty state — compact placeholder */
+              <div className="flex flex-col items-center justify-center py-14 text-center">
+                <div className="size-12 rounded-xl bg-white/[0.03] border border-white/[0.06] flex items-center justify-center mb-3">
+                  <Package className="size-5 text-slate-600" />
+                </div>
+                <p className="text-slate-500 text-sm max-w-sm">
+                  Featured services coming soon. Check back as we curate our top picks.
+                </p>
+              </div>
+            )}
+          </div>
+        </section>
 
         {/* HOW IT WORKS */}
         <HowItWorks />

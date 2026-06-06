@@ -10,9 +10,9 @@ export default async function AdminUsersPage() {
     }
 
     const token = (session?.user as any)?.accessToken;
-    const users = await api("/admin/users", { token }).catch(() => []);
+    const res = await api<{ data: any[] }>("/admin/users", { token }).catch(() => ({ data: [] }));
 
-    const mappedUsers = users.map((u: any) => ({
+    const mappedUsers = res.data.map((u: any) => ({
         ...u,
         _count: { serviceOrders: u.serviceOrdersCount ?? 0 }
     }));

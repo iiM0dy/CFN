@@ -4,60 +4,71 @@ import { notFound } from "next/navigation"
 import { ServiceList } from "@/components/services/service-list"
 import { Footer } from "@/components/layout/footer"
 import { GameFavoriteButton } from "@/components/services/game-favorite-button"
-
+import { Shield, Headphones, Truck, UserCheck } from "lucide-react"
 
 export default async function GameServicesPage({ params }: { params: Promise<{ gameSlug: string }> }) {
     const { gameSlug } = await params
 
-    // Fetch game with services from the Laravel API
     const gameData = await api(`/games/${gameSlug}/services`).catch(() => null);
-
     const game = gameData?.data ?? gameData;
 
     if (!game) {
         notFound()
     }
 
-    // The API returns services with options, displayPrice already computed server-side.
-    // If services come nested under game.services, use them directly.
-    // Otherwise, if the API returns a flat services array, attach them.
     if (!game.services) {
         game.services = [];
     }
 
+    const hasBg = game.bgImage && (game.bgImage.includes("://") || game.bgImage.startsWith("/"))
+
     return (
-        <div className="bg-[#0B0B0B] text-white min-h-screen flex flex-col font-cairo overflow-x-hidden">
-            <main className="grow w-full max-w-[1440px] mx-auto px-6 lg:px-10 pt-9 pb-12">
-                {/* Tactical Breadcrumbs */}
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 mb-12">
-                    <div className="flex items-center gap-2 text-[14px] font-black uppercase tracking-[0.2em] text-slate-500">
-                        <Link href="/" className="hover:text-primary transition-colors">Home</Link>
-                        <span className="material-symbols-outlined text-[14px]">chevron_right</span>
-                        <span className="text-white">{game.name}</span>
+        <div className="bg-[#080808] text-white min-h-screen flex flex-col overflow-x-hidden">
+            {/* Game banner with artwork */}
+            <div className="relative h-32 sm:h-40 overflow-hidden">
+                {hasBg ? (
+                    <>
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img src={game.bgImage} alt="" aria-hidden="true" className="absolute inset-0 w-full h-full object-cover opacity-30" />
+                        <div className="absolute inset-0 bg-gradient-to-b from-[#080808]/30 via-[#080808]/60 to-[#080808]" />
+                    </>
+                ) : (
+                    <div className="absolute inset-0 bg-gradient-to-b from-primary/[0.04] to-[#080808]" />
+                )}
+                <div className="absolute inset-0 flex items-end">
+                    <div className="w-full max-w-[1440px] mx-auto px-6 lg:px-10 pb-4">
+                        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3">
+                            <div>
+                                <nav className="flex items-center gap-1.5 text-xs text-slate-500 mb-2">
+                                    <Link href="/" className="hover:text-white transition-colors">Home</Link>
+                                    <span className="text-slate-700">/</span>
+                                    <span className="text-white font-medium">{game.name}</span>
+                                </nav>
+                                <h1 className="font-cairo text-2xl sm:text-3xl font-bold text-white uppercase tracking-tight">
+                                    {game.name} <span className="text-primary">Services</span>
+                                </h1>
+                            </div>
+                            <GameFavoriteButton gameId={game.id} />
+                        </div>
                     </div>
-
-                    <GameFavoriteButton gameId={game.id} />
                 </div>
+            </div>
 
+            <main className="grow w-full max-w-[1440px] mx-auto px-6 lg:px-10 pt-6 pb-12">
                 <ServiceList initialServices={game.services} />
 
-                {/* Performance Analytics Row */}
-                <section className="mt-20 py-16 border-t border-white/5 w-full">
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-12">
+                {/* Trust bar */}
+                <section className="mt-16 pt-8 border-t border-white/[0.06]">
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                         {[
-                            { label: 'Deployments Finished', value: '50,000+' },
-                            { label: 'Asset Rating', value: '4.9/5' },
-                            { label: 'Field Experts', value: '500+' },
-                            { label: 'HQ Monitoring', value: '24/7' }
-                        ].map((stat, i) => (
-                            <div key={i} className="text-center group relative">
-                                <div className="text-4xl md:text-5xl font-black text-white group-hover:text-primary transition-all duration-500 mb-2 tracking-tighter italic">
-                                    {stat.value}
-                                </div>
-                                <div className="text-slate-500 text-[14px] font-black uppercase tracking-[0.2em] group-hover:text-primary/50 transition-colors">
-                                    {stat.label}
-                                </div>
-                                <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-8 h-0.5 bg-primary/0 group-hover:bg-primary/50 transition-all duration-500"></div>
+                            { icon: Shield, label: "Secure Checkout" },
+                            { icon: Headphones, label: "24/7 Support" },
+                            { icon: Truck, label: "Order Tracking" },
+                            { icon: UserCheck, label: "Verified Boosters" },
+                        ].map((item) => (
+                            <div key={item.label} className="flex items-center justify-center gap-2.5 py-4 px-3 rounded-xl bg-[#0c0c0c] border border-white/[0.06] group hover:border-primary/20 transition-colors">
+                                <item.icon className="size-4 text-primary/60 group-hover:text-primary transition-colors" />
+                                <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">{item.label}</span>
                             </div>
                         ))}
                     </div>
@@ -67,4 +78,3 @@ export default async function GameServicesPage({ params }: { params: Promise<{ g
         </div>
     )
 }
-

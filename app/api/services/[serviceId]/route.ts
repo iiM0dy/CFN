@@ -1,3 +1,5 @@
+import { NextResponse } from "next/server";
+
 const API = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8888/api';
 
 export async function GET(
@@ -12,6 +14,7 @@ export async function GET(
       ...(request.headers.get('authorization') ? { 'Authorization': request.headers.get('authorization')! } : {}),
     },
   });
-  const data = await res.text();
-  return new Response(data, { status: res.status, headers: { 'Content-Type': 'application/json' } });
+  const json = await res.json().catch(() => null);
+  const data = json?.data ?? json;
+  return NextResponse.json(data, { status: res.status });
 }
